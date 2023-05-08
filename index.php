@@ -10,7 +10,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Phoenix</title>
+    <title>CRM</title>
 
 
     <!-- ===============================================-->
@@ -84,8 +84,8 @@
 
                                         <div
                                             class="position-relative px-4 px-lg-7 pt-7 pb-7 pb-sm-5 text-center text-md-start pb-lg-7 pb-md-7">
-                                            <h3 class="mb-3 text-black fs-1">Phoenix Authentication</h3>
-                                            <p class="text-700">Give yourself some hassle-free development process with
+                                            <h3 class="mb-3 text-black fs-1">CRM Autenticação</h3>
+                                            <!-- <p class="text-700">Give yourself some hassle-free development process with
                                                 the uniqueness of Phoenix!</p>
                                             <ul class="list-unstyled mb-0 w-max-content w-md-auto mx-auto">
                                                 <li class="d-flex align-items-center"><span
@@ -97,7 +97,7 @@
                                                 <li class="d-flex align-items-center"><span
                                                         class="uil uil-check-circle text-success me-2"></span><span
                                                         class="text-700 fw-semi-bold">Responsive</span></li>
-                                            </ul>
+                                            </ul> -->
                                         </div>
                                         <div
                                             class="position-relative z-index--1 mb-6 d-none d-md-block text-center mt-md-15">
@@ -116,22 +116,22 @@
                                                         <img src="assets/img/icons/logo.png" alt="phoenix" width="58" />
                                                     </div>
                                                 </a>
-                                                <h3 class="text-1000">Sign In</h3>
-                                                <p class="text-700">Get access to your account</p>
+                                                <h3 class="text-1000">Entrar</h3>
+                                                <p class="text-700">Acesse sua conta</p>
                                             </div>
-                                            <button class="btn btn-phoenix-secondary w-100 mb-3"><span
+                                            <!-- <button class="btn btn-phoenix-secondary w-100 mb-3"><span
                                                     class="fab fa-google text-danger me-2 fs--1"></span>Sign in with
                                                 google</button>
                                             <button class="btn btn-phoenix-secondary w-100"><span
                                                     class="fab fa-facebook text-primary me-2 fs--1"></span>Sign in with
-                                                facebook</button>
-                                            <div class="position-relative">
+                                                facebook</button> -->
+                                            <!-- <div class="position-relative">
                                                 <hr class="bg-200 mt-5 mb-4" />
                                                 <div class="divider-content-center bg-white">or use email</div>
-                                            </div>
+                                            </div> -->
                                             <div class="mb-3 text-start">
                                                 <form action="database/processa_login.php" method="POST">
-                                                    <label class="form-label" for="email">Email address</label>
+                                                    <label class="form-label" for="email">Email</label>
                                                     <div class="form-icon-container">
                                                         <input class="form-control form-icon-input" id="email" name="email"
                                                             type="email" placeholder="name@example.com" /><span
@@ -139,10 +139,10 @@
                                                     </div>
                                             </div>
                                             <div class="mb-3 text-start">
-                                                <label class="form-label" for="password">Password</label>
+                                                <label class="form-label" for="password">Senha</label>
                                                 <div class="form-icon-container">
                                                     <input class="form-control form-icon-input" id="password" name="senha"
-                                                        type="password" placeholder="Password" /><span
+                                                        type="password" placeholder="Senha" /><span
                                                         class="fas fa-key text-900 fs--1 form-icon"></span>
                                                 </div>
                                             </div>
@@ -152,17 +152,17 @@
                                                         <input class="form-check-input" id="basic-checkbox"
                                                             type="checkbox" checked="checked" />
                                                         <label class="form-check-label mb-0"
-                                                            for="basic-checkbox">Remember me</label>
+                                                            for="basic-checkbox">Lembrar Senha</label>
                                                     </div>
                                                 </div>
-                                                <div class="col-auto"><a class="fs--1 fw-semi-bold"
+                                                <!-- <div class="col-auto"><a class="fs--1 fw-semi-bold"
                                                         href="pages/authentication/card/forgot-password.html">Forgot
-                                                        Password?</a></div>
+                                                        Password?</a></div> -->
                                             </div>
-                                            <button class="btn btn-primary w-100 mb-3">Sign In</button>
-                                            <div class="text-center"><a class="fs--1 fw-bold"
+                                            <button class="btn btn-primary w-100 mb-3">Entrar</button>
+                                            <!-- <div class="text-center"><a class="fs--1 fw-bold"
                                                     href="pages/authentication/card/sign-up.html">Create an account</a>
-                                            </div>
+                                            </div> -->
                                             </form>
                                         </div>
                                     </div>
@@ -186,7 +186,7 @@
             navbarVertical.classList.add('navbar-darker');
         }
         </script>
-        <div class="support-chat-container">
+        <!-- <div class="support-chat-container">
             <div class="container-fluid support-chat">
                 <div class="card bg-white">
                     <div class="card-header d-flex flex-between-center px-4 py-3 border-bottom">
@@ -258,14 +258,14 @@
                     class="fs-0 btn-text text-primary text-nowrap">Chat demo</span><span
                     class="fa-solid fa-circle text-success fs--1 ms-2"></span><span
                     class="fa-solid fa-chevron-down text-primary fs-1"></span></button>
-        </div>
+        </div> -->
     </main>
     <!-- ===============================================-->
     <!--    End of Main Content-->
     <!-- ===============================================-->
 
 
-    <div class="offcanvas offcanvas-end settings-panel border-0" id="settings-offcanvas" tabindex="-1"
+    <!-- <div class="offcanvas offcanvas-end settings-panel border-0" id="settings-offcanvas" tabindex="-1"
         aria-labelledby="settings-offcanvas">
         <div class="offcanvas-header align-items-start border-bottom flex-column">
             <div class="pt-1 w-100 mb-6 d-flex justify-content-between align-items-start">
@@ -452,7 +452,7 @@
                                 </svg></span></span></span></div>
             </div><small class="text-uppercase text-700 fw-bold py-2 pe-2 ps-1 rounded-end">customize</small>
         </div>
-    </a>
+    </a> -->
 
 
     <!-- ===============================================-->
