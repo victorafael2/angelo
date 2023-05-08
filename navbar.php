@@ -69,13 +69,13 @@
                   <hr class="navbar-vertical-line" />
 
 
-                  <div class="nav-item-wrapper"><a class="nav-link label-1"href="cadastro_empresas.php" role="button" data-bs-toggle="" aria-expanded="false">
-                      <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="edit"></span></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Cadastro de Empresas</span></span>
+                  <div class="nav-item-wrapper"><a class="nav-link label-1"href="#" role="button" data-bs-toggle="" aria-expanded="false">
+                      <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="edit"></span></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Cadastro de Funcionários</span></span>
                       </div>
                     </a>
                   </div>
 
-                  <div class="nav-item-wrapper"><a class="nav-link label-1"href="cadastro_feito.php"role="button" data-bs-toggle="" aria-expanded="false">
+                  <!-- <div class="nav-item-wrapper"><a class="nav-link label-1"href="cadastro_feito.php"role="button" data-bs-toggle="" aria-expanded="false">
                       <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="file-text"></span></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Prospecção</span></span>
                       </div>
                     </a>
@@ -85,7 +85,7 @@
                       <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="users"></span></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Usuários</span></span>
                       </div>
                     </a>
-                  </div>
+                  </div> -->
 
                 </li>
 
