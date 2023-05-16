@@ -1,4 +1,13 @@
-     <style>
+
+    <?php
+    // Query to retrieve the data from the database
+$query = "SELECT * FROM menu";
+$result = mysqli_query($conn, $query);
+
+?>
+
+
+    <style>
 .avatar-letter {
   display: flex;
   align-items: center;
@@ -69,11 +78,39 @@
                   <hr class="navbar-vertical-line" />
 
 
-                  <div class="nav-item-wrapper"><a class="nav-link label-1"href="#" role="button" data-bs-toggle="" aria-expanded="false">
+                  <!-- <div class="nav-item-wrapper"><a class="nav-link label-1"href="pages/cadastro/cadastro_funcionario.php" role="button" data-bs-toggle="" aria-expanded="false">
                       <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="edit"></span></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Cadastro de Funcionários</span></span>
                       </div>
                     </a>
-                  </div>
+                  </div> -->
+
+                  <?php
+                                            // Generate the HTML code dynamically
+                          while ($row = mysqli_fetch_assoc($result)) {
+                            // $idFuncionario = $row['idFuncionario'];
+                            $nome_menu = $row['nome'];
+                            $id_menu = $row['id'];
+                            $caminho = 'content_pages.php?id=' . $id_menu ;
+
+                            // Modify the following line to include the appropriate URL or link destination
+                            // $link = 'pages/cadastro/cadastro_funcionario.php?id=' . $idFuncionario;
+
+
+                            $html = '<div class="nav-item-wrapper">
+                                        <a class="nav-link label-1" href="' . $caminho . '" role="button" data-bs-toggle="" aria-expanded="false">
+                                            <div class="d-flex align-items-center">
+                                                <span class="nav-link-icon"><span data-feather="edit"></span></span>
+                                                <span class="nav-link-text-wrapper">
+                                                    <span class="nav-link-text">' . $nome_menu . '</span>
+                                                </span>
+                                            </div>
+                                        </a>
+                                    </div>';
+
+                            echo $html;
+                          }
+
+                  ?>
 
                   <!-- <div class="nav-item-wrapper"><a class="nav-link label-1"href="cadastro_feito.php"role="button" data-bs-toggle="" aria-expanded="false">
                       <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="file-text"></span></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Prospecção</span></span>
