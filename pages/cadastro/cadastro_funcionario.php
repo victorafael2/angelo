@@ -1,4 +1,7 @@
-<form action="processar_formulario.php" method="POST">
+<?php
+$date = date("Y-m-d"); // Obtém a data atual no formato ano-mês-dia
+?>
+<form id="form" class="mb-3">
     <div class="row">
         <!-- <div class="col-sm-4">
             <div class="form-group">
@@ -9,7 +12,7 @@
         <div class="col-sm-4">
             <div class="form-group">
                 <label for="dataCadastro">Data de Cadastro:</label>
-                <input type="date" class="form-control" id="dataCadastro" name="dataCadastro">
+                <input type="date" class="form-control" id="dataCadastro" name="dataCadastro" value="<?php echo $date; ?>">
             </div>
         </div>
         <div class="col-sm-4">
@@ -119,7 +122,7 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row mb-3">
         <div class="col-sm-4">
             <div class="form-group">
                 <label for="sigilo">Sigilo:</label>
@@ -130,5 +133,68 @@
             </div>
         </div>
     </div>
+
     <button type="submit" class="btn btn-primary">Enviar</button>
 </form>
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<script>
+$(document).ready(function() {
+  $("#form").submit(function(e) {
+    e.preventDefault(); // Impede que o formulário seja enviado normalmente
+
+    // Verifica se todos os campos estão preenchidos
+    var allFieldsFilled = true;
+    $("#form input, #form select").each(function() {
+      if ($(this).val() === "") {
+        allFieldsFilled = false;
+        return false; // Interrompe o loop quando um campo vazio é encontrado
+      }
+    });
+
+    if (!allFieldsFilled) {
+      Swal.fire({
+        title: 'Campos vazios',
+        text: 'Por favor, preencha todos os campos do formulário.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+      return; // Interrompe a submissão do formulário
+    }
+
+    var formData = $(this).serialize(); // Serializa os dados do formulário
+
+
+    $.ajax({
+      type: "POST",
+      url: "pages/cadastro/add/add_usuario.php",
+      data: formData,
+      success: function(response) {
+        if (response == "success") {
+          Swal.fire({
+            title: 'Erro',
+            text: 'Ocorreu um erro ao salvar os dados!',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
+        } else {
+          Swal.fire({
+            title: 'Parabéns',
+            text: 'Usuário cadastrado com sucesso!',
+            icon: 'success',
+            confirmButtonText: 'OK'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              // location.href = 'palitagens.php';
+            }
+          });
+        }
+      }
+    });
+  });
+});
+</script>
