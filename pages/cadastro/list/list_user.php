@@ -1,8 +1,6 @@
 
 
-<div class="content">
 
-    <!-- Criar todo conteurdo depois da primeira linha -->
 
                 <div class="row">
 
@@ -13,7 +11,7 @@
 
 
                                     // Consulta SQL para selecionar todos os usuários
-                                    $sql = "SELECT * FROM formulario ";
+                                    $sql = "SELECT * FROM funcionarios ";
                                     $result = $conn->query($sql);
 
                                     if ($result->num_rows > 0) {
@@ -24,10 +22,10 @@
                                         // Percorrendo os resultados e adicionando-os à tabela HTML
                                         while($row = $result->fetch_assoc()) {
                                             echo "<tr>";
-                                            echo "<td>" . $row["id"] . "</td>";
-                                            echo "<td>" . $row["protocolo"] . "</td>";
-                                            echo "<td>" . $row["classificacao"] . "</td>";
-                                            echo "<td>" . $row["data_criacao"] . "</td>";
+                                            echo "<td>" . $row["idFuncionario"] . "</td>";
+                                            echo "<td>" . $row["dataCadastro"] . "</td>";
+                                            echo "<td>" . $row["cpf"] . "</td>";
+                                            echo "<td>" . $row["dataAdmissao"] . "</td>";
 
                                             echo "</tr>";
                                         }

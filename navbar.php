@@ -120,33 +120,7 @@ echo generateMenuHTML($menuData);
         <!-- scrollbar removed-->
         <div class="navbar-vertical-content">
             <ul class="navbar-nav flex-column" id="navbarVerticalNav">
-                <!-- <li class="nav-item">
 
-                  <div class="nav-item-wrapper"><a class="nav-link dropdown-indicator label-1" href="#home" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="home">
-                      <div class="d-flex align-items-center">
-                        <div class="dropdown-indicator-icon"><span class="fas fa-caret-right"></span></div><span class="nav-link-icon"><span data-feather="pie-chart"></span></span><span class="nav-link-text">Home</span>
-                      </div>
-                    </a>
-                    <div class="parent-wrapper label-1">
-                      <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="home">
-                        <li class="collapsed-nav-item-title d-none">Home </li>
-                        <li class="nav-item"><a class="nav-link" href="cadastro_empresas.php" data-bs-toggle="" aria-expanded="false">
-                            <div class="d-flex align-items-center"><span class="nav-link-text">Cadastro de Empresa</span>
-                            </div>
-                          </a>
-
-                        </li>
-                        <li class="nav-item"><a class="nav-link" href="cadastro_feito.php" data-bs-toggle="" aria-expanded="false">
-                            <div class="d-flex align-items-center"><span class="nav-link-text">Prospecções</span>
-                            </div>
-                          </a>
-
-                        </li>
-
-                      </ul>
-                    </div>
-                  </div>
-                </li> -->
 
                 <li class="nav-item">
                     <!-- label-->
@@ -155,11 +129,7 @@ echo generateMenuHTML($menuData);
                     <hr class="navbar-vertical-line" />
 
 
-                    <!-- <div class="nav-item-wrapper"><a class="nav-link label-1"href="pages/cadastro/cadastro_funcionario.php" role="button" data-bs-toggle="" aria-expanded="false">
-                      <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="edit"></span></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Cadastro de Funcionários</span></span>
-                      </div>
-                    </a>
-                  </div> -->
+
 
                     <!-- <?php
                                             // Generate the HTML code dynamically
@@ -195,17 +165,7 @@ echo generateMenuHTML($menuData);
 
 
 
-                    <!-- <div class="nav-item-wrapper"><a class="nav-link label-1"href="cadastro_feito.php"role="button" data-bs-toggle="" aria-expanded="false">
-                      <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="file-text"></span></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Prospecção</span></span>
-                      </div>
-                    </a>
-                  </div>
 
-                  <div class="nav-item-wrapper"><a class="nav-link label-1"href="create_user.php"role="button" data-bs-toggle="" aria-expanded="false">
-                      <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="users"></span></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Usuários</span></span>
-                      </div>
-                    </a>
-                  </div> -->
 
                 </li>
 
