@@ -8,7 +8,7 @@ $result = mysqli_query($conn, $query);
 
 
 <?php
-
+date_default_timezone_set('America/Fortaleza');
 
 // Verificar a conexão
 if ($conn->connect_error) {
@@ -180,6 +180,11 @@ echo generateMenuHTML($menuData);
             class="btn navbar-vertical-toggle border-0 fw-semi-bold w-100 white-space-nowrap d-flex align-items-center"><span
                 class="uil uil-left-arrow-to-left fs-0"></span><span class="uil uil-arrow-from-right fs-0"></span><span
                 class="navbar-vertical-footer-text ms-2">Encolher</span></button>
+                <p><?php
+$dataHoraAtual = date('Y-m-d H:i:s');
+echo $dataHoraAtual;
+?></p>
+
     </div>
 </nav>
 <nav class="navbar navbar-top fixed-top navbar-expand" id="navbarDefault">

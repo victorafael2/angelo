@@ -1,6 +1,8 @@
 <?php
 $date = date("Y-m-d"); // Obtém a data atual no formato ano-mês-dia
 ?>
+<h3>Cadastro de Funcionários</h3>
+
 <form id="form" class="mb-3">
     <div class="row">
         <!-- <div class="col-sm-4">

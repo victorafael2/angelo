@@ -1,8 +1,8 @@
 <?php
 include '../../../database/databaseconnect.php';
-
+date_default_timezone_set('America/Fortaleza');
 // Criar a conexão
-$conn = new mysqli($servername, $username, $password, $dbname);
+// $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Verificar a conexão
 if ($conn->connect_error) {
