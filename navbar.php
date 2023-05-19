@@ -180,10 +180,10 @@ echo generateMenuHTML($menuData);
             class="btn navbar-vertical-toggle border-0 fw-semi-bold w-100 white-space-nowrap d-flex align-items-center"><span
                 class="uil uil-left-arrow-to-left fs-0"></span><span class="uil uil-arrow-from-right fs-0"></span><span
                 class="navbar-vertical-footer-text ms-2">Encolher</span></button>
-                <p><?php
+                <!-- <p><?php
 $dataHoraAtual = date('Y-m-d H:i:s');
 echo $dataHoraAtual;
-?></p>
+?></p> -->
 
     </div>
 </nav>

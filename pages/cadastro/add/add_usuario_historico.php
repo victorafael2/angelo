@@ -4,8 +4,9 @@ date_default_timezone_set('America/Fortaleza');
 // Criar a conexão
 // $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Verifica se o formulário foi enviado
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($conn->connect_error) {
+    die("Erro na conexão com o banco de dados: " . $conn->connect_error);
+}
     // Recupera os dados do formulário
     $nomeSocial = $_POST["nomeSocial"];
     $nomeRegistro = $_POST["nomeRegistro"];
@@ -36,6 +37,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Erro ao salvar os dados: " . mysqli_error($conn);
     }
     mysqli_close($conn);
-}
+
 
 ?>

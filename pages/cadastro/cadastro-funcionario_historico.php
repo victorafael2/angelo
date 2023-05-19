@@ -34,6 +34,10 @@ $status = $row["status"] ?? "";
 
 <form id="form">
   <div class="row">
+  <div class="col-md-4">
+          <label for="idFuncioanrio" class="form-label">Id Funcioanrio</label>
+          <input type="text" class="form-control" id="idFuncioanrio" name="idFuncioanrio" value="<?php echo $id_funci; ?>">
+      </div>
       <div class="col-md-4">
           <label for="nomeSocial" class="form-label">Nome Social</label>
           <input type="text" class="form-control" id="nomeSocial" name="nomeSocial" value="<?php echo $nomeSocial; ?>">
