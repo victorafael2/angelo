@@ -12,7 +12,7 @@
 
 
 <div id="tableExample2" data-list='{"valueNames":["cpf","email","age"],"page":20,"pagination":true}'>
-    <div class="table-responsive">
+    <div class="table-responsive ms-n1 ps-1 scrollbar">
         <table class="table table-striped table-sm fs--1 mb-0">
             <thead>
                 <tr>

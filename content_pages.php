@@ -4,8 +4,8 @@ include 'navbar.php';
 
 $id = $_GET['id'];
 
-$query = "SELECT * FROM submenu where submenu_id = $id";
-$result = mysqli_query($conn, $query);
+$query_content_page = "SELECT * FROM submenu where submenu_id = $id";
+$result_content_page = mysqli_query($conn, $query_content_page);
 
 ?>
 
@@ -15,9 +15,13 @@ $result = mysqli_query($conn, $query);
 
 
                      <?php
+                    //  echo $query;
                                             // Generate the HTML code dynamically
-                          while ($row = mysqli_fetch_assoc($result)) {
+                          while ($row = mysqli_fetch_assoc($result_content_page)) {
                             $caminho = $row['submenu_link'];
+                            // $submenu_link = $caminho ?? null;
+
+                            // echo $caminho;
 
                             include $caminho;
 
