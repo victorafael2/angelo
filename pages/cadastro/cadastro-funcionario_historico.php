@@ -76,7 +76,7 @@ $created = $row["created"];
 
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
-            <h3>Cadastro Histórico de funcionários</h3>
+            <h3>Cadastrar Atualização de funcionários</h3>
 
             <form id="form">
                 <div class="row">
@@ -97,7 +97,8 @@ $created = $row["created"];
                     </div>
                     <div class="col-md-4">
                         <label for="sexo" class="form-label">Sexo</label>
-                        <select class="form-select" id="sexo" name="sexo">
+                        <select class="form-select" id="sexo" name="sexo" data-choices="data-choices"
+                            data-options='{"removeItemButton":true,"placeholder":true}'>
                             <option value="">Selecione</option>
                             <option value="Masculino" <?php if ($sexo == "Masculino") echo " selected"; ?>>Masculino
                             </option>
@@ -109,7 +110,8 @@ $created = $row["created"];
                 <div class="row">
                     <div class="col-md-4">
                         <label for="genero" class="form-label">Gênero</label>
-                        <select class="form-select" id="genero" name="genero">
+                        <select class="form-select" id="genero" name="genero" data-choices="data-choices"
+                            data-options='{"removeItemButton":true,"placeholder":true}'>
                             <option value="">Selecione</option>
                             <option value="Masculino" <?php if ($genero == "Masculino") echo " selected"; ?>>Masculino
                             </option>
@@ -120,7 +122,8 @@ $created = $row["created"];
                     </div>
                     <div class="col-md-4">
                         <label for="estadoCivil" class="form-label">Estado Civil</label>
-                        <select class="form-select" id="estadoCivil" name="estadoCivil">
+                        <select class="form-select" id="estadoCivil" name="estadoCivil" data-choices="data-choices"
+                            data-options='{"removeItemButton":true,"placeholder":true}'>
                             <option value="">Selecione</option>
                             <option value="Solteiro(a)" <?php if ($estadoCivil == "Solteiro(a)") echo " selected"; ?>>
                                 Solteiro(a)</option>
@@ -134,14 +137,92 @@ $created = $row["created"];
                     </div>
                     <div class="col-md-4">
                         <label for="idCargo" class="form-label">ID Cargo</label>
-                        <input type="text" class="form-control" id="idCargo" name="idCargo"
-                            value="<?php echo $idCargo; ?>">
+                        <select type="text" class="form-control" id="idCargo" name="idCargo" data-choices="data-choices"
+                            data-options='{"removeItemButton":true,"placeholder":true}'>
+                            <option value="">Selecione</option>
+
+
+
+                            <?php
+                        // Executar a consulta para obter os dados
+                        $sql_cargo = "SELECT id_cargo, cargo_nome FROM aux_cargos"; // Substitua "tabela" pelo nome correto da sua tabela
+                        $result_cargo = $conn->query($sql_cargo);
+
+                        // Verificar se há resultados e criar as opções
+                        if ($result_cargo->num_rows > 0) {
+                            while ($row = $result_cargo->fetch_assoc()) {
+                                $id_cargo = $row["id_cargo"];
+                                $nome_cargo = $row["cargo_nome"];
+                                $visibilidade_cargo = ($idCargo == $id_cargo) ? "selected" : "";
+
+                                echo "<option value='$id_cargo' $visibilidade_cargo>$nome_cargo</option>";
+                            }
+                        } else {
+                            // echo "<option value=''>Nenhum resultado encontrado</option>";
+                        }
+                        ?>
+                        </select>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <label for="idVt" class="form-label">ID VT</label>
-                        <input type="text" class="form-control" id="idVt" name="idVt" value="<?php echo $idVt; ?>">
+                        <label for="idVt" class="form-label">Auxilio Transporte</label>
+                        <!-- <input type="text" class="form-control" id="idVt" name="idVt" value="<?php echo $idVt; ?>"> -->
+                        <select type="text" class="form-control" id="idVt" name="idVt" data-choices="data-choices"
+                            data-options='{"removeItemButton":true,"placeholder":true}'>
+                            <option value="">Selecione</option>
+
+
+
+                            <?php
+                        // Executar a consulta para obter os dados
+                        $sql_vt = "SELECT id_vt, vt_nome FROM aux_vt"; // Substitua "tabela" pelo nome correto da sua tabela
+                        $result_vt = $conn->query($sql_vt);
+
+                        // Verificar se há resultados e criar as opções
+                        if ($result_vt->num_rows > 0) {
+                            while ($row = $result_vt->fetch_assoc()) {
+                                $id_vt = $row["id_vt"];
+                                $vt_nome = $row["vt_nome"];
+                                $visibilidade_vt = ($idVt == $id_vt) ? "selected" : "";
+
+                                echo "<option value='$id_vt' $visibilidade_vt>$vt_nome</option>";
+                            }
+                        } else {
+                            // echo "<option value=''>Nenhum resultado encontrado</option>";
+                        }
+                        ?>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="idVt" class="form-label">Auxilio Alimentação</label>
+                        <!-- <input type="text" class="form-control" id="idVt" name="idVt" value="<?php echo $idVt; ?>"> -->
+                        <select type="text" class="form-control" id="idvr" name="idvr" data-choices="data-choices"
+                            data-options='{"removeItemButton":true,"placeholder":true}'>
+                            <option value="">Selecione</option>
+
+
+
+                            <?php
+                        // Executar a consulta para obter os dados
+                        $sql_vr = "SELECT id_vr, vr_nome FROM aux_vr"; // Substitua "tabela" pelo nome correto da sua tabela
+                        $result_vr = $conn->query($sql_vr);
+
+                        // Verificar se há resultados e criar as opções
+                        if ($result_vr->num_rows > 0) {
+                            while ($row = $result_vr->fetch_assoc()) {
+                                $id_vr = $row["id_vr"];
+                                $vr_nome = $row["vr_nome"];
+                                $visibilidade_vr = ($idVr == $id_vr) ? "selected" : "";
+
+                                echo "<option value='$id_vr' $visibilidade_vr>$vr_nome</option>";
+                            }
+                        } else {
+                            // echo "<option value=''>Nenhum resultado encontrado</option>";
+                        }
+                        ?>
+                        </select>
                     </div>
                     <div class="col-md-4">
                         <label for="idSuperior" class="form-label">ID Superior</label>
@@ -150,8 +231,29 @@ $created = $row["created"];
                     </div>
                     <div class="col-md-4">
                         <label for="idArea" class="form-label">ID Área</label>
-                        <input type="text" class="form-control" id="idArea" name="idArea"
-                            value="<?php echo $idArea; ?>">
+                        <select type="text" class="form-control" id="idArea" name="idArea" data-choices="data-choices"
+                            data-options='{"removeItemButton":true,"placeholder":true}'>
+                            <option value="">Selecione</option>
+
+                            <?php
+                        // Executar a consulta para obter os dados
+                        $sql_areas = "SELECT id_area, nome_area FROM aux_areas"; // Substitua "tabela" pelo nome correto da sua tabela
+                        $result_areas = $conn->query($sql_areas);
+
+                        // Verificar se há resultados e criar as opções
+                        if ($result_areas->num_rows > 0) {
+                            while ($row = $result_areas->fetch_assoc()) {
+                                $id_area = $row["id_area"];
+                                $nome_area = $row["nome_area"];
+                                $visibilidade_area = ($idArea == $id_area) ? "selected" : "";
+
+                                echo "<option value='$id_area' $visibilidade_area>$nome_area</option>";
+                            }
+                        } else {
+                            // echo "<option value=''>Nenhum resultado encontrado</option>";
+                        }
+                        ?>
+                        </select>
                     </div>
                 </div>
                 <div class="row">
@@ -203,9 +305,11 @@ $created = $row["created"];
                 <button type="submit" class="btn btn-primary">Salvar</button>
             </form>
         </div>
+
+
         <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
             <h3>Cadastro </h3>
-            <form id="form" class="mb-3">
+            <form id="form_2" class="mb-3" >
                 <div class="row">
                     <!-- <div class="col-sm-4">
             <div class="form-group">
@@ -223,7 +327,40 @@ $created = $row["created"];
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label for="cpf">CPF:</label>
-                            <input type="text" class="form-control" id="cpf" name="cpf" value="<?php echo $cpf; ?>">
+                            <?php
+                                function formatarCPF($cpf) {
+                                    // Remover caracteres não numéricos
+                                    $cpf = preg_replace('/[^0-9]/', '', $cpf);
+
+                                    // Verificar se o CPF possui 11 dígitos
+                                    if (strlen($cpf) == 11) {
+                                        // Formatar CPF (XXX.XXX.XXX-XX)
+                                        $cpf_formatado = substr($cpf, 0, 3) . '.' . substr($cpf, 3, 3) . '.' . substr($cpf, 6, 3) . '-' . substr($cpf, 9, 2);
+                                        return $cpf_formatado;
+                                    }
+
+                                    // Se o CPF não possuir 11 dígitos, retorna o valor original
+                                    return $cpf;
+                                }
+                                ?>
+                            <!-- <input type="text" class="form-control" id="cpf" name="cpf" value="<?php echo formatarCPF($cpf); ?>"> -->
+                            <input type="text" class="form-control" id="cpf" name="cpf" value="<?php echo $cpf; ?>" maxlength="14" oninput="formatarCPF(this)">
+
+                            <script>
+                                function formatarCPF(input) {
+                                    // Remove caracteres não numéricos
+                                    var cpf = input.value.replace(/\D/g, '');
+
+                                    // Verifica se o CPF possui 11 dígitos
+                                    if (cpf.length === 11) {
+                                        // Formata CPF (XXX.XXX.XXX-XX)
+                                        cpf = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+                                    }
+
+                                    // Atualiza o valor do input com a formatação
+                                    input.value = cpf;
+                                }
+                                </script>
                         </div>
                     </div>
                 </div>
@@ -350,6 +487,11 @@ $created = $row["created"];
                                 <option value="0" <?php if($sigilo == 0) echo "selected"; ?>>Não</option>
                             </select>
                         </div>
+                        <div class="col-md-4 ">
+                        <label for="idFuncioanrio" class="form-label">Id Funcioanrio</label>
+                        <input type="text" class="form-control" id="idFuncioanrio" name="idFuncioanrio"
+                            value="<?php echo $id_funci; ?>">
+                    </div>
                     </div>
                 </div>
 
@@ -361,9 +503,6 @@ $created = $row["created"];
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 
 
@@ -372,7 +511,7 @@ $created = $row["created"];
     <h3 class="flex-1 mb-0">Histórico</h3>
 </div>
 <div class="py-3 border-bottom border-dashed">
-    <div id="tableExample2" data-list='{"valueNames":["cpf","email","age"],"page":20,"pagination":true}'>
+    <div id="tableExample2" data-list='{"valueNames":["cpf","email","age"],"page":10,"pagination":true}'>
         <div class="table-responsive ms-n1 ps-1 scrollbar">
             <table class="table table-striped table-sm fs--1 mb-0">
                 <thead>
@@ -391,19 +530,18 @@ $created = $row["created"];
                         <th class="sort border-top " data-sort="id_area">ID Área</th>
                         <th class="sort border-top " data-sort="id_operacao">ID Operação</th>
                         <th class="sort border-top " data-sort="id_filial">ID Filial</th>
-                        <th class="sort text-end align-middle pe-0 border-top" scope="col">Ações</th>
+
                     </tr>
                 </thead>
                 <tbody class="list">
                     <?php
                 // Recupere os dados do MySQL
-            $sql = "SELECT * FROM tb_history_cadastro AS thc where id_funcionario = 1
-            )";
-            $result = $conn->query($sql);
+            $sql_tab2 = "SELECT * FROM tb_history_cadastro AS thc where id_funcionario = $id_funci";
+            $result_tab2 = $conn->query($sql_tab2);
 
             // Preencha a tabela com os dados
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
+            if ($result_tab2->num_rows > 0) {
+                while ($row = $result_tab2->fetch_assoc()) {
                     echo '<tr>';
 
                     echo '<td class="align-middle cpf">' . $row['nome_social'] . '</td>';
@@ -420,14 +558,7 @@ $created = $row["created"];
                     echo '<td class="align-middle">' . $row['id_operacao'] . '</td>';
                     echo '<td class="align-middle">' . $row['id_filial'] . '</td>';
 
-                    echo '<td class="align-middle white-space-nowrap text-end pe-0">';
-                    echo '<div class="font-sans-serif btn-reveal-trigger position-static">';
-                    echo '<button class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs--2" type="button" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><span class="fas fa-ellipsis-h fs--2"></span></button>';
-                    echo '<div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item" href="content_pages.php?id=3&id_func='.$row['id_funcionario'] . '">Ver/editar</a><a class="dropdown-item" href="#!">Export</a>';
-                    echo '<div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">Remove</a>';
-                    echo '</div>';
-                    echo '</div>';
-                    echo '</td>';
+
                     echo '</tr>';
                 }
             } else {
@@ -454,6 +585,11 @@ $created = $row["created"];
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
+<!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+
 <script>
 $(document).ready(function() {
     $("#form").submit(function(e) {
@@ -461,17 +597,20 @@ $(document).ready(function() {
 
         // Verifica se todos os campos estão preenchidos
         var allFieldsFilled = true;
+        var emptyFields = ""; // Variável para armazenar os nomes dos campos vazios
+
         $("#form input, #form select").each(function() {
-            if ($(this).val() === "") {
+            if ($(this).val() === "" && !$(this).hasClass("choices__input")) {
                 allFieldsFilled = false;
-                return false; // Interrompe o loop quando um campo vazio é encontrado
+                emptyFields += $(this).attr("name") + ", "; // Adiciona o nome do campo vazio à variável
             }
         });
 
         if (!allFieldsFilled) {
+            emptyFields = emptyFields.slice(0, -2); // Remove a vírgula e o espaço no final da string
             Swal.fire({
                 title: 'Campos vazios',
-                text: 'Por favor, preencha todos os campos do formulário.',
+                text: 'Por favor, preencha todos os campos do formulário. Campos vazios: ' + emptyFields,
                 icon: 'error',
                 confirmButtonText: 'OK'
             });
@@ -479,7 +618,6 @@ $(document).ready(function() {
         }
 
         var formData = $(this).serialize(); // Serializa os dados do formulário
-
 
         $.ajax({
             type: "POST",
@@ -502,6 +640,7 @@ $(document).ready(function() {
                     }).then((result) => {
                         if (result.isConfirmed) {
                             // location.href = 'palitagens.php';
+                            window.location.reload(); // Recarrega a página
                         }
                     });
                 }
@@ -509,9 +648,70 @@ $(document).ready(function() {
         });
     });
 });
+
+
 </script>
 
 
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script>
+$(document).ready(function() {
+    $("#form_2").submit(function(e) {
+        e.preventDefault(); // Impede que o formulário seja enviado normalmente
+
+        // Verifica se todos os campos estão preenchidos
+        var allFieldsFilled = true;
+        var emptyFields = ""; // Variável para armazenar os nomes dos campos vazios
+
+        $("#form_2 input, #form_2 select").each(function() {
+            if ($(this).val() === "" && !$(this).hasClass("choices__input")) {
+                allFieldsFilled = false;
+                emptyFields += $(this).attr("name") + ", "; // Adiciona o nome do campo vazio à variável
+            }
+        });
+
+        if (!allFieldsFilled) {
+            emptyFields = emptyFields.slice(0, -2); // Remove a vírgula e o espaço no final da string
+            Swal.fire({
+                title: 'Campos vazios',
+                text: 'Por favor, preencha todos os campos do formulário. Campos vazios: ' + emptyFields,
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+            return; // Interrompe a submissão do formulário
+        }
+
+        var formData = $(this).serialize(); // Serializa os dados do formulário
+        console.log(formData); // Exibe os dados serializados no console
+
+        $.ajax({
+            type: "POST",
+            url: "pages/cadastro/update/update_usuario.php",
+            data: formData,
+            success: function(response) {
+                if (response == "success") {
+                    Swal.fire({
+                        title: 'Erro',
+                        text: 'Ocorreu um erro ao salvar os dados!',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Parabéns',
+                        text: 'Usuário Atualizado com sucesso!',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // location.href = 'palitagens.php';
+                            window.location.reload(); // Recarrega a página
+                        }
+                    });
+                }
+            }
+        });
+    });
+});
+
+
+</script>

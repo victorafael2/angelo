@@ -24,7 +24,7 @@ $menuData = array(); // Array para armazenar os dados do menu
 if ($menuResult->num_rows > 0) {
     while ($menuRow = $menuResult->fetch_assoc()) {
         $menuId = $menuRow['menu_id'];
-        $submenuQuery = "SELECT * FROM submenu WHERE menu_id = $menuId";
+        $submenuQuery = "SELECT * FROM submenu WHERE menu_id = $menuId and mostrar = 's' and tipo ='NAV'";
         $submenuResult = $conn->query($submenuQuery);
 
         $submenuData = array(); // Array para armazenar os dados do submenu
@@ -615,18 +615,52 @@ echo $dataHoraAtual;
                       </div> -->
                         </div>
                         <div class="overflow-auto scrollbar" style="height: 10rem;">
-                            <ul class="nav d-flex flex-column mb-2 pb-1">
+
+                        <?php
+
+                                                                // Consulta para obter os itens do menu
+                                        $sql_menu_adm = "SELECT * FROM submenu WHERE  mostrar = 's' and tipo ='ADM' ";
+                                        $result_menu_adm = $conn->query($sql_menu_adm);
+
+                                        // Verifica se a consulta retornou resultados
+                                        if ($result_menu_adm->num_rows > 0) {
+                                            // Inicia a construção da lista de itens do menu
+                                            echo '<ul class="nav d-flex flex-column mb-2 pb-1">';
+
+                                            // Loop através dos resultados da consulta
+                                            while ($row = $result_menu_adm->fetch_assoc()) {
+                                                // Obtém os valores das colunas "texto" e "icone" para cada item
+                                                $texto_menu_adm = $row["submenu_name"];
+                                                $icone_menu_adm = $row["icone"];
+                                                $url_menu_adm = $row["submenu_id"];
+
+                                                // Cria o item do menu
+                                                echo '<li class="nav-item"><a class="nav-link px-3" href="content_pages.php?id=' . $url_menu_adm . '">';
+                                                echo '<span class="me-2 text-900" data-feather="' . $icone_menu_adm . '"></span>';
+                                                echo '<span>' . $texto_menu_adm . '</span></a></li>';
+                                            }
+
+                                            // Fecha a lista de itens do menu
+                                            echo '</ul>';
+                                        } else {
+                                            echo "Nenhum item encontrado.";
+                                        }
+                            ?>
+
+
+
+                            <!-- <ul class="nav d-flex flex-column mb-2 pb-1">
                                 <li class="nav-item"><a class="nav-link px-3" href="#!"> <span class="me-2 text-900"
                                             data-feather="user"></span><span>Perfil</span></a></li>
                                 <li class="nav-item"><a class="nav-link px-3" href="#!"><span class="me-2 text-900"
                                             data-feather="pie-chart"></span>Dashboard</a></li>
-                                <!-- <li class="nav-item"><a class="nav-link px-3" href="#!"> <span class="me-2 text-900" data-feather="lock"></span>Posts &amp; Activity</a></li> -->
+
                                 <li class="nav-item"><a class="nav-link px-3" href="#!"> <span class="me-2 text-900"
                                             data-feather="settings"></span>Config &amp; Privacidade </a></li>
                                 <li class="nav-item"><a class="nav-link px-3" href="#!"> <span class="me-2 text-900"
                                             data-feather="help-circle"></span>Central de Ajuda</a></li>
-                                <!-- <li class="nav-item"><a class="nav-link px-3" href="#!"> <span class="me-2 text-900" data-feather="globe"></span>Language</a></li> -->
-                            </ul>
+
+                            </ul> -->
                         </div>
                         <div class="card-footer p-0 border-top">
                             <ul class="nav d-flex flex-column my-3">

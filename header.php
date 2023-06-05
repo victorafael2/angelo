@@ -23,7 +23,7 @@ $sql = "SELECT * FROM user WHERE email='$email' ";
 $result = mysqli_query($conn, $sql);
 while ($row1 = mysqli_fetch_array($result)) {
     $name = $row1['name'];
-    // $pagina = $row1['link'];
+    $id_user = $row1['id'] ;   // $pagina = $row1['link'];
 
 
     }

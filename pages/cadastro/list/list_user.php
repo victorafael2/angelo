@@ -1,14 +1,22 @@
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb mb-0">
-        <li class="breadcrumb-item"><a href="#">Item 1</a></li>
-        <li class="breadcrumb-item"><a href="#">Item 2</a></li>
-        <li class="breadcrumb-item"><a href="#">Item 3</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Item 4</li>
-    </ol>
-</nav>
 
 
-<h3>Usuários</h3>
+
+<div class="row align-items-center justify-content-between g-3 mb-4">
+              <div class="col-12 col-md-auto">
+                <h2 class="mb-0">Usuários</h2>
+              </div>
+              <div class="col-12 col-md-auto">
+                <a href="content_pages.php?id=1" class="btn btn-phoenix-secondary px-3 px-sm-5 me-2"><span class="fa-solid fa-plus me-sm-2"></span><span class="d-none d-sm-inline">Adicionar Usuário		</span></a>
+                <a href="content_pages.php?id=4" class="btn btn-phoenix-secondary me-2"><span class="fa-solid fa-trash me-2"></span><span>Usuários sem relação</span></a>
+                <!-- <button class="btn px-3 btn-phoenix-secondary" type="button" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><span class="fa-solid fa-ellipsis"></span></button>
+                <ul class="dropdown-menu dropdown-menu-end p-0" style="z-index: 9999;">
+                  <li><a class="dropdown-item" href="#!">View profile</a></li>
+                  <li><a class="dropdown-item" href="#!">Report</a></li>
+                  <li><a class="dropdown-item" href="#!">Manage notifications</a></li>
+                  <li><a class="dropdown-item text-danger" href="#!">Delete Lead</a></li>
+                </ul> -->
+              </div>
+            </div>
 
 
 <div id="tableExample2" data-list='{"valueNames":["cpf","email","age"],"page":20,"pagination":true}'>
@@ -17,7 +25,7 @@
             <thead>
                 <tr>
 
-                    <th class="sort border-top " data-sort="id_funcionario">ID Funcionário</th>
+                    <th class="sort border-top " data-sort="id_funcionario">ID</th>
                     <th class="sort border-top " data-sort="cpf">CPF</th>
                     <th class="sort border-top " data-sort="nome_social">Nome Social</th>
                     <th class="sort border-top " data-sort="nome_registro">Nome Registro</th>
@@ -36,14 +44,15 @@
             <tbody class="list">
                 <?php
                 // Recupere os dados do MySQL
-            $sql = "SELECT f.cpf,h.id_funcionario, h.nome_social,h.nome_registro, h.sexo, h.genero,h.estado_civil,h.id_cargo,h.id_vt,h.id_superior,h.id_area, h.id_operacao,h.id_filial
+            $sql = "SELECT f.cpf, h.id_funcionario, h.nome_social, h.nome_registro, h.sexo, h.genero, h.estado_civil, h.id_cargo, h.id_vt, h.id_superior, h.id_area, h.id_operacao, h.id_filial, h.id_history
             FROM funcionarios f
             INNER JOIN tb_history_cadastro h ON f.idFuncionario = h.id_funcionario
-            WHERE h.id_history = (
-              SELECT MAX(id_history)
-              FROM tb_history_cadastro
-              WHERE idFuncionario = h.id_funcionario
-            )";
+            WHERE h.id_history IN (
+                SELECT MAX(id_history)
+                FROM tb_history_cadastro
+                GROUP BY id_funcionario
+            )
+            ";
             $result = $conn->query($sql);
 
             // Preencha a tabela com os dados
@@ -51,8 +60,8 @@
                 while ($row = $result->fetch_assoc()) {
                     echo '<tr>';
 
-                    echo '<td class="align-middle cpf">' . $row['cpf'] . '</td>';
-                    echo '<td class="align-middle">' . $row['id_funcionario'] . '</td>';
+                    echo '<td class="align-middle cpf">' . $row['id_funcionario'] . '</td>';
+                    echo '<td class="align-middle">' . $row['cpf'] . '</td>';
                     echo '<td class="align-middle">' . $row['nome_social'] . '</td>';
                     echo '<td class="align-middle">' . $row['nome_registro'] . '</td>';
                     echo '<td class="align-middle">' . $row['sexo'] . '</td>';
