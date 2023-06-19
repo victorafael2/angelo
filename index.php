@@ -1,18 +1,56 @@
+<!-- <?php
+include 'database/databaseconnect.php';
+
+if (isset($_POST['email']) && isset($_POST['senha'])) {
+    $email = $_POST['email'];
+    $senha = $_POST['senha'];
+
+    // Consulta no banco de dados
+    $query = "SELECT * FROM user WHERE email='$email' AND senha='$senha'";
+    $result = mysqli_query($conn, $query);
+
+    if (mysqli_num_rows($result) == 1) {
+      // Iniciar sessão
+      $message = "Bem vindo!";
+      $_SESSION['email'] = $email;
+      echo $query;
+
+  header("Location: home.php");
+exit();
+
+    } else {
+      // Login falhou
+      $message = "Usuário ou senha incorretos";
+      echo "<script>
+      window.onload = function() {
+          Swal.fire({
+              icon: 'error',
+              title: 'Erro',
+              text: '$message',
+          });
+      };
+  </script>";
+    }
+  }
+?> -->
+
+
 <!DOCTYPE html>
-<html lang="en-US" dir="ltr">
+<html lang="pt-br" dir="ltr">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
 
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
     <title>CRM</title>
 
-
+    <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
     <!-- ===============================================-->
     <!--    Favicons-->
     <!-- ===============================================-->
@@ -60,7 +98,7 @@
 
 
 <body>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
     <!-- ===============================================-->
     <!--    Main Content-->
     <!-- ===============================================-->
@@ -104,7 +142,8 @@
                                             <img class="auth-title-box-img d-dark-none"
                                                 src="assets/img/spot-illustrations/auth.png" alt="" /><img
                                                 class="auth-title-box-img d-light-none"
-                                                src="assets/img/spot-illustrations/auth-dark.png" alt="" /></div>
+                                                src="assets/img/spot-illustrations/auth-dark.png" alt="" />
+                                        </div>
                                     </div>
                                     <div class="col mx-auto">
                                         <div class="auth-form-box">
@@ -133,16 +172,17 @@
                                                 <form action="database/processa_login.php" method="POST">
                                                     <label class="form-label" for="email">Email</label>
                                                     <div class="form-icon-container">
-                                                        <input class="form-control form-icon-input" id="email" name="email"
-                                                            type="email" placeholder="name@example.com" /><span
+                                                        <input class="form-control form-icon-input" id="email"
+                                                            name="email" type="email"
+                                                            placeholder="name@example.com" /><span
                                                             class="fas fa-user text-900 fs--1 form-icon"></span>
                                                     </div>
                                             </div>
                                             <div class="mb-3 text-start">
                                                 <label class="form-label" for="password">Senha</label>
                                                 <div class="form-icon-container">
-                                                    <input class="form-control form-icon-input" id="password" name="senha"
-                                                        type="password" placeholder="Senha" /><span
+                                                    <input class="form-control form-icon-input" id="password"
+                                                        name="senha" type="password" placeholder="Senha" /><span
                                                         class="fas fa-key text-900 fs--1 form-icon"></span>
                                                 </div>
                                             </div>

@@ -16,7 +16,7 @@ if ($conn->connect_error) {
 }
 
 // 2. Recuperar os dados do menu e submenu do banco de dados
-$menuQuery = "SELECT * FROM menu";
+$menuQuery = "SELECT * FROM menu where menu_name <> 'ADM'";
 $menuResult = $conn->query($menuQuery);
 
 $menuData = array(); // Array para armazenar os dados do menu
