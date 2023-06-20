@@ -11,7 +11,7 @@
                     <div class="card-body">
                         <form id="acessos">
                             <div class="form-group">
-                                <label for="id_funcionario">ID Funcionário:</label>
+                                <label for="id_funcionario" class="form-label">ID Funcionário:</label>
                                 <!-- <input type="text" class="form-control" id="id_funcionario" name="id_funcionario"
                                     required> -->
                                     <select type="text" class="form-control" id="id_funcionario" name="id_funcionario"
@@ -49,11 +49,11 @@
                                     </select>
                             </div>
                             <div class="form-group">
-                                <label for="data">Data:</label>
+                                <label for="data" class="form-label">Data:</label>
                                 <input type="date" class="form-control" id="data_acesso" name="data_acesso" required>
                             </div>
                             <div class="form-group">
-                                <label for="id_sistema">ID Sistema:</label>
+                                <label for="id_sistema" class="form-label">ID Sistema:</label>
                                 <!-- <input type="text" class="form-control" id="id_sistema_acesso" name="id_sistema_acesso" required> -->
                                 <select type="text" class="form-control" id="id_sistema_acesso" name="id_sistema_acesso"
                                         data-choices="data-choices"
@@ -85,11 +85,11 @@
                                     </select>
                             </div>
                             <div class="form-group">
-                                <label for="username">Username:</label>
+                                <label for="username" class="form-label">Username:</label>
                                 <input type="text" class="form-control" id="username_acesso" name="username_acesso" required>
                             </div>
                             <div class="form-group">
-                                <label for="password">Password:</label>
+                                <label for="password" class="form-label">Password:</label>
                                 <input type="password" class="form-control" id="password_acesso" name="password_acesso" required>
                             </div>
                             <!-- <div class="form-group">

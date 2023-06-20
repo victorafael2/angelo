@@ -25,13 +25,13 @@ else {
 
 
 <div class="content">
-    <nav class="mb-2" aria-label="breadcrumb">
+    <!-- <nav class="mb-2" aria-label="breadcrumb">
         <ol class="breadcrumb mb-0">
             <li class="breadcrumb-item"><a href="#!">Page 1</a></li>
             <li class="breadcrumb-item"><a href="#!">Page 2</a></li>
             <li class="breadcrumb-item active" aria-current="page">Default</li>
         </ol>
-    </nav>
+    </nav> -->
     <!-- Criar todo conteúdo depois da primeira linha -->
 
 

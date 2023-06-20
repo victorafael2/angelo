@@ -10,15 +10,15 @@
                     <div class="card-body">
                         <form id="areas">
                             <div class="form-group">
-                                <label for="id_area">ID_AREA:</label>
+                                <label for="id_area" class="form-label">ID_AREA:</label>
                                 <input type="text" class="form-control" id="id_area" name="id_area">
                             </div>
                             <div class="form-group">
-                                <label for="nome_area">NOME_AREA:</label>
+                                <label for="nome_area" class="form-label">NOME_AREA:</label>
                                 <input type="text" class="form-control" id="nome_area" name="nome_area">
                             </div>
                             <div class="form-group">
-                                <label for="habilitado">HABILITADO:</label>
+                                <label for="habilitado" class="form-label">HABILITADO:</label>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="habilitado" name="habilitado">
                                     <label class="form-check-label" for="habilitado">

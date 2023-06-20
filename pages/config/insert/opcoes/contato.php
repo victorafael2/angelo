@@ -9,37 +9,39 @@
 
                     </div>
                     <div class="card-body">
-                    <form action="insert.php" method="POST">
-      <div class="form-group">
-        <label for="id_contatos">ID Contatos:</label>
-        <input type="text" class="form-control" id="id_contatos" name="id_contatos" required>
-      </div>
-      <div class="form-group">
-        <label for="id_funcionario">ID Funcionário:</label>
-        <input type="text" class="form-control" id="id_funcionario" name="id_funcionario" required>
-      </div>
-      <div class="form-group">
-        <label for="data">Data:</label>
-        <input type="date" class="form-control" id="data" name="data" required>
-      </div>
-      <div class="form-group">
-        <label for="contato_tipo">Contato Tipo:</label>
-        <input type="text" class="form-control" id="contato_tipo" name="contato_tipo" required>
-      </div>
-      <div class="form-group">
-        <label for="contato_identificacao">Contato Identificação:</label>
-        <input type="text" class="form-control" id="contato_identificacao" name="contato_identificacao" required>
-      </div>
-      <div class="form-group">
-        <label for="habilitado">Habilitado:</label>
-        <input type="checkbox" id="habilitado" name="habilitado">
-      </div>
-      <div class="form-group">
-        <label for="preferencial">Preferencial:</label>
-        <input type="checkbox" id="preferencial" name="preferencial">
-      </div>
-      <button type="submit" class="btn btn-primary">Enviar</button>
-    </form>
+                        <form action="insert.php" method="POST">
+                            <div class="form-group">
+                                <label class="form-label" for="id_contatos">ID Contatos:</label>
+                                <input type="text" class="form-control" id="id_contatos" name="id_contatos" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="id_funcionario">ID Funcionário:</label>
+                                <input type="text" class="form-control" id="id_funcionario" name="id_funcionario"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="data">Data:</label>
+                                <input type="date" class="form-control" id="data" name="data" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="contato_tipo">Contato Tipo:</label>
+                                <input type="text" class="form-control" id="contato_tipo" name="contato_tipo" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="contato_identificacao">Contato Identificação:</label>
+                                <input type="text" class="form-control" id="contato_identificacao"
+                                    name="contato_identificacao" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="habilitado">Habilitado:</label>
+                                <input type="checkbox" id="habilitado" name="habilitado">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="preferencial">Preferencial:</label>
+                                <input type="checkbox" id="preferencial" name="preferencial">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Enviar</button>
+                        </form>
                     </div>
                 </div>
             </div>

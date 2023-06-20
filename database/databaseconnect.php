@@ -1,9 +1,21 @@
 <?php
+    // Seleciona as configurações do banco de dados com base no ambiente
 
-$servidor = "45.152.44.103";
-$usuario = "u358437276_angelo";
-$senha = "Angelo01";
-$dbname = "u358437276_angelo";
+    if ($_SERVER['SERVER_NAME'] === 'localhost') {
+        $servidor = "45.152.44.103";
+        $usuario = "u358437276_angelo";
+        $senha = "Angelo01";
+        $dbname = "u358437276_angelo";
+} else {
+
+    $servidor = "localhost";
+        $usuario = "crm_victor.rafael";
+        $senha = "Vr88094852.";
+        $dbname = "crm_adm";
+
+}
+
+
 
 //Criar a conexao
 // Define o fuso horário após a conexão
@@ -20,39 +32,6 @@ if(!$conn){
 
 
 
-
-// // Gere alguns dados de exemplo
-// $nomes = ['João', 'Maria', 'Pedro', 'Ana', 'Carlos'];
-// $qtdRegistros = 20; // Quantidade de registros a serem gerados
-
-// for ($i = 0; $i < $qtdRegistros; $i++) {
-//     $dataCadastro = date('Y-m-d', strtotime('-' . mt_rand(0, 365) . ' days'));
-//     $cpf = mt_rand(10000000000, 99999999999);
-//     $dataAdmissao = date('Y-m-d', strtotime('-' . mt_rand(0, 365) . ' days'));
-//     $dataDemissao = date('Y-m-d', strtotime('-' . mt_rand(0, 365) . ' days'));
-//     $dataNascimento = date('Y-m-d', strtotime('-' . mt_rand(18, 60) . ' years'));
-//     $rgNumero = mt_rand(100000000, 999999999);
-//     $rgEmissor = 'SSP';
-//     $rgUF = 'CE';
-//     $rgDataEmissao = date('Y-m-d', strtotime('-' . mt_rand(365, 1825) . ' days'));
-//     $cnhNumero = mt_rand(10000000000, 99999999999);
-//     $cnhTipo = 'A';
-//     $ctpsNumero = mt_rand(10000000000, 99999999999);
-//     $ctpsSerie = mt_rand(1000000, 9999999);
-//     $ctpsDataEmissao = date('Y-m-d', strtotime('-' . mt_rand(365, 1825) . ' days'));
-//     $ctpsUF = 'CE';
-//     $pisNumero = mt_rand(10000000000, 99999999999);
-//     $eSocial = mt_rand(10000000000, 99999999999);
-//     $sigilo = mt_rand(0, 1);
-
-//     // Insira os dados na tabela
-//     $sql = "INSERT INTO funcionarios (dataCadastro, cpf, dataAdmissao, dataDemissao, dataNascimento, rgNumero, rgEmissor, rgUF, rgDataEmissao, cnhNumero, cnhTipo, ctpsNumero, ctpsSerie, ctpsDataEmissao, ctpsUF, pisNumero, eSocial, sigilo)
-//             VALUES ('$dataCadastro', '$cpf', '$dataAdmissao', '$dataDemissao', '$dataNascimento', '$rgNumero', '$rgEmissor', '$rgUF', '$rgDataEmissao', '$cnhNumero', '$cnhTipo', '$ctpsNumero', '$ctpsSerie', '$ctpsDataEmissao', '$ctpsUF', '$pisNumero', '$eSocial', '$sigilo')";
-
-//     if ($conn->query($sql) !== TRUE) {
-//         echo "Erro ao inserir registro: " . $conn->error;
-//     }
-// }
 
 
 

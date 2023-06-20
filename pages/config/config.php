@@ -123,7 +123,7 @@
                                     <!-- <label for="id_area">ID Área:</label> -->
                                     <!-- <input type="text" class="form-control" name="id_area" id="id_area" required> -->
                                     <!-- <div class=""> -->
-                                    <label for="id_area" class="form-label">Area</label>
+                                    <label for="id_area" class="form-label" >Area</label>
                                     <!-- <input type="text" class="form-control" id="idVt" name="idVt" value="<?php echo $idVt; ?>"> -->
                                     <select type="text" class="form-control" id="id_area" name="id_area"
                                         data-choices="data-choices"
@@ -403,15 +403,15 @@
                                     <input type="text" class="form-control" id="id_vt" name="id_vt">
                                 </div> -->
                                 <div class="form-group">
-                                    <label for="vt_nome">Nome:</label>
+                                    <label for="vt_nome" class="form-label">Nome:</label>
                                     <input type="text" class="form-control" id="vt_nome" name="vt_nome">
                                 </div>
                                 <div class="form-group">
-                                    <label for="vt_valor">Valor:</label>
+                                    <label for="vt_valor" class="form-label">Valor:</label>
                                     <input type="number" class="form-control" id="vt_valor" name="vt_valor">
                                 </div>
                                 <div class="form-group">
-                                    <label for="habilitado">HABILITADO:</label>
+                                    <label for="habilitado" class="form-label">HABILITADO:</label>
                                     <select class="form-control" id="habilitado" name="habilitado">
                                         <option value="1">Sim</option>
                                         <option value="0">Não</option>
@@ -491,15 +491,15 @@
                                     <input type="text" class="form-control" id="id_vt" name="id_vt">
                                 </div> -->
                                 <div class="form-group">
-                                    <label for="vt_nome">Nome:</label>
+                                    <label for="vt_nome" class="form-label">Nome:</label>
                                     <input type="text" class="form-control" id="vr_nome" name="vr_nome">
                                 </div>
                                 <div class="form-group">
-                                    <label for="vt_valor">Valor:</label>
+                                    <label for="vt_valor" class="form-label">Valor:</label>
                                     <input type="number" class="form-control" id="vr_valor" name="vr_valor">
                                 </div>
                                 <div class="form-group">
-                                    <label for="habilitado">HABILITADO:</label>
+                                    <label for="habilitado" class="form-label">HABILITADO:</label>
                                     <select class="form-control" id="habilitado" name="habilitado">
                                         <option value="1">Sim</option>
                                         <option value="0">Não</option>

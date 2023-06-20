@@ -12,24 +12,24 @@
                         <form id="beneficios" >
 
                             <div class="form-group">
-                                <label for="data">DATA:</label>
+                                <label for="data" class="form-label">DATA:</label>
                                 <input type="date" class="form-control" id="data" name="data">
                             </div>
                             <div class="form-group">
-                                <label for="beneficio_tipo">BENEFICIO_TIPO:</label>
+                                <label for="beneficio_tipo" class="form-label">BENEFICIO_TIPO:</label>
                                 <input type="text" class="form-control" id="beneficio_tipo" name="beneficio_tipo">
                             </div>
                             <div class="form-group">
-                                <label for="beneficio_periodicidade">BENEFICIO_PERIODICIDADE:</label>
+                                <label for="beneficio_periodicidade" class="form-label">BENEFICIO_PERIODICIDADE:</label>
                                 <input type="text" class="form-control" id="beneficio_periodicidade"
                                     name="beneficio_periodicidade">
                             </div>
                             <div class="form-group">
-                                <label for="beneficio_valor">BENEFICIO_VALOR:</label>
+                                <label for="beneficio_valor" class="form-label">BENEFICIO_VALOR:</label>
                                 <input type="text" class="form-control" id="beneficio_valor" name="beneficio_valor">
                             </div>
                             <div class="form-group">
-                                <label for="habilitado">HABILITADO:</label>
+                                <label for="habilitado" class="form-label">HABILITADO:</label>
                                 <select class="form-control" id="habilitado" name="habilitado">
                                     <option value="1">Sim</option>
                                     <option value="0">Não</option>
@@ -39,6 +39,8 @@
 
                                 <input type="text" class="form-control d-none" id="sys_user" name="sys_user" value="<?php echo $id_user ?>" >
                             </div>
+
+                            <br>
 
                             <button type="submit" class="btn btn-primary">Enviar</button>
                         </form>

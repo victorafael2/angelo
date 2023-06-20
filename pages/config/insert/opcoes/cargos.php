@@ -11,7 +11,7 @@
                         <form id="cargos">
 
                             <div class="form-group">
-                                <label for="id_area">AREA:</label>
+                                <label for="id_area" class="form-label">AREA:</label>
                                 <!-- <input type="text" class="form-control" id="id_area"> -->
                                 <select type="text" class="form-control" id="id_area" name="id_area"
                                         data-choices="data-choices"
@@ -42,27 +42,27 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="cargo_nome">CARGO_NOME:</label>
+                                <label for="cargo_nome" class="form-label">CARGO_NOME:</label>
                                 <input type="text" class="form-control" id="cargo_nome">
                             </div>
                             <div class="form-group">
-                                <label for="cargo_grupo">CARGO_GRUPO:</label>
+                                <label for="cargo_grupo" class="form-label">CARGO_GRUPO:</label>
                                 <input type="text" class="form-control" id="cargo_grupo">
                             </div>
                             <div class="form-group">
-                                <label for="cargo_nivel">CARGO_NIVEL:</label>
+                                <label for="cargo_nivel" class="form-label">CARGO_NIVEL:</label>
                                 <input type="text" class="form-control" id="cargo_nivel">
                             </div>
                             <div class="form-group">
-                                <label for="cargo_description">CARGO_DESCRIPTION:</label>
+                                <label for="cargo_description" class="form-label">CARGO_DESCRIPTION:</label>
                                 <textarea class="form-control" id="cargo_description"></textarea>
                             </div>
                             <div class="form-group form-check">
-                                <input type="checkbox" class="form-check-input" id="habilitado">
+                                <input type="checkbox" class="form-check-input" id="habilitado" class="form-label">
                                 <label class="form-check-label" for="habilitado">HABILITADO</label>
                             </div>
-                            <div class="form-group">
-                                <label for="sys_user">SYS_USER:</label>
+                            <div class="form-group d-none">
+                                <label for="sys_user" class="form-label">SYS_USER:</label>
                                 <input type="text" class="form-control" id="sys_user" value="<?php echo $id_user ?>">
                             </div>
 

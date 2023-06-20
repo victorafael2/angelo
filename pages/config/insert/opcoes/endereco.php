@@ -11,61 +11,61 @@
                     <div class="card-body">
                         <form id="banco">
                             <div class="form-group">
-                                <label for="id_funcionario">ID Funcionário:</label>
+                                <label class="form-label" for="id_funcionario">ID Funcionário:</label>
                                 <input type="text" class="form-control" id="id_funcionario" name="id_funcionario"
                                     required>
                             </div>
                             <div class="form-group">
-                                <label for="data">Data:</label>
+                                <label class="form-label" for="data">Data:</label>
                                 <input type="date" class="form-control" id="data" name="data" required>
                             </div>
                             <div class="form-group">
-                                <label for="pix_tipo">PIX Tipo:</label>
+                                <label class="form-label" for="pix_tipo">PIX Tipo:</label>
                                 <input type="text" class="form-control" id="pix_tipo" name="pix_tipo" required>
                             </div>
                             <div class="form-group">
-                                <label for="pix_identificacao">PIX Identificação:</label>
+                                <label class="form-label" for="pix_identificacao">PIX Identificação:</label>
                                 <input type="text" class="form-control" id="pix_identificacao" name="pix_identificacao"
                                     required>
                             </div>
                             <div class="form-group">
-                                <label for="banco_numero">Banco Número:</label>
+                                <label class="form-label" for="banco_numero">Banco Número:</label>
                                 <input type="text" class="form-control" id="banco_numero" name="banco_numero" required>
                             </div>
                             <div class="form-group">
-                                <label for="banco_nome">Banco Nome:</label>
+                                <label class="form-label" for="banco_nome">Banco Nome:</label>
                                 <input type="text" class="form-control" id="banco_nome" name="banco_nome" required>
                             </div>
                             <div class="form-group">
-                                <label for="banco_tipo_conta">Banco Tipo de Conta:</label>
+                                <label class="form-label" for="banco_tipo_conta">Banco Tipo de Conta:</label>
                                 <input type="text" class="form-control" id="banco_tipo_conta" name="banco_tipo_conta"
                                     required>
                             </div>
                             <div class="form-group">
-                                <label for="banco_agencia">Banco Agência:</label>
+                                <label class="form-label" for="banco_agencia">Banco Agência:</label>
                                 <input type="text" class="form-control" id="banco_agencia" name="banco_agencia"
                                     required>
                             </div>
                             <div class="form-group">
-                                <label for="banco_dv_agencia">Banco DV Agência:</label>
+                                <label class="form-label" for="banco_dv_agencia">Banco DV Agência:</label>
                                 <input type="text" class="form-control" id="banco_dv_agencia" name="banco_dv_agencia"
                                     required>
                             </div>
                             <div class="form-group">
-                                <label for="banco_conta">Banco Conta:</label>
+                                <label class="form-label" for="banco_conta">Banco Conta:</label>
                                 <input type="text" class="form-control" id="banco_conta" name="banco_conta" required>
                             </div>
                             <div class="form-group">
-                                <label for="banco_dv_conta">Banco DV Conta:</label>
+                                <label class="form-label" for="banco_dv_conta">Banco DV Conta:</label>
                                 <input type="text" class="form-control" id="banco_dv_conta" name="banco_dv_conta"
                                     required>
                             </div>
                             <div class="form-group">
-                                <label for="habilitado">Habilitado:</label>
+                                <label class="form-label" for="habilitado">Habilitado:</label>
                                 <input type="checkbox" id="habilitado" name="habilitado">
                             </div>
                             <div class="form-group">
-                                <label for="preferencial">Preferencial:</label>
+                                <label class="form-label" for="preferencial">Preferencial:</label>
                                 <input type="checkbox" id="preferencial" name="preferencial">
                             </div>
                             <button type="submit" class="btn btn-primary">Enviar</button>

@@ -11,16 +11,18 @@ Formulário Sistemas
                     <div class="card-body">
                         <form  id="sistemas">
                             <div class="form-group">
-                                <label for="nome_sistema">Nome do Sistema:</label>
+                                <label for="nome_sistema" class="form-label">Nome do Sistema:</label>
                                 <input type="text" class="form-control" id="nome_sistema" name="nome_sistema" required>
                             </div>
                             <div class="form-group">
-                                <label for="habilitado">Habilitado:</label>
+                                <label for="habilitado" class="form-label">Habilitado:</label>
                                 <select class="form-control" id="habilitado" name="habilitado" required>
                                     <option value="1">Sim</option>
                                     <option value="0">Não</option>
                                 </select>
                             </div>
+
+                            <br>
                             <button type="submit" class="btn btn-primary">Enviar</button>
                         </form>
                     </div>

@@ -180,7 +180,7 @@ echo generateMenuHTML($menuData);
             class="btn navbar-vertical-toggle border-0 fw-semi-bold w-100 white-space-nowrap d-flex align-items-center"><span
                 class="uil uil-left-arrow-to-left fs-0"></span><span class="uil uil-arrow-from-right fs-0"></span><span
                 class="navbar-vertical-footer-text ms-2">Encolher</span></button>
-                <!-- <p><?php
+        <!-- <p><?php
 $dataHoraAtual = date('Y-m-d H:i:s');
 echo $dataHoraAtual;
 ?></p> -->
@@ -195,7 +195,9 @@ echo $dataHoraAtual;
                 data-bs-toggle="collapse" data-bs-target="#navbarVerticalCollapse"
                 aria-controls="navbarVerticalCollapse" aria-expanded="false" aria-label="Toggle Navigation"><span
                     class="navbar-toggle-icon"><span class="toggle-line"></span></span></button>
-            <a class="navbar-brand me-1 me-sm-3" href="home.php">
+            <a class="navbar-brand me-1 me-sm-3"
+                href="content_pages.php?id=<?php echo $_SESSION['destinationPage']; ?>">
+
                 <div class="d-flex align-items-center">
                     <div class="d-flex align-items-center"><img src="assets/img/icons/logo.png" alt="phoenix"
                             width="27" />
@@ -497,7 +499,7 @@ echo $dataHoraAtual;
 
                 <div class="dropdown-menu dropdown-menu-end navbar-dropdown-caret py-0 dropdown-nide-dots shadow border border-300"
                     aria-labelledby="navbarDropdownNindeDots">
-                    <div class="card bg-white position-relative border-0">
+                    <!-- <div class="card bg-white position-relative border-0">
                         <div class="card-body pt-3 px-3 pb-0 overflow-auto scrollbar" style="height: 20rem;">
                             <div class="row text-center align-items-center gx-0 gy-0">
                                 <div class="col-4"><a
@@ -573,7 +575,7 @@ echo $dataHoraAtual;
                                     </a></div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </li>
             <li class="nav-item dropdown"><a class="nav-link lh-1 pe-0" id="navbarDropdownUser" href="#!" role="button"
@@ -616,7 +618,7 @@ echo $dataHoraAtual;
                         </div>
                         <div class="overflow-auto scrollbar" style="height: 10rem;">
 
-                        <?php
+                            <?php
 
                                                                 // Consulta para obter os itens do menu
                                         $sql_menu_adm = "SELECT * FROM submenu WHERE  mostrar = 's' and tipo ='ADM' ";
@@ -649,18 +651,6 @@ echo $dataHoraAtual;
 
 
 
-                            <!-- <ul class="nav d-flex flex-column mb-2 pb-1">
-                                <li class="nav-item"><a class="nav-link px-3" href="#!"> <span class="me-2 text-900"
-                                            data-feather="user"></span><span>Perfil</span></a></li>
-                                <li class="nav-item"><a class="nav-link px-3" href="#!"><span class="me-2 text-900"
-                                            data-feather="pie-chart"></span>Dashboard</a></li>
-
-                                <li class="nav-item"><a class="nav-link px-3" href="#!"> <span class="me-2 text-900"
-                                            data-feather="settings"></span>Config &amp; Privacidade </a></li>
-                                <li class="nav-item"><a class="nav-link px-3" href="#!"> <span class="me-2 text-900"
-                                            data-feather="help-circle"></span>Central de Ajuda</a></li>
-
-                            </ul> -->
                         </div>
                         <div class="card-footer p-0 border-top">
                             <ul class="nav d-flex flex-column my-3">
@@ -668,7 +658,8 @@ echo $dataHoraAtual;
                                             data-feather="user-plus"></span>Add another account</a></li>
                             </ul>
                             <hr />
-                            <div class="px-3"> <a class="btn btn-phoenix-secondary d-flex flex-center w-100" href="#!">
+                            <div class="px-3"> <a class="btn btn-phoenix-secondary d-flex flex-center w-100"
+                                    href="database/logout.php">
                                     <span class="me-2" data-feather="log-out"> </span>Sign out</a></div>
                             <div class="my-2 text-center fw-bold fs--2 text-600"><a class="text-600 me-1"
                                     href="#!">Privacy policy</a>&bull;<a class="text-600 mx-1"

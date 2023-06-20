@@ -10,59 +10,59 @@
                     <div class="card-body">
                         <form id="filiais">
                             <div class="form-group">
-                                <label for="id_filial">ID Filial:</label>
+                                <label for="id_filial" class="form-label">ID Filial:</label>
                                 <input type="text" class="form-control" id="id_filial" name="id_filial">
                             </div>
                             <div class="form-group">
-                                <label for="filial_nome">Nome da Filial:</label>
+                                <label for="filial_nome" class="form-label">Nome da Filial:</label>
                                 <input type="text" class="form-control" id="filial_nome" name="filial_nome">
                             </div>
                             <div class="form-group">
-                                <label for="filial_cnpj">CNPJ:</label>
+                                <label for="filial_cnpj" class="form-label">CNPJ:</label>
                                 <input type="text" class="form-control" id="filial_cnpj" name="filial_cnpj">
                             </div>
                             <div class="form-group">
-                                <label for="endereco_rua">Rua:</label>
+                                <label for="endereco_rua" class="form-label">Rua:</label>
                                 <input type="text" class="form-control" id="endereco_rua" name="endereco_rua">
                             </div>
                             <div class="form-group">
-                                <label for="endereco_numero">Número:</label>
+                                <label for="endereco_numero" class="form-label">Número:</label>
                                 <input type="text" class="form-control" id="endereco_numero" name="endereco_numero">
                             </div>
                             <div class="form-group">
-                                <label for="endereco_comp">Complemento:</label>
+                                <label for="endereco_comp" class="form-label">Complemento:</label>
                                 <input type="text" class="form-control" id="endereco_comp" name="endereco_comp">
                             </div>
                             <div class="form-group">
-                                <label for="endereco_bairro">Bairro:</label>
+                                <label for="endereco_bairro" class="form-label">Bairro:</label>
                                 <input type="text" class="form-control" id="endereco_bairro" name="endereco_bairro">
                             </div>
                             <div class="form-group">
-                                <label for="endereco_cidade">Cidade:</label>
+                                <label for="endereco_cidade" class="form-label">Cidade:</label>
                                 <input type="text" class="form-control" id="endereco_cidade" name="endereco_cidade">
                             </div>
                             <div class="form-group">
-                                <label for="endereco_uf">UF:</label>
+                                <label for="endereco_uf" class="form-label">UF:</label>
                                 <input type="text" class="form-control" id="endereco_uf" name="endereco_uf">
                             </div>
                             <div class="form-group">
-                                <label for="endereco_cep">CEP:</label>
+                                <label for="endereco_cep" class="form-label">CEP:</label>
                                 <input type="text" class="form-control" id="endereco_cep" name="endereco_cep">
                             </div>
                             <div class="form-group">
-                                <label for="nome_responsavel">Nome do Responsável:</label>
+                                <label for="nome_responsavel" class="form-label">Nome do Responsável:</label>
                                 <input type="text" class="form-control" id="nome_responsavel" name="nome_responsavel">
                             </div>
                             <div class="form-group">
-                                <label for="cpf_responsavel">CPF do Responsável:</label>
+                                <label for="cpf_responsavel" class="form-label">CPF do Responsável:</label>
                                 <input type="text" class="form-control" id="cpf_responsavel" name="cpf_responsavel">
                             </div>
                             <div class="form-group">
-                                <label for="id_contatos">ID Contatos:</label>
+                                <label for="id_contatos" class="form-label">ID Contatos:</label>
                                 <input type="text" class="form-control" id="id_contatos" name="id_contatos">
                             </div>
                             <div class="form-group">
-                                <label for="habilitado">Habilitado:</label>
+                                <label for="habilitado" class="form-label">Habilitado:</label>
                                 <input type="checkbox" class="form-check-input" id="habilitado" name="habilitado">
                             </div>
                             <button type="submit" class="btn btn-primary">Salvar</button>
