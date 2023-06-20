@@ -33,7 +33,7 @@ if (mysqli_num_rows($result) > 0) {
 } else {
     // Login falhou
     // echo "Usuário ou senha incorretos.";
-    echo $sql;
+    // echo $sql;
 }
 
 // Feche a conexão com o banco de dados

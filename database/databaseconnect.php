@@ -12,10 +12,10 @@
     // $usuario = "u358437276_angelo";
     // $senha = "Angelo01";
     // $dbname = "u358437276_angelo";
-    $servidor = "localhost";
-        $usuario = "crm_victor.rafael";
-        $senha = "Vr88094852.";
-        $dbname = "crm_adm";
+            $servidor = "localhost";
+            $usuario = "crm_victor.rafael";
+            $senha = "Vr88094852.";
+            $dbname = "crm_adm";
 
 }
 

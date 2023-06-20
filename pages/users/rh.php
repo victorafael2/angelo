@@ -2,7 +2,7 @@
 
 
 
-<?php echo $_SERVER['SERVER_NAME'] ?>
+<!-- <?php echo $_SERVER['SERVER_NAME'] ?> -->
 
 <div class="row align-items-center justify-content-between g-3 mb-6">
     <div class="col-12 col-md-auto">
