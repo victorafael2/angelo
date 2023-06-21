@@ -1,7 +1,10 @@
 <?php
 include_once("databaseconnect.php");
 $email = $_POST['email'];
-$senha = $_POST['senha'];
+$senha = md5($_POST['senha']);
+
+
+
 
 // Execute a consulta SQL para buscar o usuário e senha na tabela de usuários
 $sql = "SELECT * FROM user AS u
@@ -32,7 +35,10 @@ if (mysqli_num_rows($result) > 0) {
     header('Location: ../content_pages.php?id=' . $destinationPage . '');
 } else {
     // Login falhou
-    // echo "Usuário ou senha incorretos.";
+    /* The line `// echo "Usuário ou senha incorretos.";` is commented out, which means it is not being
+    executed. However, it appears to be intended to output a message indicating that the login
+    failed due to incorrect username or password. */
+    echo "Usuário ou senha incorretos.";
     // echo $sql;
 }
 

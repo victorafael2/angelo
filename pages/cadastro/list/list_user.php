@@ -44,14 +44,24 @@
             <tbody class="list">
                 <?php
                 // Recupere os dados do MySQL
-            $sql = "SELECT f.cpf, h.id_funcionario, h.nome_social, h.nome_registro, h.sexo, h.genero, h.estado_civil, h.id_cargo, h.id_vt, h.id_superior, h.id_area, h.id_operacao, h.id_filial, h.id_history
+            $sql = "SELECT f.cpf, h.id_funcionario, h.nome_social, h.nome_registro, h.sexo, h.genero, h.estado_civil, h.id_cargo, h.id_vt, h.id_superior, h.id_area, h.id_operacao, h.id_filial, h.id_history, aux_cargos.cargo_nome,aux_vt.vt_nome, tb_history_cadastro.nome_social as superior_nome, aux_areas.nome_area, aux_operacoes.nome_operacao, aux_filiais.filial_nome
+
+
+
             FROM funcionarios f
             INNER JOIN tb_history_cadastro h ON f.idFuncionario = h.id_funcionario
+            left JOIN aux_cargos ON aux_cargos.id_cargo = h.id_cargo
+            left JOIN aux_vt ON aux_vt.id_vt = h.id_vt
+            left JOIN tb_history_cadastro ON tb_history_cadastro.id_funcionario = h.id_superior
+            left JOIN aux_areas ON aux_areas.id_area = h.id_area
+            left JOIN aux_operacoes ON aux_operacoes.id_operacao = h.id_operacao
+            left JOIN aux_filiais ON aux_filiais.id_filial = h.id_filial
             WHERE h.id_history IN (
                 SELECT MAX(id_history)
                 FROM tb_history_cadastro
                 GROUP BY id_funcionario
-            )
+            );
+
             ";
             $result = $conn->query($sql);
 
@@ -67,12 +77,12 @@
                     echo '<td class="align-middle">' . $row['sexo'] . '</td>';
                     echo '<td class="align-middle">' . $row['genero'] . '</td>';
                     echo '<td class="align-middle">' . $row['estado_civil'] . '</td>';
-                    echo '<td class="align-middle">' . $row['id_cargo'] . '</td>';
-                    echo '<td class="align-middle">' . $row['id_vt'] . '</td>';
-                    echo '<td class="align-middle">' . $row['id_superior'] . '</td>';
-                    echo '<td class="align-middle">' . $row['id_area'] . '</td>';
-                    echo '<td class="align-middle">' . $row['id_operacao'] . '</td>';
-                    echo '<td class="align-middle">' . $row['id_filial'] . '</td>';
+                    echo '<td class="align-middle">' . $row['cargo_nome'] . '</td>';
+                    echo '<td class="align-middle">' . $row['vt_nome'] . '</td>';
+                    echo '<td class="align-middle">' . $row['superior_nome'] . '</td>';
+                    echo '<td class="align-middle">' . $row['nome_area'] . '</td>';
+                    echo '<td class="align-middle">' . $row['nome_operacao'] . '</td>';
+                    echo '<td class="align-middle">' . $row['filial_nome'] . '</td>';
 
                     echo '<td class="align-middle white-space-nowrap text-end pe-0">';
                     echo '<div class="font-sans-serif btn-reveal-trigger position-static">';

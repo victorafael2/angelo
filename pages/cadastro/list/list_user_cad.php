@@ -29,7 +29,7 @@
                     <th class="sort border-top " data-sort="nome_social">Data de Cadastro</th>
                     <th class="sort border-top " data-sort="nome_registro">Data de Admissão</th>
                     <th class="sort border-top " data-sort="sexo">Data de Nascimento</th>
-                    <th class="sort border-top " data-sort="genero">RG</th>
+
 
                     <th class="sort text-end align-middle pe-0 border-top" scope="col">Ações</th>
                 </tr>
@@ -37,10 +37,20 @@
             <tbody class="list">
                             <?php
                             // Recupere os dados do MySQL
-                                        $sql = "SELECT funcionarios.*
-                            FROM funcionarios
-                            LEFT JOIN tb_history_cadastro ON tb_history_cadastro.id_funcionario = funcionarios.idFuncionario
-                            WHERE tb_history_cadastro.id_funcionario IS NULL";
+                                        $sql = "SELECT subquery.idFuncionario, subquery.cpf, subquery.dataCadastro, subquery.dataAdmissao, subquery.dataNascimento
+                                        FROM (
+                                            SELECT fcnpj.id AS idFuncionario, fcnpj.cnpj AS cpf, fcnpj.dataCadastro, fcnpj.dataAdmissao, fcnpj.dataNascimento
+                                            FROM funcionarios_cnpj AS fcnpj
+                                            LEFT JOIN tb_history_cadastro ON tb_history_cadastro.id_funcionario = fcnpj.id
+                                            WHERE tb_history_cadastro.id_funcionario IS NULL
+
+                                            UNION ALL
+
+                                            SELECT f.idFuncionario, f.cpf, f.dataCadastro, f.dataAdmissao, f.dataNascimento
+                                            FROM funcionarios AS f
+                                            LEFT JOIN tb_history_cadastro ON tb_history_cadastro.id_funcionario = f.idFuncionario
+                                            WHERE tb_history_cadastro.id_funcionario IS NULL
+                                        ) AS subquery;";
                                         $result = $conn->query($sql);
 
                         // Preencha a tabela com os dados
@@ -53,7 +63,7 @@
                                 echo '<td class="align-middle">' . $row['dataCadastro'] . '</td>';
                                 echo '<td class="align-middle">' . $row['dataAdmissao'] . '</td>';
                                 echo '<td class="align-middle">' . $row['dataNascimento'] . '</td>';
-                                echo '<td class="align-middle">' . $row['rgNumero'] . '</td>';
+
 
 
                                 echo '<td class="align-middle white-space-nowrap text-end pe-0">';
