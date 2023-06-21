@@ -243,74 +243,92 @@ $date = date("Y-m-d"); // Obtém a data atual no formato ano-mês-dia
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 <script>
-$(document).ready(function() {
+  $(document).ready(function() {
     $("#form").submit(function(e) {
-        e.preventDefault(); // Impede que o formulário seja enviado normalmente
+      e.preventDefault(); // Impede que o formulário seja enviado normalmente
 
-        // Verifica se todos os campos estão preenchidos
-        var allFieldsFilled = true;
-        $("#form input, #form select").each(function() {
-            if ($(this).val() === "") {
-                allFieldsFilled = false;
-                return false; // Interrompe o loop quando um campo vazio é encontrado
-            }
-        });
-
-        if (!allFieldsFilled) {
-            Swal.fire({
-                title: 'Campos vazios',
-                text: 'Por favor, preencha todos os campos do formulário.',
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
-            return; // Interrompe a submissão do formulário
+      // Verifica se todos os campos estão preenchidos
+      var allFieldsFilled = true;
+      $("#form input, #form select").each(function() {
+        if ($(this).val() === "") {
+          allFieldsFilled = false;
+          return false; // Interrompe o loop quando um campo vazio é encontrado
         }
+      });
 
-        var formData = $(this).serialize(); // Serializa os dados do formulário
-
-
-        $.ajax({
-            type: "POST",
-            url: "pages/cadastro/add/add_usuario.php",
-            data: formData,
-            success: function(response) {
-                if (response == "success") {
-                    Swal.fire({
-                        title: 'Erro',
-                        text: 'Ocorreu um erro ao salvar os dados!',
-                        icon: 'error',
-                        confirmButtonText: 'OK'
-                    });
-                } else {
-                    Swal.fire({
-                        title: 'Parabéns',
-                        text: 'Usuário cadastrado com sucesso!',
-                        icon: 'success',
-                        confirmButtonText: 'OK'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            // location.href = 'palitagens.php';
-                            // Obter referência ao formulário
-                            var form = document.getElementById('form');
-
-                            // Iterar sobre os campos do formulário
-                            for (var i = 0; i < form.elements.length; i++) {
-                                var field = form.elements[i];
-
-                                // Verificar se o campo não é o campo de ID "dataCadastro"
-                                if (field.id !== 'dataCadastro') {
-                                    // Limpar o valor do campo
-                                    field.value = '';
-                                }
-                            }
-                        }
-                    });
-                }
-            }
+      if (!allFieldsFilled) {
+        Swal.fire({
+          title: 'Campos vazios',
+          text: 'Por favor, preencha todos os campos do formulário.',
+          icon: 'error',
+          confirmButtonText: 'OK'
         });
+        return; // Interrompe a submissão do formulário
+      }
+
+      var formData = $(this).serializeArray(); // Serializa os dados do formulário
+
+      // Adiciona os campos desabilitados aos dados serializados
+      $(':disabled', this).each(function() {
+        formData.push({ name: this.name, value: $(this).val() });
+      });
+
+      // Converte os dados serializados em um objeto
+      var formDataObject = {};
+      $.map(formData, function(n, i) {
+        if (formDataObject[n['name']]) {
+          if (!Array.isArray(formDataObject[n['name']])) {
+            formDataObject[n['name']] = [formDataObject[n['name']]];
+          }
+          formDataObject[n['name']].push(n['value']);
+        } else {
+          formDataObject[n['name']] = n['value'];
+        }
+      });
+
+      $.ajax({
+        type: "POST",
+        url: "pages/cadastro/add/add_usuario.php",
+        data: formDataObject,
+        success: function(response) {
+          if (response == "success") {
+            Swal.fire({
+              title: 'Erro',
+              text: 'Ocorreu um erro ao salvar os dados!',
+              icon: 'error',
+              confirmButtonText: 'OK'
+            });
+          } else {
+            Swal.fire({
+              title: 'Parabéns',
+              text: 'Usuário cadastrado com sucesso!',
+              icon: 'success',
+              confirmButtonText: 'OK'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                // location.href = 'palitagens.php';
+                // Obter referência ao formulário
+                var form = document.getElementById('form');
+
+                // Iterar sobre os campos do formulário
+                for (var i = 0; i < form.elements.length; i++) {
+                  var field = form.elements[i];
+
+                  // Verificar se o campo não é o campo de ID "dataCadastro"
+                  if (field.id !== 'dataCadastro') {
+                    // Limpar o valor do campo
+                    field.value = '';
+                  }
+                }
+              }
+            });
+          }
+        }
+      });
     });
-});
+  });
 </script>
+
 
 <script>
 function formatarCPF(campo) {
