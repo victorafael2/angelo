@@ -1,11 +1,9 @@
 <?php
 // Verificar se a requisição é do tipo POST
-
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Verificar se o parâmetro 'id_vt' foi enviado
-    if (isset($_POST["id_area"])) {
-        $id_area = $_POST["id_area"];
+    if (isset($_POST["id_vr"])) {
+        $id_vr = $_POST["id_vr"];
 
         include '../../../database/databaseconnect.php';
 
@@ -20,9 +18,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             );
         } else {
             // Preparar a consulta SQL para excluir o item
-            $stmt = mysqli_prepare($conn, "DELETE FROM aux_areas WHERE id_area = ?");
-            mysqli_stmt_bind_param($stmt, "i", $id_area);
-
+            $stmt = mysqli_prepare($conn, "DELETE FROM aux_vr WHERE id_vr = ?");
+            mysqli_stmt_bind_param($stmt, "i", $id_vr);
 
             // Executar a consulta SQL
             if (mysqli_stmt_execute($stmt)) {
@@ -31,11 +28,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     "message" => "Item excluído com sucesso"
                 );
             } else {
-
                 $response = array(
                     "status" => false,
-                    "message" => "Erro ao excluir o item: " . mysqli_error($conn),
-                    "sql_error" => mysqli_stmt_error($stmt)
+                    "message" => "Erro ao excluir o item: " . mysqli_error($conn)
                 );
             }
 
@@ -60,5 +55,3 @@ $response = array(
 // Enviar a resposta como JSON
 header("Content-Type: application/json");
 echo json_encode($response);
-
-?>

@@ -1,75 +1,93 @@
-<div class="tab-pane fade " id="tab-banco" role="tabpanel" aria-labelledby="banco-tab">
+<div class="tab-pane fade " id="tab-endereco" role="tabpanel" aria-labelledby="endereco-tab">
     <div class="d-flex flex-wrap">
         <div class="row flex-fill">
             <div class="col-md-3">
                 <div class="card">
                     <div class="card-header">
 
-                        Formulário banco
+                        Formulário Endereço
 
                     </div>
                     <div class="card-body">
-                        <form id="banco">
+                        <form id="endereco">
                             <div class="form-group">
-                                <label class="form-label" for="id_funcionario">ID Funcionário:</label>
-                                <input type="text" class="form-control" id="id_funcionario" name="id_funcionario"
-                                    required>
+                                <label for="id_funcionario">Funcionário:</label>
+                                <select class="form-control" id="id_funcionario" name="id_funcionario"
+                                    data-choices="data-choices"
+                                    data-options='{"removeItemButton":true,"placeholder":true}'>
+                                    <option value="">Selecione</option>
+                                    <?php
+        // Executar a consulta para obter os dados
+        $sql_vt = "SELECT id_funcionario, id_history AS max_id, nome_social
+        FROM tb_history_cadastro
+        WHERE (id_funcionario, id_history) IN (
+        SELECT id_funcionario, MAX(id_history)
+        FROM tb_history_cadastro
+        GROUP BY id_funcionario
+        );"; // Substitua "tabela" pelo nome correto da sua tabela
+        $result_vt = $conn->query($sql_vt);
+
+        // Verificar se há resultados e criar as opções
+        if ($result_vt->num_rows > 0) {
+          while ($row = $result_vt->fetch_assoc()) {
+            $id_funcionario = $row["id_funcionario"];
+            $nome_social = $row["nome_social"];
+            echo "<option value='$id_funcionario'>$nome_social</option>";
+          }
+        }
+      ?>
+                                </select>
                             </div>
                             <div class="form-group">
-                                <label class="form-label" for="data">Data:</label>
-                                <input type="date" class="form-control" id="data" name="data" required>
+                                <label for="data">Data:</label>
+                                <input type="date" class="form-control" id="data" name="data">
                             </div>
                             <div class="form-group">
-                                <label class="form-label" for="pix_tipo">PIX Tipo:</label>
-                                <input type="text" class="form-control" id="pix_tipo" name="pix_tipo" required>
+                                <label for="endereco_rua">Rua:</label>
+                                <input type="text" class="form-control" id="endereco_rua" name="endereco_rua"
+                                    placeholder="Informe a rua">
                             </div>
                             <div class="form-group">
-                                <label class="form-label" for="pix_identificacao">PIX Identificação:</label>
-                                <input type="text" class="form-control" id="pix_identificacao" name="pix_identificacao"
-                                    required>
+                                <label for="endereco_numero">Número:</label>
+                                <input type="text" class="form-control" id="endereco_numero" name="endereco_numero"
+                                    placeholder="Informe o número">
                             </div>
                             <div class="form-group">
-                                <label class="form-label" for="banco_numero">Banco Número:</label>
-                                <input type="text" class="form-control" id="banco_numero" name="banco_numero" required>
+                                <label for="endereco_comp">Complemento:</label>
+                                <input type="text" class="form-control" id="endereco_comp" name="endereco_comp"
+                                    placeholder="Informe o complemento">
                             </div>
                             <div class="form-group">
-                                <label class="form-label" for="banco_nome">Banco Nome:</label>
-                                <input type="text" class="form-control" id="banco_nome" name="banco_nome" required>
+                                <label for="endereco_bairro">Bairro:</label>
+                                <input type="text" class="form-control" id="endereco_bairro" name="endereco_bairro"
+                                    placeholder="Informe o bairro">
                             </div>
                             <div class="form-group">
-                                <label class="form-label" for="banco_tipo_conta">Banco Tipo de Conta:</label>
-                                <input type="text" class="form-control" id="banco_tipo_conta" name="banco_tipo_conta"
-                                    required>
+                                <label for="endereco_cidade">Cidade:</label>
+                                <input type="text" class="form-control" id="endereco_cidade" name="endereco_cidade"
+                                    placeholder="Informe a cidade">
                             </div>
                             <div class="form-group">
-                                <label class="form-label" for="banco_agencia">Banco Agência:</label>
-                                <input type="text" class="form-control" id="banco_agencia" name="banco_agencia"
-                                    required>
+                                <label for="endereco_uf">Estado:</label>
+                                <input type="text" class="form-control" id="endereco_uf" name="endereco_uf"
+                                    placeholder="Informe o estado">
                             </div>
                             <div class="form-group">
-                                <label class="form-label" for="banco_dv_agencia">Banco DV Agência:</label>
-                                <input type="text" class="form-control" id="banco_dv_agencia" name="banco_dv_agencia"
-                                    required>
+                                <label for="endereco_cep">CEP:</label>
+                                <input type="text" class="form-control" id="endereco_cep" name="endereco_cep"
+                                    placeholder="Informe o CEP">
                             </div>
-                            <div class="form-group">
-                                <label class="form-label" for="banco_conta">Banco Conta:</label>
-                                <input type="text" class="form-control" id="banco_conta" name="banco_conta" required>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="habilitado" name="habilitado">
+                                <label class="form-check-label" for="habilitado">Habilitado</label>
                             </div>
-                            <div class="form-group">
-                                <label class="form-label" for="banco_dv_conta">Banco DV Conta:</label>
-                                <input type="text" class="form-control" id="banco_dv_conta" name="banco_dv_conta"
-                                    required>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="habilitado">Habilitado:</label>
-                                <input type="checkbox" id="habilitado" name="habilitado">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="preferencial">Preferencial:</label>
-                                <input type="checkbox" id="preferencial" name="preferencial">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="preferencial" name="preferencial">
+                                <label class="form-check-label" for="preferencial">Preferencial</label>
                             </div>
                             <button type="submit" class="btn btn-primary">Enviar</button>
                         </form>
+
                     </div>
                 </div>
             </div>
@@ -85,17 +103,24 @@
                                 <table class="table table-striped table-sm fs--1 mb-0">
                                     <thead>
                                         <tr>
+                                            <th>ID</th>
+                                            <th>ID do Funcionário</th>
 
-                                            <th class="sort border-top " data-sort="id">ID</th>
-                                            <th class="sort border-top " data-sort="nome_sistema">Funcionario</th>
-                                            <th class="sort border-top " data-sort="habilitado">Sistema</th>
-                                            <th class="sort border-top " data-sort="habilitado">Habilitado</th>
-                                            <th class="sort border-top ">Apagar</th>
+                                            <th>Rua</th>
+                                            <th>Número</th>
+                                            <th>Complemento</th>
+                                            <th>Bairro</th>
+                                            <th>Cidade</th>
+                                            <th>Estado</th>
+                                            <th>CEP</th>
+                                            <th>Habilitado</th>
+                                            <th>Preferencial</th>
+                                            <th></th>
 
 
                                         </tr>
                                     </thead>
-                                    <tbody id="table_body_acessos" class="list">
+                                    <tbody id="table_body_endereco" class="list">
 
                                     </tbody>
                                 </table>
@@ -135,24 +160,32 @@ $(document).ready(function() {
 
     function loadItems() {
         $.ajax({
-            url: 'pages/config/insert/get_acessos.php',
+            url: 'pages/config/insert/get_endereco.php',
             type: 'GET',
             dataType: 'json',
             success: function(data) {
                 var tableData = "";
                 data.forEach(function(item) {
                     tableData += "<tr>";
-                    tableData += "<td>" + item.id_acesso + "</td>";
+                    tableData += "<td>" + item.id_endereco + "</td>";
                     tableData += "<td>" + item.nome_social + "</td>";
+                    // tableData += "<td>" + item.nome_social + "</td>";
 
-                    tableData += "<td>" + item.nome_sistema + "</td>";
-                    tableData += "<td>" + item.habilitado + "</td>";
+                    tableData += "<td>" + item.endereco_rua + "</td>";
+                    tableData += "<td>" + item.endereco_numero + "</td>";
+                    tableData += "<td>" + item.endereco_comp + "</td>";
+                    tableData += "<td>" + item.endereco_bairro + "</td>";
+                    tableData += "<td>" + item.endereco_cidade + "</td>";
+                    tableData += "<td>" + item.endereco_uf + "</td>";
+                    tableData += "<td>" + item.endereco_cep + "</td>";
+                    tableData += "<td>" + item.habilitado_icon + "</td>";
+                    tableData += "<td>" + item.preferencial_icon + "</td>";
                     tableData +=
-                        "<td><button class='delete-btn-acesso btn btn-danger btn-sm' data-id='" +
-                        item.id_acesso + "'>Excluir</button></td>";
+                        "<td><button class='delete-btn-endereco btn btn-danger btn-sm' data-id='" +
+                        item.id_endereco + "'>Excluir</button></td>";
                     tableData += "</tr>";
                 });
-                $("#table_body_acessos").html(tableData);
+                $("#table_body_endereco").html(tableData);
             },
             error: function(xhr, status, error) {
                 console.log("Erro na solicitação AJAX: " + error);
@@ -160,8 +193,8 @@ $(document).ready(function() {
         });
     }
 
-    $(document).on("click", ".delete-btn-acesso", function() {
-        var id_acesso = $(this).data("id");
+    $(document).on("click", ".delete-btn-endereco", function() {
+        var id_endereco = $(this).data("id");
 
         Swal.fire({
             title: 'Tem certeza?',
@@ -172,17 +205,17 @@ $(document).ready(function() {
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                deleteItem(id_acesso);
+                deleteItem(id_endereco);
             }
         });
     });
 
-    function deleteItem(id_acesso) {
+    function deleteItem(id_endereco) {
         $.ajax({
-            url: 'pages/config/insert/delete_acessos.php',
+            url: 'pages/config/insert/delete_endereco.php',
             type: 'POST',
             data: {
-                id_acesso_apagar: id_acesso
+                id_endereco: id_endereco
             },
             dataType: 'json',
             success: function(response) {
@@ -210,32 +243,18 @@ $(document).ready(function() {
         });
     }
 
-    document.getElementById("acessos").addEventListener("submit", function(event) {
+    document.getElementById("endereco").addEventListener("submit", function(event) {
         event.preventDefault();
 
-        var idFuncionario = document.getElementById("id_funcionario").value;
-        var dataAcesso = document.getElementById("data_acesso").value;
-        var idSistemaAcesso = document.getElementById("id_sistema_acesso").value;
-        var usernameAcesso = document.getElementById("username_acesso").value;
-        var passwordAcesso = document.getElementById("password_acesso").value;
-        var habilitadoAcesso = document.getElementById("habilitado_acesso").checked;
-        var sysUserAcesso = document.getElementById("sys_user_acesso").value;
+        var formData_endereco = $(this).serialize();
 
         // Crie um objeto com os dados do formulário
 
 
         $.ajax({
-            url: 'pages/config/insert/salve_acessos.php',
+            url: 'pages/config/insert/salve_endereco.php',
             type: 'POST',
-            data: {
-                id_funcionario: idFuncionario,
-                data_acesso: dataAcesso,
-                id_sistema_acesso: idSistemaAcesso,
-                username_acesso: usernameAcesso,
-                password_acesso: passwordAcesso,
-                habilitado_acesso: habilitadoAcesso,
-                sys_user_acesso: sysUserAcesso
-            },
+            data: formData_endereco,
             dataType: 'json',
             success: function(response) {
                 console.log(response);
@@ -248,7 +267,7 @@ $(document).ready(function() {
 
                 if (response.status) {
                     loadItems();
-                    document.getElementById("sistemas").reset();
+                    document.getElementById("endereco").reset();
                 }
             },
             error: function(xhr, status, error) {

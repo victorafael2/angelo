@@ -13,14 +13,26 @@ if ($conn->connect_error) {
 $dataCadastro = $_POST['dataCadastro'];
 $cpf = $_POST['cpf'];
 $dataAdmissao = $_POST['dataAdmissao'];
-$dataDemissao = $_POST['dataDemissao'];
+// $dataDemissao = $_POST['dataDemissao'];
 $dataNascimento = $_POST['dataNascimento'];
 $rgNumero = $_POST['rgNumero'];
 $rgEmissor = $_POST['rgEmissor'];
 $rgUF = $_POST['rgUF'];
 $rgDataEmissao = $_POST['rgDataEmissao'];
 $cnhNumero = $_POST['cnhNumero'];
-$cnhTipo = $_POST['cnhTipo'];
+// $cnhTipo = $_POST['cnhTipo'];
+$cnhTipos = $_POST['cnhTipo']; // $cnhTipos é um array contendo os valores recebidos
+
+// Verificar se foram selecionados valores
+if (!empty($cnhTipos)) {
+  // Juntar os valores do campo cnhTipo em um único valor separado por vírgulas
+  $cnhTipo = implode(',', $cnhTipos);
+
+  // Agora você pode usar a variável $cnhTiposString como o valor desejado no banco de dados
+
+  // Exemplo de exibição dos valores
+
+}
 $ctpsNumero = $_POST['ctpsNumero'];
 $ctpsSerie = $_POST['ctpsSerie'];
 $ctpsDataEmissao = $_POST['ctpsDataEmissao'];
@@ -29,8 +41,8 @@ $pisNumero = $_POST['pisNumero'];
 $eSocial = $_POST['eSocial'];
 $sigilo = $_POST['sigilo'];
 
-$sql = "INSERT INTO funcionarios (dataCadastro, cpf, dataAdmissao, dataDemissao, dataNascimento, rgNumero, rgEmissor, rgUF, rgDataEmissao, cnhNumero, cnhTipo, ctpsNumero, ctpsSerie, ctpsDataEmissao, ctpsUF, pisNumero, eSocial, sigilo)
-        VALUES ('$dataCadastro', '$cpf', '$dataAdmissao', '$dataDemissao', '$dataNascimento', '$rgNumero', '$rgEmissor', '$rgUF', '$rgDataEmissao', '$cnhNumero', '$cnhTipo', '$ctpsNumero', '$ctpsSerie', '$ctpsDataEmissao', '$ctpsUF', '$pisNumero', '$eSocial', '$sigilo')";
+$sql = "INSERT INTO funcionarios (dataCadastro, cpf, dataAdmissao, dataNascimento, rgNumero, rgEmissor, rgUF, rgDataEmissao, cnhNumero, cnhTipo, ctpsNumero, ctpsSerie, ctpsDataEmissao, ctpsUF, pisNumero, eSocial, sigilo)
+        VALUES ('$dataCadastro', '$cpf', '$dataAdmissao', '$dataNascimento', '$rgNumero', '$rgEmissor', '$rgUF', '$rgDataEmissao', '$cnhNumero', '$cnhTipo', '$ctpsNumero', '$ctpsSerie', '$ctpsDataEmissao', '$ctpsUF', '$pisNumero', '$eSocial', '$sigilo')";
 
 if ($conn->query($sql) === TRUE) {
     echo "Dados inseridos com sucesso!";

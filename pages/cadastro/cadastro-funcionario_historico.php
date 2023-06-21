@@ -225,12 +225,46 @@ $created = $row["created"];
                         </select>
                     </div>
                     <div class="col-md-4">
-                        <label for="idSuperior" class="form-label">ID Superior</label>
-                        <input type="text" class="form-control" id="idSuperior" name="idSuperior"
-                            value="<?php echo $idSuperior; ?>">
+                        <label for="idSuperior" class="form-label">Superior</label>
+                        <!-- <input type="text" class="form-control" id="idSuperior" name="idSuperior"
+                            value="<?php echo $idSuperior; ?>"> -->
+                            <select type="text" class="form-control" id="idSuperior" name="idSuperior"
+                                        data-choices="data-choices"
+                                        data-options='{"removeItemButton":true,"placeholder":true,"shouldSort":false}'>
+                                        <option value="">Selecione</option>
+                                        <option value="sem_superior">Sem Superior</option>
+
+
+
+                                        <?php
+                                        // Executar a consulta para obter os dados
+                                        $sql_vt = "SELECT id_funcionario, id_history AS max_id, nome_social
+                                        FROM tb_history_cadastro
+                                        WHERE (id_funcionario, id_history) IN (
+                                          SELECT id_funcionario, MAX(id_history)
+                                          FROM tb_history_cadastro
+                                          GROUP BY id_funcionario
+                                        );
+                                        "; // Substitua "tabela" pelo nome correto da sua tabela
+                                        $result_vt = $conn->query($sql_vt);
+
+                                        // Verificar se há resultados e criar as opções
+                                        if ($result_vt->num_rows > 0) {
+                                            while ($row = $result_vt->fetch_assoc()) {
+                                                $id_funcionario = $row["id_funcionario"];
+                                                $nome_social = $row["nome_social"];
+                                                // $visibilidade_vt = ($idVt == $id_vt) ? "selected" : "";
+
+                                                echo "<option value='$id_funcionario' >$id_funcionario - $nome_social</option>";
+                                            }
+                                        } else {
+                                            // echo "<option value=''>Nenhum resultado encontrado</option>";
+                                        }
+                                        ?>
+                                    </select>
                     </div>
                     <div class="col-md-4">
-                        <label for="idArea" class="form-label">ID Área</label>
+                        <label for="idArea" class="form-label">Área</label>
                         <select type="text" class="form-control" id="idArea" name="idArea" data-choices="data-choices"
                             data-options='{"removeItemButton":true,"placeholder":true}'>
                             <option value="">Selecione</option>
@@ -258,31 +292,114 @@ $created = $row["created"];
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <label for="idOperacao" class="form-label">ID Operação</label>
-                        <input type="text" class="form-control" id="idOperacao" name="idOperacao"
-                            value="<?php echo $idOperacao; ?>">
+                        <label for="idOperacao" class="form-label">Operação</label>
+                        <!-- <input type="text" class="form-control" id="idOperacao" name="idOperacao"
+                            value="<?php echo $idOperacao; ?>"> -->
+                        <select type="text" class="form-control" id="idOperacao" name="idOperacao"
+                            data-choices="data-choices" data-options='{"removeItemButton":true,"placeholder":true}'>
+                            <option value="">Selecione</option>
+
+                            <?php
+                        // Executar a consulta para obter os dados
+                        $sql_areas = "SELECT id_operacao, nome_operacao FROM aux_operacoes"; // Substitua "tabela" pelo nome correto da sua tabela
+                        $result_areas = $conn->query($sql_areas);
+
+                        // Verificar se há resultados e criar as opções
+                        if ($result_areas->num_rows > 0) {
+                            while ($row = $result_areas->fetch_assoc()) {
+                                $id_area = $row["id_operacao"];
+                                $nome_area = $row["nome_operacao"];
+                                $visibilidade_area = ($idOperacao == $id_area) ? "selected" : "";
+
+                                echo "<option value='$id_area' $visibilidade_area>$nome_area</option>";
+                            }
+                        } else {
+                            // echo "<option value=''>Nenhum resultado encontrado</option>";
+                        }
+                        ?>
+                        </select>
                     </div>
                     <div class="col-md-4">
-                        <label for="idFilial" class="form-label">ID Filial</label>
-                        <input type="text" class="form-control" id="idFilial" name="idFilial"
-                            value="<?php echo $idFilial; ?>">
+                        <label for="idFilial" class="form-label">Filial</label>
+                        <!-- <input type="text" class="form-control" id="idFilial" name="idFilial"
+                            value="<?php echo $idFilial; ?>"> -->
+                        <select type="text" class="form-control" id="idFilial" name="idFilial"
+                            data-choices="data-choices" data-options='{"removeItemButton":true,"placeholder":true}'>
+                            <option value="">Selecione</option>
+
+                            <?php
+                        // Executar a consulta para obter os dados
+                        $sql_areas = "SELECT id_filial, filial_nome FROM aux_filiais"; // Substitua "tabela" pelo nome correto da sua tabela
+                        $result_areas = $conn->query($sql_areas);
+
+                        // Verificar se há resultados e criar as opções
+                        if ($result_areas->num_rows > 0) {
+                            while ($row = $result_areas->fetch_assoc()) {
+                                $id_area = $row["id_filial"];
+                                $nome_area = $row["filial_nome"];
+                                $visibilidade_area = ($idFilial == $id_area) ? "selected" : "";
+
+                                echo "<option value='$id_area' $visibilidade_area>$nome_area</option>";
+                            }
+                        } else {
+                            // echo "<option value=''>Nenhum resultado encontrado</option>";
+                        }
+                        ?>
+                        </select>
                     </div>
                     <div class="col-md-4">
-                        <label for="tipoRegime" class="form-label">Tipo Regime</label>
-                        <input type="text" class="form-control" id="tipoRegime" name="tipoRegime"
-                            value="<?php echo $tipoRegime; ?>">
+
+                    <label for="tipoContrato" class="form-label">Tipo Contrato</label>
+                        <!-- <input type="text" class="form-control" id="tipoContrato" name="tipoContrato"
+                            value="<?php echo $tipoContrato; ?>"> -->
+                        <select class="form-select" id="tipoContrato" name="tipoContrato" data-choices="data-choices"
+                            data-options='{"removeItemButton":true,"placeholder":true}'>
+                            <option value="">Selecione</option>
+                            <option value="Indeterminado" <?php if ($tipoContrato == "Indeterminado") echo "selected"; ?>>Indeterminado</option>
+                            <option value="Determinado" <?php if ($tipoContrato == "Determinado") echo "selected"; ?>>Determinado</option>
+                            <option value="Temporário" <?php if ($tipoContrato == "Temporário") echo "selected"; ?>>Temporário</option>
+                            <option value="Home Office" <?php if ($tipoContrato == "Home Office") echo "selected"; ?>>Home Office</option>
+                            <option value="Estágio" <?php if ($tipoContrato == "Estágio") echo "selected"; ?>>Estágio</option>
+                            <option value="Experiência" <?php if ($tipoContrato == "Experiência") echo "selected"; ?>>Experiência</option>
+                        </select>
+
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <label for="tipoContrato" class="form-label">Tipo Contrato</label>
-                        <input type="text" class="form-control" id="tipoContrato" name="tipoContrato"
-                            value="<?php echo $tipoContrato; ?>">
+
+
+                        <label for="tipoRegime" class="form-label">Tipo Regime</label>
+                        <!-- <input type="text" class="form-control" id="tipoRegime" name="tipoRegime"
+                            value="<?php echo $tipoRegime; ?>"> -->
+                        <select class="form-select" id="tipoRegime" name="tipoRegime" data-choices="data-choices"
+                            data-options='{"removeItemButton":true,"placeholder":true}'>
+                            <option value="">Selecione</option>
+                            <option value="CLT" <?php if ($tipoRegime == "CLT") echo "selected"; ?>>CLT</option>
+                            <option value="PJ" <?php if ($tipoRegime == "PJ") echo "selected"; ?>>PJ</option>
+                            <option value="Estágio" <?php if ($tipoRegime == "Estágio") echo "selected"; ?>>Estágio</option>
+                            <option value="Jovem Aprendiz" <?php if ($tipoRegime == "Jovem Aprendiz") echo "selected"; ?>>
+                                Jovem Aprendiz</option>
+                            <option value="Temporária" <?php if ($tipoRegime == "Temporária") echo "selected"; ?>>Temporária
+                            </option>
+                            <option value="Terceirização" <?php if ($tipoRegime == "Terceirização") echo "selected"; ?>>
+                                Terceirização</option>
+                        </select>
                     </div>
                     <div class="col-md-4">
                         <label for="tipoPonto" class="form-label">Tipo Ponto</label>
-                        <input type="text" class="form-control" id="tipoPonto" name="tipoPonto"
-                            value="<?php echo $tipoPonto; ?>">
+                        <!-- <input type="text" class="form-control" id="tipoPonto" name="tipoPonto"
+                            value="<?php echo $tipoPonto; ?>"> -->
+                            <select class="form-select" id="tipoPonto" name="tipoPonto" data-choices="data-choices"
+                            data-options='{"removeItemButton":true,"placeholder":true}'>
+                            <option value="">Selecione</option>
+                            <option value="Manual" <?php if ($tipoPonto == "Manual") echo "selected"; ?>>Manual</option>
+                            <option value="Mecânico" <?php if ($tipoPonto == "Mecânico") echo "selected"; ?>>Mecânico</option>
+                            <option value="Eletrônico " <?php if ($tipoPonto == "Eletrônico") echo "selected"; ?>>Eletrônico </option>
+                            <option value="Digital" <?php if ($tipoPonto == "Digital") echo "selected"; ?>>Digital</option>
+
+
+                        </select>
                     </div>
                     <div class="col-md-4">
                         <label for="sistemaPonto" class="form-label">Sistema Ponto</label>
@@ -298,8 +415,18 @@ $created = $row["created"];
                     </div>
                     <div class="col-md-4">
                         <label for="status" class="form-label">Status</label>
-                        <input type="text" class="form-control" id="status" name="status"
-                            value="<?php echo $status; ?>">
+                        <!-- <input type="text" class="form-control" id="status" name="status"
+                            value="<?php echo $status; ?>"> -->
+                            <select class="form-select" id="status" name="status" data-choices="data-choices"
+                            data-options='{"removeItemButton":true,"placeholder":true}'>
+                            <option value="">Selecione</option>
+                            <option value="Ativo" <?php if ($status == "Ativo") echo "selected"; ?>>Ativo</option>
+                            <option value="Férias" <?php if ($status == "Férias") echo "selected"; ?>>Férias</option>
+                            <option value="Afastado" <?php if ($status == "Afastado") echo "selected"; ?>>Afastado </option>
+                            <option value="Desligado" <?php if ($status == "Desligado") echo "selected"; ?>>Desligado</option>
+
+
+                        </select>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Salvar</button>
@@ -309,7 +436,7 @@ $created = $row["created"];
 
         <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
             <h3>Cadastro </h3>
-            <form id="form_2" class="mb-3" >
+            <form id="form_2" class="mb-3">
                 <div class="row">
                     <!-- <div class="col-sm-4">
             <div class="form-group">
@@ -344,23 +471,24 @@ $created = $row["created"];
                                 }
                                 ?>
                             <!-- <input type="text" class="form-control" id="cpf" name="cpf" value="<?php echo formatarCPF($cpf); ?>"> -->
-                            <input type="text" class="form-control" id="cpf" name="cpf" value="<?php echo $cpf; ?>" maxlength="14" oninput="formatarCPF(this)">
+                            <input type="text" class="form-control" id="cpf" name="cpf" value="<?php echo $cpf; ?>"
+                                maxlength="14" oninput="formatarCPF(this)">
 
                             <script>
-                                function formatarCPF(input) {
-                                    // Remove caracteres não numéricos
-                                    var cpf = input.value.replace(/\D/g, '');
+                            function formatarCPF(input) {
+                                // Remove caracteres não numéricos
+                                var cpf = input.value.replace(/\D/g, '');
 
-                                    // Verifica se o CPF possui 11 dígitos
-                                    if (cpf.length === 11) {
-                                        // Formata CPF (XXX.XXX.XXX-XX)
-                                        cpf = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
-                                    }
-
-                                    // Atualiza o valor do input com a formatação
-                                    input.value = cpf;
+                                // Verifica se o CPF possui 11 dígitos
+                                if (cpf.length === 11) {
+                                    // Formata CPF (XXX.XXX.XXX-XX)
+                                    cpf = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
                                 }
-                                </script>
+
+                                // Atualiza o valor do input com a formatação
+                                input.value = cpf;
+                            }
+                            </script>
                         </div>
                     </div>
                 </div>
@@ -487,11 +615,11 @@ $created = $row["created"];
                                 <option value="0" <?php if($sigilo == 0) echo "selected"; ?>>Não</option>
                             </select>
                         </div>
-                        <div class="col-md-4 ">
-                        <label for="idFuncioanrio" class="form-label">Id Funcioanrio</label>
-                        <input type="text" class="form-control" id="idFuncioanrio" name="idFuncioanrio"
-                            value="<?php echo $id_funci; ?>">
-                    </div>
+                        <div class="col-md-4 d-none">
+                            <label for="idFuncioanrio" class="form-label">Id Funcioanrio</label>
+                            <input type="text" class="form-control" id="idFuncioanrio" name="idFuncioanrio"
+                                value="<?php echo $id_funci; ?>">
+                        </div>
                     </div>
                 </div>
 
@@ -602,7 +730,8 @@ $(document).ready(function() {
         $("#form input, #form select").each(function() {
             if ($(this).val() === "" && !$(this).hasClass("choices__input")) {
                 allFieldsFilled = false;
-                emptyFields += $(this).attr("name") + ", "; // Adiciona o nome do campo vazio à variável
+                emptyFields += $(this).attr("name") +
+                    ", "; // Adiciona o nome do campo vazio à variável
             }
         });
 
@@ -610,7 +739,8 @@ $(document).ready(function() {
             emptyFields = emptyFields.slice(0, -2); // Remove a vírgula e o espaço no final da string
             Swal.fire({
                 title: 'Campos vazios',
-                text: 'Por favor, preencha todos os campos do formulário. Campos vazios: ' + emptyFields,
+                text: 'Por favor, preencha todos os campos do formulário. Campos vazios: ' +
+                    emptyFields,
                 icon: 'error',
                 confirmButtonText: 'OK'
             });
@@ -648,8 +778,6 @@ $(document).ready(function() {
         });
     });
 });
-
-
 </script>
 
 
@@ -665,7 +793,8 @@ $(document).ready(function() {
         $("#form_2 input, #form_2 select").each(function() {
             if ($(this).val() === "" && !$(this).hasClass("choices__input")) {
                 allFieldsFilled = false;
-                emptyFields += $(this).attr("name") + ", "; // Adiciona o nome do campo vazio à variável
+                emptyFields += $(this).attr("name") +
+                    ", "; // Adiciona o nome do campo vazio à variável
             }
         });
 
@@ -673,7 +802,8 @@ $(document).ready(function() {
             emptyFields = emptyFields.slice(0, -2); // Remove a vírgula e o espaço no final da string
             Swal.fire({
                 title: 'Campos vazios',
-                text: 'Por favor, preencha todos os campos do formulário. Campos vazios: ' + emptyFields,
+                text: 'Por favor, preencha todos os campos do formulário. Campos vazios: ' +
+                    emptyFields,
                 icon: 'error',
                 confirmButtonText: 'OK'
             });
@@ -712,6 +842,4 @@ $(document).ready(function() {
         });
     });
 });
-
-
 </script>

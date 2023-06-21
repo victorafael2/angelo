@@ -11,8 +11,9 @@ $dataHoraAtual = date("Y-m-d H:i:s");
 // echo $dataHoraAtual;
 
 $nome_area = $_POST["nome_area"];
-$habilitado = $_POST["habilitado"];
 
+// $habilitado = isset($_POST['habilitado']) ? 1 : 0;
+$habilitado = ($_POST['habilitado'] == "true") ? 1 : 0;
 // Insere os dados na tabela AUX_VT
 $sql = "insert into aux_areas (nome_area,habilitado)
           values ( '$nome_area','$habilitado')";

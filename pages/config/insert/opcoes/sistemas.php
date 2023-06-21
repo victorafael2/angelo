@@ -15,8 +15,8 @@ Formulário Sistemas
                                 <input type="text" class="form-control" id="nome_sistema" name="nome_sistema" required>
                             </div>
                             <div class="form-group">
-                                <label for="habilitado" class="form-label">Habilitado:</label>
-                                <select class="form-control" id="habilitado" name="habilitado" required>
+                                <label for="habilitado_sistemas" class="form-label">Habilitado:</label>
+                                <select class="form-control" id="habilitado_sistemas" name="habilitado_sistemas" required>
                                     <option value="1">Sim</option>
                                     <option value="0">Não</option>
                                 </select>
@@ -99,7 +99,7 @@ $(document).ready(function() {
                     tableData += "<td>" + item.id_sistema + "</td>";
                     tableData += "<td>" + item.nome_sistema + "</td>";
 
-                    tableData += "<td>" + item.habilitado + "</td>";
+                    tableData += "<td>" + item.habilitado_icon + "</td>";
                     tableData +=
                         "<td><button class='delete-btn-sistemas btn btn-danger btn-sm' data-id='" +
                         item.id_sistema + "'>Excluir</button></td>";
@@ -166,7 +166,7 @@ $(document).ready(function() {
     document.getElementById("sistemas").addEventListener("submit", function(event) {
         event.preventDefault();
         var nome_sistema = document.getElementById("nome_sistema").value;
-        var habilitado = document.getElementById("habilitado").value;
+        var habilitado = document.getElementById("habilitado_sistemas").value;
 
         $.ajax({
             url: 'pages/config/insert/salve_sistemas.php',

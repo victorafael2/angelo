@@ -15,7 +15,7 @@ $cargo_nome = $_POST["cargo_nome"];
 $cargo_grupo = $_POST["cargo_grupo"];
 $cargo_nivel = $_POST["cargo_nivel"];
 $cargo_description = $_POST["cargo_description"];
-$habilitado = isset($_POST["habilitado"]) ? 1 : 0;
+$habilitado = ($_POST['habilitado'] == "true") ? 1 : 0;
 $sys_user = $_POST["sys_user"];
 
 // Insere os dados na tabela AUX_VT

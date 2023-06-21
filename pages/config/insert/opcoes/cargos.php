@@ -11,9 +11,9 @@
                         <form id="cargos">
 
                             <div class="form-group">
-                                <label for="id_area" class="form-label">AREA:</label>
+                                <label for="id_area_cargos" class="form-label">AREA:</label>
                                 <!-- <input type="text" class="form-control" id="id_area"> -->
-                                <select type="text" class="form-control" id="id_area" name="id_area"
+                                <select type="text" class="form-control" id="id_area_cargos" name="id_area_cargos"
                                         data-choices="data-choices"
                                         data-options='{"removeItemButton":true,"placeholder":true}'>
                                         <option value="">Selecione</option>
@@ -90,7 +90,7 @@
                                             <th class="sort border-top">CARGO_NIVEL</th>
                                             <th class="sort border-top">CARGO_DESCRIPTION</th>
                                             <th class="sort border-top">HABILITADO</th>
-                                            <th class="sort border-top">SYS_USER</th>
+                                            <th class="sort border-top">APAGAR</th>
 
 
 
@@ -146,10 +146,11 @@ $(document).ready(function() {
 
                     tableData += "<td>" + item.nome_area + "</td>";
                     tableData += "<td>" + item.cargo_nome + "</td>";
+                    tableData += "<td>" + item.cargo_grupo + "</td>";
                     tableData += "<td>" + item.cargo_nivel + "</td>";
                     tableData += "<td>" + item.cargo_description + "</td>";
                     tableData += "<td>" + item.habilitado + "</td>";
-                    tableData += "<td>" + item.sys_user + "</td>";
+
                     tableData +=
                         "<td><button class='delete-btn-cargos btn btn-danger btn-sm' data-id='" +
                         item.id_cargo + "'>Excluir</button></td>";
@@ -217,7 +218,7 @@ $(document).ready(function() {
         event.preventDefault();
 
 
-        var idArea = document.getElementById("id_area").value;
+        var idArea_cargos = document.getElementById("id_area_cargos").value;
         var cargoNome = document.getElementById("cargo_nome").value;
         var cargoGrupo = document.getElementById("cargo_grupo").value;
         var cargoNivel = document.getElementById("cargo_nivel").value;
@@ -229,7 +230,7 @@ $(document).ready(function() {
             url: 'pages/config/insert/salve_cargos.php',
             type: 'POST',
             data: {
-                id_area: idArea,
+                id_area: idArea_cargos,
             cargo_nome: cargoNome,
             cargo_grupo: cargoGrupo,
             cargo_nivel: cargoNivel,

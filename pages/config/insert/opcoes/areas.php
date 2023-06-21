@@ -9,19 +9,19 @@
                     </div>
                     <div class="card-body">
                         <form id="areas">
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="id_area" class="form-label">ID_AREA:</label>
                                 <input type="text" class="form-control" id="id_area" name="id_area">
-                            </div>
+                            </div> -->
                             <div class="form-group">
                                 <label for="nome_area" class="form-label">NOME_AREA:</label>
                                 <input type="text" class="form-control" id="nome_area" name="nome_area">
                             </div>
                             <div class="form-group">
-                                <label for="habilitado" class="form-label">HABILITADO:</label>
+                                <label for="habilitado_areas" class="form-label">HABILITADO:</label>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="habilitado" name="habilitado">
-                                    <label class="form-check-label" for="habilitado">
+                                    <input class="form-check-input" type="checkbox" id="habilitado_areas" name="habilitado_areas">
+                                    <label class="form-check-label" for="habilitado_areas">
                                         Ativo
                                     </label>
                                 </div>
@@ -103,10 +103,10 @@ $(document).ready(function() {
                     tableData += "<td>" + item.nome_area + "</td>";
 
 
-                    tableData += "<td>" + item.habilitado + "</td>";
+                    tableData += "<td>" + item.habilitado_icon + "</td>";
                     tableData +=
-                        "<td><button class='delete-btn-areas btn btn-danger btn-sm' data-id='" +
-                        item.id_areas + "'>Excluir</button></td>";
+                        "<td><button class='delete-btn btn btn-danger btn-sm apagar_areas' data-id='" +
+                        item.id_area + "'>Excluir</button></td>";
                     tableData += "</tr>";
                 });
                 $("#table_body_areas").html(tableData);
@@ -117,8 +117,8 @@ $(document).ready(function() {
         });
     }
 
-    $(document).on("click", ".delete-btn-areas", function() {
-        var id_areas = $(this).data("id");
+    $(document).on("click", ".apagar_areas", function() {
+        var id_area = $(this).data("id");
 
         Swal.fire({
             title: 'Tem certeza?',
@@ -129,17 +129,17 @@ $(document).ready(function() {
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                deleteItem(id_areas);
+                deleteItem(id_area);
             }
         });
     });
 
-    function deleteItem(id_areas) {
+    function deleteItem(id_area) {
         $.ajax({
             url: 'pages/config/insert/delete_areas.php',
             type: 'POST',
             data: {
-                id_areas: id_areas
+                id_area: id_area
             },
             dataType: 'json',
             success: function(response) {
@@ -172,7 +172,7 @@ $(document).ready(function() {
 
 
             var nomeArea = document.getElementById("nome_area").value;
-            var habilitado = document.getElementById("habilitado").checked;
+            var habilitado = document.getElementById("habilitado_areas").checked;
 
         $.ajax({
             url: 'pages/config/insert/salve_areas.php',

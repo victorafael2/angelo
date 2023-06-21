@@ -29,8 +29,8 @@
                                 <input type="text" class="form-control" id="beneficio_valor" name="beneficio_valor">
                             </div>
                             <div class="form-group">
-                                <label for="habilitado" class="form-label">HABILITADO:</label>
-                                <select class="form-control" id="habilitado" name="habilitado">
+                                <label for="habilitado_beneficio" class="form-label">HABILITADO:</label>
+                                <select class="form-control" id="habilitado_beneficio" name="habilitado_beneficio">
                                     <option value="1">Sim</option>
                                     <option value="0">Não</option>
                                 </select>
@@ -188,7 +188,7 @@ $(document).ready(function() {
         var beneficio_tipo = document.getElementById("beneficio_tipo").value;
         var beneficio_periodicidade = document.getElementById("beneficio_periodicidade").value;
         var beneficio_valor = document.getElementById("beneficio_valor").value;
-        var habilitado = document.getElementById("habilitado").value;
+        var habilitado = document.getElementById("habilitado_beneficio").value;
         var sys_user = document.getElementById("sys_user").value;
 
         $.ajax({

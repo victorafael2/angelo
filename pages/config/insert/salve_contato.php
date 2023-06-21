@@ -10,17 +10,19 @@ if ($conn->connect_error) {
 $dataHoraAtual = date("Y-m-d H:i:s");
 // echo $dataHoraAtual;
 // Pegar dados do formulário
+
 $id_funcionario = $_POST['id_funcionario'];
-$data = $_POST['data_acesso'];
-$id_sistema = $_POST['id_sistema_acesso'];
-$username = $_POST['username_acesso'];
-$password = $_POST['password_acesso'];
-$habilitado = ($_POST['habilitado_acesso'] == "true") ? 1 : 0;
-$sys_user = $_POST['sys_user_acesso'];
+$data = $_POST['data'];
+$contato_tipo = $_POST['contato_tipo'];
+$contato_identificacao = $_POST['contato_identificacao'];
+$habilitado = isset($_POST['habilitado']) ? 1 : 0;
+$preferencial = isset($_POST['preferencial']) ? 1 : 0;
+
 
     // Prepara a consulta SQL de inserção
-    $sql = "INSERT INTO aux_acessos (id_funcionario, data, id_sistema, username, password, habilitado, sys_user,sys_data)
-    VALUES ('$id_funcionario', '$data', '$id_sistema', '$username', '$password', '$habilitado', '$sys_user','$dataHoraAtual')";
+
+    $sql = "INSERT INTO aux_contatos ( id_funcionario, data, contato_tipo, contato_identificacao, habilitado, preferencial)
+    VALUES ( '$id_funcionario', '$data', '$contato_tipo', '$contato_identificacao', '$habilitado', '$preferencial')";
 // Insere os dados na tabela AUX_VT
 if ($conn->query($sql) === TRUE) {
     $response = array(

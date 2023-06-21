@@ -9,10 +9,10 @@
                     </div>
                     <div class="card-body">
                         <form id="filiais">
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="id_filial" class="form-label">ID Filial:</label>
                                 <input type="text" class="form-control" id="id_filial" name="id_filial">
-                            </div>
+                            </div> -->
                             <div class="form-group">
                                 <label for="filial_nome" class="form-label">Nome da Filial:</label>
                                 <input type="text" class="form-control" id="filial_nome" name="filial_nome">

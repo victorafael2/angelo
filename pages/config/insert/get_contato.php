@@ -7,7 +7,7 @@ if ($conn->connect_error) {
 }
 
 // Consulta os dados da tabela AUX_VT
-$sql = "SELECT * from aux_info_bancario AS aux
+$sql = "SELECT * from aux_contatos AS aux
 LEFT JOIN (SELECT id_funcionario, id_history AS max_id, nome_social
 FROM tb_history_cadastro
 WHERE (id_funcionario, id_history) IN (

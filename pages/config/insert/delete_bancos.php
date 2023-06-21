@@ -4,8 +4,8 @@
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Verificar se o parâmetro 'id_vt' foi enviado
-    if (isset($_POST["id_acesso_apagar"])) {
-        $id_acesso = $_POST["id_acesso_apagar"];
+    if (isset($_POST["id"])) {
+        $id = $_POST["id"];
 
         include '../../../database/databaseconnect.php';
 
@@ -20,8 +20,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             );
         } else {
             // Preparar a consulta SQL para excluir o item
-            $stmt = mysqli_prepare($conn, "DELETE FROM aux_acessos WHERE id_acesso = ?");
-            mysqli_stmt_bind_param($stmt, "i", $id_acesso);
+            $stmt = mysqli_prepare($conn, "DELETE FROM aux_info_bancario WHERE id = ?");
+            mysqli_stmt_bind_param($stmt, "i", $id);
 
 
             // Executar a consulta SQL

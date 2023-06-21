@@ -11,9 +11,42 @@
                     <div class="card-body">
                         <form id="banco">
                             <div class="form-group">
-                                <label class="form-label" for="id_funcionario">ID Funcionário:</label>
-                                <input type="text" class="form-control" id="id_funcionario" name="id_funcionario"
-                                    required>
+                                <label class="form-label" for="id_funcionario">Funcionário:</label>
+                                <!-- <input type="text" class="form-control" id="id_funcionario" name="id_funcionario"
+                                    required> -->
+                                    <select type="text" class="form-control" id="id_funcionario" name="id_funcionario"
+                                        data-choices="data-choices"
+                                        data-options='{"removeItemButton":true,"placeholder":true}'>
+                                        <option value="">Selecione</option>
+
+
+
+                                            <?php
+                                            // Executar a consulta para obter os dados
+                                            $sql_vt = "SELECT id_funcionario, id_history AS max_id, nome_social
+                                            FROM tb_history_cadastro
+                                            WHERE (id_funcionario, id_history) IN (
+                                            SELECT id_funcionario, MAX(id_history)
+                                            FROM tb_history_cadastro
+                                            GROUP BY id_funcionario
+                                            );
+                                            "; // Substitua "tabela" pelo nome correto da sua tabela
+                                            $result_vt = $conn->query($sql_vt);
+
+                                            // Verificar se há resultados e criar as opções
+                                            if ($result_vt->num_rows > 0) {
+                                                while ($row = $result_vt->fetch_assoc()) {
+                                                    $id_funcionario = $row["id_funcionario"];
+                                                    $nome_social = $row["nome_social"];
+                                                    // $visibilidade_vt = ($idVt == $id_vt) ? "selected" : "";
+
+                                                    echo "<option value='$id_funcionario' >$nome_social</option>";
+                                                }
+                                            } else {
+                                                // echo "<option value=''>Nenhum resultado encontrado</option>";
+                                            }
+                                            ?>
+                                    </select>
                             </div>
                             <div class="form-group">
                                 <label class="form-label" for="data">Data:</label>
@@ -91,7 +124,9 @@
                                             <th class="sort border-top " data-sort="habilitado">Pix Tipo</th>
                                             <th class="sort border-top " data-sort="habilitado">Pix identificação</th>
                                             <th class="sort border-top " data-sort="habilitado">Banco</th>
-                                            <th class="sort border-top " data-sort="habilitado">tipode Conta</th>
+                                            <th class="sort border-top " data-sort="habilitado">Tipo de Conta</th>
+                                            <th class="sort border-top " data-sort="habilitado">Habilitado</th>
+                                            <th class="sort border-top " data-sort="habilitado">Preferencial</th>
                                             <th class="sort border-top ">Apagar</th>
 
 
@@ -145,14 +180,15 @@ $(document).ready(function() {
                 data.forEach(function(item) {
                     tableData += "<tr>";
                     tableData += "<td>" + item.id + "</td>";
-                    tableData += "<td>" + item.id_funcionario + "</td>";
-
+                    tableData += "<td>" + item.nome_social + "</td>";
                     tableData += "<td>" + item.pix_tipo + "</td>";
                     tableData += "<td>" + item.pix_identificacao + "</td>";
                     tableData += "<td>" + item.banco_nome + "</td>";
                     tableData += "<td>" + item.banco_tipo_conta + "</td>";
+                    tableData += "<td>" + item.habilitado_icon + "</td>";
+                    tableData += "<td>" + item.preferencial_icon + "</td>";
                     tableData +=
-                        "<td><button class='delete-btn-acesso btn btn-danger btn-sm' data-id='" +
+                        "<td><button class='delete-btn-banco btn btn-danger btn-sm' data-id='" +
                         item.id + "'>Excluir</button></td>";
                     tableData += "</tr>";
                 });
@@ -164,8 +200,8 @@ $(document).ready(function() {
         });
     }
 
-    $(document).on("click", ".delete-btn-acesso", function() {
-        var id_acesso = $(this).data("id");
+    $(document).on("click", ".delete-btn-banco", function() {
+        var id = $(this).data("id");
 
         Swal.fire({
             title: 'Tem certeza?',
@@ -176,17 +212,17 @@ $(document).ready(function() {
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                deleteItem(id_acesso);
+                deleteItem(id);
             }
         });
     });
 
-    function deleteItem(id_acesso) {
+    function deleteItem(id) {
         $.ajax({
-            url: 'pages/config/insert/delete_acessos.php',
+            url: 'pages/config/insert/delete_bancos.php',
             type: 'POST',
             data: {
-                id_acesso_apagar: id_acesso
+                id: id
             },
             dataType: 'json',
             success: function(response) {

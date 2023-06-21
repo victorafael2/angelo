@@ -18,9 +18,9 @@ if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         // Verifica o valor da coluna "HABILITADO" e define o ícone correspondente
         if ($row['habilitado'] == 1) {
-            $row['habilitado_icon'] = '<i class="fas fa-check"></i>'; // Ícone "ok" do Font Awesome
+            $row['habilitado_icon'] = '<i class="fas fa-check text-success "></i>'; // Ícone "ok" do Font Awesome
         } else {
-            $row['habilitado_icon'] = '<i class="fas fa-times"></i>'; // Ícone "não ok" do Font Awesome
+            $row['habilitado_icon'] = '<i class="fas fa-times text-danger "></i>'; // Ícone "não ok" do Font Awesome
         }
 
         $items[] = $row;

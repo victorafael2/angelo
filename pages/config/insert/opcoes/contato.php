@@ -9,15 +9,40 @@
 
                     </div>
                     <div class="card-body">
-                        <form action="insert.php" method="POST">
-                            <div class="form-group">
+                        <form id="contato">
+                            <!-- <div class="form-group">
                                 <label class="form-label" for="id_contatos">ID Contatos:</label>
                                 <input type="text" class="form-control" id="id_contatos" name="id_contatos" required>
-                            </div>
+                            </div> -->
                             <div class="form-group">
                                 <label class="form-label" for="id_funcionario">ID Funcionário:</label>
-                                <input type="text" class="form-control" id="id_funcionario" name="id_funcionario"
-                                    required>
+                                <!-- <input type="text" class="form-control" id="id_funcionario" name="id_funcionario"
+                                    required> -->
+                                    <select class="form-control" id="id_funcionario" name="id_funcionario"
+                                    data-choices="data-choices"
+                                    data-options='{"removeItemButton":true,"placeholder":true}'>
+                                    <option value="">Selecione</option>
+                                            <?php
+                                            // Executar a consulta para obter os dados
+                                            $sql_vt = "SELECT id_funcionario, id_history AS max_id, nome_social
+                                            FROM tb_history_cadastro
+                                            WHERE (id_funcionario, id_history) IN (
+                                            SELECT id_funcionario, MAX(id_history)
+                                            FROM tb_history_cadastro
+                                            GROUP BY id_funcionario
+                                            );"; // Substitua "tabela" pelo nome correto da sua tabela
+                                            $result_vt = $conn->query($sql_vt);
+
+                                            // Verificar se há resultados e criar as opções
+                                            if ($result_vt->num_rows > 0) {
+                                            while ($row = $result_vt->fetch_assoc()) {
+                                                $id_funcionario = $row["id_funcionario"];
+                                                $nome_social = $row["nome_social"];
+                                                echo "<option value='$id_funcionario'>$nome_social</option>";
+                                            }
+                                            }
+                                        ?>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label class="form-label" for="data">Data:</label>
@@ -60,16 +85,16 @@
 
                                             <th class="sort border-top " data-sort="id">ID</th>
                                             <th class="sort border-top " data-sort="nome_sistema">Funcionario</th>
-                                            <th class="sort border-top " data-sort="habilitado">Pix Tipo</th>
-                                            <th class="sort border-top " data-sort="habilitado">Pix identificação</th>
-                                            <th class="sort border-top " data-sort="habilitado">Banco</th>
-                                            <th class="sort border-top " data-sort="habilitado">tipode Conta</th>
+                                            <th class="sort border-top " data-sort="habilitado">Tipo de Contato</th>
+                                            <th class="sort border-top " data-sort="habilitado">Contato</th>
+                                            <th class="sort border-top " data-sort="habilitado">Habilitado</th>
+                                            <th class="sort border-top " data-sort="habilitado">Preferencial</th>
                                             <th class="sort border-top ">Apagar</th>
 
 
                                         </tr>
                                     </thead>
-                                    <tbody id="table_body_bancos" class="list">
+                                    <tbody id="table_body_contato" class="list">
 
                                     </tbody>
                                 </table>
@@ -109,26 +134,26 @@ $(document).ready(function() {
 
     function loadItems() {
         $.ajax({
-            url: 'pages/config/insert/get_bancos.php',
+            url: 'pages/config/insert/get_contato.php',
             type: 'GET',
             dataType: 'json',
             success: function(data) {
                 var tableData = "";
                 data.forEach(function(item) {
                     tableData += "<tr>";
-                    tableData += "<td>" + item.id + "</td>";
-                    tableData += "<td>" + item.id_funcionario + "</td>";
+                    tableData += "<td>" + item.id_contatos + "</td>";
+                    tableData += "<td>" + item.nome_social + "</td>";
 
-                    tableData += "<td>" + item.pix_tipo + "</td>";
-                    tableData += "<td>" + item.pix_identificacao + "</td>";
-                    tableData += "<td>" + item.banco_nome + "</td>";
-                    tableData += "<td>" + item.banco_tipo_conta + "</td>";
+                    tableData += "<td>" + item.contato_tipo + "</td>";
+                    tableData += "<td>" + item.contato_identificacao + "</td>";
+                    tableData += "<td>" + item.habilitado_icon + "</td>";
+                    tableData += "<td>" + item.preferencial_icon + "</td>";
                     tableData +=
-                        "<td><button class='delete-btn-acesso btn btn-danger btn-sm' data-id='" +
-                        item.id + "'>Excluir</button></td>";
+                        "<td><button class='delete-btn-contato btn btn-danger btn-sm' data-id='" +
+                        item.id_contatos + "'>Excluir</button></td>";
                     tableData += "</tr>";
                 });
-                $("#table_body_bancos").html(tableData);
+                $("#table_body_contato").html(tableData);
             },
             error: function(xhr, status, error) {
                 console.log("Erro na solicitação AJAX: " + error);
@@ -136,8 +161,8 @@ $(document).ready(function() {
         });
     }
 
-    $(document).on("click", ".delete-btn-acesso", function() {
-        var id_acesso = $(this).data("id");
+    $(document).on("click", ".delete-btn-contato", function() {
+        var id_contatos = $(this).data("id");
 
         Swal.fire({
             title: 'Tem certeza?',
@@ -148,17 +173,17 @@ $(document).ready(function() {
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                deleteItem(id_acesso);
+                deleteItem(id_contatos);
             }
         });
     });
 
-    function deleteItem(id_acesso) {
+    function deleteItem(id_contatos) {
         $.ajax({
-            url: 'pages/config/insert/delete_acessos.php',
+            url: 'pages/config/insert/delete_contato.php',
             type: 'POST',
             data: {
-                id_acesso_apagar: id_acesso
+                id_contatos: id_contatos
             },
             dataType: 'json',
             success: function(response) {
@@ -186,7 +211,7 @@ $(document).ready(function() {
         });
     }
 
-    document.getElementById("banco").addEventListener("submit", function(event) {
+    document.getElementById("contato").addEventListener("submit", function(event) {
         event.preventDefault();
 
         var formData = $(this).serialize();
@@ -195,7 +220,7 @@ $(document).ready(function() {
 
 
         $.ajax({
-            url: 'pages/config/insert/salve_bancos.php',
+            url: 'pages/config/insert/salve_contato.php',
             type: 'POST',
             data: formData,
             dataType: 'json',
@@ -210,7 +235,7 @@ $(document).ready(function() {
 
                 if (response.status) {
                     loadItems();
-                    document.getElementById("sistemas").reset();
+                    document.getElementById("contato").reset();
                 }
             },
             error: function(xhr, status, error) {

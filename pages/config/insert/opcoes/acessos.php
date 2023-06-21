@@ -11,7 +11,7 @@
                     <div class="card-body">
                         <form id="acessos">
                             <div class="form-group">
-                                <label for="id_funcionario" class="form-label">ID Funcionário:</label>
+                                <label for="id_funcionario" class="form-label">Funcionário:</label>
                                 <!-- <input type="text" class="form-control" id="id_funcionario" name="id_funcionario"
                                     required> -->
                                     <select type="text" class="form-control" id="id_funcionario" name="id_funcionario"
@@ -186,7 +186,7 @@ $(document).ready(function() {
                     tableData += "<td>" + item.nome_social + "</td>";
 
                     tableData += "<td>" + item.nome_sistema + "</td>";
-                    tableData += "<td>" + item.habilitado + "</td>";
+                    tableData += "<td>" + item.habilitado_icon + "</td>";
                     tableData +=
                         "<td><button class='delete-btn-acesso btn btn-danger btn-sm' data-id='" +
                         item.id_acesso + "'>Excluir</button></td>";

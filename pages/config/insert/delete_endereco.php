@@ -4,8 +4,8 @@
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Verificar se o parâmetro 'id_vt' foi enviado
-    if (isset($_POST["id_area"])) {
-        $id_area = $_POST["id_area"];
+    if (isset($_POST["id_endereco"])) {
+        $id_endereco = $_POST["id_endereco"];
 
         include '../../../database/databaseconnect.php';
 
@@ -20,8 +20,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             );
         } else {
             // Preparar a consulta SQL para excluir o item
-            $stmt = mysqli_prepare($conn, "DELETE FROM aux_areas WHERE id_area = ?");
-            mysqli_stmt_bind_param($stmt, "i", $id_area);
+            $stmt = mysqli_prepare($conn, "DELETE FROM aux_info_endereco WHERE id_endereco = ?");
+            mysqli_stmt_bind_param($stmt, "i", $id_endereco);
 
 
             // Executar a consulta SQL
