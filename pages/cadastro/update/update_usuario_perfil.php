@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST['name'];
     $email = $_POST['email'];
     $telefone = $_POST['telefone'];
-    $senha = $_POST['senha'];
+    $senha = md5($_POST['senha']);
     $grupo_acesso = $_POST['grupo_acesso'];
     $cpf = $_POST['cpf'];
 

@@ -26,10 +26,11 @@ if ($conn->connect_error) {
     $vlrSalario = $_POST["vlrSalario"];
     $status = $_POST["status"];
     $idFuncionario = $_POST["idFuncioanrio"];
+    $tipo_registro = $_POST["tipo_registro"];
 
     // Query SQL para inserir os dados no banco de dados
-    $sql = "INSERT INTO tb_history_cadastro (nome_social, nome_registro, sexo, genero, estado_civil, id_cargo, id_vt, id_superior, id_area, id_operacao, id_filial, tipo_regime, tipo_contrato, tipo_ponto, sistema_ponto, vlr_salario, status, id_funcionario)
-    VALUES ('$nomeSocial', '$nomeRegistro', '$sexo', '$genero', '$estadoCivil', '$idCargo', '$idVt', '$idSuperior', '$idArea', '$idOperacao', '$idFilial', '$tipoRegime', '$tipoContrato', '$tipoPonto', '$sistemaPonto', '$vlrSalario', '$status', '$idFuncionario')";
+    $sql = "INSERT INTO tb_history_cadastro (nome_social, nome_registro, sexo, genero, estado_civil, id_cargo, id_vt, id_superior, id_area, id_operacao, id_filial, tipo_regime, tipo_contrato, tipo_ponto, sistema_ponto, vlr_salario, status, id_funcionario, tipo_registro)
+    VALUES ('$nomeSocial', '$nomeRegistro', '$sexo', '$genero', '$estadoCivil', '$idCargo', '$idVt', '$idSuperior', '$idArea', '$idOperacao', '$idFilial', '$tipoRegime', '$tipoContrato', '$tipoPonto', '$sistemaPonto', '$vlrSalario', '$status', '$idFuncionario','$tipo_registro')";
 
 // Certifique-se de substituir "$idFuncionario" pela variável que contém o valor do funcionário associado a este registro.
 

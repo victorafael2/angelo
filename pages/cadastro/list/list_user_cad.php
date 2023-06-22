@@ -25,7 +25,7 @@
                 <tr>
 
                     <th class="sort border-top " data-sort="id_funcionario">ID</th>
-                    <th class="sort border-top " data-sort="cpf">CPF</th>
+                    <th class="sort border-top " data-sort="cpf">CPF/CNPJ</th>
                     <th class="sort border-top " data-sort="nome_social">Data de Cadastro</th>
                     <th class="sort border-top " data-sort="nome_registro">Data de Admissão</th>
                     <th class="sort border-top " data-sort="sexo">Data de Nascimento</th>
@@ -37,16 +37,16 @@
             <tbody class="list">
                             <?php
                             // Recupere os dados do MySQL
-                                        $sql = "SELECT subquery.idFuncionario, subquery.cpf, subquery.dataCadastro, subquery.dataAdmissao, subquery.dataNascimento
+                                        $sql = "SELECT subquery.idFuncionario, subquery.cpf, subquery.dataCadastro, subquery.dataAdmissao, subquery.dataNascimento, tipo
                                         FROM (
-                                            SELECT fcnpj.id AS idFuncionario, fcnpj.cnpj AS cpf, fcnpj.dataCadastro, fcnpj.dataAdmissao, fcnpj.dataNascimento
+                                            SELECT fcnpj.id AS idFuncionario, fcnpj.cnpj AS cpf, fcnpj.dataCadastro, fcnpj.dataAdmissao, fcnpj.dataNascimento, 'cnpj' AS tipo
                                             FROM funcionarios_cnpj AS fcnpj
                                             LEFT JOIN tb_history_cadastro ON tb_history_cadastro.id_funcionario = fcnpj.id
                                             WHERE tb_history_cadastro.id_funcionario IS NULL
 
                                             UNION ALL
 
-                                            SELECT f.idFuncionario, f.cpf, f.dataCadastro, f.dataAdmissao, f.dataNascimento
+                                            SELECT f.idFuncionario, f.cpf, f.dataCadastro, f.dataAdmissao, f.dataNascimento, 'cpf' AS tipo
                                             FROM funcionarios AS f
                                             LEFT JOIN tb_history_cadastro ON tb_history_cadastro.id_funcionario = f.idFuncionario
                                             WHERE tb_history_cadastro.id_funcionario IS NULL
@@ -69,7 +69,7 @@
                                 echo '<td class="align-middle white-space-nowrap text-end pe-0">';
                                 echo '<div class="font-sans-serif btn-reveal-trigger position-static">';
                                 echo '<button class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs--2" type="button" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><span class="fas fa-ellipsis-h fs--2"></span></button>';
-                                echo '<div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item" href="content_pages.php?id=3&id_func='.$row['idFuncionario'] . '">Ver/editar</a><a class="dropdown-item" href="#!">Export</a>';
+                                echo '<div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item" href="content_pages.php?id=3&id_func='.$row['idFuncionario'] . '&tipo='.$row['tipo'].'">Ver/editar</a><a class="dropdown-item" href="#!">Export</a>';
                                 echo '<div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">Remove</a>';
                                 echo '</div>';
                                 echo '</div>';

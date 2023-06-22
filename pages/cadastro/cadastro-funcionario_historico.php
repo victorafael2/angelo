@@ -2,6 +2,8 @@
 
 $id_funci = $_GET['id_func'];
 
+$tipo = $_GET['tipo'];
+
 
 // Query SQL para obter os dados existentes no banco de dados
 $query_history = "SELECT * FROM tb_history_cadastro where id_funcionario = $id_funci ORDER BY id_history DESC LIMIT 1";
@@ -30,34 +32,75 @@ $status = $row["status"] ?? "";
 
 
 
+if ($tipo == 'cpf') {
+    // Query SQL para obter os dados existentes no banco de dados
+    $query_cadastro = "SELECT * FROM funcionarios WHERE idfuncionario = $id_funci";
+    $result_cadastro = mysqli_query($conn, $query_cadastro);
+    $row = mysqli_fetch_assoc($result_cadastro);
+
+    // Preenche os campos com os dados existentes no banco, se houver
+    $idFuncionario = $row["idFuncionario"];
+    $dataCadastro = $row["dataCadastro"];
+    $cpf = $row["cpf"];
+    $dataAdmissao = $row["dataAdmissao"];
+    $dataDemissao = $row["dataDemissao"];
+    $dataNascimento = $row["dataNascimento"];
+    $rgNumero = $row["rgNumero"];
+    $rgEmissor = $row["rgEmissor"];
+    $rgUF = $row["rgUF"];
+    $rgDataEmissao = $row["rgDataEmissao"];
+    $cnhNumero = $row["cnhNumero"];
+    $cnhTipo = $row["cnhTipo"];
+    $ctpsNumero = $row["ctpsNumero"];
+    $ctpsSerie = $row["ctpsSerie"];
+    $ctpsDataEmissao = $row["ctpsDataEmissao"];
+    $ctpsUF = $row["ctpsUF"];
+    $pisNumero = $row["pisNumero"];
+    $eSocial = $row["eSocial"];
+    $sigilo = $row["sigilo"];
+    $created = $row["created"];
+} else {
+    // Use a different variable name for the else block
+    $query_cadastro_cnpj = "SELECT * FROM funcionarios_cnpj WHERE id = $id_funci";
+    $result_cadastro_cnpj = mysqli_query($conn, $query_cadastro_cnpj);
+    $row_cnpj = mysqli_fetch_assoc($result_cadastro_cnpj);
+
+    if ($row_cnpj) {
+        // Preenche as variáveis com os dados existentes no banco, se houver
+        $id = $row_cnpj["id"];
+        $cnpj = $row_cnpj["cnpj"];
+        $nome_fantasia = $row_cnpj["nome_fantasia"];
+        $razao_social = $row_cnpj["razao_social"];
+        $abertura = $row_cnpj["abertura"];
+        $atividade_principal = $row_cnpj["atividade_principal"];
+        $logradouro = $row_cnpj["logradouro"];
+        $municipio = $row_cnpj["municipio"];
+        $situacao = $row_cnpj["situacao"];
+        $porte = $row_cnpj["porte"];
+        $uf = $row_cnpj["uf"];
+        $tipo_cnpj = $row_cnpj["tipo"];
+        $email = $row_cnpj["email"];
+        $telefone = $row_cnpj["telefone"];
+        $dataCadastro = $row_cnpj["dataCadastro"];
+        $dataAdmissao = $row_cnpj["dataAdmissao"];
+        $dataDemissao = $row_cnpj["dataDemissao"];
+        $dataNascimento = $row_cnpj["dataNascimento"];
+        $cnhNumero = $row_cnpj["cnhNumero"];
+        $cnhTipo = $row_cnpj["cnhTipo"];
+    } else {
+        // Handle the case when the query didn't return any results
+        // You can display an error message or perform any other action here
+        echo "No data found for the provided ID.";
+    }
+}
 
 
-// Query SQL para obter os dados existentes no banco de dados
-$query_cadastro = "SELECT * FROM funcionarios where idfuncionario = $id_funci ";
-$result_cadastro = mysqli_query($conn, $query_cadastro);
-$row = mysqli_fetch_assoc($result_cadastro);
 
-// Preenche os campos com os dados existentes no banco, se houver
-$idFuncionario = $row["idFuncionario"];
-$dataCadastro = $row["dataCadastro"];
-$cpf = $row["cpf"];
-$dataAdmissao = $row["dataAdmissao"];
-$dataDemissao = $row["dataDemissao"];
-$dataNascimento = $row["dataNascimento"];
-$rgNumero = $row["rgNumero"];
-$rgEmissor = $row["rgEmissor"];
-$rgUF = $row["rgUF"];
-$rgDataEmissao = $row["rgDataEmissao"];
-$cnhNumero = $row["cnhNumero"];
-$cnhTipo = $row["cnhTipo"];
-$ctpsNumero = $row["ctpsNumero"];
-$ctpsSerie = $row["ctpsSerie"];
-$ctpsDataEmissao = $row["ctpsDataEmissao"];
-$ctpsUF = $row["ctpsUF"];
-$pisNumero = $row["pisNumero"];
-$eSocial = $row["eSocial"];
-$sigilo = $row["sigilo"];
-$created = $row["created"];
+
+
+
+
+
 
 
 ?>
@@ -144,23 +187,23 @@ $created = $row["created"];
 
 
                             <?php
-                        // Executar a consulta para obter os dados
-                        $sql_cargo = "SELECT id_cargo, cargo_nome FROM aux_cargos"; // Substitua "tabela" pelo nome correto da sua tabela
-                        $result_cargo = $conn->query($sql_cargo);
+                                // Executar a consulta para obter os dados
+                                $sql_cargo = "SELECT id_cargo, cargo_nome FROM aux_cargos"; // Substitua "tabela" pelo nome correto da sua tabela
+                                $result_cargo = $conn->query($sql_cargo);
 
-                        // Verificar se há resultados e criar as opções
-                        if ($result_cargo->num_rows > 0) {
-                            while ($row = $result_cargo->fetch_assoc()) {
-                                $id_cargo = $row["id_cargo"];
-                                $nome_cargo = $row["cargo_nome"];
-                                $visibilidade_cargo = ($idCargo == $id_cargo) ? "selected" : "";
+                                // Verificar se há resultados e criar as opções
+                                if ($result_cargo->num_rows > 0) {
+                                    while ($row = $result_cargo->fetch_assoc()) {
+                                        $id_cargo = $row["id_cargo"];
+                                        $nome_cargo = $row["cargo_nome"];
+                                        $visibilidade_cargo = ($idCargo == $id_cargo) ? "selected" : "";
 
-                                echo "<option value='$id_cargo' $visibilidade_cargo>$nome_cargo</option>";
-                            }
-                        } else {
-                            // echo "<option value=''>Nenhum resultado encontrado</option>";
-                        }
-                        ?>
+                                        echo "<option value='$id_cargo' $visibilidade_cargo>$nome_cargo</option>";
+                                    }
+                                } else {
+                                    // echo "<option value=''>Nenhum resultado encontrado</option>";
+                                }
+                                ?>
                         </select>
                     </div>
                 </div>
@@ -175,23 +218,23 @@ $created = $row["created"];
 
 
                             <?php
-                        // Executar a consulta para obter os dados
-                        $sql_vt = "SELECT id_vt, vt_nome FROM aux_vt"; // Substitua "tabela" pelo nome correto da sua tabela
-                        $result_vt = $conn->query($sql_vt);
+                                    // Executar a consulta para obter os dados
+                                    $sql_vt = "SELECT id_vt, vt_nome FROM aux_vt"; // Substitua "tabela" pelo nome correto da sua tabela
+                                    $result_vt = $conn->query($sql_vt);
 
-                        // Verificar se há resultados e criar as opções
-                        if ($result_vt->num_rows > 0) {
-                            while ($row = $result_vt->fetch_assoc()) {
-                                $id_vt = $row["id_vt"];
-                                $vt_nome = $row["vt_nome"];
-                                $visibilidade_vt = ($idVt == $id_vt) ? "selected" : "";
+                                    // Verificar se há resultados e criar as opções
+                                    if ($result_vt->num_rows > 0) {
+                                        while ($row = $result_vt->fetch_assoc()) {
+                                            $id_vt = $row["id_vt"];
+                                            $vt_nome = $row["vt_nome"];
+                                            $visibilidade_vt = ($idVt == $id_vt) ? "selected" : "";
 
-                                echo "<option value='$id_vt' $visibilidade_vt>$vt_nome</option>";
-                            }
-                        } else {
-                            // echo "<option value=''>Nenhum resultado encontrado</option>";
-                        }
-                        ?>
+                                            echo "<option value='$id_vt' $visibilidade_vt>$vt_nome</option>";
+                                        }
+                                    } else {
+                                        // echo "<option value=''>Nenhum resultado encontrado</option>";
+                                    }
+                                    ?>
                         </select>
                     </div>
 
@@ -205,63 +248,63 @@ $created = $row["created"];
 
 
                             <?php
-                        // Executar a consulta para obter os dados
-                        $sql_vr = "SELECT id_vr, vr_nome FROM aux_vr"; // Substitua "tabela" pelo nome correto da sua tabela
-                        $result_vr = $conn->query($sql_vr);
+                                    // Executar a consulta para obter os dados
+                                    $sql_vr = "SELECT id_vr, vr_nome FROM aux_vr"; // Substitua "tabela" pelo nome correto da sua tabela
+                                    $result_vr = $conn->query($sql_vr);
 
-                        // Verificar se há resultados e criar as opções
-                        if ($result_vr->num_rows > 0) {
-                            while ($row = $result_vr->fetch_assoc()) {
-                                $id_vr = $row["id_vr"];
-                                $vr_nome = $row["vr_nome"];
-                                $visibilidade_vr = ($idVr == $id_vr) ? "selected" : "";
+                                    // Verificar se há resultados e criar as opções
+                                    if ($result_vr->num_rows > 0) {
+                                        while ($row = $result_vr->fetch_assoc()) {
+                                            $id_vr = $row["id_vr"];
+                                            $vr_nome = $row["vr_nome"];
+                                            $visibilidade_vr = ($idVr == $id_vr) ? "selected" : "";
 
-                                echo "<option value='$id_vr' $visibilidade_vr>$vr_nome</option>";
-                            }
-                        } else {
-                            // echo "<option value=''>Nenhum resultado encontrado</option>";
-                        }
-                        ?>
+                                            echo "<option value='$id_vr' $visibilidade_vr>$vr_nome</option>";
+                                        }
+                                    } else {
+                                        // echo "<option value=''>Nenhum resultado encontrado</option>";
+                                    }
+                                    ?>
                         </select>
                     </div>
                     <div class="col-md-4">
                         <label for="idSuperior" class="form-label">Superior</label>
                         <!-- <input type="text" class="form-control" id="idSuperior" name="idSuperior"
                             value="<?php echo $idSuperior; ?>"> -->
-                            <select type="text" class="form-control" id="idSuperior" name="idSuperior"
-                                        data-choices="data-choices"
-                                        data-options='{"removeItemButton":true,"placeholder":true,"shouldSort":false}'>
-                                        <option value="">Selecione</option>
-                                        <option value="sem_superior">Sem Superior</option>
+                        <select type="text" class="form-control" id="idSuperior" name="idSuperior"
+                            data-choices="data-choices"
+                            data-options='{"removeItemButton":true,"placeholder":true,"shouldSort":false}'>
+                            <option value="">Selecione</option>
+                            <option value="sem_superior">Sem Superior</option>
 
 
 
-                                        <?php
-                                        // Executar a consulta para obter os dados
-                                        $sql_vt = "SELECT id_funcionario, id_history AS max_id, nome_social
-                                        FROM tb_history_cadastro
-                                        WHERE (id_funcionario, id_history) IN (
-                                          SELECT id_funcionario, MAX(id_history)
-                                          FROM tb_history_cadastro
-                                          GROUP BY id_funcionario
-                                        );
-                                        "; // Substitua "tabela" pelo nome correto da sua tabela
-                                        $result_vt = $conn->query($sql_vt);
+                            <?php
+                                                // Executar a consulta para obter os dados
+                                                $sql_vt = "SELECT id_funcionario, id_history AS max_id, nome_social
+                                                FROM tb_history_cadastro
+                                                WHERE (id_funcionario, id_history) IN (
+                                                SELECT id_funcionario, MAX(id_history)
+                                                FROM tb_history_cadastro
+                                                GROUP BY id_funcionario
+                                                );
+                                                "; // Substitua "tabela" pelo nome correto da sua tabela
+                                                $result_vt = $conn->query($sql_vt);
 
-                                        // Verificar se há resultados e criar as opções
-                                        if ($result_vt->num_rows > 0) {
-                                            while ($row = $result_vt->fetch_assoc()) {
-                                                $id_funcionario = $row["id_funcionario"];
-                                                $nome_social = $row["nome_social"];
-                                                // $visibilidade_vt = ($idVt == $id_vt) ? "selected" : "";
+                                                // Verificar se há resultados e criar as opções
+                                                if ($result_vt->num_rows > 0) {
+                                                    while ($row = $result_vt->fetch_assoc()) {
+                                                        $id_funcionario = $row["id_funcionario"];
+                                                        $nome_social = $row["nome_social"];
+                                                        // $visibilidade_vt = ($idVt == $id_vt) ? "selected" : "";
 
-                                                echo "<option value='$id_funcionario' >$id_funcionario - $nome_social</option>";
-                                            }
-                                        } else {
-                                            // echo "<option value=''>Nenhum resultado encontrado</option>";
-                                        }
-                                        ?>
-                                    </select>
+                                                        echo "<option value='$id_funcionario' >$id_funcionario - $nome_social</option>";
+                                                    }
+                                                } else {
+                                                    // echo "<option value=''>Nenhum resultado encontrado</option>";
+                                                }
+                                                ?>
+                        </select>
                     </div>
                     <div class="col-md-4">
                         <label for="idArea" class="form-label">Área</label>
@@ -270,23 +313,23 @@ $created = $row["created"];
                             <option value="">Selecione</option>
 
                             <?php
-                        // Executar a consulta para obter os dados
-                        $sql_areas = "SELECT id_area, nome_area FROM aux_areas"; // Substitua "tabela" pelo nome correto da sua tabela
-                        $result_areas = $conn->query($sql_areas);
+                                    // Executar a consulta para obter os dados
+                                    $sql_areas = "SELECT id_area, nome_area FROM aux_areas"; // Substitua "tabela" pelo nome correto da sua tabela
+                                    $result_areas = $conn->query($sql_areas);
 
-                        // Verificar se há resultados e criar as opções
-                        if ($result_areas->num_rows > 0) {
-                            while ($row = $result_areas->fetch_assoc()) {
-                                $id_area = $row["id_area"];
-                                $nome_area = $row["nome_area"];
-                                $visibilidade_area = ($idArea == $id_area) ? "selected" : "";
+                                    // Verificar se há resultados e criar as opções
+                                    if ($result_areas->num_rows > 0) {
+                                        while ($row = $result_areas->fetch_assoc()) {
+                                            $id_area = $row["id_area"];
+                                            $nome_area = $row["nome_area"];
+                                            $visibilidade_area = ($idArea == $id_area) ? "selected" : "";
 
-                                echo "<option value='$id_area' $visibilidade_area>$nome_area</option>";
-                            }
-                        } else {
-                            // echo "<option value=''>Nenhum resultado encontrado</option>";
-                        }
-                        ?>
+                                            echo "<option value='$id_area' $visibilidade_area>$nome_area</option>";
+                                        }
+                                    } else {
+                                        // echo "<option value=''>Nenhum resultado encontrado</option>";
+                                    }
+                                    ?>
                         </select>
                     </div>
                 </div>
@@ -300,23 +343,23 @@ $created = $row["created"];
                             <option value="">Selecione</option>
 
                             <?php
-                        // Executar a consulta para obter os dados
-                        $sql_areas = "SELECT id_operacao, nome_operacao FROM aux_operacoes"; // Substitua "tabela" pelo nome correto da sua tabela
-                        $result_areas = $conn->query($sql_areas);
+                                    // Executar a consulta para obter os dados
+                                    $sql_areas = "SELECT id_operacao, nome_operacao FROM aux_operacoes"; // Substitua "tabela" pelo nome correto da sua tabela
+                                    $result_areas = $conn->query($sql_areas);
 
-                        // Verificar se há resultados e criar as opções
-                        if ($result_areas->num_rows > 0) {
-                            while ($row = $result_areas->fetch_assoc()) {
-                                $id_area = $row["id_operacao"];
-                                $nome_area = $row["nome_operacao"];
-                                $visibilidade_area = ($idOperacao == $id_area) ? "selected" : "";
+                                    // Verificar se há resultados e criar as opções
+                                    if ($result_areas->num_rows > 0) {
+                                        while ($row = $result_areas->fetch_assoc()) {
+                                            $id_area = $row["id_operacao"];
+                                            $nome_area = $row["nome_operacao"];
+                                            $visibilidade_area = ($idOperacao == $id_area) ? "selected" : "";
 
-                                echo "<option value='$id_area' $visibilidade_area>$nome_area</option>";
-                            }
-                        } else {
-                            // echo "<option value=''>Nenhum resultado encontrado</option>";
-                        }
-                        ?>
+                                            echo "<option value='$id_area' $visibilidade_area>$nome_area</option>";
+                                        }
+                                    } else {
+                                        // echo "<option value=''>Nenhum resultado encontrado</option>";
+                                    }
+                                    ?>
                         </select>
                     </div>
                     <div class="col-md-4">
@@ -328,39 +371,45 @@ $created = $row["created"];
                             <option value="">Selecione</option>
 
                             <?php
-                        // Executar a consulta para obter os dados
-                        $sql_areas = "SELECT id_filial, filial_nome FROM aux_filiais"; // Substitua "tabela" pelo nome correto da sua tabela
-                        $result_areas = $conn->query($sql_areas);
+                                    // Executar a consulta para obter os dados
+                                    $sql_areas = "SELECT id_filial, filial_nome FROM aux_filiais"; // Substitua "tabela" pelo nome correto da sua tabela
+                                    $result_areas = $conn->query($sql_areas);
 
-                        // Verificar se há resultados e criar as opções
-                        if ($result_areas->num_rows > 0) {
-                            while ($row = $result_areas->fetch_assoc()) {
-                                $id_area = $row["id_filial"];
-                                $nome_area = $row["filial_nome"];
-                                $visibilidade_area = ($idFilial == $id_area) ? "selected" : "";
+                                    // Verificar se há resultados e criar as opções
+                                    if ($result_areas->num_rows > 0) {
+                                        while ($row = $result_areas->fetch_assoc()) {
+                                            $id_area = $row["id_filial"];
+                                            $nome_area = $row["filial_nome"];
+                                            $visibilidade_area = ($idFilial == $id_area) ? "selected" : "";
 
-                                echo "<option value='$id_area' $visibilidade_area>$nome_area</option>";
-                            }
-                        } else {
-                            // echo "<option value=''>Nenhum resultado encontrado</option>";
-                        }
-                        ?>
+                                            echo "<option value='$id_area' $visibilidade_area>$nome_area</option>";
+                                        }
+                                    } else {
+                                        // echo "<option value=''>Nenhum resultado encontrado</option>";
+                                    }
+                                    ?>
                         </select>
                     </div>
                     <div class="col-md-4">
 
-                    <label for="tipoContrato" class="form-label">Tipo Contrato</label>
+                        <label for="tipoContrato" class="form-label">Tipo Contrato</label>
                         <!-- <input type="text" class="form-control" id="tipoContrato" name="tipoContrato"
                             value="<?php echo $tipoContrato; ?>"> -->
                         <select class="form-select" id="tipoContrato" name="tipoContrato" data-choices="data-choices"
                             data-options='{"removeItemButton":true,"placeholder":true}'>
                             <option value="">Selecione</option>
-                            <option value="Indeterminado" <?php if ($tipoContrato == "Indeterminado") echo "selected"; ?>>Indeterminado</option>
-                            <option value="Determinado" <?php if ($tipoContrato == "Determinado") echo "selected"; ?>>Determinado</option>
-                            <option value="Temporário" <?php if ($tipoContrato == "Temporário") echo "selected"; ?>>Temporário</option>
-                            <option value="Home Office" <?php if ($tipoContrato == "Home Office") echo "selected"; ?>>Home Office</option>
-                            <option value="Estágio" <?php if ($tipoContrato == "Estágio") echo "selected"; ?>>Estágio</option>
-                            <option value="Experiência" <?php if ($tipoContrato == "Experiência") echo "selected"; ?>>Experiência</option>
+                            <option value="Indeterminado"
+                                <?php if ($tipoContrato == "Indeterminado") echo "selected"; ?>>Indeterminado</option>
+                            <option value="Determinado" <?php if ($tipoContrato == "Determinado") echo "selected"; ?>>
+                                Determinado</option>
+                            <option value="Temporário" <?php if ($tipoContrato == "Temporário") echo "selected"; ?>>
+                                Temporário</option>
+                            <option value="Home Office" <?php if ($tipoContrato == "Home Office") echo "selected"; ?>>
+                                Home Office</option>
+                            <option value="Estágio" <?php if ($tipoContrato == "Estágio") echo "selected"; ?>>Estágio
+                            </option>
+                            <option value="Experiência" <?php if ($tipoContrato == "Experiência") echo "selected"; ?>>
+                                Experiência</option>
                         </select>
 
                     </div>
@@ -377,10 +426,13 @@ $created = $row["created"];
                             <option value="">Selecione</option>
                             <option value="CLT" <?php if ($tipoRegime == "CLT") echo "selected"; ?>>CLT</option>
                             <option value="PJ" <?php if ($tipoRegime == "PJ") echo "selected"; ?>>PJ</option>
-                            <option value="Estágio" <?php if ($tipoRegime == "Estágio") echo "selected"; ?>>Estágio</option>
-                            <option value="Jovem Aprendiz" <?php if ($tipoRegime == "Jovem Aprendiz") echo "selected"; ?>>
+                            <option value="Estágio" <?php if ($tipoRegime == "Estágio") echo "selected"; ?>>Estágio
+                            </option>
+                            <option value="Jovem Aprendiz"
+                                <?php if ($tipoRegime == "Jovem Aprendiz") echo "selected"; ?>>
                                 Jovem Aprendiz</option>
-                            <option value="Temporária" <?php if ($tipoRegime == "Temporária") echo "selected"; ?>>Temporária
+                            <option value="Temporária" <?php if ($tipoRegime == "Temporária") echo "selected"; ?>>
+                                Temporária
                             </option>
                             <option value="Terceirização" <?php if ($tipoRegime == "Terceirização") echo "selected"; ?>>
                                 Terceirização</option>
@@ -390,13 +442,16 @@ $created = $row["created"];
                         <label for="tipoPonto" class="form-label">Tipo Ponto</label>
                         <!-- <input type="text" class="form-control" id="tipoPonto" name="tipoPonto"
                             value="<?php echo $tipoPonto; ?>"> -->
-                            <select class="form-select" id="tipoPonto" name="tipoPonto" data-choices="data-choices"
+                        <select class="form-select" id="tipoPonto" name="tipoPonto" data-choices="data-choices"
                             data-options='{"removeItemButton":true,"placeholder":true}'>
                             <option value="">Selecione</option>
                             <option value="Manual" <?php if ($tipoPonto == "Manual") echo "selected"; ?>>Manual</option>
-                            <option value="Mecânico" <?php if ($tipoPonto == "Mecânico") echo "selected"; ?>>Mecânico</option>
-                            <option value="Eletrônico " <?php if ($tipoPonto == "Eletrônico") echo "selected"; ?>>Eletrônico </option>
-                            <option value="Digital" <?php if ($tipoPonto == "Digital") echo "selected"; ?>>Digital</option>
+                            <option value="Mecânico" <?php if ($tipoPonto == "Mecânico") echo "selected"; ?>>Mecânico
+                            </option>
+                            <option value="Eletrônico " <?php if ($tipoPonto == "Eletrônico") echo "selected"; ?>>
+                                Eletrônico </option>
+                            <option value="Digital" <?php if ($tipoPonto == "Digital") echo "selected"; ?>>Digital
+                            </option>
 
 
                         </select>
@@ -417,217 +472,43 @@ $created = $row["created"];
                         <label for="status" class="form-label">Status</label>
                         <!-- <input type="text" class="form-control" id="status" name="status"
                             value="<?php echo $status; ?>"> -->
-                            <select class="form-select" id="status" name="status" data-choices="data-choices"
+                        <select class="form-select" id="status" name="status" data-choices="data-choices"
                             data-options='{"removeItemButton":true,"placeholder":true}'>
                             <option value="">Selecione</option>
                             <option value="Ativo" <?php if ($status == "Ativo") echo "selected"; ?>>Ativo</option>
                             <option value="Férias" <?php if ($status == "Férias") echo "selected"; ?>>Férias</option>
-                            <option value="Afastado" <?php if ($status == "Afastado") echo "selected"; ?>>Afastado </option>
-                            <option value="Desligado" <?php if ($status == "Desligado") echo "selected"; ?>>Desligado</option>
+                            <option value="Afastado" <?php if ($status == "Afastado") echo "selected"; ?>>Afastado
+                            </option>
+                            <option value="Desligado" <?php if ($status == "Desligado") echo "selected"; ?>>Desligado
+                            </option>
 
 
                         </select>
                     </div>
+
+                    <div class="col-md-4 d-none">
+                            <label for="tipo_registro" class="form-label">tipo_registro</label>
+                            <input type="text" class="form-control" id="tipo_registro" name="tipo_registro"
+                                value="<?php echo $tipo; ?>">
+                        </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Salvar</button>
             </form>
         </div>
 
 
-        <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
-            <h3>Cadastro </h3>
-            <form id="form_2" class="mb-3">
-                <div class="row">
-                    <!-- <div class="col-sm-4">
-            <div class="form-group">
-                <label for="idFuncionario">ID Funcionário:</label>
-                <input type="text" class="form-control" id="idFuncionario" name="idFuncionario" value="<?php echo $idFuncionario; ?>">
-            </div>
-        </div> -->
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label for="dataCadastro">Data de Cadastro:</label>
-                            <input type="date" class="form-control" id="dataCadastro" name="dataCadastro"
-                                value="<?php echo $dataCadastro; ?>">
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label for="cpf">CPF:</label>
-                            <?php
-                                function formatarCPF($cpf) {
-                                    // Remover caracteres não numéricos
-                                    $cpf = preg_replace('/[^0-9]/', '', $cpf);
 
-                                    // Verificar se o CPF possui 11 dígitos
-                                    if (strlen($cpf) == 11) {
-                                        // Formatar CPF (XXX.XXX.XXX-XX)
-                                        $cpf_formatado = substr($cpf, 0, 3) . '.' . substr($cpf, 3, 3) . '.' . substr($cpf, 6, 3) . '-' . substr($cpf, 9, 2);
-                                        return $cpf_formatado;
-                                    }
-
-                                    // Se o CPF não possuir 11 dígitos, retorna o valor original
-                                    return $cpf;
-                                }
-                                ?>
-                            <!-- <input type="text" class="form-control" id="cpf" name="cpf" value="<?php echo formatarCPF($cpf); ?>"> -->
-                            <input type="text" class="form-control" id="cpf" name="cpf" value="<?php echo $cpf; ?>"
-                                maxlength="14" oninput="formatarCPF(this)">
-
-                            <script>
-                            function formatarCPF(input) {
-                                // Remove caracteres não numéricos
-                                var cpf = input.value.replace(/\D/g, '');
-
-                                // Verifica se o CPF possui 11 dígitos
-                                if (cpf.length === 11) {
-                                    // Formata CPF (XXX.XXX.XXX-XX)
-                                    cpf = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
-                                }
-
-                                // Atualiza o valor do input com a formatação
-                                input.value = cpf;
-                            }
-                            </script>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label for="dataAdmissao">Data de Admissão:</label>
-                            <input type="date" class="form-control" id="dataAdmissao" name="dataAdmissao"
-                                value="<?php echo $dataAdmissao; ?>">
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label for="dataDemissao">Data de Demissão:</label>
-                            <input type="date" class="form-control" id="dataDemissao" name="dataDemissao"
-                                value="<?php echo $dataDemissao; ?>">
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label for="dataNascimento">Data de Nascimento:</label>
-                            <input type="date" class="form-control" id="dataNascimento" name="dataNascimento"
-                                value="<?php echo $dataNascimento; ?>">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label for="rgNumero">RG Número:</label>
-                            <input type="text" class="form-control" id="rgNumero" name="rgNumero"
-                                value="<?php echo $rgNumero; ?>">
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label for="rgEmissor">RG Emissor:</label>
-                            <input type="text" class="form-control" id="rgEmissor" name="rgEmissor"
-                                value="<?php echo $rgEmissor; ?>">
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label for="rgUF">RG UF:</label>
-                            <input type="text" class="form-control" id="rgUF" name="rgUF" value="<?php echo $rgUF; ?>">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label for="rgDataEmissao"> RG Data de Emissão:</label>
-                            <input type="date" class="form-control" id="rgDataEmissao" name="rgDataEmissao"
-                                value="<?php echo $rgDataEmissao; ?>">
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label for="cnhNumero">CNH Número:</label>
-                            <input type="text" class="form-control" id="cnhNumero" name="cnhNumero"
-                                value="<?php echo $cnhNumero; ?>">
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label for="cnhTipo">CNH Tipo:</label>
-                            <input type="text" class="form-control" id="cnhTipo" name="cnhTipo"
-                                value="<?php echo $cnhTipo; ?>">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label for="ctpsNumero">CTPS Número:</label>
-                            <input type="text" class="form-control" id="ctpsNumero" name="ctpsNumero"
-                                value="<?php echo $ctpsNumero; ?>">
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label for="ctpsSerie">CTPS Série:</label>
-                            <input type="text" class="form-control" id="ctpsSerie" name="ctpsSerie"
-                                value="<?php echo $ctpsSerie; ?>">
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label for="ctpsDataEmissao">CTPS Data de Emissão:</label>
-                            <input type="date" class="form-control" id="ctpsDataEmissao" name="ctpsDataEmissao"
-                                value="<?php echo $ctpsDataEmissao; ?>">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label for="ctpsUF">CTPS UF:</label>
-                            <input type="text" class="form-control" id="ctpsUF" name="ctpsUF"
-                                value="<?php echo $ctpsUF; ?>">
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label for="pisNumero">PIS Número:</label>
-                            <input type="text" class="form-control" id="pisNumero" name="pisNumero"
-                                value="<?php echo $pisNumero; ?>">
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label for="eSocial">eSocial:</label>
-                            <input type="text" class="form-control" id="eSocial" name="eSocial"
-                                value="<?php echo $eSocial; ?>">
-                        </div>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label for="sigilo">Sigilo:</label>
-                            <select class="form-control" id="sigilo" name="sigilo">
-                                <option value="1" <?php if($sigilo == 1) echo "selected"; ?>>Sim</option>
-                                <option value="0" <?php if($sigilo == 0) echo "selected"; ?>>Não</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4 d-none">
-                            <label for="idFuncioanrio" class="form-label">Id Funcioanrio</label>
-                            <input type="text" class="form-control" id="idFuncioanrio" name="idFuncioanrio"
-                                value="<?php echo $id_funci; ?>">
-                        </div>
-                    </div>
-                </div>
-
-                <button type="submit" class="btn btn-primary">Enviar</button>
-            </form>
+        <?php if ($tipo == 'cpf')  {
+            include 'include_cpf.php';
+        } else {
+            include 'include_cnpj.php';
+        }
 
 
-        </div>
+
+        ?>
+
+
     </div>
 </div>
 

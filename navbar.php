@@ -159,9 +159,9 @@ echo generateMenuHTML($menuData);
 
                   ?> -->
 
-                    <?php // Exibir o menu cascata no HTML
-echo generateMenuHTML($menuData);
- ?>
+                            <?php // Exibir o menu cascata no HTML
+                            echo generateMenuHTML($menuData);
+                            ?>
 
 
 

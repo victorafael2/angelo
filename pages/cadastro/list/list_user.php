@@ -26,7 +26,7 @@
                 <tr>
 
                     <th class="sort border-top " data-sort="id_funcionario">ID</th>
-                    <th class="sort border-top " data-sort="cpf">CPF</th>
+                    <th class="sort border-top " data-sort="cpf">CPF/CNPJ</th>
                     <th class="sort border-top " data-sort="nome_social">Nome Social</th>
                     <th class="sort border-top " data-sort="nome_registro">Nome Registro</th>
                     <th class="sort border-top " data-sort="sexo">Sexo</th>
