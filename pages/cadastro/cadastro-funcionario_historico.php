@@ -496,6 +496,7 @@ if ($tipo == 'cpf') {
             </form>
         </div>
 
+       
 
 
         <?php if ($tipo == 'cpf')  {

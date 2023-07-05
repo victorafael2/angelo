@@ -149,10 +149,10 @@ exit();
                                         <div class="auth-form-box">
                                             <div class="text-center mb-7"><a
                                                     class="d-flex flex-center text-decoration-none mb-4"
-                                                    href="index.html">
+                                                    href="#">
                                                     <div
                                                         class="d-flex align-items-center fw-bolder fs-5 d-inline-block">
-                                                        <img src="assets/img/icons/logo.png" alt="phoenix" width="58" />
+                                                        <img src="assets/png/logo.png" alt="phoenix" width="58" />
                                                     </div>
                                                 </a>
                                                 <h3 class="text-1000">Entrar</h3>

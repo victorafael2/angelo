@@ -199,9 +199,9 @@ echo $dataHoraAtual;
                 href="content_pages.php?id=<?php echo $_SESSION['destinationPage']; ?>">
 
                 <div class="d-flex align-items-center">
-                    <div class="d-flex align-items-center"><img src="assets/img/icons/logo.png" alt="phoenix"
-                            width="27" />
-                        <p class="logo-text ms-2 d-none d-sm-block">CRM</p>
+                    <div class="d-flex align-items-center"><img src="assets/png/logo.png" alt="crm"
+                            width="80" />
+                        <!-- <p class="logo-text ms-2 d-none d-sm-block">CRM</p> -->
                     </div>
                 </div>
             </a>

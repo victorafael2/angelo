@@ -166,11 +166,7 @@
 
         </div>
 
-        <div class="col-md-4 ">
-                            <label for="tipo_registro" class="form-label">tipo_registro</label>
-                            <input type="text" class="form-control" id="tipo_registro" name="tipo_registro"
-                                value="<?php echo $tipo; ?>">
-                        </div>
+      
 
         <br>
 

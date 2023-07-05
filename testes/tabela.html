@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tabela com campo de checkbox</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.3/bootstrap-table.min.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Tabela com campo de checkbox</h2>
+    <button id="updateSelectedBtn" class="btn btn-primary">Atualizar Selecionados</button>
+    <table id="table" data-toggle="table" data-height="300">
+      <thead>
+        <tr>
+          <th data-field="checkbox" data-checkbox="true"></th>
+          <th data-field="id">ID</th>
+          <th data-field="name">Nome</th>
+          <th data-field="email">Email</th>
+          <th data-field="supervisor">Supervisor</th>
+          <th data-field="sector">Setor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td>1</td>
+          <td>João</td>
+          <td>joao@example.com</td>
+          <td>Maria</td>
+          <td>Vendas</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>2</td>
+          <td>Maria</td>
+          <td>maria@example.com</td>
+          <td>Carlos</td>
+          <td>Financeiro</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>3</td>
+          <td>Carlos</td>
+          <td>carlos@example.com</td>
+          <td>Julia</td>
+          <td>TI</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.3/bootstrap-table.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      // Redirecionar para a outra página com os IDs selecionados
+      $('#updateSelectedBtn').on('click', function() {
+        var selectedRows = $('#table').bootstrapTable('getSelections');
+        var selectedIds = selectedRows.map(function(row) {
+          return row.id;
+        });
+        var url = 'pagina-alteracao.html?ids=' + selectedIds.join(',');
+        window.location.href = url;
+      });
+    });
+  </script>
+</body>
+</html>

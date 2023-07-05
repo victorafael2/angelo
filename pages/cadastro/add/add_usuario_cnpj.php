@@ -28,16 +28,16 @@ $dataHoraAtual = date("Y-m-d H:i:s");
     $dataDemissao = $_POST['dataDemissao'];
     $dataNascimento = $_POST['dataNascimento'];
     $cnhNumero = $_POST['cnhNumero'];
-    // $cnhTipo = isset($_POST['cnhTipo']) ? implode(',', $_POST['cnhTipo']) : '';
-    $usuariosString = $_POST['modal-usuarios']; // String JSON dos valores selecionados do campo "mySelect"
-$usuarios = json_decode($usuariosString); // Decodifica o JSON em um array
+    $cnhTipo = isset($_POST['cnhTipo']) ? implode(',', $_POST['cnhTipo']) : '';
+    // $usuariosString = $_POST['modal-usuarios']; // String JSON dos valores selecionados do campo "mySelect"
+// $usuarios = json_decode($usuariosString); // Decodifica o JSON em um array
 
 // Verifica se $usuarios é um array antes de continuar
-if (is_array($usuarios)) {
-    $usuariosString = implode(', ', $usuarios); // Converte o array em uma string separada por vírgulas
-} else {
-    // Trate o caso em que $usuarios não é um array, se necessário
-}
+// if (is_array($usuarios)) {
+//     $usuariosString = implode(', ', $usuarios); // Converte o array em uma string separada por vírgulas
+// } else {
+//     // Trate o caso em que $usuarios não é um array, se necessário
+// }
 
 // Insere os dados na tabela AUX_VT
 $sql = "INSERT INTO funcionarios_cnpj (cnpj, nome_fantasia, razao_social, abertura, atividade_principal, logradouro, municipio, situacao, porte, uf, tipo, email, telefone, dataCadastro, dataAdmissao, dataDemissao, dataNascimento, cnhNumero, cnhTipo)

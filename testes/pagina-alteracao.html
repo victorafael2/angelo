@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Outra Página</title>
+</head>
+<body>
+  <h2>Atualizar Setor/Supervisor</h2>
+
+  <form id="updateForm">
+    <label for="selectField">Selecione o campo:</label>
+    <select id="selectField" name="field">
+      <option value="setor">Setor</option>
+      <option value="supervisor">Supervisor</option>
+    </select>
+
+    <label for="newValueField">Novo valor:</label>
+    <input type="text" id="newValueField" name="newValue">
+
+    <button type="submit">Atualizar</button>
+  </form>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      // Obter IDs da URL
+      var urlParams = new URLSearchParams(window.location.search);
+      var ids = urlParams.get('ids');
+
+      // Manipular formulário de atualização
+      $('#updateForm').on('submit', function(e) {
+        e.preventDefault();
+
+        var selectedField = $('#selectField').val();
+        var newValue = $('#newValueField').val();
+
+        // Aqui você pode fazer a lógica de atualização dos registros com os IDs e os valores selecionados
+
+        // Exemplo de exibição dos dados
+        console.log('IDs selecionados:', ids);
+        console.log('Campo selecionado:', selectedField);
+        console.log('Novo valor:', newValue);
+
+        // Redirecionar de volta para a página anterior
+        window.history.back();
+      });
+    });
+  </script>
+</body>
+</html>

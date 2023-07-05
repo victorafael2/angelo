@@ -48,16 +48,18 @@ while ($row1 = mysqli_fetch_array($result)) {
     <!-- ===============================================-->
     <!--    Favicons-->
     <!-- ===============================================-->
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/logo.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/logo.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/logo.png">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/png/logo.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/png/logo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/png/logo.png">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/png/logo.png">
     <link rel="manifest" href="assets/img/favicons/manifest.json">
-    <meta name="msapplication-TileImage" href="assets/img/logo.png">
+    <meta name="msapplication-TileImage" href="assets/png/logo.png">
     <meta name="theme-color" content="#ffffff">
     <script src="vendors/imagesloaded/imagesloaded.pkgd.min.js"></script>
     <script src="vendors/simplebar/simplebar.min.js"></script>
     <script src="assets/js/config.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.3/bootstrap-table.min.css">
 
 
     <!-- ===============================================-->
