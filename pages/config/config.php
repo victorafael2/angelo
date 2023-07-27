@@ -94,6 +94,13 @@
         <span class="fa-solid fa-address-book me-2"></span>Contato
         </a>
     </li>
+
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" id="custo-tab" data-bs-toggle="tab" href="#tab-custo" role="tab" aria-controls="tab-custo" aria-selected="true">
+        <span class="fa-solid fa-file-invoice me-2"></span>Centro de Custo
+        </a>
+
+    </li>
 </ul>
 
 <div class="tab-content mt-3" id="myTabContent">
@@ -129,6 +136,8 @@
     <?php include 'pages/config/insert/opcoes/endereco.php'?>
 
     <?php include 'pages/config/insert/opcoes/contato.php'?>
+
+    <?php include 'pages/config/insert/opcoes/custo.php'?>
 
 
 

@@ -46,20 +46,27 @@ function generateMenuHTML($data)
     $html = '';
 
     foreach ($data as $menu) {
-        $html .= '<div class="nav-item-wrapper">';
-        $html .= '<a class="nav-link dropdown-indicator label-1" href="#' . $menu['menu_name'] . '" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="' . $menu['menu_name'] . '">';
+        // Replace spaces with underscores in menu_name
+        $menu_id = str_replace(' ', '_', $menu['menu_name']);
+
+        $html .= '<div class="nav-item-wrapper fs--1">';
+        $html .= '<a class="nav-link dropdown-indicator label-1" href="#' . $menu_id . '" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="' . $menu_id . '">';
         $html .= '<div class="d-flex align-items-center">';
         $html .= '<div class="dropdown-indicator-icon"><span class="fas fa-caret-right"></span></div>';
         $html .= '<span class="nav-link-icon">' . $menu['icone'] . '</span>';
         $html .= '<span class="nav-link-text">' . $menu['menu_name'] . '</span>';
+        // Check the 'breve' property to decide whether to display additional text
+        if ($menu['breve'] === 's') {
+          $html .= '<span class="badge ms-2 badge badge-phoenix badge-phoenix-info nav-link-badge">Breve</span>';
+      }
         $html .= '</div>';
         $html .= '</a>';
         $html .= '<div class="parent-wrapper label-1">';
-        $html .= '<ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="' . $menu['menu_name'] . '">';
+        $html .= '<ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="' . $menu_id . '">';
         $html .= '<li class="collapsed-nav-item-title d-none">' . $menu['menu_name'] . '</li>';
 
         foreach ($menu['submenu'] as $submenu) {
-            $html .= '<li class="nav-item"><a class="nav-link" href="content_pages.php?id=' . $submenu['submenu_id'] . '" data-bs-toggle="" aria-expanded="false">';
+            $html .= '<li class="nav-item fs--1"><a class="nav-link" href="content_pages.php?id=' . $submenu['submenu_id'] . '" data-bs-toggle="" aria-expanded="false">';
             $html .= '<div class="d-flex align-items-center"><span class="nav-link-text">' . $submenu['submenu_name'] . '</span></div>';
             $html .= '</a></li>';
         }
@@ -72,8 +79,9 @@ function generateMenuHTML($data)
     return $html;
 }
 
+
 // Exibir o menu dinâmico no HTML
-echo generateMenuHTML($menuData);
+// echo generateMenuHTML($menuData);
 
 // Fechar a conexão com o banco de dados
 // $conn->close();
@@ -124,40 +132,14 @@ echo generateMenuHTML($menuData);
 
                 <li class="nav-item">
                     <!-- label-->
-                    <p class="navbar-vertical-label">Apps
+                    <p class="navbar-vertical-label mb--3">Menu
                     </p>
                     <hr class="navbar-vertical-line" />
 
 
 
 
-                    <!-- <?php
-                                            // Generate the HTML code dynamically
-                          while ($row = mysqli_fetch_assoc($result)) {
-                            // $idFuncionario = $row['idFuncionario'];
-                            $nome_menu = $row['nome'];
-                            $id_menu = $row['id'];
-                            $caminho = 'content_pages.php?id=' . $id_menu ;
 
-                            // Modify the following line to include the appropriate URL or link destination
-                            // $link = 'pages/cadastro/cadastro_funcionario.php?id=' . $idFuncionario;
-
-
-                            $html = '<div class="nav-item-wrapper">
-                                        <a class="nav-link label-1" href="' . $caminho . '" role="button" data-bs-toggle="" aria-expanded="false">
-                                            <div class="d-flex align-items-center">
-                                                <span class="nav-link-icon"><span data-feather="edit"></span></span>
-                                                <span class="nav-link-text-wrapper">
-                                                    <span class="nav-link-text">' . $nome_menu . '</span>
-                                                </span>
-                                            </div>
-                                        </a>
-                                    </div>';
-
-                            echo $html;
-                          }
-
-                  ?> -->
 
                             <?php // Exibir o menu cascata no HTML
                             echo generateMenuHTML($menuData);

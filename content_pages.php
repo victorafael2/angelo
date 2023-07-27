@@ -5,10 +5,10 @@ include 'navbar.php';
 
 
 // $id = $_GET['id'];
-if (empty($_GET['id'])) {
-    // Redirecionar para home.php com o parâmetro id
-    // echo "<html><head><meta http-equiv='refresh' content='0;url=home.php'></head></html>";
-
+if (!isset($_GET['id']) || empty($_GET['id'])) {
+    $id = 6;
+    $query_content_page = "SELECT * FROM submenu where submenu_id = $id";
+        $result_content_page = mysqli_query($conn, $query_content_page);
 }
 
 else {
@@ -22,6 +22,15 @@ else {
 
 ?>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 
 <div class="content">
@@ -49,7 +58,6 @@ else {
                           }
 
                           ?>
-
 
 
 

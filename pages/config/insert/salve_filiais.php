@@ -10,7 +10,7 @@ if ($conn->connect_error) {
 $dataHoraAtual = date("Y-m-d H:i:s");
 // echo $dataHoraAtual;
 
-$idFilial = $_POST["id_filial"];
+
 $filialNome = $_POST["filial_nome"];
 $filialCNPJ = $_POST["filial_cnpj"];
 $enderecoRua = $_POST["endereco_rua"];
@@ -26,8 +26,8 @@ $idContatos = $_POST["id_contatos"];
 $habilitado = $_POST["habilitado"];
 
 // Insere os dados na tabela AUX_VT
-$sql = "insert into aux_filiais (id_filial, filial_nome, filial_cnpj, endereco_rua, endereco_numero, endereco_comp, endereco_bairro, endereco_cidade, endereco_uf, endereco_cep, nome_responsavel, cpf_responsavel, id_contatos, habilitado)
-          values ('$idFilial', '$filialNome', '$filialCNPJ', '$enderecoRua', '$enderecoNumero', '$enderecoComp', '$enderecoBairro', '$enderecoCidade', '$enderecoUF', '$enderecoCEP', '$nomeResponsavel', '$cpfResponsavel', '$idContatos', '$habilitado')";
+$sql = "insert into aux_filiais ( filial_nome, filial_cnpj, endereco_rua, endereco_numero, endereco_comp, endereco_bairro, endereco_cidade, endereco_uf, endereco_cep, nome_responsavel, cpf_responsavel, id_contatos, habilitado)
+          values ( '$filialNome', '$filialCNPJ', '$enderecoRua', '$enderecoNumero', '$enderecoComp', '$enderecoBairro', '$enderecoCidade', '$enderecoUF', '$enderecoCEP', '$nomeResponsavel', '$cpfResponsavel', '$idContatos', '$habilitado')";
 if ($conn->query($sql) === TRUE) {
     $response = array(
         'status' => true,

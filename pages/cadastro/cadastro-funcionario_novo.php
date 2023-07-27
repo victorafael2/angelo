@@ -1,14 +1,14 @@
 <?php
 
-$id_funci = $_GET['id_func'];
+// $id_funci = $_GET['id_func'];
 
-$tipo = $_GET['tipo'];
+$tipo = isset($_GET['tipo']) ? $_GET['tipo'] : 'cpf';
 
 
 // Query SQL para obter os dados existentes no banco de dados
-$query_history = "SELECT * FROM tb_history_cadastro where id_funcionario = $id_funci ORDER BY id_history DESC LIMIT 1";
-$result_history = mysqli_query($conn, $query_history);
-$row = mysqli_fetch_assoc($result_history);
+// $query_history = "SELECT * FROM tb_history_cadastro where id_funcionario = $id_funci ORDER BY id_history DESC LIMIT 1";
+// $result_history = mysqli_query($conn, $query_history);
+// $row = mysqli_fetch_assoc($result_history);
 
 // Preenche os campos com os dados existentes no banco, se houver
 $nomeSocial = $row["nome_social"] ?? "";
@@ -34,91 +34,136 @@ $status = $row["status"] ?? "";
 
 if ($tipo == 'cpf') {
     // Query SQL para obter os dados existentes no banco de dados
-    $query_cadastro = "SELECT * FROM funcionarios WHERE idfuncionario = $id_funci";
-    $result_cadastro = mysqli_query($conn, $query_cadastro);
-    $row = mysqli_fetch_assoc($result_cadastro);
+    // $query_cadastro = "SELECT * FROM funcionarios WHERE idfuncionario = $id_funci";
+    // $result_cadastro = mysqli_query($conn, $query_cadastro);
+    // $row = mysqli_fetch_assoc($result_cadastro);
 
     // Preenche os campos com os dados existentes no banco, se houver
-    $idFuncionario = $row["idFuncionario"];
-    $dataCadastro = $row["dataCadastro"];
-    $cpf = $row["cpf"];
-    $dataAdmissao = $row["dataAdmissao"];
-    $dataDemissao = $row["dataDemissao"];
-    $dataNascimento = $row["dataNascimento"];
-    $rgNumero = $row["rgNumero"];
-    $rgEmissor = $row["rgEmissor"];
-    $rgUF = $row["rgUF"];
-    $rgDataEmissao = $row["rgDataEmissao"];
-    $cnhNumero = $row["cnhNumero"];
-    $cnhTipo = $row["cnhTipo"];
-    $ctpsNumero = $row["ctpsNumero"];
-    $ctpsSerie = $row["ctpsSerie"];
-    $ctpsDataEmissao = $row["ctpsDataEmissao"];
-    $ctpsUF = $row["ctpsUF"];
-    $pisNumero = $row["pisNumero"];
-    $eSocial = $row["eSocial"];
-    $sigilo = $row["sigilo"];
-    $created = $row["created"];
+    $idFuncionario = $row["idFuncionario"] ?? "";
+$dataCadastro = $row["dataCadastro"] ?? "";
+$cpf = $row["cpf"] ?? "";
+$dataAdmissao = $row["dataAdmissao"] ?? "";
+$dataDemissao = $row["dataDemissao"] ?? "";
+$dataNascimento = $row["dataNascimento"] ?? "";
+$rgNumero = $row["rgNumero"] ?? "";
+$rgEmissor = $row["rgEmissor"] ?? "";
+$rgUF = $row["rgUF"] ?? "";
+$rgDataEmissao = $row["rgDataEmissao"] ?? "";
+$cnhNumero = $row["cnhNumero"] ?? "";
+$cnhTipo = $row["cnhTipo"] ?? "";
+$ctpsNumero = $row["ctpsNumero"] ?? "";
+$ctpsSerie = $row["ctpsSerie"] ?? "";
+$ctpsDataEmissao = $row["ctpsDataEmissao"] ?? "";
+$ctpsUF = $row["ctpsUF"] ?? "";
+$pisNumero = $row["pisNumero"] ?? "";
+$eSocial = $row["eSocial"] ?? "";
+$sigilo = $row["sigilo"] ?? "";
+$created = $row["created"] ?? "";
+
 } else {
     // Use a different variable name for the else block
-    $query_cadastro_cnpj = "SELECT * FROM funcionarios_cnpj WHERE id = $id_funci";
-    $result_cadastro_cnpj = mysqli_query($conn, $query_cadastro_cnpj);
-    $row_cnpj = mysqli_fetch_assoc($result_cadastro_cnpj);
+    // $query_cadastro_cnpj = "SELECT * FROM funcionarios_cnpj WHERE id = $id_funci";
+    // $result_cadastro_cnpj = mysqli_query($conn, $query_cadastro_cnpj);
+    // $row_cnpj = mysqli_fetch_assoc($result_cadastro_cnpj);
 
-    if ($row_cnpj) {
+
         // Preenche as variáveis com os dados existentes no banco, se houver
-        $id = $row_cnpj["id"];
-        $cnpj = $row_cnpj["cnpj"];
-        $nome_fantasia = $row_cnpj["nome_fantasia"];
-        $razao_social = $row_cnpj["razao_social"];
-        $abertura = $row_cnpj["abertura"];
-        $atividade_principal = $row_cnpj["atividade_principal"];
-        $logradouro = $row_cnpj["logradouro"];
-        $municipio = $row_cnpj["municipio"];
-        $situacao = $row_cnpj["situacao"];
-        $porte = $row_cnpj["porte"];
-        $uf = $row_cnpj["uf"];
-        $tipo_cnpj = $row_cnpj["tipo"];
-        $email = $row_cnpj["email"];
-        $telefone = $row_cnpj["telefone"];
-        $dataCadastro = $row_cnpj["dataCadastro"];
-        $dataAdmissao = $row_cnpj["dataAdmissao"];
-        $dataDemissao = $row_cnpj["dataDemissao"];
-        $dataNascimento = $row_cnpj["dataNascimento"];
-        $cnhNumero = $row_cnpj["cnhNumero"];
-        $cnhTipo = $row_cnpj["cnhTipo"];
-    } else {
-        // Handle the case when the query didn't return any results
-        // You can display an error message or perform any other action here
-        echo "No data found for the provided ID.";
-    }
+        $id = $row_cnpj["id"] ?? "";
+$cnpj = $row_cnpj["cnpj"] ?? "";
+$nome_fantasia = $row_cnpj["nome_fantasia"] ?? "";
+$razao_social = $row_cnpj["razao_social"] ?? "";
+$abertura = $row_cnpj["abertura"] ?? "";
+$atividade_principal = $row_cnpj["atividade_principal"] ?? "";
+$logradouro = $row_cnpj["logradouro"] ?? "";
+$municipio = $row_cnpj["municipio"] ?? "";
+$situacao = $row_cnpj["situacao"] ?? "";
+$porte = $row_cnpj["porte"] ?? "";
+$uf = $row_cnpj["uf"] ?? "";
+$tipo_cnpj = $row_cnpj["tipo"] ?? "";
+$email = $row_cnpj["email"] ?? "";
+$telefone = $row_cnpj["telefone"] ?? "";
+$dataCadastro = $row_cnpj["dataCadastro"] ?? "";
+$dataAdmissao = $row_cnpj["dataAdmissao"] ?? "";
+$dataDemissao = $row_cnpj["dataDemissao"] ?? "";
+$dataNascimento = $row_cnpj["dataNascimento"] ?? "";
+$cnhNumero = $row_cnpj["cnhNumero"] ?? "";
+$cnhTipo = $row_cnpj["cnhTipo"] ?? "";
+
+
 }
-
-
-
-
-
-
-
-
 
 
 ?>
 
+<form id="tipoForm" action="" method="GET" class="mt-4">
+    <div class="form-group d-inline-block align-middle">
+        <label for="tipoSelect">Selecione o tipo de cadastro</label>
+        <select id="tipoSelect" name="tipo" class="form-control">
+            <option value="cpf" <?php if ($tipo === 'cpf') echo 'selected'; ?>>CPF</option>
+            <option value="cnpj" <?php if ($tipo === 'cnpj') echo 'selected'; ?>>CNPJ</option>
+        </select>
+    </div>
+    <!-- <button type="submit" class="btn btn-primary align-middle">Enviar</button> -->
+</form>
+
 <div class="container mt-5">
-    <ul class="nav nav-tabs" id="myTabs" role="tablist">
+    <ul class="nav nav-tabs nav-underline mb-3" id="myTabs" role="tablist">
+
         <li class="nav-item">
-            <a class="nav-link active" id="tab1-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1"
-                aria-selected="true">Cadastrar Atualização</a>
+            <a class="nav-link active" id="tab-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1"
+                aria-selected="false">1. Cadastro</a>
         </li>
+
         <li class="nav-item">
-            <a class="nav-link" id="tab2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2"
-                aria-selected="false">Cadastro</a>
+            <a class="nav-link " id="tab1-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2"
+                aria-selected="true">2. Cadastrar Atualização</a>
         </li>
+
+        <li class="nav-item">
+            <a class="nav-link " id="docs-tab" data-toggle="tab" href="#docs" role="tab" aria-controls="docs"
+                aria-selected="true">3. Documentos</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link " id="filhos-tab" data-toggle="tab" href="#filhos" role="tab" aria-controls="filhos"
+                aria-selected="true">4. Filhos</a>
+        </li>
+
+
+        <li class="nav-item">
+            <a class="nav-link " id="conjuge-tab" data-toggle="tab" href="#conjuge" role="tab" aria-controls="conjuge"
+                aria-selected="true">5. Cônjuge</a>
+        </li>
+
+
+        <li class="nav-item">
+            <a class="nav-link " id="banco-tab" data-toggle="tab" href="#banco" role="tab" aria-controls="banco"
+                aria-selected="true">6. Inf. Bancaria</a>
+        </li>
+
+
+        <li class="nav-item">
+            <a class="nav-link " id="login-tab" data-toggle="tab" href="#login" role="tab" aria-controls="login"
+                aria-selected="true">7. Logins</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link " id="docs-tab" data-toggle="tab" href="#docs" role="tab" aria-controls="docs"
+                aria-selected="true">8. Acessos</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link " id="docs-tab" data-toggle="tab" href="#docs" role="tab" aria-controls="docs"
+                aria-selected="true">9. Adicionais</a>
+        </li>
+
+
+
+
     </ul>
 
     <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
+        <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
             <h3>Cadastrar Atualização de funcionários</h3>
 
             <form id="form">
@@ -504,16 +549,352 @@ if ($tipo == 'cpf') {
 
 
 
-
         <?php if ($tipo == 'cpf')  {
-            include 'include_cpf.php';
-        } else {
-            include 'include_cnpj.php';
-        }
+                            include 'include_cpf_novo.php';
+                        } else {
+                            include 'include_cnpj_novo.php';
+                        }
 
 
 
-        ?>
+                        ?>
+
+
+
+        <div class="tab-pane fade" id="docs" role="tabpanel" aria-labelledby="docs-tab">
+            <h2>Formulário para Anexar Documentos</h2>
+            <form action="upload.php" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="documentos">Selecione os Documentos:</label>
+                    <input type="file" class="form-control-file" id="documentos" name="documentos[]" multiple>
+                </div>
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
+
+
+
+        </div>
+
+
+        <div class="tab-pane fade" id="filhos" role="tabpanel" aria-labelledby="filhos-tab">
+
+            <h1>Cadastro de Filhos</h1>
+            <form>
+                <div class="form-group">
+                    <label for="nome">Nome do Filho:</label>
+                    <input type="text" class="form-control" id="nome" name="nome" required>
+                </div>
+                <div class="form-group">
+                    <label for="data_nascimento">Data de Nascimento:</label>
+                    <input type="date" class="form-control" id="data_nascimento" name="data_nascimento" required>
+                </div>
+                <!-- Adicione outros campos relevantes para o cadastro dos filhos aqui, como gênero, informações adicionais, etc. -->
+
+                <button type="submit" class="btn btn-primary">Adicionar Filho</button>
+            </form>
+            <!-- Lista de filhos adicionados (substitua esse exemplo pelo código que gerencia a exibição dos filhos cadastrados) -->
+            <div class="mt-5">
+                <h2>Lista de Filhos Cadastrados:</h2>
+                <ul class="list-group">
+                    <li class="list-group-item">Filho 1 - Data de Nascimento: 01/01/2010</li>
+                    <li class="list-group-item">Filho 2 - Data de Nascimento: 05/06/2015</li>
+                    <!-- Use JavaScript para exibir dinamicamente a lista de filhos cadastrados -->
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="tab-pane fade" id="conjuge" role="tabpanel" aria-labelledby="conjuge-tab">
+            <h2>Dados do Cônjuge</h2>
+            <form>
+                <div class="form-group">
+                    <label for="nome_conjuge">Nome do Cônjuge:</label>
+                    <input type="text" class="form-control" id="nome_conjuge" name="nome_conjuge" required>
+                </div>
+                <div class="form-group">
+                    <label for="data_nascimento_conjuge">Data de Nascimento do Cônjuge:</label>
+                    <input type="date" class="form-control" id="data_nascimento_conjuge" name="data_nascimento_conjuge"
+                        required>
+                </div>
+                <div class="form-group">
+                    <label for="genero_conjuge">Gênero do Cônjuge:</label>
+                    <select class="form-control" id="genero_conjuge" name="genero_conjuge" required>
+                        <option value="masculino">Masculino</option>
+                        <option value="feminino">Feminino</option>
+                        <option value="outro">Outro</option>
+                    </select>
+                </div>
+            </form>
+
+            <div class="mt-5">
+                <h2>Cônjuge</h2>
+                <ul class="list-group">
+                    <li class="list-group-item">Cônjuge: João Silva - Data de Nascimento: 01/01/1980</li>
+
+                    <!-- Use JavaScript para exibir dinamicamente a lista de famílias cadastradas -->
+                </ul>
+            </div>
+
+        </div>
+
+
+        <div class="tab-pane fade " id="banco" role="tabpanel" aria-labelledby="banco-tab">
+            <div class="d-flex flex-wrap">
+                <div class="row flex-fill">
+                    <div class="col-md-12 mb-2">
+                        <div class="card">
+                            <div class="card-header">
+
+                                Formulário banco
+
+                            </div>
+                            <div class="card-body">
+                                <form id="banco">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="form-label" for="id_funcionario">Funcionário:</label>
+                                                <select type="text" class="form-control" id="id_funcionario"
+                                                    name="id_funcionario" data-choices="data-choices"
+                                                    data-options='{"removeItemButton":true,"placeholder":true}'>
+                                                    <option value="">Selecione</option>
+                                                    <?php
+                                            // Executar a consulta para obter os dados
+                                            $sql_vt = "SELECT id_funcionario, id_history AS max_id, nome_social
+                                            FROM tb_history_cadastro
+                                            WHERE (id_funcionario, id_history) IN (
+                                            SELECT id_funcionario, MAX(id_history)
+                                            FROM tb_history_cadastro
+                                            GROUP BY id_funcionario
+                                            );
+                                            "; // Substitua "tabela" pelo nome correto da sua tabela
+                                            $result_vt = $conn->query($sql_vt);
+
+                                            // Verificar se há resultados e criar as opções
+                                            if ($result_vt->num_rows > 0) {
+                                                while ($row = $result_vt->fetch_assoc()) {
+                                                    $id_funcionario = $row["id_funcionario"];
+                                                    $nome_social = $row["nome_social"];
+                                                    // $visibilidade_vt = ($idVt == $id_vt) ? "selected" : "";
+
+                                                    echo "<option value='$id_funcionario' >$nome_social</option>";
+                                                }
+                                            } else {
+                                                // echo "<option value=''>Nenhum resultado encontrado</option>";
+                                            }
+                                            ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="form-label" for="data">Data:</label>
+                                                <input type="date" class="form-control" id="data" name="data" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="form-label" for="pix_tipo">PIX Tipo:</label>
+                                                <input type="text" class="form-control" id="pix_tipo" name="pix_tipo"
+                                                    required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="form-label" for="pix_identificacao">PIX
+                                                    Identificação:</label>
+                                                <input type="text" class="form-control" id="pix_identificacao"
+                                                    name="pix_identificacao" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="form-label" for="banco_numero">Banco Número:</label>
+                                                <input type="text" class="form-control" id="banco_numero"
+                                                    name="banco_numero" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="form-label" for="banco_nome">Banco Nome:</label>
+                                                <input type="text" class="form-control" id="banco_nome"
+                                                    name="banco_nome" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="form-label" for="banco_tipo_conta">Banco Tipo de
+                                                    Conta:</label>
+                                                <input type="text" class="form-control" id="banco_tipo_conta"
+                                                    name="banco_tipo_conta" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="form-label" for="banco_agencia">Banco Agência:</label>
+                                                <input type="text" class="form-control" id="banco_agencia"
+                                                    name="banco_agencia" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="form-label" for="banco_dv_agencia">Banco DV
+                                                    Agência:</label>
+                                                <input type="text" class="form-control" id="banco_dv_agencia"
+                                                    name="banco_dv_agencia" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="form-label" for="banco_conta">Banco Conta:</label>
+                                                <input type="text" class="form-control" id="banco_conta"
+                                                    name="banco_conta" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="form-label" for="banco_dv_conta">Banco DV Conta:</label>
+                                                <input type="text" class="form-control" id="banco_dv_conta"
+                                                    name="banco_dv_conta" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="form-label" for="habilitado">Habilitado:</label>
+                                                <input type="checkbox" id="habilitado" name="habilitado">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="form-label" for="preferencial">Preferencial:</label>
+                                                <input type="checkbox" id="preferencial" name="preferencial">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <!-- Empty div to offset the last row and keep the button centered -->
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <button type="submit" class="btn btn-primary">Enviar</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                Itens Cadastrados
+                            </div>
+                            <div class="card-body">
+                                <div id="tableExample2"
+                                    data-list='{"valueNames":["id","email","age"],"page":5,"pagination":true}'>
+                                    <div class="table-responsive ms-n1 ps-1 scrollbar">
+                                        <table class="table table-striped table-sm fs--1 mb-0">
+                                            <thead>
+                                                <tr>
+
+                                                    <th class="sort border-top " data-sort="id">ID</th>
+                                                    <th class="sort border-top " data-sort="nome_sistema">Funcionario
+                                                    </th>
+                                                    <th class="sort border-top " data-sort="habilitado">Pix Tipo</th>
+                                                    <th class="sort border-top " data-sort="habilitado">Pix
+                                                        identificação</th>
+                                                    <th class="sort border-top " data-sort="habilitado">Banco</th>
+                                                    <th class="sort border-top " data-sort="habilitado">Tipo de Conta
+                                                    </th>
+                                                    <th class="sort border-top " data-sort="habilitado">Habilitado</th>
+                                                    <th class="sort border-top " data-sort="habilitado">Preferencial
+                                                    </th>
+                                                    <th class="sort border-top ">Apagar</th>
+
+
+                                                </tr>
+                                            </thead>
+                                            <tbody id="table_body_bancos" class="list">
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="d-flex justify-content-center mt-3">
+                                        <button class="page-link" data-list-pagination="prev"><span
+                                                class="fas fa-chevron-left"></span></button>
+                                        <ul class="mb-0 pagination"></ul>
+                                        <button class="page-link pe-0" data-list-pagination="next"><span
+                                                class="fas fa-chevron-right"></span></button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="tab-pane fade " id="login" role="tabpanel" aria-labelledby="login-tab">
+
+            <form>
+                <div class="form-row">
+                    <div class="col-md-12 mb-3">
+                        <label for="campoTexto">Login</label>
+                        <input type="text" class="form-control" id="campoTexto" placeholder="Login" required>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="selectSistemas">Select de Sistemas</label>
+                        <select class="form-control" id="selectSistemas" required>
+                            <option value="">Selecione um sistema</option>
+                                            <?php
+                                            // Executar a consulta para obter os dados
+                                            $sql_sistemas = "SELECT id_sistema, nome_sistema
+                                            FROM aux_sistemas
+
+                                            ;
+                                            "; // Substitua "tabela" pelo nome correto da sua tabela
+                                            $result_sistemas = $conn->query($sql_sistemas);
+
+                                            // Verificar se há resultados e criar as opções
+                                            if ($result_sistemas->num_rows > 0) {
+                                                while ($row = $result_sistemas->fetch_assoc()) {
+                                                    $id_funcionario = $row["id_sistema"];
+                                                    $nome_social = $row["nome_sistema"];
+                                                    // $visibilidade_vt = ($idVt == $id_vt) ? "selected" : "";
+
+                                                    echo "<option value='$id_funcionario' >$nome_social</option>";
+                                                }
+                                            } else {
+                                                // echo "<option value=''>Nenhum resultado encontrado</option>";
+                                            }
+                                            ?>
+                        </select>
+                    </div>
+                    <!-- Adicione aqui o terceiro input da mesma maneira -->
+                    <!-- Por exemplo, um campo de e-mail -->
+                    <div class="col-md-12 mb-3">
+                        <label for="campoEmail">Campo de E-mail</label>
+                        <input type="email" class="form-control" id="campoEmail" placeholder="Digite seu e-mail"
+                            required>
+                    </div>
+                </div>
+                <!-- Adicione mais form-row aqui para mais linhas de inputs, se necessário -->
+                <button class="btn btn-primary" type="submit">Enviar</button>
+            </form>
+
+        </div>
 
 
     </div>
@@ -523,79 +904,7 @@ if ($tipo == 'cpf') {
 
 
 
-<div class="d-flex pb-4 mt-3 border-bottom border-dashed border-300 align-items-end">
-    <h3 class="flex-1 mb-0">Histórico</h3>
-</div>
-<div class="py-3 border-bottom border-dashed">
-    <div id="tableExample2" data-list='{"valueNames":["cpf","email","age"],"page":10,"pagination":true}'>
-        <div class="table-responsive ms-n1 ps-1 scrollbar">
-            <table class="table table-striped table-sm fs--1 mb-0">
-                <thead>
-                    <tr>
 
-                        <th class="sort border-top " data-sort="id_funcionario">ID Funcionário</th>
-                        <th class="sort border-top " data-sort="cpf">CPF</th>
-                        <th class="sort border-top " data-sort="nome_social">Nome Social</th>
-                        <th class="sort border-top " data-sort="nome_registro">Nome Registro</th>
-                        <th class="sort border-top " data-sort="sexo">Sexo</th>
-                        <th class="sort border-top " data-sort="genero">Gênero</th>
-                        <th class="sort border-top " data-sort="estado_civil">Estado Civil</th>
-                        <th class="sort border-top " data-sort="id_cargo">ID Cargo</th>
-                        <th class="sort border-top " data-sort="id_vt">ID VT</th>
-                        <th class="sort border-top " data-sort="id_superior">ID Superior</th>
-                        <th class="sort border-top " data-sort="id_area">ID Área</th>
-                        <th class="sort border-top " data-sort="id_operacao">ID Operação</th>
-                        <th class="sort border-top " data-sort="id_filial">ID Filial</th>
-
-                    </tr>
-                </thead>
-                <tbody class="list">
-                    <?php
-                // Recupere os dados do MySQL
-            $sql_tab2 = "SELECT * FROM tb_history_cadastro AS thc where id_funcionario = $id_funci";
-            $result_tab2 = $conn->query($sql_tab2);
-
-            // Preencha a tabela com os dados
-            if ($result_tab2->num_rows > 0) {
-                while ($row = $result_tab2->fetch_assoc()) {
-                    echo '<tr>';
-
-                    echo '<td class="align-middle cpf">' . $row['nome_social'] . '</td>';
-                    echo '<td class="align-middle">' . $row['nome_registro'] . '</td>';
-                    echo '<td class="align-middle">' . $row['nome_social'] . '</td>';
-                    echo '<td class="align-middle">' . $row['nome_registro'] . '</td>';
-                    echo '<td class="align-middle">' . $row['sexo'] . '</td>';
-                    echo '<td class="align-middle">' . $row['genero'] . '</td>';
-                    echo '<td class="align-middle">' . $row['estado_civil'] . '</td>';
-                    echo '<td class="align-middle">' . $row['id_cargo'] . '</td>';
-                    echo '<td class="align-middle">' . $row['id_vt'] . '</td>';
-                    echo '<td class="align-middle">' . $row['id_superior'] . '</td>';
-                    echo '<td class="align-middle">' . $row['id_area'] . '</td>';
-                    echo '<td class="align-middle">' . $row['id_operacao'] . '</td>';
-                    echo '<td class="align-middle">' . $row['id_filial'] . '</td>';
-
-
-                    echo '</tr>';
-                }
-            } else {
-                echo '<tr><td colspan="4">Nenhum registro encontrado.</td></tr>';
-            }
-
-            ?>
-
-                </tbody>
-
-            </table>
-        </div>
-        <div class="d-flex justify-content-center mt-3">
-            <button class="page-link" data-list-pagination="prev"><span class="fas fa-chevron-left"></span></button>
-            <ul class="mb-0 pagination"></ul>
-            <button class="page-link pe-0" data-list-pagination="next"><span
-                    class="fas fa-chevron-right"></span></button>
-        </div>
-    </div>
-
-</div>
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -729,5 +1038,16 @@ $(document).ready(function() {
             }
         });
     });
+});
+</script>
+
+<script>
+document.getElementById('tipoForm').addEventListener('change', function(event) {
+    event.preventDefault(); // Impede o envio do formulário padrão
+    var tipo = document.getElementById('tipoSelect').value;
+    var currentUrl = window.location.href;
+    var separator = currentUrl.includes('?') ? '&' : '?';
+    var newUrl = currentUrl + separator + 'tipo=' + tipo;
+    window.location.href = newUrl;
 });
 </script>
