@@ -28,6 +28,7 @@ $tipoPonto = $row["tipo_ponto"] ?? "";
 $sistemaPonto = $row["sistema_ponto"] ?? "";
 $vlrSalario = $row["vlr_salario"] ?? "";
 $status = $row["status"] ?? "";
+$eleitor = $row["eleitor"] ?? "";
 
 
 

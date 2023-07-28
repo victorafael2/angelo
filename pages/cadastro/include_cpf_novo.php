@@ -170,7 +170,7 @@
                 <div class="form-group">
                     <label for="eleitor">Titulo de Eleitor:</label>
 
-                    <input type="date" class="form-control" id="eleitor" name="eleitor"
+                    <input type="text" class="form-control" id="eleitor" name="eleitor"
                         value="<?php echo $eleitor; ?>">
                     </select>
                 </div>
