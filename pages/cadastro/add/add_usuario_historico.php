@@ -15,6 +15,7 @@ if ($conn->connect_error) {
     $estadoCivil = $_POST["estadoCivil"];
     $idCargo = $_POST["idCargo"];
     $idVt = $_POST["idVt"];
+    $idvr = $_POST["idvr"];
     $idSuperior = $_POST["idSuperior"];
     $idArea = $_POST["idArea"];
     $idOperacao = $_POST["idOperacao"];
@@ -29,8 +30,8 @@ if ($conn->connect_error) {
     $tipo_registro = $_POST["tipo_registro"];
 
     // Query SQL para inserir os dados no banco de dados
-    $sql = "INSERT INTO tb_history_cadastro (nome_social, nome_registro, sexo, genero, estado_civil, id_cargo, id_vt, id_superior, id_area, id_operacao, id_filial, tipo_regime, tipo_contrato, tipo_ponto, sistema_ponto, vlr_salario, status, id_funcionario, tipo_registro)
-    VALUES ('$nomeSocial', '$nomeRegistro', '$sexo', '$genero', '$estadoCivil', '$idCargo', '$idVt', '$idSuperior', '$idArea', '$idOperacao', '$idFilial', '$tipoRegime', '$tipoContrato', '$tipoPonto', '$sistemaPonto', '$vlrSalario', '$status', '$idFuncionario','$tipo_registro')";
+    $sql = "INSERT INTO tb_history_cadastro (nome_social, nome_registro, sexo, genero, estado_civil, id_cargo, id_vt,id_vr, id_superior, id_area, id_operacao, id_filial, tipo_regime, tipo_contrato, tipo_ponto, sistema_ponto, vlr_salario, status, id_funcionario, tipo_registro)
+    VALUES ('$nomeSocial', '$nomeRegistro', '$sexo', '$genero', '$estadoCivil', '$idCargo', '$idVt','$idvr', '$idSuperior', '$idArea', '$idOperacao', '$idFilial', '$tipoRegime', '$tipoContrato', '$tipoPonto', '$sistemaPonto', '$vlrSalario', '$status', '$idFuncionario','$tipo_registro')";
 
 // Certifique-se de substituir "$idFuncionario" pela variável que contém o valor do funcionário associado a este registro.
 
@@ -39,7 +40,7 @@ if ($conn->connect_error) {
 
     // Executa a query no banco de dados
     if (mysqli_query($conn, $sql)) {
-        echo "Dados salvos com sucesso!";
+        echo $idFuncionario;
     } else {
         echo "Erro ao salvar os dados: " . mysqli_error($conn);
     }

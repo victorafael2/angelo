@@ -11,7 +11,7 @@ if ($conn->connect_error) {
 
 // Processar os dados do formulário e atualizar no banco de dados
 // $funcionarioId = $_POST['funcionarioId']; // ID do funcionário que será atualizado
-$dataCadastro = $_POST['dataCadastro'];
+
 $cpf = $_POST['cpf'];
 $dataAdmissao = $_POST['dataAdmissao'];
 $dataDemissao = $_POST['dataDemissao'];
@@ -22,18 +22,15 @@ $rgUF = $_POST['rgUF'];
 $rgDataEmissao = $_POST['rgDataEmissao'];
 $cnhNumero = $_POST['cnhNumero'];
 $cnhTipo = $_POST['cnhTipo'];
-$ctpsNumero = $_POST['ctpsNumero'];
-$ctpsSerie = $_POST['ctpsSerie'];
-$ctpsDataEmissao = $_POST['ctpsDataEmissao'];
-$ctpsUF = $_POST['ctpsUF'];
-$pisNumero = $_POST['pisNumero'];
+
 $eSocial = $_POST['eSocial'];
 $sigilo = $_POST['sigilo'];
+$eleitor = $_POST['eleitor'];
 
 $idFuncionario = $_POST['idFuncioanrio'];
 
 $sql = "UPDATE funcionarios SET
-        dataCadastro = '$dataCadastro',
+
         cpf = '$cpf',
         dataAdmissao = '$dataAdmissao',
         dataDemissao = '$dataDemissao',
@@ -44,18 +41,15 @@ $sql = "UPDATE funcionarios SET
         rgDataEmissao = '$rgDataEmissao',
         cnhNumero = '$cnhNumero',
         cnhTipo = '$cnhTipo',
-        ctpsNumero = '$ctpsNumero',
-        ctpsSerie = '$ctpsSerie',
-        ctpsDataEmissao = '$ctpsDataEmissao',
-        ctpsUF = '$ctpsUF',
-        pisNumero = '$pisNumero',
+
         eSocial = '$eSocial',
-        sigilo = '$sigilo'
+        sigilo = '$sigilo',
+        eleitor = '$eleitor'
         WHERE idFuncionario = $idFuncionario";
 
 if ($conn->query($sql) === TRUE) {
-    echo "Dados atualizados com sucesso!";
-    echo $sql;
+    // $lastInsertedId = $conn->insert_id;
+    echo $idFuncionario;
 } else {
     echo "Erro ao atualizar os dados: " . $conn->error;
 }

@@ -1,6 +1,6 @@
 <?php
 
-// $id_funci = $_GET['id_func'];
+$id_funci = isset($_GET['id_func']) ? $_GET['id_func'] : '';
 
 $tipo = isset($_GET['tipo']) ? $_GET['tipo'] : 'cpf';
 
@@ -10,34 +10,33 @@ $tipo = isset($_GET['tipo']) ? $_GET['tipo'] : 'cpf';
 // $result_history = mysqli_query($conn, $query_history);
 // $row = mysqli_fetch_assoc($result_history);
 
-// Preenche os campos com os dados existentes no banco, se houver
-$nomeSocial = $row["nome_social"] ?? "";
-$nomeRegistro = $row["nome_registro"] ?? "";
-$sexo = $row["sexo"] ?? "";
-$genero = $row["genero"] ?? "";
-$estadoCivil = $row["estado_civil"] ?? "";
-$idCargo = $row["id_cargo"] ?? "";
-$idVt = $row["id_vt"] ?? "";
-$idSuperior = $row["id_superior"] ?? "";
-$idArea = $row["id_area"] ?? "";
-$idOperacao = $row["id_operacao"] ?? "";
-$idFilial = $row["id_filial"] ?? "";
-$tipoRegime = $row["tipo_regime"] ?? "";
-$tipoContrato = $row["tipo_contrato"] ?? "";
-$tipoPonto = $row["tipo_ponto"] ?? "";
-$sistemaPonto = $row["sistema_ponto"] ?? "";
-$vlrSalario = $row["vlr_salario"] ?? "";
-$status = $row["status"] ?? "";
-$eleitor = $row["eleitor"] ?? "";
+
+
 
 
 
 
 if ($tipo == 'cpf') {
-    // Query SQL para obter os dados existentes no banco de dados
-    // $query_cadastro = "SELECT * FROM funcionarios WHERE idfuncionario = $id_funci";
-    // $result_cadastro = mysqli_query($conn, $query_cadastro);
-    // $row = mysqli_fetch_assoc($result_cadastro);
+    // Verifica se o parâmetro 'id_func' está presente na URL
+if (isset($_GET['id_func'])) {
+    $id_funci = $_GET['id_func'];
+    // Executa a query somente se o valor de '$id_funci' existir
+    $query_cadastro = "SELECT * FROM funcionarios WHERE idfuncionario = $id_funci";
+    $result_cadastro = mysqli_query($conn, $query_cadastro);
+    if ($result_cadastro) {
+        // A consulta foi executada com sucesso, você pode usar os resultados aqui
+        $row = mysqli_fetch_assoc($result_cadastro);
+        // ...
+    } else {
+        // Ocorreu um erro na consulta
+        echo "Erro na consulta: " . mysqli_error($conn);
+    }
+} else {
+    // Caso '$id_funci' não esteja presente, você pode lidar com a situação aqui
+    // echo "ID de funcionário não fornecido ou inválido.";
+    // Ou redirecionar o usuário para outra página:
+    // header("Location: pagina_de_erro.php");
+}
 
     // Preenche os campos com os dados existentes no banco, se houver
     $idFuncionario = $row["idFuncionario"] ?? "";
@@ -60,16 +59,31 @@ $pisNumero = $row["pisNumero"] ?? "";
 $eSocial = $row["eSocial"] ?? "";
 $sigilo = $row["sigilo"] ?? "";
 $created = $row["created"] ?? "";
+$eleitor = $row["eleitor"] ?? "";
 
 } else {
     // Use a different variable name for the else block
-    // $query_cadastro_cnpj = "SELECT * FROM funcionarios_cnpj WHERE id = $id_funci";
-    // $result_cadastro_cnpj = mysqli_query($conn, $query_cadastro_cnpj);
-    // $row_cnpj = mysqli_fetch_assoc($result_cadastro_cnpj);
+    if (isset($_GET['id_func'])) {
+        $id_funci = $_GET['id_func'];
+    $query_cadastro_cnpj = "SELECT * FROM funcionarios_cnpj WHERE id = $id_funci";
+    $result_cadastro_cnpj = mysqli_query($conn, $query_cadastro_cnpj);
+    if ($result_cadastro_cnpj) {
+    $row_cnpj = mysqli_fetch_assoc($result_cadastro_cnpj);
+    echo "Erro na consulta: " . mysqli_error($conn);
+}
+
+else {
+    // Caso '$id_funci' não esteja presente, você pode lidar com a situação aqui
+    // echo "ID de funcionário não fornecido ou inválido.";
+    // Ou redirecionar o usuário para outra página:
+    // header("Location: pagina_de_erro.php");
+}
+}
+
 
 
         // Preenche as variáveis com os dados existentes no banco, se houver
-        $id = $row_cnpj["id"] ?? "";
+$id = $row_cnpj["id"] ?? "";
 $cnpj = $row_cnpj["cnpj"] ?? "";
 $nome_fantasia = $row_cnpj["nome_fantasia"] ?? "";
 $razao_social = $row_cnpj["razao_social"] ?? "";
@@ -94,18 +108,90 @@ $cnhTipo = $row_cnpj["cnhTipo"] ?? "";
 }
 
 
+
+
+
+// agora query de atualizccao
+// First, check if the 'id_func' parameter exists in the $_GET array and is not empty
+if (isset($_GET['id_func']) && !empty($_GET['id_func'])) {
+    // Sanitize the input to prevent SQL injection (assuming you're using mysqli)
+    $id_funci = mysqli_real_escape_string($conn, $_GET['id_func']);
+
+    // Now, construct and execute the query
+    $query_atualizacao = "SELECT * FROM tb_history_cadastro WHERE id_funcionario =  $id_funci AND id_history = (SELECT MAX(id_history) AS max_id FROM tb_history_cadastro WHERE id_funcionario =  $id_funci)";
+    $result_atualizacao = mysqli_query($conn, $query_atualizacao);
+
+    // Check if the query executed successfully
+    if ($result_atualizacao) {
+        // Your code to fetch and process the results goes here
+        // Fetch the data and store it in variables
+    $row = mysqli_fetch_assoc($result_atualizacao);
+
+    // Preenche os campos com os dados existentes no banco, se houver
+$nomeSocial = $row["nome_social"] ?? "";
+$nomeRegistro = $row["nome_registro"] ?? "";
+$sexo = $row["sexo"] ?? "";
+$genero = $row["genero"] ?? "";
+$estadoCivil = $row["estado_civil"] ?? "";
+$idCargo = $row["id_cargo"] ?? "";
+$idVt = $row["id_vt"] ?? "";
+$idVr = $row["id_vr"] ?? "";
+$idSuperior = $row["id_superior"] ?? "";
+$idArea = $row["id_area"] ?? "";
+$idOperacao = $row["id_operacao"] ?? "";
+$idFilial = $row["id_filial"] ?? "";
+$tipoRegime = $row["tipo_regime"] ?? "";
+$tipoContrato = $row["tipo_contrato"] ?? "";
+$tipoPonto = $row["tipo_ponto"] ?? "";
+$sistemaPonto = $row["sistema_ponto"] ?? "";
+$vlrSalario = $row["vlr_salario"] ?? "";
+$status = $row["status"] ?? "";
+
+    } else {
+        // Handle the query execution error, if any
+        // echo "Error executing the query: " . mysqli_error($conn);
+    }
+} else {
+    // Handle the case when 'id_func' parameter is missing or empty
+    // echo "Invalid or missing 'id_func' parameter";
+
+    $nomeSocial = $row["nome_social"] ?? "";
+$nomeRegistro = $row["nome_registro"] ?? "";
+$sexo = $row["sexo"] ?? "";
+$genero = $row["genero"] ?? "";
+$estadoCivil = $row["estado_civil"] ?? "";
+$idCargo = $row["id_cargo"] ?? "";
+$idVt = $row["id_vt"] ?? "";
+$idVr = $row["id_vr"] ?? "";
+$idSuperior = $row["id_superior"] ?? "";
+$idArea = $row["id_area"] ?? "";
+$idOperacao = $row["id_operacao"] ?? "";
+$idFilial = $row["id_filial"] ?? "";
+$tipoRegime = $row["tipo_regime"] ?? "";
+$tipoContrato = $row["tipo_contrato"] ?? "";
+$tipoPonto = $row["tipo_ponto"] ?? "";
+$sistemaPonto = $row["sistema_ponto"] ?? "";
+$vlrSalario = $row["vlr_salario"] ?? "";
+$status = $row["status"] ?? "";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ?>
 
-<form id="tipoForm" action="" method="GET" class="mt-4">
-    <div class="form-group d-inline-block align-middle">
-        <label for="tipoSelect">Selecione o tipo de cadastro</label>
-        <select id="tipoSelect" name="tipo" class="form-control">
-            <option value="cpf" <?php if ($tipo === 'cpf') echo 'selected'; ?>>CPF</option>
-            <option value="cnpj" <?php if ($tipo === 'cnpj') echo 'selected'; ?>>CNPJ</option>
-        </select>
-    </div>
-    <!-- <button type="submit" class="btn btn-primary align-middle">Enviar</button> -->
-</form>
+
 
 <div class="container mt-5">
     <ul class="nav nav-tabs nav-underline mb-3" id="myTabs" role="tablist">
@@ -149,14 +235,14 @@ $cnhTipo = $row_cnpj["cnhTipo"] ?? "";
         </li>
 
         <li class="nav-item">
-            <a class="nav-link " id="docs-tab" data-toggle="tab" href="#docs" role="tab" aria-controls="docs"
-                aria-selected="true">8. Acessos</a>
+            <a class="nav-link " id="historico-tab" data-toggle="tab" href="#historico" role="tab" aria-controls="historico"
+                aria-selected="true">8. Histórico</a>
         </li>
 
-        <li class="nav-item">
+        <!-- <li class="nav-item">
             <a class="nav-link " id="docs-tab" data-toggle="tab" href="#docs" role="tab" aria-controls="docs"
                 aria-selected="true">9. Adicionais</a>
-        </li>
+        </li> -->
 
 
 
@@ -164,7 +250,7 @@ $cnhTipo = $row_cnpj["cnhTipo"] ?? "";
     </ul>
 
     <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
+        <div class="tab-pane fade mb-2" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
             <h3>Cadastrar Atualização de funcionários</h3>
 
             <form id="form">
@@ -225,7 +311,7 @@ $cnhTipo = $row_cnpj["cnhTipo"] ?? "";
                         </select>
                     </div>
                     <div class="col-md-4">
-                        <label for="idCargo" class="form-label">ID Cargo</label>
+                        <label for="idCargo" class="form-label">Cargo</label>
                         <select type="text" class="form-control" id="idCargo" name="idCargo" data-choices="data-choices"
                             data-options='{"removeItemButton":true,"placeholder":true}'>
                             <option value="">Selecione</option>
@@ -254,7 +340,7 @@ $cnhTipo = $row_cnpj["cnhTipo"] ?? "";
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="idVt" class="form-label">Auxilio Transporte</label>
                         <!-- <input type="text" class="form-control" id="idVt" name="idVt" value="<?php echo $idVt; ?>"> -->
                         <select type="text" class="form-control" id="idVt" name="idVt" data-choices="data-choices"
@@ -284,7 +370,7 @@ $cnhTipo = $row_cnpj["cnhTipo"] ?? "";
                         </select>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="idVt" class="form-label">Auxilio Alimentação</label>
                         <!-- <input type="text" class="form-control" id="idVt" name="idVt" value="<?php echo $idVt; ?>"> -->
                         <select type="text" class="form-control" id="idvr" name="idvr" data-choices="data-choices"
@@ -313,7 +399,7 @@ $cnhTipo = $row_cnpj["cnhTipo"] ?? "";
                                     ?>
                         </select>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="idSuperior" class="form-label">Superior</label>
                         <!-- <input type="text" class="form-control" id="idSuperior" name="idSuperior"
                             value="<?php echo $idSuperior; ?>"> -->
@@ -352,7 +438,7 @@ $cnhTipo = $row_cnpj["cnhTipo"] ?? "";
                                                 ?>
                         </select>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="idArea" class="form-label">Área</label>
                         <select type="text" class="form-control" id="idArea" name="idArea" data-choices="data-choices"
                             data-options='{"removeItemButton":true,"placeholder":true}'>
@@ -544,97 +630,205 @@ $cnhTipo = $row_cnpj["cnhTipo"] ?? "";
                             value="<?php echo $tipo; ?>">
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Salvar</button>
+                <button type="submit" class="btn btn-primary" id="submitBtn_atualizacao_cadastral">Salvar
+                    Atualização</button>
+                <div id="message">Cadastre um funcionário primeiro.</div>
+
             </form>
         </div>
 
 
+        <div class="tab-pane fade  show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
 
-        <?php if ($tipo == 'cpf')  {
-                            include 'include_cpf_novo.php';
-                        } else {
-                            include 'include_cnpj_novo.php';
-                        }
+            <form id="tipoForm" action="" method="GET" class="mt-0 mb-3">
+                <div class="form-group d-inline-block align-middle">
+                    <label for="tipoSelect">Selecione o tipo de cadastro</label>
+                    <select id="tipoSelect" name="tipo" class="form-control">
+                        <option value="cpf" <?php if ($tipo === 'cpf') echo 'selected'; ?>>CPF</option>
+                        <option value="cnpj" <?php if ($tipo === 'cnpj') echo 'selected'; ?>>CNPJ</option>
+                    </select>
+                </div>
+                <!-- <button type="submit" class="btn btn-primary align-middle">Enviar</button> -->
+            </form>
+
+            <?php if ($tipo == 'cpf')  {
+                                    include 'include_cpf_novo.php';
+                                } else {
+                                    include 'include_cnpj_novo.php';
+                                }
 
 
 
-                        ?>
-
+                                ?>
+        </div>
 
 
         <div class="tab-pane fade" id="docs" role="tabpanel" aria-labelledby="docs-tab">
-            <h2>Formulário para Anexar Documentos</h2>
-            <form action="upload.php" method="post" enctype="multipart/form-data">
+            <h3>Formulário para Anexar Documentos</h3>
+            <!-- <form action="upload.php" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="documentos">Selecione os Documentos:</label>
                     <input type="file" class="form-control-file" id="documentos" name="documentos[]" multiple>
                 </div>
                 <button type="submit" class="btn btn-primary">Enviar</button>
+            </form> -->
+
+            <form id="form_docs" action="pages/cadastro/enviar_documentos.php" method="post"
+                enctype="multipart/form-data" class="mb-2 border-bottom">
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <label for="arquivoCPF">CPF:</label>
+                        <input type="file" class="form-control" id="arquivoCPF" name="arquivoCPF" required>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label for="arquivoRG">RG:</label>
+                        <input type="file" class="form-control" id="arquivoRG" name="arquivoRG" required>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label for="arquivoEndereco">Endereço:</label>
+                        <input type="file" class="form-control" id="arquivoEndereco" name="arquivoEndereco" required>
+                    </div>
+
+                    <div class="col-md-4 d-none">
+                        <label for="idFuncionario" class="form-label">Id Funcioanrio</label>
+                        <input type="text" class="form-control" id="idFuncionario" name="idFuncionario"
+                            value="<?php echo $id_funci; ?>" readonly>
+                    </div>
+
+
+
+                    <div class="col-md-3">
+
+                        <button type="submit" class="btn btn-primary mt-4">Enviar</button>
+                    </div>
+                </div>
             </form>
 
 
+            <h3>Outros Anexos</h3>
+
+            <form id="form_docs" action="pages/cadastro/enviar_documentos.php" method="post"
+                enctype="multipart/form-data" class="mb-2 border-bottom">
+                <div class="row">
+                    <div class="col-md-5 mb-3">
+                        <label for="nomeArquivo">Nome do Arquivo:</label>
+                        <input type="text" class="form-control" id="nomeArquivo" name="nomeArquivo" required>
+                    </div>
+
+                    <div class="col-md-5 mb-3">
+                        <label for="arquivoUpload">Arquivo:</label>
+                        <input type="file" class="form-control" id="arquivoUpload" name="arquivoUpload" required>
+                    </div>
+
+                    <div class="col-md-4 d-none">
+                        <label for="idFuncionario" class="form-label">Id Funcioanrio</label>
+                        <input type="text" class="form-control" id="idFuncionario" name="idFuncionario"
+                            value="<?php echo $id_funci; ?>" readonly>
+                    </div>
+
+                    <!-- Additional fields, if needed -->
+
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary mt-4">Enviar</button>
+                    </div>
+                </div>
+            </form>
+
+
+
+
+            <div class="mt-3" id="fileList"></div>
 
         </div>
 
 
         <div class="tab-pane fade" id="filhos" role="tabpanel" aria-labelledby="filhos-tab">
 
-            <h1>Cadastro de Filhos</h1>
-            <form>
-                <div class="form-group">
-                    <label for="nome">Nome do Filho:</label>
-                    <input type="text" class="form-control" id="nome" name="nome" required>
+            <h3>Cadastro de Filhos</h3>
+            <form class="form-inline" id="childForm" action="pages/cadastro/add/add_filho.php">
+                <div class="row">
+                    <div class="col-md-5">
+                        <label for="nome">Nome do Filho:</label>
+                        <input type="text" class="form-control" id="nome" name="nome" required>
+                    </div>
+                    <div class="col-md-5">
+                        <label for="data_nascimento">Data de Nascimento:</label>
+                        <input type="date" class="form-control" id="data_nascimento" name="data_nascimento" required>
+                    </div>
+                    <div class="col-md-5">
+                        <label for="cpf">CPF do Filho:</label>
+                        <input type="text" class="form-control" id="cpf" name="cpf" required>
+                    </div>
+                    <div class="col-md-5">
+                        <label for="nome_mae">Nome da Mãe:</label>
+                        <input type="text" class="form-control" id="nome_mae" name="nome_mae" required>
+                    </div>
+                    <!-- Adicione outros campos relevantes para o cadastro dos filhos aqui, como gênero, informações adicionais, etc. -->
+                    <div class="col-md-4 d-none">
+                        <label for="idFuncionario" class="form-label">Id Funcioanrio</label>
+                        <input type="text" class="form-control" id="idFuncionario" name="idFuncionario"
+                            value="<?php echo $id_funci; ?>" readonly>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary ml-2">Adicionar Filho</button>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="data_nascimento">Data de Nascimento:</label>
-                    <input type="date" class="form-control" id="data_nascimento" name="data_nascimento" required>
-                </div>
-                <!-- Adicione outros campos relevantes para o cadastro dos filhos aqui, como gênero, informações adicionais, etc. -->
-
-                <button type="submit" class="btn btn-primary">Adicionar Filho</button>
             </form>
-            <!-- Lista de filhos adicionados (substitua esse exemplo pelo código que gerencia a exibição dos filhos cadastrados) -->
-            <div class="mt-5">
-                <h2>Lista de Filhos Cadastrados:</h2>
-                <ul class="list-group">
-                    <li class="list-group-item">Filho 1 - Data de Nascimento: 01/01/2010</li>
-                    <li class="list-group-item">Filho 2 - Data de Nascimento: 05/06/2015</li>
-                    <!-- Use JavaScript para exibir dinamicamente a lista de filhos cadastrados -->
-                </ul>
-            </div>
+
+            <div id="childList" class="mt-5"></div>
+
+
         </div>
 
 
         <div class="tab-pane fade" id="conjuge" role="tabpanel" aria-labelledby="conjuge-tab">
-            <h2>Dados do Cônjuge</h2>
-            <form>
-                <div class="form-group">
-                    <label for="nome_conjuge">Nome do Cônjuge:</label>
-                    <input type="text" class="form-control" id="nome_conjuge" name="nome_conjuge" required>
-                </div>
-                <div class="form-group">
-                    <label for="data_nascimento_conjuge">Data de Nascimento do Cônjuge:</label>
-                    <input type="date" class="form-control" id="data_nascimento_conjuge" name="data_nascimento_conjuge"
-                        required>
-                </div>
-                <div class="form-group">
-                    <label for="genero_conjuge">Gênero do Cônjuge:</label>
-                    <select class="form-control" id="genero_conjuge" name="genero_conjuge" required>
-                        <option value="masculino">Masculino</option>
-                        <option value="feminino">Feminino</option>
-                        <option value="outro">Outro</option>
-                    </select>
+            <h3>Dados do Cônjuge</h3>
+            <form class="form-inline" id="conjugeform" action="pages/cadastro/add/add_conjuge.php" method="post">
+                <div class="row">
+                    <div class="col-md-5">
+                        <label for="nome_completo">Nome Completo:</label>
+                        <input type="text" class="form-control" id="nome_completo" name="nome_completo" required>
+                    </div>
+                    <div class="col-md-5">
+                        <label for="data_nascimento">Data de Nascimento:</label>
+                        <input type="date" class="form-control" id="data_nascimento" name="data_nascimento" required>
+                    </div>
+                    <div class="col-md-5">
+                        <label for="cpf">CPF:</label>
+                        <input type="text" class="form-control" id="cpf" name="cpf" required>
+                    </div>
+                    <div class="col-md-5">
+                        <label for="telefone_contato">Telefone de Contato:</label>
+                        <input type="tel" class="form-control" id="telefone_contato" name="telefone_contato" required>
+                    </div>
+                    <div class="col-md-5">
+                        <label for="email_contato">E-mail de Contato:</label>
+                        <input type="email" class="form-control" id="email_contato" name="email_contato" required>
+                    </div>
+                    <!-- Add other relevant fields for the child's registration here, like gender, additional information, etc. -->
+                    <div class="col-md-4 d-none">
+                        <label for="idFuncionario" class="form-label">Id Funcionario</label>
+                        <input type="text" class="form-control" id="idFuncionario" name="idFuncionario"
+                            value="<?php echo $id_funci; ?>" readonly>
+                    </div>
+                    <div class="col-md-2 mt-4">
+                        <button type="submit" class="btn btn-primary ml-2">Adicionar Cônjuge</button>
+                    </div>
                 </div>
             </form>
 
-            <div class="mt-5">
+            <div id="conjugeList" class="mt-5"></div>
+
+            <!-- <div class="mt-5">
                 <h2>Cônjuge</h2>
                 <ul class="list-group">
                     <li class="list-group-item">Cônjuge: João Silva - Data de Nascimento: 01/01/1980</li>
 
-                    <!-- Use JavaScript para exibir dinamicamente a lista de famílias cadastradas -->
+
                 </ul>
-            </div>
+            </div> -->
 
         </div>
 
@@ -643,204 +837,134 @@ $cnhTipo = $row_cnpj["cnhTipo"] ?? "";
             <div class="d-flex flex-wrap">
                 <div class="row flex-fill">
                     <div class="col-md-12 mb-2">
-                        <div class="card">
-                            <div class="card-header">
 
-                                Formulário banco
+
+
+                        <h3> Formulário banco</h3>
+
+
+
+                        <form id="banco_user" action="pages/cadastro/add/add_banco.php" method="post">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="idFuncionario" class="form-label">Id Funcionario</label>
+                                        <input type="text" class="form-control" id="idFuncionario" name="idFuncionario"
+                                            value="<?php echo $id_funci; ?>" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="pix_tipo">PIX Tipo:</label>
+                                        <select class="form-control" id="pix_tipo" name="pix_tipo" required>
+                                            <option value="">Selecionar tipo de Chave</option>
+                                            <option value="CPF">CPF</option>
+                                            <option value="CNPJ">CNPJ</option>
+                                            <option value="Email">E-mail</option>
+                                            <option value="Telefone">Número de telefone celular</option>
+                                            <option value="ChaveAleatoria">Chave aleatória</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="pix_identificacao">PIX
+                                            Identificação:</label>
+                                        <input type="text" class="form-control" id="pix_identificacao"
+                                            name="pix_identificacao" required>
+                                    </div>
+                                </div>
 
                             </div>
-                            <div class="card-body">
-                                <form id="banco">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label class="form-label" for="id_funcionario">Funcionário:</label>
-                                                <select type="text" class="form-control" id="id_funcionario"
-                                                    name="id_funcionario" data-choices="data-choices"
-                                                    data-options='{"removeItemButton":true,"placeholder":true}'>
-                                                    <option value="">Selecione</option>
-                                                    <?php
-                                            // Executar a consulta para obter os dados
-                                            $sql_vt = "SELECT id_funcionario, id_history AS max_id, nome_social
-                                            FROM tb_history_cadastro
-                                            WHERE (id_funcionario, id_history) IN (
-                                            SELECT id_funcionario, MAX(id_history)
-                                            FROM tb_history_cadastro
-                                            GROUP BY id_funcionario
-                                            );
-                                            "; // Substitua "tabela" pelo nome correto da sua tabela
-                                            $result_vt = $conn->query($sql_vt);
-
-                                            // Verificar se há resultados e criar as opções
-                                            if ($result_vt->num_rows > 0) {
-                                                while ($row = $result_vt->fetch_assoc()) {
-                                                    $id_funcionario = $row["id_funcionario"];
-                                                    $nome_social = $row["nome_social"];
-                                                    // $visibilidade_vt = ($idVt == $id_vt) ? "selected" : "";
-
-                                                    echo "<option value='$id_funcionario' >$nome_social</option>";
-                                                }
-                                            } else {
-                                                // echo "<option value=''>Nenhum resultado encontrado</option>";
-                                            }
-                                            ?>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label class="form-label" for="data">Data:</label>
-                                                <input type="date" class="form-control" id="data" name="data" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label class="form-label" for="pix_tipo">PIX Tipo:</label>
-                                                <input type="text" class="form-control" id="pix_tipo" name="pix_tipo"
-                                                    required>
-                                            </div>
-                                        </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="banco_tipo_conta">Banco Tipo de
+                                            Conta:</label>
+                                        <select class="form-control" id="banco_tipo_conta" name="banco_tipo_conta"
+                                            required>
+                                            <option value="">Selecione um tipo de conta</option>
+                                            <option value="Conta Corrente">Conta Corrente</option>
+                                            <option value="Conta Poupança">Conta Poupança</option>
+                                            <option value="Conta Salário">Conta Salário</option>
+                                            <option value="Conta Conjunta">Conta Conjunta</option>
+                                            <option value="Conta de Investimento">Conta de Investimento</option>
+                                        </select>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label class="form-label" for="pix_identificacao">PIX
-                                                    Identificação:</label>
-                                                <input type="text" class="form-control" id="pix_identificacao"
-                                                    name="pix_identificacao" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label class="form-label" for="banco_numero">Banco Número:</label>
-                                                <input type="text" class="form-control" id="banco_numero"
-                                                    name="banco_numero" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label class="form-label" for="banco_nome">Banco Nome:</label>
-                                                <input type="text" class="form-control" id="banco_nome"
-                                                    name="banco_nome" required>
-                                            </div>
-                                        </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="banco_numero">Banco Número:</label>
+                                        <input type="text" class="form-control" id="banco_numero" name="banco_numero"
+                                            required>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label class="form-label" for="banco_tipo_conta">Banco Tipo de
-                                                    Conta:</label>
-                                                <input type="text" class="form-control" id="banco_tipo_conta"
-                                                    name="banco_tipo_conta" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label class="form-label" for="banco_agencia">Banco Agência:</label>
-                                                <input type="text" class="form-control" id="banco_agencia"
-                                                    name="banco_agencia" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label class="form-label" for="banco_dv_agencia">Banco DV
-                                                    Agência:</label>
-                                                <input type="text" class="form-control" id="banco_dv_agencia"
-                                                    name="banco_dv_agencia" required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label class="form-label" for="banco_conta">Banco Conta:</label>
-                                                <input type="text" class="form-control" id="banco_conta"
-                                                    name="banco_conta" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label class="form-label" for="banco_dv_conta">Banco DV Conta:</label>
-                                                <input type="text" class="form-control" id="banco_dv_conta"
-                                                    name="banco_dv_conta" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label class="form-label" for="habilitado">Habilitado:</label>
-                                                <input type="checkbox" id="habilitado" name="habilitado">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label class="form-label" for="preferencial">Preferencial:</label>
-                                                <input type="checkbox" id="preferencial" name="preferencial">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <!-- Empty div to offset the last row and keep the button centered -->
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <button type="submit" class="btn btn-primary">Enviar</button>
-                                        </div>
-                                    </div>
-                                </form>
-
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-header">
-                                Itens Cadastrados
-                            </div>
-                            <div class="card-body">
-                                <div id="tableExample2"
-                                    data-list='{"valueNames":["id","email","age"],"page":5,"pagination":true}'>
-                                    <div class="table-responsive ms-n1 ps-1 scrollbar">
-                                        <table class="table table-striped table-sm fs--1 mb-0">
-                                            <thead>
-                                                <tr>
-
-                                                    <th class="sort border-top " data-sort="id">ID</th>
-                                                    <th class="sort border-top " data-sort="nome_sistema">Funcionario
-                                                    </th>
-                                                    <th class="sort border-top " data-sort="habilitado">Pix Tipo</th>
-                                                    <th class="sort border-top " data-sort="habilitado">Pix
-                                                        identificação</th>
-                                                    <th class="sort border-top " data-sort="habilitado">Banco</th>
-                                                    <th class="sort border-top " data-sort="habilitado">Tipo de Conta
-                                                    </th>
-                                                    <th class="sort border-top " data-sort="habilitado">Habilitado</th>
-                                                    <th class="sort border-top " data-sort="habilitado">Preferencial
-                                                    </th>
-                                                    <th class="sort border-top ">Apagar</th>
-
-
-                                                </tr>
-                                            </thead>
-                                            <tbody id="table_body_bancos" class="list">
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="d-flex justify-content-center mt-3">
-                                        <button class="page-link" data-list-pagination="prev"><span
-                                                class="fas fa-chevron-left"></span></button>
-                                        <ul class="mb-0 pagination"></ul>
-                                        <button class="page-link pe-0" data-list-pagination="next"><span
-                                                class="fas fa-chevron-right"></span></button>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="banco_nome">Banco Nome:</label>
+                                        <input type="text" class="form-control" id="banco_nome" name="banco_nome"
+                                            required>
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="banco_agencia">Banco Agência:</label>
+                                        <input type="text" class="form-control" id="banco_agencia" name="banco_agencia"
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="banco_dv_agencia">Banco DV
+                                            Agência:</label>
+                                        <input type="text" class="form-control" id="banco_dv_agencia"
+                                            name="banco_dv_agencia" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="banco_conta">Banco Conta:</label>
+                                        <input type="text" class="form-control" id="banco_conta" name="banco_conta"
+                                            required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="banco_dv_conta">Banco DV Conta:</label>
+                                        <input type="text" class="form-control" id="banco_dv_conta"
+                                            name="banco_dv_conta" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label mt-4" for="habilitado">Habilitado:</label>
+                                        <input type="checkbox" id="habilitado" name="habilitado">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label mt-4" for="preferencial">Preferencial:</label>
+                                        <input type="checkbox" id="preferencial" name="preferencial">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-primary">Enviar</button>
+                                </div>
+                            </div>
+                        </form>
 
-                        </div>
+
+
+
                     </div>
+                    <div id="bancolist" class="mt-5"></div>
+
 
                 </div>
             </div>
@@ -848,18 +972,25 @@ $cnhTipo = $row_cnpj["cnhTipo"] ?? "";
 
 
         <div class="tab-pane fade " id="login" role="tabpanel" aria-labelledby="login-tab">
-
-            <form>
+            <h3>Login</h3>
+            <form id="login_user" action="pages/cadastro/add/add_login.php" method="post">
+                <div class="col-md-4 d-none">
+                    <div class="form-group">
+                        <label for="idFuncionario" class="form-label">Id Funcionario</label>
+                        <input type="text" class="form-control" id="idFuncionario" name="idFuncionario"
+                            value="<?php echo $id_funci; ?>" readonly>
+                    </div>
+                </div>
                 <div class="form-row">
                     <div class="col-md-12 mb-3">
-                        <label for="campoTexto">Login</label>
-                        <input type="text" class="form-control" id="campoTexto" placeholder="Login" required>
+                        <label for="login">Login</label>
+                        <input type="text" class="form-control" id="login" name="login" placeholder="Login" required>
                     </div>
                     <div class="col-md-12 mb-3">
                         <label for="selectSistemas">Select de Sistemas</label>
-                        <select class="form-control" id="selectSistemas" required>
+                        <select class="form-control" id="selectSistemas" name="selectSistemas" required>
                             <option value="">Selecione um sistema</option>
-                                            <?php
+                            <?php
                                             // Executar a consulta para obter os dados
                                             $sql_sistemas = "SELECT id_sistema, nome_sistema
                                             FROM aux_sistemas
@@ -885,17 +1016,106 @@ $cnhTipo = $row_cnpj["cnhTipo"] ?? "";
                     </div>
                     <!-- Adicione aqui o terceiro input da mesma maneira -->
                     <!-- Por exemplo, um campo de e-mail -->
-                    <div class="col-md-12 mb-3">
-                        <label for="campoEmail">Campo de E-mail</label>
-                        <input type="email" class="form-control" id="campoEmail" placeholder="Digite seu e-mail"
-                            required>
-                    </div>
+                    <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label mt-4" for="habilitado">Habilitado:</label>
+                                        <input type="checkbox" id="habilitado" name="habilitado">
+                                    </div>
+                                </div>
+
                 </div>
                 <!-- Adicione mais form-row aqui para mais linhas de inputs, se necessário -->
                 <button class="btn btn-primary" type="submit">Enviar</button>
             </form>
+            <div id="loginList" class="mt-5"></div>
+        </div>
+
+        <div class="tab-pane fade " id="historico" role="tabpanel" aria-labelledby="historico-tab">
+
+        <div class="d-flex pb-4 mt-3 border-bottom border-dashed border-300 align-items-end">
+    <h3 class="flex-1 mb-0">Histórico</h3>
+</div>
+<div class="py-3 border-bottom border-dashed">
+    <div id="tableExample2" data-list='{"valueNames":["cpf","email","age"],"page":10,"pagination":true}'>
+        <div class="table-responsive ms-n1 ps-1 scrollbar">
+            <table class="table table-striped table-sm fs--1 mb-0">
+                <thead>
+                    <tr>
+
+                        <th class="sort border-top " data-sort="id_funcionario">Funcionário</th>
+                        <th class="sort border-top " data-sort="cpf">CPF</th>
+                        <th class="sort border-top " data-sort="nome_social">Nome Social</th>
+                        <th class="sort border-top " data-sort="nome_registro">Nome Registro</th>
+                        <th class="sort border-top " data-sort="sexo">Sexo</th>
+                        <th class="sort border-top " data-sort="genero">Gênero</th>
+                        <th class="sort border-top " data-sort="estado_civil">Estado Civil</th>
+                        <th class="sort border-top " data-sort="id_cargo">Cargo</th>
+                        <th class="sort border-top " data-sort="id_vt">VT</th>
+                        <th class="sort border-top " data-sort="id_superior">Superior</th>
+                        <th class="sort border-top " data-sort="id_area">Área</th>
+                        <th class="sort border-top " data-sort="id_operacao">Operação</th>
+                        <th class="sort border-top " data-sort="id_filial">Filial</th>
+
+                    </tr>
+                </thead>
+                <tbody class="list fs--1">
+                <?php
+if (isset($id_funci) && !empty($id_funci)) {
+    // Recupere os dados do MySQL
+    $sql_tab2 = "SELECT *, ac.cargo_nome, vt.vt_nome, aa.nome_area, ao.nome_operacao, af.filial_nome FROM tb_history_cadastro AS thc
+    LEFT JOIN  funcionarios AS f ON f.idFuncionario = thc.id_funcionario
+    LEFT JOIN aux_cargos AS ac ON ac.id_cargo = thc.id_cargo
+    LEFT join aux_vt AS vt ON vt.id_vt = thc.id_vt
+    LEFT JOIN aux_areas AS aa ON aa.id_area = thc.id_area
+    LEFT JOIN aux_operacoes AS ao ON ao.id_operacao = thc.id_operacao
+    LEFT JOIN aux_filiais AS af ON af.id_filial = thc.id_filial
+
+
+
+
+    WHERE id_funcionario = $id_funci";
+    $result_tab2 = $conn->query($sql_tab2);
+
+    // Preencha a tabela com os dados
+    if ($result_tab2->num_rows > 0) {
+        while ($row = $result_tab2->fetch_assoc()) {
+            echo '<tr>';
+
+            echo '<td class="align-middle cpf">' . $row['nome_social'] . '</td>';
+            echo '<td class="align-middle">' . $row['cpf'] . '</td>';
+            echo '<td class="align-middle">' . $row['nome_social'] . '</td>';
+            echo '<td class="align-middle">' . $row['nome_registro'] . '</td>';
+            echo '<td class="align-middle">' . $row['sexo'] . '</td>';
+            echo '<td class="align-middle">' . $row['genero'] . '</td>';
+            echo '<td class="align-middle">' . $row['estado_civil'] . '</td>';
+            echo '<td class="align-middle">' . $row['cargo_nome'] . '</td>';
+            echo '<td class="align-middle">' . $row['vt_nome'] . '</td>';
+            echo '<td class="align-middle">' . $row['id_superior'] . '</td>';
+            echo '<td class="align-middle">' . $row['nome_area'] . '</td>';
+            echo '<td class="align-middle">' . $row['nome_operacao'] . '</td>';
+            echo '<td class="align-middle">' . $row['filial_nome'] . '</td>';
+
+            echo '</tr>';
+        }
+    } else {
+        echo '<tr><td colspan="4">Nenhum registro encontrado.</td></tr>';
+    }
+}
+?>
+
+
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+
+</div>
 
         </div>
+
+
 
 
     </div>
@@ -916,6 +1136,7 @@ $cnhTipo = $row_cnpj["cnhTipo"] ?? "";
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 
+
 <script>
 $(document).ready(function() {
     $("#form").submit(function(e) {
@@ -923,18 +1144,17 @@ $(document).ready(function() {
 
         // Verifica se todos os campos estão preenchidos
         var allFieldsFilled = true;
-        var emptyFields = ""; // Variável para armazenar os nomes dos campos vazios
+        var emptyFields = "";
 
         $("#form input, #form select").each(function() {
             if ($(this).val() === "" && !$(this).hasClass("choices__input")) {
                 allFieldsFilled = false;
-                emptyFields += $(this).attr("name") +
-                    ", "; // Adiciona o nome do campo vazio à variável
+                emptyFields += $(this).attr("name") + ", ";
             }
         });
 
         if (!allFieldsFilled) {
-            emptyFields = emptyFields.slice(0, -2); // Remove a vírgula e o espaço no final da string
+            emptyFields = emptyFields.slice(0, -2);
             Swal.fire({
                 title: 'Campos vazios',
                 text: 'Por favor, preencha todos os campos do formulário. Campos vazios: ' +
@@ -942,10 +1162,10 @@ $(document).ready(function() {
                 icon: 'error',
                 confirmButtonText: 'OK'
             });
-            return; // Interrompe a submissão do formulário
+            return;
         }
 
-        var formData = $(this).serialize(); // Serializa os dados do formulário
+        var formData = $(this).serialize();
 
         $.ajax({
             type: "POST",
@@ -960,6 +1180,8 @@ $(document).ready(function() {
                         confirmButtonText: 'OK'
                     });
                 } else {
+                    var insertedId =
+                        response; // Response should be the ID, adjust accordingly
                     Swal.fire({
                         title: 'Parabéns',
                         text: 'Usuário Atualizado com sucesso!',
@@ -967,8 +1189,9 @@ $(document).ready(function() {
                         confirmButtonText: 'OK'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            // location.href = 'palitagens.php';
-                            window.location.reload(); // Recarrega a página
+                            // Redirecionar para a página 'palitagens.php' após sucesso
+                            location.href = 'content_pages.php?id=10&id_func=' +
+                                insertedId;
                         }
                     });
                 }
@@ -979,68 +1202,6 @@ $(document).ready(function() {
 </script>
 
 
-<script>
-$(document).ready(function() {
-    $("#form_2").submit(function(e) {
-        e.preventDefault(); // Impede que o formulário seja enviado normalmente
-
-        // Verifica se todos os campos estão preenchidos
-        var allFieldsFilled = true;
-        var emptyFields = ""; // Variável para armazenar os nomes dos campos vazios
-
-        $("#form_2 input, #form_2 select").each(function() {
-            if ($(this).val() === "" && !$(this).hasClass("choices__input")) {
-                allFieldsFilled = false;
-                emptyFields += $(this).attr("name") +
-                    ", "; // Adiciona o nome do campo vazio à variável
-            }
-        });
-
-        if (!allFieldsFilled) {
-            emptyFields = emptyFields.slice(0, -2); // Remove a vírgula e o espaço no final da string
-            Swal.fire({
-                title: 'Campos vazios',
-                text: 'Por favor, preencha todos os campos do formulário. Campos vazios: ' +
-                    emptyFields,
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
-            return; // Interrompe a submissão do formulário
-        }
-
-        var formData = $(this).serialize(); // Serializa os dados do formulário
-        console.log(formData); // Exibe os dados serializados no console
-
-        $.ajax({
-            type: "POST",
-            url: "pages/cadastro/update/update_usuario.php",
-            data: formData,
-            success: function(response) {
-                if (response == "success") {
-                    Swal.fire({
-                        title: 'Erro',
-                        text: 'Ocorreu um erro ao salvar os dados!',
-                        icon: 'error',
-                        confirmButtonText: 'OK'
-                    });
-                } else {
-                    Swal.fire({
-                        title: 'Parabéns',
-                        text: 'Usuário Atualizado com sucesso!',
-                        icon: 'success',
-                        confirmButtonText: 'OK'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            // location.href = 'palitagens.php';
-                            window.location.reload(); // Recarrega a página
-                        }
-                    });
-                }
-            }
-        });
-    });
-});
-</script>
 
 <script>
 document.getElementById('tipoForm').addEventListener('change', function(event) {
@@ -1050,5 +1211,307 @@ document.getElementById('tipoForm').addEventListener('change', function(event) {
     var separator = currentUrl.includes('?') ? '&' : '?';
     var newUrl = currentUrl + separator + 'tipo=' + tipo;
     window.location.href = newUrl;
+});
+</script>
+
+<?php
+// Your PHP code that sets the value of $id_funci
+ // Replace this with your actual PHP code
+
+// Echo the value of $id_funci so that JavaScript can access it
+echo '<script>var $id_funci = ' . json_encode($id_funci) . ';</script>';
+?>
+
+<script>
+$(document).ready(function() {
+    // The value of $id_funci is now accessible here
+    if ($id_funci === null || $id_funci === "" || $id_funci === "invalid") {
+        // Show the message
+        $("#message").show();
+
+        // Disable the button
+        $("#submitBtn_atualizacao_cadastral").prop("disabled", true);
+    } else if ($id_funci > 0) {
+        // If id_funci is greater than 0, hide the message and enable the button
+        $("#message").hide();
+        $("#submitBtn_atualizacao_cadastral").prop("disabled", false);
+    }
+});
+</script>
+
+
+
+
+<script>
+$(document).ready(function() {
+    // Function to handle form submission
+    $("#form_docs").submit(function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        var formData = new FormData(this); // Get form data
+
+        $.ajax({
+            url: $(this).attr("action"), // URL to handle form submission
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+                // On success, update the file list
+                updateFileList();
+            },
+            error: function(xhr, status, error) {
+                // Handle error if necessary
+                console.error(error);
+            }
+        });
+    });
+
+    // Function to update the file list after form submission
+    function updateFileList() {
+        var idUsuario = $("#idFuncionario")
+            .val(); // Get the ID of the user (assuming it's stored in #idFuncioanrio)
+        var fileListContainer = $("#fileList");
+
+        // Make an AJAX request to get the related files based on the user ID
+        $.ajax({
+            url: "pages/cadastro/list/get_user_files.php", // Replace with the PHP script to fetch user files based on ID
+            type: "POST",
+            data: {
+                id_usuario: idUsuario
+            },
+            success: function(data) {
+                // On success, update the file list container
+                fileListContainer.html(data);
+            },
+            error: function(xhr, status, error) {
+                // Handle error if necessary
+                console.error(error);
+            }
+        });
+    }
+
+    // Initial file list update (if needed)
+    updateFileList();
+});
+</script>
+
+<script>
+$(document).ready(function() {
+    // Function to handle form submission
+    $("#childForm").submit(function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        var formData = new FormData(this); // Get form data
+
+        $.ajax({
+            url: $(this).attr("action"), // URL to handle form submission
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+                // On success, update the file list
+                updateFilhoList();
+            },
+            error: function(xhr, status, error) {
+                // Handle error if necessary
+                console.error(error);
+            }
+        });
+    });
+
+    // Function to update the file list after form submission
+    function updateFilhoList() {
+        var idUsuario = $("#idFuncionario")
+            .val(); // Get the ID of the user (assuming it's stored in #idFuncioanrio)
+        var fileListContainer = $("#childList");
+
+        // Make an AJAX request to get the related files based on the user ID
+        $.ajax({
+            url: "pages/cadastro/list/filhos.php", // Replace with the PHP script to fetch user files based on ID
+            type: "POST",
+            data: {
+                id_usuario: idUsuario
+            },
+            success: function(data) {
+                // On success, update the file list container
+                fileListContainer.html(data);
+            },
+            error: function(xhr, status, error) {
+                // Handle error if necessary
+                console.error(error);
+            }
+        });
+    }
+
+    // Initial file list update (if needed)
+    updateFilhoList();
+});
+</script>
+
+
+<script>
+$(document).ready(function() {
+    // Function to handle form submission
+    $("#conjugeform").submit(function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        var formData = new FormData(this); // Get form data
+
+        $.ajax({
+            url: $(this).attr("action"), // URL to handle form submission
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+                // On success, update the file list
+                updateConjugeList();
+            },
+            error: function(xhr, status, error) {
+                // Handle error if necessary
+                console.error(error);
+            }
+        });
+    });
+
+    // Function to update the file list after form submission
+    function updateConjugeList() {
+        var idUsuario = $("#idFuncionario")
+            .val(); // Get the ID of the user (assuming it's stored in #idFuncioanrio)
+        var fileListContainer = $("#conjugeList");
+
+        // Make an AJAX request to get the related files based on the user ID
+        $.ajax({
+            url: "pages/cadastro/list/conjuge.php", // Replace with the PHP script to fetch user files based on ID
+            type: "POST",
+            data: {
+                id_usuario: idUsuario
+            },
+            success: function(data) {
+                // On success, update the file list container
+                fileListContainer.html(data);
+            },
+            error: function(xhr, status, error) {
+                // Handle error if necessary
+                console.error(error);
+            }
+        });
+    }
+
+    // Initial file list update (if needed)
+    updateConjugeList();
+});
+</script>
+
+
+
+<script>
+$(document).ready(function() {
+    // Function to handle form submission
+    $("#banco_user").submit(function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        var formData = new FormData(this); // Get form data
+
+        $.ajax({
+            url: $(this).attr("action"), // URL to handle form submission
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+                // On success, update the file list
+                updateBancoList();
+            },
+            error: function(xhr, status, error) {
+                // Handle error if necessary
+                console.error(error);
+            }
+        });
+    });
+
+    // Function to update the file list after form submission
+    function updateBancoList() {
+        var idUsuario = $("#idFuncionario")
+            .val(); // Get the ID of the user (assuming it's stored in #idFuncioanrio)
+        var fileListContainer = $("#bancolist");
+
+        // Make an AJAX request to get the related files based on the user ID
+        $.ajax({
+            url: "pages/cadastro/list/banco.php", // Replace with the PHP script to fetch user files based on ID
+            type: "POST",
+            data: {
+                id_usuario: idUsuario
+            },
+            success: function(data) {
+                // On success, update the file list container
+                fileListContainer.html(data);
+            },
+            error: function(xhr, status, error) {
+                // Handle error if necessary
+                console.error(error);
+            }
+        });
+    }
+
+    // Initial file list update (if needed)
+    updateBancoList();
+});
+</script>
+
+
+<script>
+$(document).ready(function() {
+    // Function to handle form submission
+    $("#login_user").submit(function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        var formData = new FormData(this); // Get form data
+
+        $.ajax({
+            url: $(this).attr("action"), // URL to handle form submission
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+                // On success, update the file list
+                updateLoginList();
+            },
+            error: function(xhr, status, error) {
+                // Handle error if necessary
+                console.error(error);
+            }
+        });
+    });
+
+    // Function to update the file list after form submission
+    function updateLoginList() {
+        var idUsuario = $("#idFuncionario")
+            .val(); // Get the ID of the user (assuming it's stored in #idFuncioanrio)
+        var fileListContainer = $("#loginList");
+
+        // Make an AJAX request to get the related files based on the user ID
+        $.ajax({
+            url: "pages/cadastro/list/login.php", // Replace with the PHP script to fetch user files based on ID
+            type: "POST",
+            data: {
+                id_usuario: idUsuario
+            },
+            success: function(data) {
+                // On success, update the file list container
+                fileListContainer.html(data);
+            },
+            error: function(xhr, status, error) {
+                // Handle error if necessary
+                console.error(error);
+            }
+        });
+    }
+
+    // Initial file list update (if needed)
+    updateLoginList();
 });
 </script>
