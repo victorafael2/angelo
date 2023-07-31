@@ -29,7 +29,7 @@ if (isset($_GET['id_func'])) {
         // ...
     } else {
         // Ocorreu um erro na consulta
-        echo "Erro na consulta: " . mysqli_error($conn);
+        // echo "Erro na consulta: " . mysqli_error($conn);
     }
 } else {
     // Caso '$id_funci' não esteja presente, você pode lidar com a situação aqui
@@ -69,7 +69,7 @@ $eleitor = $row["eleitor"] ?? "";
     $result_cadastro_cnpj = mysqli_query($conn, $query_cadastro_cnpj);
     if ($result_cadastro_cnpj) {
     $row_cnpj = mysqli_fetch_assoc($result_cadastro_cnpj);
-    echo "Erro na consulta: " . mysqli_error($conn);
+    // echo "Erro na consulta: " . mysqli_error($conn);
 }
 
 else {
@@ -103,6 +103,10 @@ $dataDemissao = $row_cnpj["dataDemissao"] ?? "";
 $dataNascimento = $row_cnpj["dataNascimento"] ?? "";
 $cnhNumero = $row_cnpj["cnhNumero"] ?? "";
 $cnhTipo = $row_cnpj["cnhTipo"] ?? "";
+$cpf = $row_cnpj["cpf"] ?? "";
+$rg = $row_cnpj["rg"] ?? "";
+$nome_resp = $row_cnpj["nome_resp"] ?? "";
+$endereco_resp = $row_cnpj["endereco_resp"] ?? "";
 
 
 }

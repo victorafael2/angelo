@@ -95,7 +95,57 @@
     <!-- <script src="assets/js/phoenix.js"></script>
     <script src="vendors/list.js/list.min.js"></script> -->
 
+    <script>
+// // Agende um "toast" para exibir uma mensagem para o usuário quando a sessão estiver prestes a expirar
+// setTimeout(function() {
+//     window.alert('Sua sessão está prestes a expirar em 2 minutos. Por favor, salve seu trabalho e faça login novamente.');
+// }, 300); // 2 minutos
 
+
+
+// Definindo o tempo limite de inatividade em minutos
+const timeout = 15;
+
+// Definindo a função que exibe o SweetAlert2
+function exibirAlerta() {
+  Swal.fire({
+    title: 'Sessão prestes a expirar!',
+    text: 'Sua sessão será encerrada em breve. Deseja continuar?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Sim',
+    cancelButtonText: 'Não'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // Se o usuário confirmar, reinicie o contador de inatividade
+      reiniciarTempoInatividade();
+    } else {
+      // Se o usuário clicar em cancelar, redirecione para a página de login ou encerre a sessão
+      // ...
+
+
+      // Redireciona o usuário para a página de login
+      window.location.href = "database/logout.php";
+    }
+  });
+}
+
+// Definindo a função que reinicia o contador de inatividade
+function reiniciarTempoInatividade() {
+  clearTimeout(contadorInatividade);
+  contadorInatividade = setTimeout(exibirAlerta, timeout * 60 * 1000);
+}
+
+// Definindo a variável que armazena o tempo de inatividade
+let contadorInatividade = setTimeout(exibirAlerta, timeout * 60 * 1000);
+
+// Definindo os eventos que reiniciam o contador de inatividade
+document.addEventListener('mousemove', reiniciarTempoInatividade);
+document.addEventListener('keydown', reiniciarTempoInatividade);
+document.addEventListener('click', reiniciarTempoInatividade);
+
+
+</script>
 
 
 

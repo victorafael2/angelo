@@ -29,6 +29,15 @@ $dataHoraAtual = date("Y-m-d H:i:s");
     $dataNascimento = $_POST['dataNascimento'];
     $cnhNumero = $_POST['cnhNumero'];
     $cnhTipo = isset($_POST['cnhTipo']) ? implode(',', $_POST['cnhTipo']) : '';
+
+    $cpf = $_POST['cpf'];
+
+    $rg = $_POST['rg'];
+
+    $nome_resp = $_POST['nome_resp'];
+
+    $endereco_resp = $_POST['endereco_resp'];
+
     // $usuariosString = $_POST['modal-usuarios']; // String JSON dos valores selecionados do campo "mySelect"
 // $usuarios = json_decode($usuariosString); // Decodifica o JSON em um array
 
@@ -40,8 +49,8 @@ $dataHoraAtual = date("Y-m-d H:i:s");
 // }
 
 // Insere os dados na tabela AUX_VT
-$sql = "INSERT INTO funcionarios_cnpj (cnpj, nome_fantasia, razao_social, abertura, atividade_principal, logradouro, municipio, situacao, porte, uf, tipo, email, telefone, dataCadastro, dataAdmissao, dataDemissao, dataNascimento, cnhNumero, cnhTipo)
-VALUES ('$cnpj', '$nome_fantasia', '$razao_social', '$abertura', '$atividade_principal', '$logradouro', '$municipio', '$situacao', '$porte', '$uf', '$tipo', '$email', '$telefone', '$dataCadastro', '$dataAdmissao', '$dataDemissao', '$dataNascimento', '$cnhNumero', '$cnhTipo')";
+$sql = "INSERT INTO funcionarios_cnpj (cnpj, nome_fantasia, razao_social, abertura, atividade_principal, logradouro, municipio, situacao, porte, uf, tipo, email, telefone, dataCadastro, dataAdmissao, dataDemissao, dataNascimento, cnhNumero, cnhTipo,cpf,rg,nome_resp,endereco_resp)
+VALUES ('$cnpj', '$nome_fantasia', '$razao_social', '$abertura', '$atividade_principal', '$logradouro', '$municipio', '$situacao', '$porte', '$uf', '$tipo', '$email', '$telefone', '$dataCadastro', '$dataAdmissao', '$dataDemissao', '$dataNascimento', '$cnhNumero', '$cnhTipo','$cpf','$rg','$nome_resp','$endereco_resp')";
 if ($conn->query($sql) === TRUE) {
     $response = array(
         'status' => true,

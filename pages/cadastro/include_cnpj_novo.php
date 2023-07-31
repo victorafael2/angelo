@@ -1,6 +1,6 @@
 <div class="tab-pane fade  show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
     <h3>Cadastro Pessoa Jurídica</h3>
-    <form id="form" class="fs--1">
+    <form id="form_cnpj" class="fs--1">
 
         <div class="row row-cols-3 g-2 align-items-center ">
 
@@ -224,3 +224,122 @@
         <button type="submit" class="btn btn-success mt-5">Cadastrar</button>
     </form>
 </div>
+
+
+
+<script>
+function formatarCNPJ(cnpj) {
+    cnpj = cnpj.replace(/\D/g, "");
+    return cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5");
+}
+</script>
+
+
+<script>
+    $(document).ready(function() {
+        $('#cnpj').on('change', function(e) {
+            var cnpj = $(this).val();
+            $.ajax({
+                url: 'pages/config/buscar_cnpj.php',
+                type: 'post',
+                data: {
+                    cnpj: cnpj
+                },
+                success: function(response) {
+                    var data = JSON.parse(response);
+                    $('#cnpj').val(formatarCNPJ(cnpj)).attr('title', formatarCNPJ(cnpj));
+                    $('#nome_fantasia').val(data.fantasia).attr('title', data.fantasia);
+                    $('#abertura').val(data.abertura).attr('title', data.abertura);
+                    $('#atividade_principal').val(data.atividade_principal[0].text).attr(
+                        'title', data.atividade_principal[0].text);
+                    $('#municipio').val(data.municipio).attr('title', data.municipio);
+                    $('#situacao').val(data.situacao).attr('title', data.situacao);
+                    $('#email').val(data.email).attr('title', data.email);
+                    $('#uf').val(data.uf).attr('title', data.uf);
+                    $('#tipo').val(data.tipo).attr('title', data.tipo);
+                    $('#porte').val(data.porte).attr('title', data.porte);
+                    $('#telefone').val(data.telefone).attr('title', data.telefone);
+                    $('#logradouro').val(data.logradouro).attr('title', data.logradouro);
+                    $('#razao_social').val(data.nome).attr('title', data.nome);
+                    var qsa = '';
+                    for (var i = 0; i < data.qsa.length; i++) {
+                        qsa += data.qsa[i].nome + ' - ' + data.qsa[i].qual + '\n';
+                    }
+                    $('#qsa').val(qsa).attr('title', qsa);
+                    $('#edit_button').show();
+                    // Ativar os tooltips do Bootstrap em todos os inputs
+                    $('input').tooltip({
+                        trigger: 'hover'
+                    });
+                }
+
+            });
+        });
+        $('#edit_button').click(function() {
+            $('input').prop('disabled', false);
+        });
+    });
+    </script>
+
+<!-- Add an event listener to the form submit button -->
+<script>
+  $(document).ready(function() {
+    $('#form_cnpj').submit(function(event) {
+      event.preventDefault(); // Evita o envio normal do formulário
+
+      // Serialize form data (including disabled fields)
+      var formData = $(this).serializeArray();
+
+      // Add disabled fields to the serialized data
+      $(':disabled', this).each(function() {
+        formData.push({ name: this.name, value: $(this).val() });
+      });
+
+      // Convert the serialized data into an object
+      var formDataObject = {};
+      $.map(formData, function(n, i) {
+        if (formDataObject[n['name']]) {
+          if (!Array.isArray(formDataObject[n['name']])) {
+            formDataObject[n['name']] = [formDataObject[n['name']]];
+          }
+          formDataObject[n['name']].push(n['value']);
+        } else {
+          formDataObject[n['name']] = n['value'];
+        }
+      });
+
+      // Fazer a chamada AJAX
+      var insertedId =
+                    response; // Response should be the ID, adjust accordingly
+
+      $.ajax({
+        type: 'POST',
+        url: 'pages/cadastro/add/add_usuario_cnpj.php', // Substitua pelo seu endpoint da API
+        data: formDataObject,
+        success: function(response) {
+          // Exibir mensagem de sucesso usando SweetAlert2
+          Swal.fire({
+            title: 'Sucesso',
+            text: 'Dados salvos com sucesso!',
+            icon: 'success',
+            confirmButtonText: 'OK'
+          }).then(function() {
+            // Limpar os campos do formulário
+            // $('#form')[0].reset();
+            location.href = 'content_pages.php?id=10&id_func=' +
+                                insertedId;
+          });
+        },
+        error: function() {
+          // Exibir mensagem de erro usando SweetAlert2
+          Swal.fire({
+            title: 'Erro',
+            text: 'Falha ao salvar os dados!',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
+        }
+      });
+    });
+  });
+</script>
