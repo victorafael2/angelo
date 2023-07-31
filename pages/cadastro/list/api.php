@@ -59,7 +59,7 @@ while ($row = $result->fetch_assoc()) {
 
 
 
-    $row['ver'] = '<a class="dropdown-item" href="content_pages.php?id=3&id_func='.$row['id_funcionario'] . '&tipo='.$row['tipo'] . '"><i class="fa-regular fa-eye"></i></a>';
+    $row['ver'] = '<a class="dropdown-item" href="content_pages.php?id=10&id_func='.$row['id_funcionario'] . '&tipo='.$row['tipo'] . '"><i class="fa-regular fa-eye"></i></a>';
 
 
 

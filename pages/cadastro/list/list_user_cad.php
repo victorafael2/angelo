@@ -69,7 +69,7 @@
                                 echo '<td class="align-middle white-space-nowrap text-end pe-0">';
                                 echo '<div class="font-sans-serif btn-reveal-trigger position-static">';
                                 echo '<button class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs--2" type="button" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><span class="fas fa-ellipsis-h fs--2"></span></button>';
-                                echo '<div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item" href="content_pages.php?id=3&id_func='.$row['idFuncionario'] . '&tipo='.$row['tipo'].'">Ver/editar</a><a class="dropdown-item" href="#!">Export</a>';
+                                echo '<div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item" href="content_pages.php?id=10&id_func='.$row['idFuncionario'] . '&tipo='.$row['tipo'].'">Ver/editar</a><a class="dropdown-item" href="#!">Export</a>';
                                 echo '<div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">Remove</a>';
                                 echo '</div>';
                                 echo '</div>';
