@@ -23,12 +23,31 @@ $dataHoraAtual = date("Y-m-d H:i:s");
     $tipo = $_POST['tipo'];
     $email = $_POST['email'];
     $telefone = $_POST['telefone'];
-    $dataCadastro = $_POST['dataCadastro'];
+    $dataCadastro =date("Y-m-d H:i:s");
     $dataAdmissao = $_POST['dataAdmissao'];
     $dataDemissao = $_POST['dataDemissao'];
     $dataNascimento = $_POST['dataNascimento'];
     $cnhNumero = $_POST['cnhNumero'];
-    $cnhTipo = isset($_POST['cnhTipo']) ? implode(',', $_POST['cnhTipo']) : '';
+    $cnhTipos = $_POST['cnhTipo']; // $cnhTipos é um array contendo os valores recebidos
+
+// Transforma $cnhTipos em um array, mesmo que contenha apenas um valor
+$cnhTipos = (array) $cnhTipos;
+
+// Remove os valores nulos do array $cnhTipos
+$cnhTipos = array_filter($cnhTipos, function ($value) {
+    return $value !== null;
+});
+
+// Verificar se o array $cnhTipos não está vazio após remover os nulos
+if (!empty($cnhTipos)) {
+  // Juntar os valores do campo cnhTipo em um único valor separado por vírgulas
+  $cnhTipo = implode(',', $cnhTipos);
+
+  // Agora você pode usar a variável $cnhTipo como o valor desejado no banco de dados
+
+  // Exemplo de exibição dos valores
+//   echo $cnhTipo;
+}
 
     $cpf = $_POST['cpf'];
 
@@ -51,10 +70,13 @@ $dataHoraAtual = date("Y-m-d H:i:s");
 // Insere os dados na tabela AUX_VT
 $sql = "INSERT INTO funcionarios_cnpj (cnpj, nome_fantasia, razao_social, abertura, atividade_principal, logradouro, municipio, situacao, porte, uf, tipo, email, telefone, dataCadastro, dataAdmissao, dataDemissao, dataNascimento, cnhNumero, cnhTipo,cpf,rg,nome_resp,endereco_resp)
 VALUES ('$cnpj', '$nome_fantasia', '$razao_social', '$abertura', '$atividade_principal', '$logradouro', '$municipio', '$situacao', '$porte', '$uf', '$tipo', '$email', '$telefone', '$dataCadastro', '$dataAdmissao', '$dataDemissao', '$dataNascimento', '$cnhNumero', '$cnhTipo','$cpf','$rg','$nome_resp','$endereco_resp')";
+
 if ($conn->query($sql) === TRUE) {
+    $lastInsertedId = $conn->insert_id; // Usando insert_id para obter o ID inserido
     $response = array(
         'status' => true,
-        'message' => 'As informações foram salvas com sucesso.'
+        'message' => 'As informações foram salvas com sucesso.',
+        'inserted_id' => $lastInsertedId
     );
 } else {
     $response = array(
@@ -62,6 +84,7 @@ if ($conn->query($sql) === TRUE) {
         'message' => 'Erro ao salvar as informações.'
     );
 }
+
 
 // Fecha a conexão com o banco de dados
 $conn->close();

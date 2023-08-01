@@ -7,10 +7,10 @@
         <h2 class="mb-0">Usuários</h2>
     </div>
     <div class="col-12 col-md-auto">
-        <a href="content_pages.php?id=1" class="btn btn-phoenix-secondary px-3 px-sm-5 me-2"><span
+        <a href="content_pages.php?id=10" class="btn btn-phoenix-secondary px-3 px-sm-5 me-2"><span
                 class="fa-solid fa-plus me-sm-2"></span><span class="d-none d-sm-inline">Adicionar Usuário </span></a>
         <a href="content_pages.php?id=4" class="btn btn-phoenix-secondary me-2"><i
-                class="fa-solid fa-user-clock me-2"></i><span>Usuários sem relação</span></a>
+                class="fa-solid fa-user-clock me-2"></i><span>Cadastros não Finalizados</span></a>
         <!-- <button class="btn px-3 btn-phoenix-secondary" type="button" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><span class="fa-solid fa-ellipsis"></span></button>
                 <ul class="dropdown-menu dropdown-menu-end p-0" style="z-index: 9999;">
                   <li><a class="dropdown-item" href="#!">View profile</a></li>

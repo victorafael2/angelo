@@ -103,6 +103,19 @@ $dataDemissao = $row_cnpj["dataDemissao"] ?? "";
 $dataNascimento = $row_cnpj["dataNascimento"] ?? "";
 $cnhNumero = $row_cnpj["cnhNumero"] ?? "";
 $cnhTipo = $row_cnpj["cnhTipo"] ?? "";
+// Supondo que $cnhTipo seja uma string contendo os valores separados por vírgula
+$cnhTipo = $row_cnpj["cnhTipo"] ?? "";
+
+// Separar os valores por vírgula e criar um array
+$cnhTipoArray = explode(",", $cnhTipo);
+
+// Remover espaços em branco ao redor de cada valor (opcional)
+$cnhTipoArray = array_map('trim', $cnhTipoArray);
+
+// Unir os valores do array em uma string separada por vírgulas
+$cnhTipoSeparated = implode(", ", $cnhTipoArray);
+
+
 $cpf = $row_cnpj["cpf"] ?? "";
 $rg = $row_cnpj["rg"] ?? "";
 $nome_resp = $row_cnpj["nome_resp"] ?? "";
@@ -195,8 +208,27 @@ $status = $row["status"] ?? "";
 
 ?>
 
-
-
+<div class="row align-items-center justify-content-between g-3 mb-4">
+    <div class="col-12 col-md-auto">
+        <h2 class="mb-0">Cadastro de Colaboradores</h2>
+    </div>
+    <div class="col-12 col-md-auto">
+        <a href="content_pages.php?id=10" class="btn btn-phoenix-secondary px-3 px-sm-5 me-2"><span
+                class="fa-solid fa-plus me-sm-2"></span><span class="d-none d-sm-inline">Novo Cadastro </span></a>
+        <a href="content_pages.php?id=2" class="btn btn-phoenix-secondary px-3 px-sm-5 me-2"><span
+                class="fa-solid fa-user me-sm-2"></span><span class="d-none d-sm-inline">Lista de
+                Colaboradores</span></a>
+        <a href="content_pages.php?id=4" class="btn btn-phoenix-secondary me-2"><i
+                class="fa-solid fa-user-clock me-2"></i><span>Cadastros não Finalizados</span></a>
+        <!-- <button class="btn px-3 btn-phoenix-secondary" type="button" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><span class="fa-solid fa-ellipsis"></span></button>
+                <ul class="dropdown-menu dropdown-menu-end p-0" style="z-index: 9999;">
+                  <li><a class="dropdown-item" href="#!">View profile</a></li>
+                  <li><a class="dropdown-item" href="#!">Report</a></li>
+                  <li><a class="dropdown-item" href="#!">Manage notifications</a></li>
+                  <li><a class="dropdown-item text-danger" href="#!">Delete Lead</a></li>
+                </ul> -->
+    </div>
+</div>
 <div class="container mt-5">
     <ul class="nav nav-tabs nav-underline mb-3" id="myTabs" role="tablist">
 
@@ -239,8 +271,8 @@ $status = $row["status"] ?? "";
         </li>
 
         <li class="nav-item">
-            <a class="nav-link " id="historico-tab" data-toggle="tab" href="#historico" role="tab" aria-controls="historico"
-                aria-selected="true">8. Histórico</a>
+            <a class="nav-link " id="historico-tab" data-toggle="tab" href="#historico" role="tab"
+                aria-controls="historico" aria-selected="true">8. Histórico</a>
         </li>
 
         <!-- <li class="nav-item">
@@ -1021,11 +1053,11 @@ $status = $row["status"] ?? "";
                     <!-- Adicione aqui o terceiro input da mesma maneira -->
                     <!-- Por exemplo, um campo de e-mail -->
                     <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label class="form-label mt-4" for="habilitado">Habilitado:</label>
-                                        <input type="checkbox" id="habilitado" name="habilitado">
-                                    </div>
-                                </div>
+                        <div class="form-group">
+                            <label class="form-label mt-4" for="habilitado">Habilitado:</label>
+                            <input type="checkbox" id="habilitado" name="habilitado">
+                        </div>
+                    </div>
 
                 </div>
                 <!-- Adicione mais form-row aqui para mais linhas de inputs, se necessário -->
@@ -1036,34 +1068,34 @@ $status = $row["status"] ?? "";
 
         <div class="tab-pane fade " id="historico" role="tabpanel" aria-labelledby="historico-tab">
 
-        <div class="d-flex pb-4 mt-3 border-bottom border-dashed border-300 align-items-end">
-    <h3 class="flex-1 mb-0">Histórico</h3>
-</div>
-<div class="py-3 border-bottom border-dashed">
-    <div id="tableExample2" data-list='{"valueNames":["cpf","email","age"],"page":10,"pagination":true}'>
-        <div class="table-responsive ms-n1 ps-1 scrollbar">
-            <table class="table table-striped table-sm fs--1 mb-0">
-                <thead>
-                    <tr>
+            <div class="d-flex pb-4 mt-3 border-bottom border-dashed border-300 align-items-end">
+                <h3 class="flex-1 mb-0">Histórico</h3>
+            </div>
+            <div class="py-3 border-bottom border-dashed">
+                <div id="tableExample2" data-list='{"valueNames":["cpf","email","age"],"page":10,"pagination":true}'>
+                    <div class="table-responsive ms-n1 ps-1 scrollbar">
+                        <table class="table table-striped table-sm fs--1 mb-0">
+                            <thead>
+                                <tr>
 
-                        <th class="sort border-top " data-sort="id_funcionario">Funcionário</th>
-                        <th class="sort border-top " data-sort="cpf">CPF</th>
-                        <th class="sort border-top " data-sort="nome_social">Nome Social</th>
-                        <th class="sort border-top " data-sort="nome_registro">Nome Registro</th>
-                        <th class="sort border-top " data-sort="sexo">Sexo</th>
-                        <th class="sort border-top " data-sort="genero">Gênero</th>
-                        <th class="sort border-top " data-sort="estado_civil">Estado Civil</th>
-                        <th class="sort border-top " data-sort="id_cargo">Cargo</th>
-                        <th class="sort border-top " data-sort="id_vt">VT</th>
-                        <th class="sort border-top " data-sort="id_superior">Superior</th>
-                        <th class="sort border-top " data-sort="id_area">Área</th>
-                        <th class="sort border-top " data-sort="id_operacao">Operação</th>
-                        <th class="sort border-top " data-sort="id_filial">Filial</th>
+                                    <th class="sort border-top " data-sort="id_funcionario">Funcionário</th>
+                                    <th class="sort border-top " data-sort="cpf">CPF</th>
+                                    <th class="sort border-top " data-sort="nome_social">Nome Social</th>
+                                    <th class="sort border-top " data-sort="nome_registro">Nome Registro</th>
+                                    <th class="sort border-top " data-sort="sexo">Sexo</th>
+                                    <th class="sort border-top " data-sort="genero">Gênero</th>
+                                    <th class="sort border-top " data-sort="estado_civil">Estado Civil</th>
+                                    <th class="sort border-top " data-sort="id_cargo">Cargo</th>
+                                    <th class="sort border-top " data-sort="id_vt">VT</th>
+                                    <th class="sort border-top " data-sort="id_superior">Superior</th>
+                                    <th class="sort border-top " data-sort="id_area">Área</th>
+                                    <th class="sort border-top " data-sort="id_operacao">Operação</th>
+                                    <th class="sort border-top " data-sort="id_filial">Filial</th>
 
-                    </tr>
-                </thead>
-                <tbody class="list fs--1">
-                <?php
+                                </tr>
+                            </thead>
+                            <tbody class="list fs--1">
+                                <?php
 if (isset($id_funci) && !empty($id_funci)) {
     // Recupere os dados do MySQL
     $sql_tab2 = "SELECT *, ac.cargo_nome, vt.vt_nome, aa.nome_area, ao.nome_operacao, af.filial_nome FROM tb_history_cadastro AS thc
@@ -1108,14 +1140,14 @@ if (isset($id_funci) && !empty($id_funci)) {
 ?>
 
 
-                </tbody>
+                            </tbody>
 
-            </table>
-        </div>
+                        </table>
+                    </div>
 
-    </div>
+                </div>
 
-</div>
+            </div>
 
         </div>
 
@@ -1184,8 +1216,8 @@ $(document).ready(function() {
                         confirmButtonText: 'OK'
                     });
                 } else {
-                    var insertedId =
-                        response; // Response should be the ID, adjust accordingly
+var id_funci = <?php echo $id_funci ?>;
+var tipo = <?php echo json_encode($tipo) ?>;
                     Swal.fire({
                         title: 'Parabéns',
                         text: 'Usuário Atualizado com sucesso!',
@@ -1194,8 +1226,7 @@ $(document).ready(function() {
                     }).then((result) => {
                         if (result.isConfirmed) {
                             // Redirecionar para a página 'palitagens.php' após sucesso
-                            location.href = 'content_pages.php?id=10&id_func=' +
-                                insertedId;
+                            location.href = 'content_pages.php?id=10&id_func=' + id_funci + '&tipo=' + tipo;
                         }
                     });
                 }
