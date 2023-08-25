@@ -207,7 +207,9 @@ $status = $row["status"] ?? "";
 
 
 ?>
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.pt-BR.min.js"></script>
 <div class="row align-items-center justify-content-between g-3 mb-4">
     <div class="col-12 col-md-auto">
         <h2 class="mb-0">Cadastro de Colaboradores</h2>
@@ -271,8 +273,13 @@ $status = $row["status"] ?? "";
         </li>
 
         <li class="nav-item">
+            <a class="nav-link " id="linha-tab" data-toggle="tab" href="#linha" role="tab" aria-controls="linha"
+                aria-selected="true">8. Status</a>
+        </li>
+
+        <li class="nav-item">
             <a class="nav-link " id="historico-tab" data-toggle="tab" href="#historico" role="tab"
-                aria-controls="historico" aria-selected="true">8. Histórico</a>
+                aria-controls="historico" aria-selected="true">9. Histórico</a>
         </li>
 
         <!-- <li class="nav-item">
@@ -673,7 +680,6 @@ $status = $row["status"] ?? "";
             </form>
         </div>
 
-
         <div class="tab-pane fade  show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
 
             <form id="tipoForm" action="" method="GET" class="mt-0 mb-3">
@@ -697,7 +703,6 @@ $status = $row["status"] ?? "";
 
                                 ?>
         </div>
-
 
         <div class="tab-pane fade" id="docs" role="tabpanel" aria-labelledby="docs-tab">
             <h3>Formulário para Anexar Documentos</h3>
@@ -779,7 +784,6 @@ $status = $row["status"] ?? "";
 
         </div>
 
-
         <div class="tab-pane fade" id="filhos" role="tabpanel" aria-labelledby="filhos-tab">
 
             <h3>Cadastro de Filhos</h3>
@@ -817,7 +821,6 @@ $status = $row["status"] ?? "";
 
 
         </div>
-
 
         <div class="tab-pane fade" id="conjuge" role="tabpanel" aria-labelledby="conjuge-tab">
             <h3>Dados do Cônjuge</h3>
@@ -867,7 +870,6 @@ $status = $row["status"] ?? "";
             </div> -->
 
         </div>
-
 
         <div class="tab-pane fade " id="banco" role="tabpanel" aria-labelledby="banco-tab">
             <div class="d-flex flex-wrap">
@@ -1006,7 +1008,6 @@ $status = $row["status"] ?? "";
             </div>
         </div>
 
-
         <div class="tab-pane fade " id="login" role="tabpanel" aria-labelledby="login-tab">
             <h3>Login</h3>
             <form id="login_user" action="pages/cadastro/add/add_login.php" method="post">
@@ -1066,6 +1067,43 @@ $status = $row["status"] ?? "";
             <div id="loginList" class="mt-5"></div>
         </div>
 
+        <div class="tab-pane fade " id="linha" role="tabpanel" aria-labelledby="linha-tab">
+            <h3>Status</h3>
+            <form id="form_status" action="pages/cadastro/add/add_status.php" method="post">
+
+            <div class="row mb-2">
+            <div class="form-group">
+                        <label for="idFuncionario" class="form-label">Id Funcionario</label>
+                        <input type="text" class="form-control" id="idFuncionario" name="idFuncionario"
+                            value="<?php echo $id_funci; ?>" readonly>
+                    </div>
+
+                <div class="col-md-4">
+                    <label for="status">Status:</label>
+                    <select class="form-control" id="status" name="status" required>
+                        <option value="ativo">Ativo</option>
+                        <option value="inativo">Inativo</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="data_inicio">Data de Início:</label>
+                    <input type="date" class="form-control" id="data_inicio" name="data_inicio" required>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="data_fim">Data de Término:</label>
+                    <input type="date" class="form-control" id="data_fim" name="data_fim">
+                </div>
+
+
+            </div>
+
+            <button class="btn btn-primary" type="submit">Enviar</button>
+            </form>
+            <div id="statuslist" class="mt-5"></div>
+        </div>
+
         <div class="tab-pane fade " id="historico" role="tabpanel" aria-labelledby="historico-tab">
 
             <div class="d-flex pb-4 mt-3 border-bottom border-dashed border-300 align-items-end">
@@ -1096,48 +1134,48 @@ $status = $row["status"] ?? "";
                             </thead>
                             <tbody class="list fs--1">
                                 <?php
-if (isset($id_funci) && !empty($id_funci)) {
-    // Recupere os dados do MySQL
-    $sql_tab2 = "SELECT *, ac.cargo_nome, vt.vt_nome, aa.nome_area, ao.nome_operacao, af.filial_nome FROM tb_history_cadastro AS thc
-    LEFT JOIN  funcionarios AS f ON f.idFuncionario = thc.id_funcionario
-    LEFT JOIN aux_cargos AS ac ON ac.id_cargo = thc.id_cargo
-    LEFT join aux_vt AS vt ON vt.id_vt = thc.id_vt
-    LEFT JOIN aux_areas AS aa ON aa.id_area = thc.id_area
-    LEFT JOIN aux_operacoes AS ao ON ao.id_operacao = thc.id_operacao
-    LEFT JOIN aux_filiais AS af ON af.id_filial = thc.id_filial
+                                    if (isset($id_funci) && !empty($id_funci)) {
+                                        // Recupere os dados do MySQL
+                                        $sql_tab2 = "SELECT *, ac.cargo_nome, vt.vt_nome, aa.nome_area, ao.nome_operacao, af.filial_nome FROM tb_history_cadastro AS thc
+                                        LEFT JOIN  funcionarios AS f ON f.idFuncionario = thc.id_funcionario
+                                        LEFT JOIN aux_cargos AS ac ON ac.id_cargo = thc.id_cargo
+                                        LEFT join aux_vt AS vt ON vt.id_vt = thc.id_vt
+                                        LEFT JOIN aux_areas AS aa ON aa.id_area = thc.id_area
+                                        LEFT JOIN aux_operacoes AS ao ON ao.id_operacao = thc.id_operacao
+                                        LEFT JOIN aux_filiais AS af ON af.id_filial = thc.id_filial
 
 
 
 
-    WHERE id_funcionario = $id_funci";
-    $result_tab2 = $conn->query($sql_tab2);
+                                        WHERE id_funcionario = $id_funci";
+                                        $result_tab2 = $conn->query($sql_tab2);
 
-    // Preencha a tabela com os dados
-    if ($result_tab2->num_rows > 0) {
-        while ($row = $result_tab2->fetch_assoc()) {
-            echo '<tr>';
+                                        // Preencha a tabela com os dados
+                                        if ($result_tab2->num_rows > 0) {
+                                            while ($row = $result_tab2->fetch_assoc()) {
+                                                echo '<tr>';
 
-            echo '<td class="align-middle cpf">' . $row['nome_social'] . '</td>';
-            echo '<td class="align-middle">' . $row['cpf'] . '</td>';
-            echo '<td class="align-middle">' . $row['nome_social'] . '</td>';
-            echo '<td class="align-middle">' . $row['nome_registro'] . '</td>';
-            echo '<td class="align-middle">' . $row['sexo'] . '</td>';
-            echo '<td class="align-middle">' . $row['genero'] . '</td>';
-            echo '<td class="align-middle">' . $row['estado_civil'] . '</td>';
-            echo '<td class="align-middle">' . $row['cargo_nome'] . '</td>';
-            echo '<td class="align-middle">' . $row['vt_nome'] . '</td>';
-            echo '<td class="align-middle">' . $row['id_superior'] . '</td>';
-            echo '<td class="align-middle">' . $row['nome_area'] . '</td>';
-            echo '<td class="align-middle">' . $row['nome_operacao'] . '</td>';
-            echo '<td class="align-middle">' . $row['filial_nome'] . '</td>';
+                                                echo '<td class="align-middle cpf">' . $row['nome_social'] . '</td>';
+                                                echo '<td class="align-middle">' . $row['cpf'] . '</td>';
+                                                echo '<td class="align-middle">' . $row['nome_social'] . '</td>';
+                                                echo '<td class="align-middle">' . $row['nome_registro'] . '</td>';
+                                                echo '<td class="align-middle">' . $row['sexo'] . '</td>';
+                                                echo '<td class="align-middle">' . $row['genero'] . '</td>';
+                                                echo '<td class="align-middle">' . $row['estado_civil'] . '</td>';
+                                                echo '<td class="align-middle">' . $row['cargo_nome'] . '</td>';
+                                                echo '<td class="align-middle">' . $row['vt_nome'] . '</td>';
+                                                echo '<td class="align-middle">' . $row['id_superior'] . '</td>';
+                                                echo '<td class="align-middle">' . $row['nome_area'] . '</td>';
+                                                echo '<td class="align-middle">' . $row['nome_operacao'] . '</td>';
+                                                echo '<td class="align-middle">' . $row['filial_nome'] . '</td>';
 
-            echo '</tr>';
-        }
-    } else {
-        echo '<tr><td colspan="4">Nenhum registro encontrado.</td></tr>';
-    }
-}
-?>
+                                                echo '</tr>';
+                                            }
+                                        } else {
+                                            echo '<tr><td colspan="4">Nenhum registro encontrado.</td></tr>';
+                                        }
+                                    }
+                                    ?>
 
 
                             </tbody>
@@ -1216,8 +1254,8 @@ $(document).ready(function() {
                         confirmButtonText: 'OK'
                     });
                 } else {
-var id_funci = <?php echo $id_funci ?>;
-var tipo = <?php echo json_encode($tipo) ?>;
+                    var id_funci = <?php echo $id_funci ?>;
+                    var tipo = <?php echo json_encode($tipo) ?>;
                     Swal.fire({
                         title: 'Parabéns',
                         text: 'Usuário Atualizado com sucesso!',
@@ -1226,7 +1264,8 @@ var tipo = <?php echo json_encode($tipo) ?>;
                     }).then((result) => {
                         if (result.isConfirmed) {
                             // Redirecionar para a página 'palitagens.php' após sucesso
-                            location.href = 'content_pages.php?id=10&id_func=' + id_funci + '&tipo=' + tipo;
+                            location.href = 'content_pages.php?id=10&id_func=' +
+                                id_funci + '&tipo=' + tipo;
                         }
                     });
                 }
@@ -1548,5 +1587,62 @@ $(document).ready(function() {
 
     // Initial file list update (if needed)
     updateLoginList();
+});
+</script>
+
+
+
+
+<script>
+$(document).ready(function() {
+    // Function to handle form submission
+    $("#form_status").submit(function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        var formData = new FormData(this); // Get form data
+
+        $.ajax({
+            url: $(this).attr("action"), // URL to handle form submission
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+                // On success, update the file list
+                updateStatusList();
+            },
+            error: function(xhr, status, error) {
+                // Handle error if necessary
+                console.error(error);
+            }
+        });
+    });
+
+    // Function to update the file list after form submission
+    function updateStatusList() {
+        var idUsuario = $("#idFuncionario")
+            .val(); // Get the ID of the user (assuming it's stored in #idFuncioanrio)
+        var fileListContainer = $("#statuslist");
+
+        // Make an AJAX request to get the related files based on the user ID
+        $.ajax({
+            url: "pages/cadastro/list/status.php", // Replace with the PHP script to fetch user files based on ID
+            type: "POST",
+            data: {
+                id_usuario: idUsuario
+            },
+            success: function(data) {
+                // On success, update the file list container
+                fileListContainer.html(data);
+            },
+            error: function(xhr, status, error) {
+                // Handle error if necessary
+                console.error(error);
+            }
+        });
+    }
+
+    // Initial file list update (if needed)
+    updateStatusList();
 });
 </script>

@@ -6,7 +6,7 @@
 
 
 <div style="display: flex; justify-content: space-between;" class="mb-2">
-    <h3 style="margin: 0;">Cargos</h3>
+    <h3 style="margin: 0;">Filiais</h3>
     <button id="adicionarBtn" class="btn btn-sm btn-phoenix-success">Adicionar Cargos</button>
 </div>
 
