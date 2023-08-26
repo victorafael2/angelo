@@ -35,6 +35,12 @@
                                     <input type="text" class="form-control" id="reportLink" name="reportLink" required>
                                 </div>
                             </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="reporDesc">Descricao do relatório</label>
+                                    <input type="text" class="form-control" id="reporDesc" name="reporDesc" required>
+                                </div>
+                            </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label class="d-block">Ativar Relatório</label>
@@ -81,6 +87,7 @@ $(document).ready(function() {
         // Obter os valores dos campos do formulário
         var reportName = $("#reportName").val();
         var reportLink = $("#reportLink").val();
+        var reporDesc = $("#reporDesc").val();
         var activateReport = $("#activateReport").is(":checked");
 
         // Simular o envio dos dados via AJAX
@@ -90,7 +97,8 @@ $(document).ready(function() {
             data: {
                 reportName: reportName,
                 reportLink: reportLink,
-                activateReport: activateReport
+                activateReport: activateReport,
+                reporDesc: reporDesc
             },
             success: function() {
                 // Exibir mensagem de sucesso usando o SweetAlert2

@@ -25,7 +25,7 @@ $result = $conn->query($sql);
             echo '<h5 class="text-1000">Resumo do Relatório</h5>';
             echo '</div>';
             echo '<div class="col-auto">';
-            echo '<p class="text-800">' . $row["desc"] . '</p>';
+            echo '<p class="text-800">' . $row["descricao"] . '</p>';
             echo '</div>';
             echo '</div>';
             echo '</div>';

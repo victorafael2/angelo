@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
     }
 
     // Consulta o relatório no banco de dados
-    $sql = "SELECT id, nome, link, ativo FROM relatorios WHERE id = '$id'";
+    $sql = "SELECT id, nome, link, ativo,descricao FROM relatorios WHERE id = '$id'";
     $result = $conn->query($sql);
 
     if ($result->num_rows == 1) {
@@ -21,9 +21,19 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
         // Monta o formulário de edição
         echo '<form class="edit-form">';
         echo '<input type="hidden" name="id" value="' . $row["id"] . '">';
+        echo '<div class="mb-3">';
+        echo '<label for="nome" class="form-label">Nome</label>';
         echo '<input type="text" class="form-control" name="nome" value="' . $row["nome"] . '">';
+        echo '</div>';
+        echo '<div class="mb-3">';
+        echo '<label for="link" class="form-label">Link</label>';
         echo '<input type="text" class="form-control" name="link" value="' . $row["link"] . '">';
-        echo '<div class="form-check">';
+        echo '</div>';
+        echo '<div class="mb-3">';
+        echo '<label for="desc" class="form-label">Descrição</label>';
+        echo '<input type="text" class="form-control" name="desc" value="' . $row["descricao"] . '">';
+        echo '</div>';
+        echo '<div class="mb-3 form-check">';
         echo '<input type="checkbox" class="form-check-input" name="ativo" ' . ($row["ativo"] ? "checked" : "") . '>';
         echo '<label class="form-check-label">Ativar Relatório</label>';
         echo '</div>';
@@ -31,6 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
         echo '<a href="content_pages.php?id=33" class="btn btn-secondary">Voltar</a>'; // Adicione o botão de voltar
         echo '</form>';
     }
+
 
     // Fecha a conexão
     $conn->close();

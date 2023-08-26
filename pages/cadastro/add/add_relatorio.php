@@ -4,6 +4,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Recebe os dados do formulário
     $reportName = $_POST["reportName"];
     $reportLink = $_POST["reportLink"];
+    $reporDesc = $_POST["reporDesc"];
     $activateReport = isset($_POST["activateReport"]) ? 1 : 0;
 
     // Configuração da conexão com o banco de dados (substitua com suas próprias informações)
@@ -15,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Prepara a instrução SQL
-    $sql = "INSERT INTO relatorios (nome, link, ativo) VALUES ('$reportName', '$reportLink', '$activateReport')";
+    $sql = "INSERT INTO relatorios (nome, link, ativo,descricao) VALUES ('$reportName', '$reportLink', '$activateReport', '$reporDesc')";
 
     // Executa a instrução SQL
     if ($conn->query($sql) === TRUE) {

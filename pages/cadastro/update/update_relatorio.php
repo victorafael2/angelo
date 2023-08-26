@@ -5,6 +5,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = $_POST["id"];
     $nome = $_POST["nome"];
     $link = $_POST["link"];
+    $desc = $_POST["desc"];
     $ativo = isset($_POST["ativo"]) ? 1 : 0;
 
     // Configuração da conexão com o banco de dados (substitua com suas próprias informações)
@@ -16,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Prepara a instrução SQL
-    $sql = "UPDATE relatorios SET nome='$nome', link='$link', ativo='$ativo' WHERE id='$id'";
+    $sql = "UPDATE relatorios SET nome='$nome', link='$link', ativo='$ativo', descricao = '$desc' WHERE id='$id'";
 
     // Executa a instrução SQL
     if ($conn->query($sql) === TRUE) {
