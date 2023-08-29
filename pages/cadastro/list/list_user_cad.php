@@ -29,6 +29,7 @@
                     <th class="sort border-top " data-sort="nome_social">Data de Cadastro</th>
                     <th class="sort border-top " data-sort="nome_registro">Data de Admissão</th>
                     <th class="sort border-top " data-sort="sexo">Data de Nascimento</th>
+                    <th class="sort border-top " data-sort="sexo">Aceitar cadastro</th>
 
 
                     <th class="sort text-end align-middle pe-0 border-top" scope="col">Ações</th>
@@ -64,6 +65,9 @@
                                 echo '<td class="align-middle">' . $row['dataAdmissao'] . '</td>';
                                 echo '<td class="align-middle">' . $row['dataNascimento'] . '</td>';
 
+                                echo '<td class="align-middle white-space-nowrap text-end pe-0">';
+                                echo '<button class="btn btn-sm  update-button" data-id="' . $row['idFuncionario'] . '" data-tipo="' . $row['tipo'] . '">Update</button>';
+                                echo '</td>';
 
 
                                 echo '<td class="align-middle white-space-nowrap text-end pe-0">';
@@ -124,4 +128,47 @@ $(document).ready(function() {
         },
     });
 });
+</script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Listen for button clicks
+    document.querySelectorAll(".update-button").forEach(button => {
+        button.addEventListener("click", function() {
+            const id = button.getAttribute("data-id");
+            const tipo = button.getAttribute("data-tipo");
+
+            // Send AJAX request to update data
+            updateData(id, tipo);
+        });
+    });
+});
+
+function updateData(id, tipo) {
+    const url = "pages/cadastro/update/update-ativar.php"; // Replace with your update script URL
+
+    // Send AJAX request to update the data
+    // Here you can use libraries like jQuery or the Fetch API
+    // Example using Fetch API:
+    fetch(url, {
+        method: "POST",
+        body: JSON.stringify({ id: id, tipo: tipo }),
+        headers: {
+            "Content-Type": "application/json",
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Show SweetAlert2 success message
+        Swal.fire({
+            icon: "success",
+            title: "Colaborador Ativo",
+            // text: "The data has been updated successfully.",
+        });
+    })
+    .catch(error => {
+        console.error("Error updating data:", error);
+    });
+}
 </script>

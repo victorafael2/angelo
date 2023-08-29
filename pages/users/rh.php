@@ -61,46 +61,26 @@
                 include_once("database/databaseconnect.php");
 
                 // Executar a consulta SQL para obter o contador
-                $sql = "SELECT COUNT(*) AS quantidade_registros
+                $sql = "SELECT COUNT(*) AS quantidade, subquery.idFuncionario, subquery.cpf, subquery.dataCadastro, subquery.dataAdmissao, subquery.dataNascimento, subquery.tipo
                 FROM (
-                    SELECT f.cpf, h.id_funcionario, h.nome_social, h.nome_registro, h.sexo, h.genero, h.estado_civil, h.id_cargo, h.id_vt, h.id_superior, h.id_area, h.id_operacao, h.id_filial, h.id_history, aux_cargos.cargo_nome, aux_vt.vt_nome, tb_sup.nome_social as superior_nome, aux_areas.nome_area, aux_operacoes.nome_operacao, aux_filiais.filial_nome, 'cpf' AS tipo
-                    FROM funcionarios f
-                    INNER JOIN tb_history_cadastro h ON f.idFuncionario = h.id_funcionario
-                    LEFT JOIN aux_cargos ON aux_cargos.id_cargo = h.id_cargo
-                    LEFT JOIN aux_vt ON aux_vt.id_vt = h.id_vt
-                    LEFT JOIN tb_history_cadastro tb_sup ON tb_sup.id_funcionario = h.id_superior
-                    LEFT JOIN aux_areas ON aux_areas.id_area = h.id_area
-                    LEFT JOIN aux_operacoes ON aux_operacoes.id_operacao = h.id_operacao
-                    LEFT JOIN aux_filiais ON aux_filiais.id_filial = h.id_filial
-                    WHERE h.id_history IN (
-                        SELECT MAX(id_history)
-                        FROM tb_history_cadastro
-                        GROUP BY id_funcionario
-                    )
+                    SELECT fcnpj.id AS idFuncionario, fcnpj.cnpj AS cpf, fcnpj.dataCadastro, fcnpj.dataAdmissao, fcnpj.dataNascimento, 'cnpj' AS tipo
+                    FROM funcionarios_cnpj AS fcnpj
+                    LEFT JOIN tb_history_cadastro ON tb_history_cadastro.id_funcionario = fcnpj.id
+                    WHERE tb_history_cadastro.id_funcionario IS NULL
 
                     UNION ALL
 
-                    SELECT f_cnpj.cnpj AS 'cpf', h.id_funcionario, h.nome_social, h.nome_registro, h.sexo, h.genero, h.estado_civil, h.id_cargo, h.id_vt, h.id_superior, h.id_area, h.id_operacao, h.id_filial, h.id_history, aux_cargos.cargo_nome, aux_vt.vt_nome, tb_sup.nome_social as superior_nome, aux_areas.nome_area, aux_operacoes.nome_operacao, aux_filiais.filial_nome, 'cnpj' AS tipo
-                    FROM funcionarios_cnpj AS f_cnpj
-                    INNER JOIN tb_history_cadastro h ON f_cnpj.id = h.id_funcionario
-                    LEFT JOIN aux_cargos ON aux_cargos.id_cargo = h.id_cargo
-                    LEFT JOIN aux_vt ON aux_vt.id_vt = h.id_vt
-                    LEFT JOIN tb_history_cadastro tb_sup ON tb_sup.id_funcionario = h.id_superior
-                    LEFT JOIN aux_areas ON aux_areas.id_area = h.id_area
-                    LEFT JOIN aux_operacoes ON aux_operacoes.id_operacao = h.id_operacao
-                    LEFT JOIN aux_filiais ON aux_filiais.id_filial = h.id_filial
-                    WHERE h.id_history IN (
-                        SELECT MAX(id_history)
-                        FROM tb_history_cadastro
-                        GROUP BY id_funcionario
-                    )
-                ) AS subconsulta;
+                    SELECT f.idFuncionario, f.cpf, f.dataCadastro, f.dataAdmissao, f.dataNascimento, 'cpf' AS tipo
+                    FROM funcionarios AS f
+                    LEFT JOIN tb_history_cadastro ON tb_history_cadastro.id_funcionario = f.idFuncionario
+                    WHERE tb_history_cadastro.id_funcionario IS NULL
+                ) AS subquery WHERE subquery.tipo = 'cpf';
                 ";
                 $result = mysqli_query($conn, $sql);
 
                 if ($result && mysqli_num_rows($result) > 0) {
                     $row = mysqli_fetch_assoc($result);
-                    $contador = $row['quantidade_registros'];
+                    $contador = $row['quantidade'];
 
                     // Exibir o valor do contador
                     echo $contador;
@@ -140,7 +120,7 @@
                     FROM funcionarios AS f
                     LEFT JOIN tb_history_cadastro ON tb_history_cadastro.id_funcionario = f.idFuncionario
                     WHERE tb_history_cadastro.id_funcionario IS NULL
-                ) AS subquery;";
+                ) AS subquery WHERE subquery.tipo = 'cnpj';";
                 $result = mysqli_query($conn, $sql);
 
                 if ($result && mysqli_num_rows($result) > 0) {
