@@ -30,17 +30,30 @@ if (mysqli_num_rows($result) > 0) {
     could then be used to redirect the user to the appropriate page after login. */
     $_SESSION['destinationPage'] = $destinationPage;
 
+
+        // Redirect to another page if needed
+        $response['success'] = true;
+        $response['redirect'] = 'content_pages.php?id=' . $destinationPage . '';
+
+
     // Redirecione para a página de destino
-    echo "Login bem sucedido!";
-    header('Location: ../content_pages.php?id=' . $destinationPage . '');
+    // echo "Login bem sucedido!";
+    // header('Location: ../content_pages.php?id=' . $destinationPage . '');
+
 } else {
     // Login falhou
     /* The line `// echo "Usuário ou senha incorretos.";` is commented out, which means it is not being
     executed. However, it appears to be intended to output a message indicating that the login
     failed due to incorrect username or password. */
-    echo "Usuário ou senha incorretos.";
+    $response['success'] = false;
+    $response['message'] = 'Usuário ou senha incorretos.';
+
     // echo $sql;
 }
+
+// Return JSON response
+header('Content-Type: application/json');
+echo json_encode($response);
 
 // Feche a conexão com o banco de dados
 mysqli_close($conn);

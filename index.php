@@ -1,38 +1,4 @@
-<!-- <?php
-include 'database/databaseconnect.php';
 
-if (isset($_POST['email']) && isset($_POST['senha'])) {
-    $email = $_POST['email'];
-    $senha = $_POST['senha'];
-
-    // Consulta no banco de dados
-    $query = "SELECT * FROM user WHERE email='$email' AND senha='$senha'";
-    $result = mysqli_query($conn, $query);
-
-    if (mysqli_num_rows($result) == 1) {
-      // Iniciar sessão
-      $message = "Bem vindo!";
-      $_SESSION['email'] = $email;
-      echo $query;
-
-  header("Location: home.php");
-exit();
-
-    } else {
-      // Login falhou
-      $message = "Usuário ou senha incorretos";
-      echo "<script>
-      window.onload = function() {
-          Swal.fire({
-              icon: 'error',
-              title: 'Erro',
-              text: '$message',
-          });
-      };
-  </script>";
-    }
-  }
-?> -->
 
 
 <!DOCTYPE html>
@@ -169,7 +135,7 @@ exit();
                                                 <div class="divider-content-center bg-white">or use email</div>
                                             </div> -->
                                             <div class="mb-3 text-start">
-                                                <form action="database/processa_login.php" method="POST">
+                                                <form id="login-form" method="POST">
                                                     <label class="form-label" for="email">Email</label>
                                                     <div class="form-icon-container">
                                                         <input class="form-control form-icon-input" id="email"
@@ -509,6 +475,50 @@ exit();
     <script src="vendors/feather-icons/feather.min.js"></script>
     <script src="vendors/dayjs/dayjs.min.js"></script>
     <script src="assets/js/phoenix.js"></script>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('login-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        const formData = new FormData(this);
+
+        fetch('database/processa_login.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Login bem sucedido!',
+            text: data.message,
+            showConfirmButton: false,
+            timer: 2000 // Tempo em milissegundos que a mensagem deve ser exibida
+        }).then(function() {
+            // Redirect to the URL provided by the server
+            window.location.href = data.redirect;
+        });
+    } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erro de Login',
+                    text: data.message
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+});
+
+</script>
 
 </body>
 
