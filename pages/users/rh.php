@@ -56,25 +56,25 @@
             <!-- <span class="text-success fs-3" data-feather="user-check" style="height: 40px; width: 40px;"></span> -->
             <!-- <i class="fa-solid fa-user" style="height: 40px; width: 40px;"></i> -->
             <i class="fa-solid fa-user-check" style="height: 40px; width: 40px;"></i>
-            <h1 id="div1" class="fs-3 pt-3">
+
                 <?php
                 include_once("database/databaseconnect.php");
 
                 // Executar a consulta SQL para obter o contador
                 $sql = "SELECT COUNT(*) AS quantidade, subquery.idFuncionario, subquery.cpf, subquery.dataCadastro, subquery.dataAdmissao, subquery.dataNascimento, subquery.tipo
                 FROM (
-                    SELECT fcnpj.id AS idFuncionario, fcnpj.cnpj AS cpf, fcnpj.dataCadastro, fcnpj.dataAdmissao, fcnpj.dataNascimento, 'cnpj' AS tipo
+                    SELECT fcnpj.id AS idFuncionario, fcnpj.cnpj AS cpf, fcnpj.dataCadastro, fcnpj.dataAdmissao, fcnpj.dataNascimento, 'cnpj' AS tipo, fcnpj.ativo_cad
                     FROM funcionarios_cnpj AS fcnpj
                     LEFT JOIN tb_history_cadastro ON tb_history_cadastro.id_funcionario = fcnpj.id
                     WHERE tb_history_cadastro.id_funcionario IS NULL
 
                     UNION ALL
 
-                    SELECT f.idFuncionario, f.cpf, f.dataCadastro, f.dataAdmissao, f.dataNascimento, 'cpf' AS tipo
+                    SELECT f.idFuncionario, f.cpf, f.dataCadastro, f.dataAdmissao, f.dataNascimento, 'cpf' AS tipo, f.ativo_cad
                     FROM funcionarios AS f
                     LEFT JOIN tb_history_cadastro ON tb_history_cadastro.id_funcionario = f.idFuncionario
                     WHERE tb_history_cadastro.id_funcionario IS NULL
-                ) AS subquery WHERE subquery.tipo = 'cpf';
+                ) AS subquery WHERE subquery.tipo = 'cpf' AND subquery.ativo_cad = '1';
                 ";
                 $result = mysqli_query($conn, $sql);
 
@@ -83,7 +83,7 @@
                     $contador = $row['quantidade'];
 
                     // Exibir o valor do contador
-                    echo $contador;
+                    // echo $contador;
                 } else {
                     echo "Erro na consulta.";
                 }
@@ -91,6 +91,79 @@
                 // Fechar a conexão com o banco de dados
                 // mysqli_close($conn);
                 ?>
+
+<?php
+                include_once("database/databaseconnect.php");
+
+                // Executar a consulta SQL para obter o contador
+                $sql = "SELECT COUNT(*) AS quantidade, subquery.idFuncionario, subquery.cpf, subquery.dataCadastro, subquery.dataAdmissao, subquery.dataNascimento, subquery.tipo
+                FROM (
+                    SELECT fcnpj.id AS idFuncionario, fcnpj.cnpj AS cpf, fcnpj.dataCadastro, fcnpj.dataAdmissao, fcnpj.dataNascimento, 'cnpj' AS tipo, fcnpj.ativo_cad
+                    FROM funcionarios_cnpj AS fcnpj
+                    LEFT JOIN tb_history_cadastro ON tb_history_cadastro.id_funcionario = fcnpj.id
+                    WHERE tb_history_cadastro.id_funcionario IS NULL
+
+                    UNION ALL
+
+                    SELECT f.idFuncionario, f.cpf, f.dataCadastro, f.dataAdmissao, f.dataNascimento, 'cpf' AS tipo, f.ativo_cad
+                    FROM funcionarios AS f
+                    LEFT JOIN tb_history_cadastro ON tb_history_cadastro.id_funcionario = f.idFuncionario
+                    WHERE tb_history_cadastro.id_funcionario IS NULL
+                ) AS subquery WHERE subquery.tipo = 'cpf' AND subquery.ativo_cad = '1';
+                ";
+                $result = mysqli_query($conn, $sql);
+
+                if ($result && mysqli_num_rows($result) > 0) {
+                    $row = mysqli_fetch_assoc($result);
+                    $contador = $row['quantidade'];
+
+                    // Exibir o valor do contador
+                    // echo $contador;
+                } else {
+                    echo "Erro na consulta.";
+                }
+
+                // Fechar a conexão com o banco de dados
+                // mysqli_close($conn);
+                ?>
+
+<?php
+                include_once("database/databaseconnect.php");
+
+                // Executar a consulta SQL para obter o contador
+                $sql = "SELECT COUNT(*) AS quantidade, subquery.idFuncionario, subquery.cpf, subquery.dataCadastro, subquery.dataAdmissao, subquery.dataNascimento, subquery.tipo
+                FROM (
+                    SELECT fcnpj.id AS idFuncionario, fcnpj.cnpj AS cpf, fcnpj.dataCadastro, fcnpj.dataAdmissao, fcnpj.dataNascimento, 'cnpj' AS tipo, fcnpj.ativo_cad
+                    FROM funcionarios_cnpj AS fcnpj
+                    LEFT JOIN tb_history_cadastro ON tb_history_cadastro.id_funcionario = fcnpj.id
+                    WHERE tb_history_cadastro.id_funcionario IS NULL
+
+                    UNION ALL
+
+                    SELECT f.idFuncionario, f.cpf, f.dataCadastro, f.dataAdmissao, f.dataNascimento, 'cpf' AS tipo, f.ativo_cad
+                    FROM funcionarios AS f
+                    LEFT JOIN tb_history_cadastro ON tb_history_cadastro.id_funcionario = f.idFuncionario
+                    WHERE tb_history_cadastro.id_funcionario IS NULL
+                ) AS subquery WHERE subquery.tipo = 'cpf' AND subquery.ativo_cad <> '1';
+                ";
+                $result = mysqli_query($conn, $sql);
+
+                if ($result && mysqli_num_rows($result) > 0) {
+                    $row = mysqli_fetch_assoc($result);
+                    $contador_faltantes = $row['quantidade'];
+
+                    // Exibir o valor do contador
+                    // echo $contador;
+                } else {
+                    echo "Erro na consulta.";
+                }
+
+                // Fechar a conexão com o banco de dados
+                // mysqli_close($conn);
+                ?>
+
+ <h1 id="div1" class="fs-3 pt-3">
+<?php echo $contador ?>  <a class="m-0 p-0 text-decoration-none fs-0">/ <?php echo $contador_faltantes ?></a>
             </h1>
 
             <a class="nav-link" href="content_pages.php?id=2">
@@ -102,25 +175,25 @@
             <!-- <span class="uil fs-3 lh-1 text-warning uil-user-exclamation"></span> -->
             <i class="fa-solid fa-building-circle-check" style="height: 40px; width: 40px;"></i>
             <!-- <span class="text-warning fs-3" data-feather="user-x" style="height: 40px; width: 40px;"></span> -->
-            <h1 id="div2" class="fs-3 pt-3">
+
                 <?php
                 include_once("database/databaseconnect.php");
 
                 // Executar a consulta SQL para obter o contador
                 $sql = "SELECT COUNT(*) AS quantidade, subquery.idFuncionario, subquery.cpf, subquery.dataCadastro, subquery.dataAdmissao, subquery.dataNascimento, subquery.tipo
                 FROM (
-                    SELECT fcnpj.id AS idFuncionario, fcnpj.cnpj AS cpf, fcnpj.dataCadastro, fcnpj.dataAdmissao, fcnpj.dataNascimento, 'cnpj' AS tipo
+                    SELECT fcnpj.id AS idFuncionario, fcnpj.cnpj AS cpf, fcnpj.dataCadastro, fcnpj.dataAdmissao, fcnpj.dataNascimento, 'cnpj' AS tipo, fcnpj.ativo_cad
                     FROM funcionarios_cnpj AS fcnpj
                     LEFT JOIN tb_history_cadastro ON tb_history_cadastro.id_funcionario = fcnpj.id
                     WHERE tb_history_cadastro.id_funcionario IS NULL
 
                     UNION ALL
 
-                    SELECT f.idFuncionario, f.cpf, f.dataCadastro, f.dataAdmissao, f.dataNascimento, 'cpf' AS tipo
+                    SELECT f.idFuncionario, f.cpf, f.dataCadastro, f.dataAdmissao, f.dataNascimento, 'cpf' AS tipo, f.ativo_cad
                     FROM funcionarios AS f
                     LEFT JOIN tb_history_cadastro ON tb_history_cadastro.id_funcionario = f.idFuncionario
                     WHERE tb_history_cadastro.id_funcionario IS NULL
-                ) AS subquery WHERE subquery.tipo = 'cnpj';";
+                ) AS subquery WHERE subquery.tipo = 'cnpj' AND subquery.ativo_cad = '1';";
                 $result = mysqli_query($conn, $sql);
 
                 if ($result && mysqli_num_rows($result) > 0) {
@@ -128,7 +201,41 @@
                     $contador = $row['quantidade'];
 
                     // Exibir o valor do contador
-                    echo $contador;
+                    // echo $contador;
+                } else {
+                    echo "Erro na consulta.";
+                }
+
+                // Fechar a conexão com o banco de dados
+                // mysqli_close($conn);
+                ?>
+
+<?php
+                include_once("database/databaseconnect.php");
+
+                // Executar a consulta SQL para obter o contador
+                $sql = "SELECT COUNT(*) AS quantidade, subquery.idFuncionario, subquery.cpf, subquery.dataCadastro, subquery.dataAdmissao, subquery.dataNascimento, subquery.tipo
+                FROM (
+                    SELECT fcnpj.id AS idFuncionario, fcnpj.cnpj AS cpf, fcnpj.dataCadastro, fcnpj.dataAdmissao, fcnpj.dataNascimento, 'cnpj' AS tipo, fcnpj.ativo_cad
+                    FROM funcionarios_cnpj AS fcnpj
+                    LEFT JOIN tb_history_cadastro ON tb_history_cadastro.id_funcionario = fcnpj.id
+                    WHERE tb_history_cadastro.id_funcionario IS NULL
+
+                    UNION ALL
+
+                    SELECT f.idFuncionario, f.cpf, f.dataCadastro, f.dataAdmissao, f.dataNascimento, 'cpf' AS tipo, f.ativo_cad
+                    FROM funcionarios AS f
+                    LEFT JOIN tb_history_cadastro ON tb_history_cadastro.id_funcionario = f.idFuncionario
+                    WHERE tb_history_cadastro.id_funcionario IS NULL
+                ) AS subquery WHERE subquery.tipo = 'cnpj' AND subquery.ativo_cad <> '1';";
+                $result = mysqli_query($conn, $sql);
+
+                if ($result && mysqli_num_rows($result) > 0) {
+                    $row = mysqli_fetch_assoc($result);
+                    $contador_faltantes = $row['quantidade'];
+
+                    // Exibir o valor do contador
+                    // echo $contador;
                 } else {
                     echo "Erro na consulta.";
                 }
@@ -139,7 +246,8 @@
 
 
 
-
+<h1 id="div1" class="fs-3 pt-3">
+<?php echo $contador ?>  <a class="m-0 p-0 text-decoration-none fs-0">/ <?php echo $contador_faltantes ?></a>
             </h1>
 
             <a class="nav-link" href="content_pages.php?id=4">
@@ -198,7 +306,7 @@
     </div>
 
     <div class="col-md-8 col-xl-8 col-xxl-8 gy-5 gy-md-3">
-        <h5>Calendario</h5>
+        <h5>Calendário</h5>
         <div id="calendar"></div>
     </div>
     </div>

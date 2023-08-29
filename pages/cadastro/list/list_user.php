@@ -1,5 +1,5 @@
-<link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.22.0/dist/bootstrap-table.min.css">
-<script src="https://unpkg.com/bootstrap-table@1.22.0/dist/bootstrap-table.min.js"></script>
+<!-- <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.22.0/dist/bootstrap-table.min.css">
+<script src="https://unpkg.com/bootstrap-table@1.22.0/dist/bootstrap-table.min.js"></script> -->
 
 
 <div class="row align-items-center justify-content-between g-3 mb-4">
