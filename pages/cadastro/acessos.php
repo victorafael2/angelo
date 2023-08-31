@@ -119,7 +119,7 @@
                                     value="<?php echo $id_user ?>" required>
                             </div>
 
-                            <button type="submit" class="btn btn-primary">Enviar</button>
+                            <button type="submit" class="btn btn-primary">Salvar</button>
                         </form>
                     </div>
                 </div>

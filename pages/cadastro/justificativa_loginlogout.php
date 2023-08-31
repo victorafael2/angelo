@@ -1,7 +1,7 @@
 
   <div class="container">
     <h1>Formulário de Justificativa</h1>
-    <form action="pages/cadastro/add/processar_justificativas.php" method="POST" enctype="multipart/form-data">
+    <form id="formulario" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-md-4">
                     <label for="funcionario">Funcionário</label>
@@ -66,6 +66,14 @@
                     <input type="date" class="form-control" id="data" name="data">
                 </div>
                 <div class="col-md-4">
+                    <label for="data">Hora inicio</label>
+                    <input type="time" class="form-control" id="data" name="data">
+                </div>
+                <div class="col-md-4">
+                    <label for="data">Hora fim</label>
+                    <input type="time" class="form-control" id="data" name="data">
+                </div>
+                <div class="col-md-4">
                     <label for="descricao">Descrição</label>
                     <input type="text" class="form-control" id="descricao" name="descricao">
                 </div>
@@ -83,4 +91,55 @@
             <button type="submit" class="btn btn-primary mt-3">Enviar</button>
         </form>
   </div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const formulario = document.getElementById("formulario");
+
+            formulario.addEventListener("submit", function(event) {
+                event.preventDefault();
+
+                const formData = new FormData(formulario);
+
+                // Enviar o formulário via Ajax
+                fetch("pages/cadastro/add/processar_justificativas.php", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Limpar o formulário
+                        formulario.reset();
+
+                        // Exibir a mensagem de sucesso
+                        Swal.fire({
+                            icon: "success",
+                            title: "Sucesso",
+                            text: "Dados enviados com sucesso!",
+                            confirmButtonText: "OK"
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Erro",
+                            text: "Ocorreu um erro ao enviar os dados.",
+                            confirmButtonText: "OK"
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error("Erro:", error);
+                    Swal.fire({
+                        icon: "error",
+                        title: "Erro",
+                        text: "Ocorreu um erro ao enviar os dados.",
+                        confirmButtonText: "OK"
+                    });
+                });
+            });
+        });
+    </script>
 

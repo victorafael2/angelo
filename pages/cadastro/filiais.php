@@ -7,7 +7,7 @@
 
 <div style="display: flex; justify-content: space-between;" class="mb-2">
     <h3 style="margin: 0;">Filiais</h3>
-    <button id="adicionarBtn" class="btn btn-sm btn-phoenix-success">Adicionar Cargos</button>
+    <button id="adicionarBtn" class="btn btn-sm btn-phoenix-success">Adicionar Filial</button>
 </div>
 
 
@@ -129,7 +129,7 @@
                                     <input type="text" class="form-control" id="cpf_responsavel" name="cpf_responsavel">
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4 d-none">
                                 <div class="form-group">
                                     <label for="id_contatos" class="form-label">ID Contatos:</label>
                                     <input type="text" class="form-control" id="id_contatos" name="id_contatos">

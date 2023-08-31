@@ -172,7 +172,7 @@ $(document).ready(function() {
                 // Envia a requisição para apagar o relatório
                 $.ajax({
                     type: "POST",
-                    url: "salvar_relatorio.php",
+                    url: "pages/cadastro/delete/apagar_relatorios.php",
                     data: {
                         action: "delete",
                         id: id

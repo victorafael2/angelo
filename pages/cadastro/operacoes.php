@@ -6,8 +6,8 @@
 
 
 <div style="display: flex; justify-content: space-between;" class="mb-2">
-    <h3 style="margin: 0;">Cargos</h3>
-    <button id="adicionarBtn" class="btn btn-sm btn-phoenix-success">Adicionar Cargos</button>
+    <h3 style="margin: 0;">Operações</h3>
+    <button id="adicionarBtn" class="btn btn-sm btn-phoenix-success">Adicionar Operação</button>
 </div>
 
 
@@ -227,7 +227,7 @@
                                 name="habilitado" id="habilitado">
                             <label class="form-check-label" for="habilitado">Habilitado</label>
                         </div>
-                        <button type="submit" class="btn btn-primary">Cadastrar Operação</button>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
                     </form>
                 </div>
             </div>

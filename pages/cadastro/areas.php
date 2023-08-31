@@ -6,8 +6,8 @@
 
 
 <div style="display: flex; justify-content: space-between;" class="mb-2">
-    <h3 style="margin: 0;">Cargos</h3>
-    <button id="adicionarBtn" class="btn btn-sm btn-phoenix-success">Adicionar Cargos</button>
+    <h3 style="margin: 0;">Áreas</h3>
+    <button id="adicionarBtn" class="btn btn-sm btn-phoenix-success">Adicionar Área</button>
 </div>
 
     <div class="d-flex flex-wrap">
@@ -37,7 +37,7 @@
                                     </label>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary">Enviar</button>
+                            <button type="submit" class="btn btn-primary">Salvar</button>
                         </form>
                     </div>
                 </div>
