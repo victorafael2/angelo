@@ -4,19 +4,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["id"]) && isset($_POST
     $id = $_POST["id"];
     $tipo = $_POST["tipo"];
 
-    // Connect to your database
- include '../../../database/databaseconnect.php';
+    // Conecte-se ao seu banco de dados
+    include '../../../database/databaseconnect.php';
 
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    // Update based on $tipo
+    // Aqui você pode realizar a atualização com base nos valores de $id e $tipo
+    // Por exemplo, você pode executar uma consulta SQL para atualizar os dados no banco de dados
+
     if ($tipo === "cpf") {
-        // Update funcionarios table
+        // Atualize a tabela "funcionarios"
         $sql = "UPDATE funcionarios SET ativo_cad = 1 WHERE idFuncionario = $id";
     } elseif ($tipo === "cnpj") {
-        // Update funcionarios_cnpj table
+        // Atualize a tabela "funcionarios_cnpj"
         $sql = "UPDATE funcionarios_cnpj SET ativo_cad = 1 WHERE id = $id";
     }
 
@@ -28,6 +30,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["id"]) && isset($_POST
 
     $conn->close();
 } else {
-    echo json_encode(array("success" => false));
+    echo json_encode(array("success" => false, "error" => "Invalid POST request"));
 }
 ?>

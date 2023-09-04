@@ -16,6 +16,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $tipo = $funcionarioData[1];
     $data = $conn->real_escape_string($_POST["data"]);
     $descricao = $conn->real_escape_string($_POST["descricao"]);
+    $inicio = $conn->real_escape_string($_POST["hora_inicio"]);
+    $fim = $conn->real_escape_string($_POST["hora_fim"]);
 
     // Processar outros campos conforme necessário
 
@@ -37,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Inserir dados no banco de dados em colunas separadas
-    $sql = "INSERT INTO justificativa (id_funcionario, tipo, data, descricao, anexo) VALUES ('$id_funcionario', '$tipo', '$data', '$descricao', '$anexo_nome')";
+    $sql = "INSERT INTO justificativa (id_funcionario, tipo, data, descricao, anexo,inicio,fim) VALUES ('$id_funcionario', '$tipo', '$data', '$descricao', '$anexo_nome', '$inicio', '$fim')";
 
     if ($conn->query($sql) === TRUE) {
         echo "Dados inseridos com sucesso!";

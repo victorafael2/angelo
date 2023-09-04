@@ -12,7 +12,7 @@ $id_tarefa = isset($_GET['dado']) ? $_GET['dado'] : 18;
 // Consulta para obter os dados da tabela
 $sql = "SELECT f.cpf, h.id_funcionario, h.nome_social, h.nome_registro, h.sexo, h.genero, h.estado_civil, h.id_cargo, h.id_vt, h.id_superior, h.id_area, h.id_operacao, h.id_filial, h.id_history, aux_cargos.cargo_nome, aux_vt.vt_nome, tb_sup.nome_social as superior_nome, aux_areas.nome_area, aux_operacoes.nome_operacao, aux_filiais.filial_nome, 'cpf' AS tipo
 FROM funcionarios f
-INNER JOIN tb_history_cadastro h ON f.idFuncionario = h.id_funcionario
+LEFT JOIN tb_history_cadastro h ON f.idFuncionario = h.id_funcionario
 LEFT JOIN aux_cargos ON aux_cargos.id_cargo = h.id_cargo
 LEFT JOIN aux_vt ON aux_vt.id_vt = h.id_vt
 LEFT JOIN tb_history_cadastro tb_sup ON tb_sup.id_funcionario = h.id_superior
@@ -22,6 +22,7 @@ LEFT JOIN aux_filiais ON aux_filiais.id_filial = h.id_filial
 WHERE h.id_history IN (
     SELECT MAX(id_history)
     FROM tb_history_cadastro
+    WHERE ativo_cad = 1  -- Filtre por ativo_cad igual a 1
     GROUP BY id_funcionario
 )
 
@@ -39,6 +40,7 @@ LEFT JOIN aux_filiais ON aux_filiais.id_filial = h.id_filial
 WHERE h.id_history IN (
     SELECT MAX(id_history)
     FROM tb_history_cadastro
+    WHERE ativo_cad = 1  -- Filtre por ativo_cad igual a 1
     GROUP BY id_funcionario
 );
 ";

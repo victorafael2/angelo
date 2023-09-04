@@ -23,6 +23,7 @@
 
 
 
+
 <div id="tableExample2" data-list='{"valueNames":["cpf","email","age"],"page":20,"pagination":true}'>
     <div class="table-responsive ms-n1 ps-1 scrollbar">
         <!-- Botão para abrir o modal -->
@@ -35,6 +36,7 @@
                     <th data-field="state" data-checkbox="true"></th>
                     <th data-field="ver" data-sortable="true">Ver</th>
                     <th data-field="id_funcionario" data-sortable="true">ID</th>
+                    <th data-field="tipo" data-sortable="true">Tipo</th>
                     <th data-field="cpf" data-sortable="true">CPF/CNPJ</th>
                     <th data-field="nome_social" data-sortable="true">Nome Social</th>
                     <th data-field="nome_registro" data-sortable="true">Nome de Registro</th>

@@ -2,7 +2,7 @@
 
 $id_funci = isset($_GET['id_func']) ? $_GET['id_func'] : '';
 
-$tipo = isset($_GET['tipo']) ? $_GET['tipo'] : 'cpf';
+$tipo = isset($_GET['tipo']) ? $_GET['tipo'] : '';
 
 
 // Query SQL para obter os dados existentes no banco de dados
@@ -135,7 +135,7 @@ if (isset($_GET['id_func']) && !empty($_GET['id_func'])) {
     $id_funci = mysqli_real_escape_string($conn, $_GET['id_func']);
 
     // Now, construct and execute the query
-    $query_atualizacao = "SELECT * FROM tb_history_cadastro WHERE id_funcionario =  $id_funci AND id_history = (SELECT MAX(id_history) AS max_id FROM tb_history_cadastro WHERE id_funcionario =  $id_funci)";
+    $query_atualizacao = "SELECT * FROM tb_history_cadastro WHERE id_funcionario =  $id_funci AND id_history = (SELECT MAX(id_history) AS max_id FROM tb_history_cadastro WHERE id_funcionario =  $id_funci) AND tipo_registro = '$tipo'";
     $result_atualizacao = mysqli_query($conn, $query_atualizacao);
 
     // Check if the query executed successfully
@@ -212,7 +212,7 @@ $status = $row["status"] ?? "";
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.pt-BR.min.js"></script>
 <div class="row align-items-center justify-content-between g-3 mb-4">
     <div class="col-12 col-md-auto">
-        <h2 class="mb-0">Cadastro de Colaboradores</h2>
+        <h2 class="mb-0">Cadastro de Colaboradores <?php echo $tipo ?></h2>
     </div>
     <div class="col-12 col-md-auto">
         <a href="content_pages.php?id=10" class="btn btn-phoenix-secondary px-3 px-sm-5 me-2"><span
@@ -789,6 +789,10 @@ $status = $row["status"] ?? "";
             <h3>Cadastro de Filhos</h3>
             <form class="form-inline" id="childForm" action="pages/cadastro/add/add_filho.php">
                 <div class="row">
+                <div class="col-md-5 d-none">
+                        <label for="nome">tipo</label>
+                        <input type="text" class="form-control" id="tipo" name="tipo" value="<?php echo $tipo ?>" required>
+                    </div>
                     <div class="col-md-5">
                         <label for="nome">Nome do Filho:</label>
                         <input type="text" class="form-control" id="nome" name="nome" required>
@@ -826,6 +830,10 @@ $status = $row["status"] ?? "";
             <h3>Dados do Cônjuge</h3>
             <form class="form-inline" id="conjugeform" action="pages/cadastro/add/add_conjuge.php" method="post">
                 <div class="row">
+                <div class="col-md-5 d-none">
+                        <label for="nome">tipo</label>
+                        <input type="text" class="form-control" id="tipo" name="tipo" value="<?php echo $tipo ?>" required>
+                    </div>
                     <div class="col-md-5">
                         <label for="nome_completo">Nome Completo:</label>
                         <input type="text" class="form-control" id="nome_completo" name="nome_completo" required>
@@ -884,12 +892,17 @@ $status = $row["status"] ?? "";
 
                         <form id="banco_user" action="pages/cadastro/add/add_banco.php" method="post">
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-4 d-none">
                                     <div class="form-group">
                                         <label for="idFuncionario" class="form-label">Id Funcionario</label>
                                         <input type="text" class="form-control" id="idFuncionario" name="idFuncionario"
                                             value="<?php echo $id_funci; ?>" readonly>
                                     </div>
+
+                                    <div class="col-md-5 d-none">
+                        <label for="nome">tipo</label>
+                        <input type="text" class="form-control" id="tipo" name="tipo" value="<?php echo $tipo ?>" required>
+                    </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
@@ -1017,6 +1030,11 @@ $status = $row["status"] ?? "";
                         <input type="text" class="form-control" id="idFuncionario" name="idFuncionario"
                             value="<?php echo $id_funci; ?>" readonly>
                     </div>
+
+                    <div class="col-md-5">
+                        <label for="nome">tipo</label>
+                        <input type="text" class="form-control" id="tipo" name="tipo" value="<?php echo $tipo ?>" required>
+                    </div>
                 </div>
                 <div class="form-row">
                     <div class="col-md-12 mb-3">
@@ -1072,17 +1090,28 @@ $status = $row["status"] ?? "";
             <form id="form_status" action="pages/cadastro/add/add_status.php" method="post">
 
             <div class="row mb-2">
-            <div class="form-group">
+            <div class="form-group d-none">
                         <label for="idFuncionario" class="form-label">Id Funcionario</label>
                         <input type="text" class="form-control" id="idFuncionario" name="idFuncionario"
                             value="<?php echo $id_funci; ?>" readonly>
                     </div>
 
+                    <div class="col-md-5 d-none">
+                        <label for="nome">tipo</label>
+                        <input type="text" class="form-control" id="tipo" name="tipo" value="<?php echo $tipo ?>" required>
+                    </div>
+
                 <div class="col-md-4">
                     <label for="status">Status:</label>
                     <select class="form-control" id="status" name="status" required>
-                        <option value="ativo">Ativo</option>
-                        <option value="inativo">Inativo</option>
+                    <option value="Ativo" <?php if ($status == "Ativo") echo "selected"; ?>>Ativo</option>
+                            <option value="Férias" <?php if ($status == "Férias") echo "selected"; ?>>Férias</option>
+                            <option value="Afastado" <?php if ($status == "Afastado") echo "selected"; ?>>Afastado
+                            </option>
+                            <option value="Treinamento" <?php if ($status == "Treinamento") echo "selected"; ?>>Treinamento
+                            </option>
+                            <option value="Desligado" <?php if ($status == "Desligado") echo "selected"; ?>>Desligado
+                            </option>
                     </select>
                 </div>
 
@@ -1147,7 +1176,7 @@ $status = $row["status"] ?? "";
 
 
 
-                                        WHERE id_funcionario = $id_funci";
+                                        WHERE id_funcionario = $id_funci and tipo_registro = '<?php echo $tipo ?>'";
                                         $result_tab2 = $conn->query($sql_tab2);
 
                                         // Preencha a tabela com os dados
@@ -1397,8 +1426,9 @@ $(document).ready(function() {
 
     // Function to update the file list after form submission
     function updateFilhoList() {
-        var idUsuario = $("#idFuncionario")
-            .val(); // Get the ID of the user (assuming it's stored in #idFuncioanrio)
+        var idUsuario = $("#idFuncionario").val(); // Get the ID of the user (assuming it's stored in #idFuncioanrio)
+
+        var tipo = $("#tipo").val()
         var fileListContainer = $("#childList");
 
         // Make an AJAX request to get the related files based on the user ID
@@ -1406,7 +1436,8 @@ $(document).ready(function() {
             url: "pages/cadastro/list/filhos.php", // Replace with the PHP script to fetch user files based on ID
             type: "POST",
             data: {
-                id_usuario: idUsuario
+                id_usuario: idUsuario,
+                tipo: tipo // Aqui, estamos passando o valor de "tipo" como parte dos dados
             },
             success: function(data) {
                 // On success, update the file list container
@@ -1454,6 +1485,7 @@ $(document).ready(function() {
     function updateConjugeList() {
         var idUsuario = $("#idFuncionario")
             .val(); // Get the ID of the user (assuming it's stored in #idFuncioanrio)
+            var tipo = $("#tipo").val()
         var fileListContainer = $("#conjugeList");
 
         // Make an AJAX request to get the related files based on the user ID
@@ -1461,7 +1493,8 @@ $(document).ready(function() {
             url: "pages/cadastro/list/conjuge.php", // Replace with the PHP script to fetch user files based on ID
             type: "POST",
             data: {
-                id_usuario: idUsuario
+                id_usuario: idUsuario,
+                tipo: tipo
             },
             success: function(data) {
                 // On success, update the file list container
@@ -1510,6 +1543,7 @@ $(document).ready(function() {
     function updateBancoList() {
         var idUsuario = $("#idFuncionario")
             .val(); // Get the ID of the user (assuming it's stored in #idFuncioanrio)
+            var tipo = $("#tipo").val()
         var fileListContainer = $("#bancolist");
 
         // Make an AJAX request to get the related files based on the user ID
@@ -1517,7 +1551,8 @@ $(document).ready(function() {
             url: "pages/cadastro/list/banco.php", // Replace with the PHP script to fetch user files based on ID
             type: "POST",
             data: {
-                id_usuario: idUsuario
+                id_usuario: idUsuario,
+                tipo:tipo
             },
             success: function(data) {
                 // On success, update the file list container
@@ -1565,6 +1600,7 @@ $(document).ready(function() {
     function updateLoginList() {
         var idUsuario = $("#idFuncionario")
             .val(); // Get the ID of the user (assuming it's stored in #idFuncioanrio)
+            var tipo = $("#tipo").val()
         var fileListContainer = $("#loginList");
 
         // Make an AJAX request to get the related files based on the user ID
@@ -1572,7 +1608,8 @@ $(document).ready(function() {
             url: "pages/cadastro/list/login.php", // Replace with the PHP script to fetch user files based on ID
             type: "POST",
             data: {
-                id_usuario: idUsuario
+                id_usuario: idUsuario,
+                tipo: tipo
             },
             success: function(data) {
                 // On success, update the file list container
@@ -1622,6 +1659,7 @@ $(document).ready(function() {
     function updateStatusList() {
         var idUsuario = $("#idFuncionario")
             .val(); // Get the ID of the user (assuming it's stored in #idFuncioanrio)
+            var tipo = $("#tipo").val()
         var fileListContainer = $("#statuslist");
 
         // Make an AJAX request to get the related files based on the user ID
@@ -1629,7 +1667,8 @@ $(document).ready(function() {
             url: "pages/cadastro/list/status.php", // Replace with the PHP script to fetch user files based on ID
             type: "POST",
             data: {
-                id_usuario: idUsuario
+                id_usuario: idUsuario,
+                tipo: tipo
             },
             success: function(data) {
                 // On success, update the file list container

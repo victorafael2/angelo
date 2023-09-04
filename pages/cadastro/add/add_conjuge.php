@@ -19,6 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $telefone_contato = sanitize_input($_POST['telefone_contato']);
   $email_contato = sanitize_input($_POST['email_contato']);
   $id_user = sanitize_input($_POST['idFuncionario']);
+  $tipo = sanitize_input($_POST['tipo']);
 
   // Perform additional validation on the form data if needed
   // ...
@@ -31,8 +32,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
 
   // Prepare the SQL statement to insert the data into the database
-  $stmt = $conn->prepare("INSERT INTO conjuge (nome_completo, data_nascimento, cpf, telefone_contato,email_contato,idFuncionario) VALUES (?, ?, ?, ?,?,?)");
-  $stmt->bind_param("ssssss", $nome, $data_nascimento, $cpf, $telefone_contato,$email_contato,$id_user);
+  $stmt = $conn->prepare("INSERT INTO conjuge (nome_completo, data_nascimento, cpf, telefone_contato,email_contato,idFuncionario,tipo) VALUES (?, ?, ?, ?,?,?,?)");
+  $stmt->bind_param("sssssss", $nome, $data_nascimento, $cpf, $telefone_contato,$email_contato,$id_user,$tipo);
 
   // Execute the prepared statement
   if ($stmt->execute()) {

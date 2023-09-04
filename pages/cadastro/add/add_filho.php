@@ -18,6 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $cpf = sanitize_input($_POST['cpf']);
   $nome_mae = sanitize_input($_POST['nome_mae']);
   $id_user = sanitize_input($_POST['idFuncionario']);
+  $tipo = sanitize_input($_POST['tipo']);
 
   // Perform additional validation on the form data if needed
   // ...
@@ -30,8 +31,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
 
   // Prepare the SQL statement to insert the data into the database
-  $stmt = $conn->prepare("INSERT INTO children (nome, data_nascimento, cpf, nome_mae,idFuncionario) VALUES (?, ?, ?, ?,?)");
-  $stmt->bind_param("sssss", $nome, $data_nascimento, $cpf, $nome_mae,$id_user);
+  $stmt = $conn->prepare("INSERT INTO children (nome, data_nascimento, cpf, nome_mae,idFuncionario,tipo) VALUES (?, ?, ?, ?,?,?)");
+  $stmt->bind_param("ssssss", $nome, $data_nascimento, $cpf, $nome_mae,$id_user,$tipo);
 
   // Execute the prepared statement
   if ($stmt->execute()) {

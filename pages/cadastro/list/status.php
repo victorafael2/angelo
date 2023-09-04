@@ -20,11 +20,12 @@ function getFileIcon($fileName) {
 // Assuming you have already received the `id_usuario` via POST
 if (isset($_POST['id_usuario'])) {
     $idUsuario = $_POST['id_usuario'];
+    $tipo = $_POST['tipo'];
 
     // SQL query to fetch related files based on the user ID
     $sql = "SELECT *, DATE_FORMAT(data_inicio, '%d/%m/%Y') AS data_inicio_formatada, DATE_FORMAT(data_fim, '%d/%m/%Y') AS data_fim_formatada
     FROM status_funcionario
-    WHERE nome = '$idUsuario' ORDER BY id desc";
+    WHERE nome = '$idUsuario' and tipo = '$tipo' ORDER BY id desc";
 
     $result = $conn->query($sql);
 

@@ -6,6 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $sistema = $_POST["selectSistemas"];
     $login = $_POST["login"];
     $habilitado = isset($_POST["habilitado"]) ? 1 : 0;
+    $tipo = $_POST["tipo"];
 
 
     // Assuming you have already established a database connection
@@ -18,8 +19,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     // Prepare and execute the database insertion query
-    $sql = "INSERT INTO aux_acessos (id_funcionario, id_sistema,username,habilitado)
-            VALUES ('$idFuncionario', '$sistema','$login','$habilitado')";
+    $sql = "INSERT INTO aux_acessos (id_funcionario, id_sistema,username,habilitado,tipo)
+            VALUES ('$idFuncionario', '$sistema','$login','$habilitado','$tipo')";
 
     if ($conn->query($sql) === TRUE) {
         echo "Data inserted successfully.";

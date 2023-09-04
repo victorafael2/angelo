@@ -14,6 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $bancoDvConta = $_POST["banco_dv_conta"];
     $habilitado = isset($_POST["habilitado"]) ? 1 : 0;
     $preferencial = isset($_POST["preferencial"]) ? 1 : 0;
+    $tipo = $_POST["tipo"];
 
     // Assuming you have already established a database connection
     // Replace 'your_db_username', 'your_db_password', 'your_db_name', and 'your_table_name' with appropriate values
@@ -25,8 +26,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     // Prepare and execute the database insertion query
-    $sql = "INSERT INTO aux_info_bancario (id_funcionario, pix_tipo, pix_identificacao, banco_tipo_conta, banco_numero, banco_nome, banco_agencia, banco_dv_agencia, banco_conta, banco_dv_conta, habilitado, preferencial)
-            VALUES ('$idFuncionario', '$pixTipo', '$pixIdentificacao', '$bancoTipoConta', '$bancoNumero', '$bancoNome', '$bancoAgencia', '$bancoDvAgencia', '$bancoConta', '$bancoDvConta', $habilitado, $preferencial)";
+    $sql = "INSERT INTO aux_info_bancario (id_funcionario, pix_tipo, pix_identificacao, banco_tipo_conta, banco_numero, banco_nome, banco_agencia, banco_dv_agencia, banco_conta, banco_dv_conta, habilitado, preferencial,tipo)
+            VALUES ('$idFuncionario', '$pixTipo', '$pixIdentificacao', '$bancoTipoConta', '$bancoNumero', '$bancoNome', '$bancoAgencia', '$bancoDvAgencia', '$bancoConta', '$bancoDvConta', $habilitado, $preferencial,$tipo)";
 
     if ($conn->query($sql) === TRUE) {
         echo "Data inserted successfully.";

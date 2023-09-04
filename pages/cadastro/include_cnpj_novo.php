@@ -72,8 +72,8 @@
                     disabled>
             </div>
             <div class="form-group col-md-4">
-                <label for="tipo">Tipo</label>
-                <input type="text" class="form-control" id="tipo" name="tipo" placeholder="Tipo"
+                <label for="tipo">Matriz?</label>
+                <input type="text" class="form-control" id="tipo_matriz" name="tipo_matriz" placeholder="tipo_matriz"
                     value="<?php echo $tipo_cnpj; ?>" disabled>
             </div>
         </div>

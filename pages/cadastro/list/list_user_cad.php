@@ -38,35 +38,50 @@
             <tbody class="list">
                             <?php
                             // Recupere os dados do MySQL
-                                        $sql = "SELECT subquery.idFuncionario, subquery.cpf, subquery.dataCadastro, subquery.dataAdmissao, subquery.dataNascimento, tipo
-                                        FROM (
-                                            SELECT fcnpj.id AS idFuncionario, fcnpj.cnpj AS cpf, fcnpj.dataCadastro, fcnpj.dataAdmissao, fcnpj.dataNascimento, 'cnpj' AS tipo
-                                            FROM funcionarios_cnpj AS fcnpj
-                                            LEFT JOIN tb_history_cadastro ON tb_history_cadastro.id_funcionario = fcnpj.id
-                                            WHERE tb_history_cadastro.id_funcionario IS NULL
+                                        $sql = "SELECT
+                                        ROW_NUMBER() OVER (ORDER BY subquery.idFuncionario) AS numero_da_linha,
+                                        subquery.idFuncionario,
+                                        subquery.cpf,
+                                        subquery.dataCadastro,
+                                        subquery.dataAdmissao,
+                                        subquery.dataNascimento,
+                                        subquery.tipo,
+                                        h.id_funcionario AS tipo_registro
+                                    FROM (
+                                        SELECT DISTINCT fcnpj.id AS idFuncionario, fcnpj.cnpj AS cpf, fcnpj.dataCadastro, fcnpj.dataAdmissao, fcnpj.dataNascimento, 'cnpj' AS tipo
+                                        FROM funcionarios_cnpj AS fcnpj
+                                        WHERE fcnpj.ativo_cad = 0
 
-                                            UNION ALL
+                                        UNION ALL
 
-                                            SELECT f.idFuncionario, f.cpf, f.dataCadastro, f.dataAdmissao, f.dataNascimento, 'cpf' AS tipo
-                                            FROM funcionarios AS f
-                                            LEFT JOIN tb_history_cadastro ON tb_history_cadastro.id_funcionario = f.idFuncionario
-                                            WHERE tb_history_cadastro.id_funcionario IS NULL
-                                        ) AS subquery;";
+                                        SELECT DISTINCT f.idFuncionario, f.cpf, f.dataCadastro, f.dataAdmissao, f.dataNascimento, 'cpf' AS tipo
+                                        FROM funcionarios AS f
+                                        WHERE f.ativo_cad = 0
+                                    ) AS subquery
+                                    LEFT JOIN tb_history_cadastro h
+                                    ON subquery.idFuncionario = h.id_funcionario AND subquery.tipo = h.tipo_registro;
+                                    ";
                                         $result = $conn->query($sql);
 
                         // Preencha a tabela com os dados
                         if ($result->num_rows > 0) {
                             while ($row = $result->fetch_assoc()) {
+
+
                                 echo '<tr>';
 
-                                echo '<td class="align-middle cpf">' . $row['idFuncionario'] . '</td>';
+                                echo '<td class="align-middle cpf">' . $row['numero_da_linha'] . '</td>';
                                 echo '<td class="align-middle">' . $row['cpf'] . '</td>';
                                 echo '<td class="align-middle">' . $row['dataCadastro'] . '</td>';
                                 echo '<td class="align-middle">' . $row['dataAdmissao'] . '</td>';
                                 echo '<td class="align-middle">' . $row['dataNascimento'] . '</td>';
 
-                                echo '<td class="align-middle white-space-nowrap text-end pe-0">';
-                                echo '<button class="btn btn-sm  update-button" data-id="' . $row['idFuncionario'] . '" data-tipo="' . $row['tipo'] . '">Update</button>';
+                                echo '<td class="align-middle white-space-nowrap  pe-0">';
+                                if ($row['tipo_registro'] == 1) {
+                                    echo '<button class="btn btn-sm btn-phoenix-success update-button" data-id="' . $row['idFuncionario'] . '" data-tipo="' . $row['tipo'] . '">Aceitar Cadastro <i class="fa-solid fa-circle-check"></i></button>';
+                                } else {
+                                    echo '<button class="btn btn-sm btn-phoenix-danger update-button-negado" data-id="' . $row['idFuncionario'] . '" data-tipo="' . $row['tipo'] . '">Cadastro Incompleto <i class="fa-solid fa-ban"></i></button>';
+                                }
                                 echo '</td>';
 
 
@@ -132,7 +147,7 @@ $(document).ready(function() {
 
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function() {
     // Listen for button clicks
     document.querySelectorAll(".update-button").forEach(button => {
         button.addEventListener("click", function() {
@@ -146,29 +161,63 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function updateData(id, tipo) {
-    const url = "pages/cadastro/update/update-ativar.php"; // Replace with your update script URL
+    const url = "pages/cadastro/update/update-ativar.php"; // Substitua pelo URL do seu script de atualização
 
-    // Send AJAX request to update the data
-    // Here you can use libraries like jQuery or the Fetch API
-    // Example using Fetch API:
-    fetch(url, {
-        method: "POST",
-        body: JSON.stringify({ id: id, tipo: tipo }),
-        headers: {
-            "Content-Type": "application/json",
+    const formData = new FormData();
+    formData.append("id", id);
+    formData.append("tipo", tipo);
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                const data = JSON.parse(xhr.responseText);
+                if (data.success) {
+                    // Mostra uma mensagem de sucesso
+                    Swal.fire({
+                        icon: "success",
+                        title: "Colaborador Ativo",
+                    });
+                } else {
+                    // Mostra uma mensagem de erro com o SQL gerado
+                    Swal.fire({
+                        icon: "error",
+                        title: "Erro",
+                        text: "Ocorreu um erro ao atualizar os dados. SQL gerado: " + data.sql,
+                    });
+                }
+            } else {
+                // Trate erros de rede ou de servidor aqui
+                console.error("Erro de rede ou do servidor:", xhr.status, xhr.statusText);
+            }
         }
-    })
-    .then(response => response.json())
-    .then(data => {
-        // Show SweetAlert2 success message
-        Swal.fire({
-            icon: "success",
-            title: "Colaborador Ativo",
-            // text: "The data has been updated successfully.",
-        });
-    })
-    .catch(error => {
-        console.error("Error updating data:", error);
-    });
+    };
+
+    xhr.send(formData);
 }
+
+
+
+
+</script>
+
+
+<script>
+    // Selecione todos os botões com a classe "update-button-negado"
+    const buttonsNegados = document.querySelectorAll('.update-button-negado');
+
+    // Adicione um ouvinte de eventos de clique a cada botão
+    buttonsNegados.forEach(button => {
+        button.addEventListener('click', () => {
+            // Exiba o SweetAlert2 informando que o cadastro está incompleto
+            Swal.fire({
+                icon: 'error',
+                title: 'Cadastro Incompleto',
+                text: 'O cadastro está incompleto e não pode ser aceito.',
+                confirmButtonText: 'OK'
+            });
+        });
+    });
 </script>

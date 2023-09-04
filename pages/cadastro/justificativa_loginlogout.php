@@ -66,12 +66,12 @@
                     <input type="date" class="form-control" id="data" name="data">
                 </div>
                 <div class="col-md-4">
-                    <label for="data">Hora inicio</label>
-                    <input type="time" class="form-control" id="data" name="data">
+                    <label for="hora_inicio">Hora inicio</label>
+                    <input type="time" class="form-control" id="hora_inicio" name="hora_inicio">
                 </div>
                 <div class="col-md-4">
-                    <label for="data">Hora fim</label>
-                    <input type="time" class="form-control" id="data" name="data">
+                    <label for="hora_fim">Hora fim</label>
+                    <input type="time" class="form-control" id="hora_fim" name="hora_fim">
                 </div>
                 <div class="col-md-4">
                     <label for="descricao">Descrição</label>

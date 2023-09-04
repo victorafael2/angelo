@@ -20,6 +20,7 @@ function getFileIcon($fileName) {
 // Assuming you have already received the `id_usuario` via POST
 if (isset($_POST['id_usuario'])) {
     $idUsuario = $_POST['id_usuario'];
+    $tipo = $_POST['tipo'];
 
     // SQL query to fetch related files based on the user ID
     $sql = "SELECT
@@ -37,7 +38,7 @@ if (isset($_POST['id_usuario'])) {
     banco_dv_conta,
     habilitado,
     preferencial
-FROM aux_info_bancario WHERE id_funcionario = '$idUsuario'";
+FROM aux_info_bancario WHERE id_funcionario = '$idUsuario' and tipo ='$tipo'";
 
     $result = $conn->query($sql);
 

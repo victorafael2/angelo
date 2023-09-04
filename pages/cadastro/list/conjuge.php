@@ -20,9 +20,10 @@ function getFileIcon($fileName) {
 // Assuming you have already received the `id_usuario` via POST
 if (isset($_POST['id_usuario'])) {
     $idUsuario = $_POST['id_usuario'];
+    $tipo = $_POST['tipo'];
 
     // SQL query to fetch related files based on the user ID
-    $sql = "SELECT * FROM conjuge WHERE idFuncionario = '$idUsuario'";
+    $sql = "SELECT * FROM conjuge WHERE idFuncionario = '$idUsuario' and tipo = '$tipo'";
 
     $result = $conn->query($sql);
 
