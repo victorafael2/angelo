@@ -8,14 +8,14 @@
         $dbname = "u358437276_angelo";
 } else {
 
-    $servidor = "45.152.44.103";
-    $usuario = "u358437276_angelo";
-    $senha = "Angelo01";
-    $dbname = "u358437276_angelo";
-            // $servidor = "localhost";
-            // $usuario = "crm_victor.rafael";
-            // $senha = "Vr88094852.";
-            // $dbname = "crm_adm";
+    // $servidor = "45.152.44.103";
+    // $usuario = "u358437276_angelo";
+    // $senha = "Angelo01";
+    // $dbname = "u358437276_angelo";
+            $servidor = "localhost";
+            $usuario = "xpeer_adm";
+            $senha = "xpeer_adm";
+            $dbname = "xpeer_adm";
 
 }
 
