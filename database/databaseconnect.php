@@ -14,7 +14,7 @@
     // $dbname = "u358437276_angelo";
             $servidor = "localhost";
             $usuario = "xpeer_adm";
-            $senha = "xpeer_adm";
+            $senha = "xpeer_adm_victor";
             $dbname = "xpeer_adm";
 
 }
