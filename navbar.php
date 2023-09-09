@@ -178,7 +178,7 @@ echo $dataHoraAtual;
                 aria-controls="navbarVerticalCollapse" aria-expanded="false" aria-label="Toggle Navigation"><span
                     class="navbar-toggle-icon"><span class="toggle-line"></span></span></button>
             <a class="navbar-brand me-1 me-sm-3"
-                href="content_pages.php?id=<?php echo $_SESSION['destinationPage']; ?>">
+                href="<?php echo $_SESSION['destinationPage']; ?>">
 
                 <div class="d-flex align-items-center">
                     <div class="d-flex align-items-center"><img src="assets/png/logo.png" alt="crm"

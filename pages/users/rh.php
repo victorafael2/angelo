@@ -466,15 +466,13 @@ echo '</ul>
                     <div class="calendar">
                         <div class="row">
                             <div class="col-md-2">
-                                <button class="btn btn-phoenix-primary btn-block" id="prev-week-button">Semana
-                                    Anterior</button>
+                                <button class="btn btn-phoenix-primary btn-block" id="prev-week-button"><i class="fa-solid fa-chevron-left"></i></button>
                             </div>
                             <div class="col-md-8">
                                 <div class="week" id="days"></div>
                             </div>
                             <div class="col-md-2">
-                                <button class="btn btn-phoenix-primary btn-block" id="next-week-button">Próxima
-                                    Semana</button>
+                                <button class="btn btn-phoenix-primary btn-block" id="next-week-button"><i class="fa-solid fa-chevron-right"></i></button>
                             </div>
                         </div>
                     </div>

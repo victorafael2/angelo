@@ -1,13 +1,31 @@
+<style>
+        /* Importe a fonte Ringel Star (substitua 'URL_DA_FONTE' pelo caminho real da fonte) */
+        @font-face {
+            font-family: 'Ringel Star';
+            src: url('assets/fonte/Rigelstar.ttf') format('truetype');
+        }
+
+        /* Aplique a fonte Ringel Star ao elemento <p> com a classe "text-900" */
+        p.better {
+            font-family: 'ringel star', sans-serif;
+            /* Outros estilos CSS, se desejados */
+        }
+    </style>
+
 <footer class="footer position-absolute">
-    <div class="row g-0 justify-content-between align-items-center h-100">
-      <div class="col-12 col-sm-auto text-center">
-        <p class="mb-0 mt-2 mt-sm-0 text-900">Obrigado por criar com Better Consultoria<span class="d-none d-sm-inline-block"></span><span class="d-none d-sm-inline-block mx-1">|</span><br class="d-sm-none" />2023 &copy;</p>
-      </div>
-      <div class="col-12 col-sm-auto text-center">
-        <p class="mb-0 text-600">v1.08.26</p>
-      </div>
+  <div class="row g-0 justify-content-between align-items-center h-100">
+    <div class="col-12 col-sm-auto text-center">
+      <img class="d-dark-none" src="assets/png/black_logo_transparent_background-1.png " alt="Better" width="50"  class="img-fluid">
+      <img class="d-light-none" src="assets/png/watermark_logo_transparent_background.png " alt="Better" width="50"  class="img-fluid">
+      <p class="mb-0 mt-2 mt-sm-0 text-900 better fs--1 d-inline-block">Inteligência e resultados para seu negócio<span class="d-none d-sm-inline-block"></span><span class="d-none d-sm-inline-block mx-1">|</span><br class="d-sm-none" />2023 &copy;</p>
     </div>
-  </footer>
+    <div class="col-12 col-sm-auto text-center">
+      <p class="mb-0 text-600">v1.08.26</p>
+    </div>
+  </div>
+</footer>
+
+
   </div>
       </div>
       <script>
