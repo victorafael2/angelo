@@ -29,7 +29,7 @@
                     value="<?php echo $email ?>" disabled>
             </div>
 
-            <div class="form-group col">
+            <!-- <div class="form-group col">
                 <label for="senha">Senha:</label>
                 <div class="input-group">
                     <input type="password" class="form-control" id="senha" placeholder="Digite a senha"
@@ -40,7 +40,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
 
         <div class="form-group">
@@ -49,25 +49,6 @@
                 value="<?php echo $telefone ?>">
         </div>
 
-        <div class="form-group">
-            <label for="grupo_acesso">Grupo de Acesso:</label>
-            <select class="form-control" id="grupo_acesso" data-choices="data-choices" data-options='{"removeItemButton":true,"placeholder":true}'>
-                <?php
-                // Busca os grupos de acesso no banco de dados
-                $sql_grupos = "SELECT id, nome_do_grupo FROM user_group";
-                $result_grupos = $conn->query($sql_grupos);
-
-                if ($result_grupos->num_rows > 0) {
-                    while ($row_grupo = $result_grupos->fetch_assoc()) {
-                        $grupo_id = $row_grupo['id'];
-                        $grupo_nome = $row_grupo['nome_do_grupo'];
-                        $selected = ($grupo_acesso == $grupo_id) ? "selected" : "";
-                        echo "<option value='$grupo_id' $selected>$grupo_nome</option>";
-                    }
-                }
-                ?>
-            </select>
-        </div>
 
         <div class="form-group">
             <label for="cpf">CPF:</label>
@@ -124,7 +105,7 @@
         var name = document.getElementById('name').value;
         var email = document.getElementById('email').value;
         var telefone = document.getElementById('telefone').value;
-        var senha = document.getElementById('senha').value;
+        // var senha = document.getElementById('senha').value;
         var grupo_acesso = document.getElementById('grupo_acesso').value;
         var cpf = document.getElementById('cpf').value;
 
@@ -133,7 +114,7 @@
         formData.append('name', name);
         formData.append('email', email);
         formData.append('telefone', telefone);
-        formData.append('senha', senha);
+        // formData.append('senha', senha);
         formData.append('grupo_acesso', grupo_acesso);
         formData.append('cpf', cpf);
 

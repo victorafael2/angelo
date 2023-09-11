@@ -32,7 +32,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="filial_cnpj" class="form-label">CNPJ:</label>
-                                    <input type="text" class="form-control" id="filial_cnpj" name="filial_cnpj">
+                                    <input type="number" class="form-control" id="filial_cnpj" name="filial_cnpj">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -46,7 +46,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="endereco_numero" class="form-label">Número:</label>
-                                    <input type="text" class="form-control" id="endereco_numero" name="endereco_numero">
+                                    <input type="number" class="form-control" id="endereco_numero" name="endereco_numero">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -109,7 +109,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="endereco_cep" class="form-label">CEP</label>
-                                    <input type="text" class="form-control" id="endereco_cep" name="endereco_cep">
+                                    <input type="number" class="form-control" id="endereco_cep" name="endereco_cep">
                                 </div>
                             </div>
                         </div>
@@ -126,7 +126,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="cpf_responsavel" class="form-label">CPF do Responsável:</label>
-                                    <input type="text" class="form-control" id="cpf_responsavel" name="cpf_responsavel">
+                                    <input type="number" class="form-control" id="cpf_responsavel" name="cpf_responsavel">
                                 </div>
                             </div>
                             <div class="col-md-4 d-none">
@@ -239,7 +239,7 @@ $(document).ready(function() {
                     tableData += "<td>" + item.endereco_cep + "</td>";
                     tableData += "<td>" + item.nome_responsavel + "</td>";
 
-                    tableData += "<td>" + item.habilitado + "</td>";
+                    tableData += "<td>" + item.habilitado_icon + "</td>";
                     tableData +=
                         "<td><button class='delete-btn-filiais btn btn-danger btn-sm' data-id='" +
                         item.id_filial + "'>Excluir</button></td>";

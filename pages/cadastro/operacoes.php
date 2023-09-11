@@ -29,8 +29,7 @@
                             <label for="id_area" class="form-label" >Area</label>
                             <!-- <input type="text" class="form-control" id="idVt" name="idVt" value="<?php echo $idVt; ?>"> -->
                             <select type="text" class="form-control" id="id_area" name="id_area"
-                                data-choices="data-choices"
-                                data-options='{"removeItemButton":true,"placeholder":true}'>
+                                 >
                                 <option value="">Selecione</option>
 
 
@@ -56,15 +55,11 @@
                             </select>
                             <!-- </div> -->
                         </div>
-                        <!-- <div class="form-group">
-                            <label for="id_operacao">ID Operação:</label>
-                            <input type="text" class="form-control" name="id_operacao" id="id_operacao"
-                                required>
-                        </div> -->
+
                         <div class="form-group">
                             <label for="nome_operacao" class="form-label">Nome Operação:</label>
                             <input type="text" class="form-control" name="nome_operacao" id="nome_operacao"
-                                required>
+                                >
                         </div>
                         <div class="row">
                             <div class="col">
@@ -232,6 +227,8 @@
                 </div>
             </div>
         </div>
+
+
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
@@ -245,8 +242,8 @@
                                 <thead>
                                     <tr>
 
-                                        <th>ID Área</th>
-                                        <th>ID Operação</th>
+                                        <!-- <th>ID Área</th>
+                                        <th>ID Operação</th> -->
                                         <th>Nome Operação</th>
                                         <th>Hora Início Segunda</th>
                                         <th>Hora Fim Segunda</th>
@@ -299,6 +296,13 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 
+
+
+
+
+
+
+
 <script>
 // Função para carregar os itens cadastrados na inicialização da página - Formulário 2
 $(document).ready(function() {
@@ -312,9 +316,7 @@ $(document).ready(function() {
             success: function(data) {
                 var tableData = "";
                 data.forEach(function(item) {
-                    tableData += "<tr><td>" + item.id_area + "</td><td>" + item
-                        .id_operacao +
-                        "</td><td>" + item.nome_operacao + "</td><td>" + item.hr_ini_seg +
+                    tableData += "<tr><td>" + item.nome_operacao + "</td><td>" + item.hr_ini_seg +
                         "</td><td>" + item.hr_fim_seg + "</td><td>" + item.hr_ini_ter +
                         "</td><td>" + item.hr_fim_ter + "</td><td>" + item.hr_ini_qua +
                         "</td><td>" + item.hr_fim_qua + "</td><td>" + item.hr_ini_qui +
@@ -378,71 +380,140 @@ $(document).ready(function() {
         });
     }
 
-    document.getElementById("operacoes").addEventListener("submit", function(event) {
-        event.preventDefault();
 
-        var id_area = document.getElementById("id_area").value;
-        var nome_operacao = document.getElementById("nome_operacao").value;
-        var hr_ini_seg = document.getElementById("hr_ini_seg").value;
-        var hr_fim_seg = document.getElementById("hr_fim_seg").value;
-        var hr_ini_ter = document.getElementById("hr_ini_ter").value;
-        var hr_fim_ter = document.getElementById("hr_fim_ter").value;
-        var hr_ini_qua = document.getElementById("hr_ini_qua").value;
-        var hr_fim_qua = document.getElementById("hr_fim_qua").value;
-        var hr_ini_qui = document.getElementById("hr_ini_qui").value;
-        var hr_fim_qui = document.getElementById("hr_fim_qui").value;
-        var hr_ini_sex = document.getElementById("hr_ini_sex").value;
-        var hr_fim_sex = document.getElementById("hr_fim_sex").value;
-        var hr_ini_sab = document.getElementById("hr_ini_sab").value;
-        var hr_fim_sab = document.getElementById("hr_fim_sab").value;
-        var hr_ini_dom = document.getElementById("hr_ini_dom").value;
-        var hr_fim_dom = document.getElementById("hr_fim_dom").value;
-        var habilitado = document.getElementById("habilitado").checked;
-
-        $.ajax({
-            url: 'pages/config/insert/salve_operacoes.php',
-            type: 'POST',
-            data: {
-                id_area: id_area,
-                nome_operacao: nome_operacao,
-                hr_ini_seg: hr_ini_seg,
-                hr_fim_seg: hr_fim_seg,
-                hr_ini_ter: hr_ini_ter,
-                hr_fim_ter: hr_fim_ter,
-                hr_ini_qua: hr_ini_qua,
-                hr_fim_qua: hr_fim_qua,
-                hr_ini_qui: hr_ini_qui,
-                hr_fim_qui: hr_fim_qui,
-                hr_ini_sex: hr_ini_sex,
-                hr_fim_sex: hr_fim_sex,
-                hr_ini_sab: hr_ini_sab,
-                hr_fim_sab: hr_fim_sab,
-                hr_ini_dom: hr_ini_dom,
-                hr_fim_dom: hr_fim_dom,
-                habilitado: habilitado
-            },
-            dataType: 'json',
-            success: function(response) {
-                Swal.fire({
-                    icon: response.status ? 'success' : 'error',
-                    title: response.status ? 'Sucesso!' : 'Erro!',
-                    text: response.message,
-                    confirmButtonText: 'OK'
-                });
-
-                if (response.status) {
-                    loadItems();
-                    document.getElementById("operacoes").reset();
-                }
-            },
-            error: function(xhr, status, error) {
-                console.log("Erro na solicitação AJAX: " + error);
-            }
-        });
-    });
 });
 </script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('operacoes');
+        form.addEventListener('submit', function (event) {
+            event.preventDefault(); // Impede o envio do formulário padrão
+
+            // Inicializa uma variável para armazenar o nome do campo vazio
+            let campoVazio = '';
+
+            // Verifica se o campo id_area foi selecionado
+            const id_area = document.getElementById('id_area');
+            if (id_area.selectedIndex === 0) {
+                campoVazio = 'Área';
+            }
+
+            // Seleciona todos os campos de entrada e selects, exceto o campo de checkbox
+            const inputs = form.querySelectorAll('input:not([type="checkbox"]), select');
+
+            // Verifica se todos os campos, exceto o checkbox, estão preenchidos
+            const camposVazios = Array.from(inputs).filter(input => input.value.trim() === '');
+
+            if ( camposVazios.length > 0) {
+                // Se o campo id_area não foi selecionado ou outros campos estão vazios
+                // Mostra um SweetAlert2 com a mensagem indicando qual campo está vazio
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erro!',
+                    text: campoVazio ? `O campo ${campoVazio} deve ser selecionado.` : 'Todos os campos devem ser preenchidos.',
+                });
+            } else {
+                // Se todos os campos, exceto o checkbox, estiverem preenchidos, você pode enviar o formulário aqui
+                enviarFormulario();
+            }
+        });
+
+        function enviarFormulario() {
+            // ... (código para enviar o formulário)
+            var id_area = document.getElementById("id_area").value;
+            var nome_operacao = document.getElementById("nome_operacao").value;
+            var hr_ini_seg = document.getElementById("hr_ini_seg").value;
+            var hr_fim_seg = document.getElementById("hr_fim_seg").value;
+            var hr_ini_ter = document.getElementById("hr_ini_ter").value;
+            var hr_fim_ter = document.getElementById("hr_fim_ter").value;
+            var hr_ini_qua = document.getElementById("hr_ini_qua").value;
+            var hr_fim_qua = document.getElementById("hr_fim_qua").value;
+            var hr_ini_qui = document.getElementById("hr_ini_qui").value;
+            var hr_fim_qui = document.getElementById("hr_fim_qui").value;
+            var hr_ini_sex = document.getElementById("hr_ini_sex").value;
+            var hr_fim_sex = document.getElementById("hr_fim_sex").value;
+            var hr_ini_sab = document.getElementById("hr_ini_sab").value;
+            var hr_fim_sab = document.getElementById("hr_fim_sab").value;
+            var hr_ini_dom = document.getElementById("hr_ini_dom").value;
+            var hr_fim_dom = document.getElementById("hr_fim_dom").value;
+            var habilitado = document.getElementById("habilitado").checked;
+
+            $.ajax({
+                url: 'pages/config/insert/salve_operacoes.php',
+                type: 'POST',
+                data: {
+                    // ... (dados do formulário)
+                    id_area: id_area,
+                    nome_operacao: nome_operacao,
+                    hr_ini_seg: hr_ini_seg,
+                    hr_fim_seg: hr_fim_seg,
+                    hr_ini_ter: hr_ini_ter,
+                    hr_fim_ter: hr_fim_ter,
+                    hr_ini_qua: hr_ini_qua,
+                    hr_fim_qua: hr_fim_qua,
+                    hr_ini_qui: hr_ini_qui,
+                    hr_fim_qui: hr_fim_qui,
+                    hr_ini_sex: hr_ini_sex,
+                    hr_fim_sex: hr_fim_sex,
+                    hr_ini_sab: hr_ini_sab,
+                    hr_fim_sab: hr_fim_sab,
+                    hr_ini_dom: hr_ini_dom,
+                    hr_fim_dom: hr_fim_dom,
+                    habilitado: habilitado
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status) {
+
+                        // Exibe uma mensagem de sucesso usando SweetAlert2
+            Swal.fire({
+                icon: 'success',
+                title: 'Sucesso!',
+                text: 'O formulário foi enviado com sucesso.',
+                confirmButtonText: 'OK'
+            });
+
+
+                        loadItems();
+                                                function loadItems() {
+                                $.ajax({
+                                    url: 'pages/config/insert/get_operacoes.php',
+                                    type: 'GET',
+                                    dataType: 'json',
+                                    success: function(data) {
+                                        var tableData = "";
+                                        data.forEach(function(item) {
+                                            tableData += "<tr><td>" + item.nome_operacao + "</td><td>" + item.hr_ini_seg +
+                                                "</td><td>" + item.hr_fim_seg + "</td><td>" + item.hr_ini_ter +
+                                                "</td><td>" + item.hr_fim_ter + "</td><td>" + item.hr_ini_qua +
+                                                "</td><td>" + item.hr_fim_qua + "</td><td>" + item.hr_ini_qui +
+                                                "</td><td>" + item.hr_fim_qui + "</td><td>" + item.hr_ini_sex +
+                                                "</td><td>" + item.hr_fim_sex + "</td><td>" + item.hr_ini_sab +
+                                                "</td><td>" + item.hr_fim_sab + "</td><td>" + item.hr_ini_dom +
+                                                "</td><td>" + item.hr_fim_dom + "</td><td>" + item.habilitado_icon +
+                                                "</td><td><button class='delete-btn btn btn-danger btn-sm apagar_operacoes' data-id='" +
+                                                item.id_operacao + "'>Excluir</button></td></tr>";
+
+
+                                        });
+                                        $("#table_body_operacoes").html(tableData);
+                                    },
+                                    error: function(xhr, status, error) {
+                                        console.log("Erro na solicitação AJAX: " + error);
+                                    }
+                                });
+                            }
+                        document.getElementById("operacoes").reset();
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log("Erro na solicitação AJAX: " + error);
+                }
+            });
+        }
+    });
+</script>
 
 <script>
 function copiarHorarios() {

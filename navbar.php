@@ -54,9 +54,11 @@ function generateMenuHTML($data)
         $html .= '<div class="d-flex align-items-center">';
         $html .= '<div class="dropdown-indicator-icon"><span class="fas fa-caret-right"></span></div>';
         $html .= '<span class="nav-link-icon">' . $menu['icone'] . '</span>';
-        $html .= '<span class="nav-link-text">' . $menu['menu_name'] . '</span>';
+        $html .= '<span class="nav-link-text line-clamp-1 " data-tooltip="' . htmlspecialchars($menu['menu_name']) . '">' . htmlspecialchars($menu['menu_name']) . '</span>';
+
         // Check the 'breve' property to decide whether to display additional text
         if ($menu['breve'] === 's') {
+          $html .= '<span class="fa-solid fa-circle text-info ms-1 new-page-indicator" style="font-size: 6px"></span>';
           $html .= '<span class="badge ms-2 badge badge-phoenix badge-phoenix-info nav-link-badge">Breve</span>';
       }
         $html .= '</div>';
@@ -114,6 +116,11 @@ function generateMenuHTML($data)
   background-color: #fff;
   color: #007bff;
 } */
+
+
+
+
+
 </style>
 
 
@@ -348,115 +355,7 @@ echo $dataHoraAtual;
                             </div>
                         </div>
                         <div class="card-body p-0">
-                            <!-- <div class="scrollbar-overlay" style="height: 27rem;">
-                        <div class="border-300">
-                          <div class="px-2 px-sm-3 py-3 border-300 notification-card position-relative read border-bottom">
-                            <div class="d-flex align-items-center justify-content-between position-relative">
-                              <div class="d-flex">
-                                <div class="avatar avatar-m status-online me-3"><img class="rounded-circle" src="assets/img/team/40x40/30.webp" alt="" />
-                                </div>
-                                <div class="flex-1 me-sm-3">
-                                  <h4 class="fs--1 text-black">Jessie Samson</h4>
-                                  <p class="fs--1 text-1000 mb-2 mb-sm-3 fw-normal"><span class='me-1 fs--2'>💬</span>Mentioned you in a comment.<span class="ms-2 text-400 fw-bold fs--2">10m</span></p>
-                                  <p class="text-800 fs--1 mb-0"><span class="me-1 fas fa-clock"></span><span class="fw-bold">10:41 AM </span>August 7,2021</p>
-                                </div>
-                              </div>
-                              <div class="font-sans-serif d-none d-sm-block">
-                                <button class="btn fs--2 btn-sm dropdown-toggle dropdown-caret-none transition-none notification-dropdown-toggle" type="button" data-stop-propagation="data-stop-propagation" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><span class="fas fa-ellipsis-h fs--2 text-900"></span></button>
-                                <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item" href="#!">Mark as unread</a></div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="px-2 px-sm-3 py-3 border-300 notification-card position-relative unread border-bottom">
-                            <div class="d-flex align-items-center justify-content-between position-relative">
-                              <div class="d-flex">
-                                <div class="avatar avatar-m status-online me-3">
-                                  <div class="avatar-name rounded-circle"><span>J</span></div>
-                                </div>
-                                <div class="flex-1 me-sm-3">
-                                  <h4 class="fs--1 text-black">Jane Foster</h4>
-                                  <p class="fs--1 text-1000 mb-2 mb-sm-3 fw-normal"><span class='me-1 fs--2'>📅</span>Created an event.<span class="ms-2 text-400 fw-bold fs--2">20m</span></p>
-                                  <p class="text-800 fs--1 mb-0"><span class="me-1 fas fa-clock"></span><span class="fw-bold">10:20 AM </span>August 7,2021</p>
-                                </div>
-                              </div>
-                              <div class="font-sans-serif d-none d-sm-block">
-                                <button class="btn fs--2 btn-sm dropdown-toggle dropdown-caret-none transition-none notification-dropdown-toggle" type="button" data-stop-propagation="data-stop-propagation" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><span class="fas fa-ellipsis-h fs--2 text-900"></span></button>
-                                <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item" href="#!">Mark as unread</a></div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="px-2 px-sm-3 py-3 border-300 notification-card position-relative unread border-bottom">
-                            <div class="d-flex align-items-center justify-content-between position-relative">
-                              <div class="d-flex">
-                                <div class="avatar avatar-m status-online me-3"><img class="rounded-circle avatar-placeholder" src="assets/img/team/40x40/avatar.webp" alt="" />
-                                </div>
-                                <div class="flex-1 me-sm-3">
-                                  <h4 class="fs--1 text-black">Jessie Samson</h4>
-                                  <p class="fs--1 text-1000 mb-2 mb-sm-3 fw-normal"><span class='me-1 fs--2'>👍</span>Liked your comment.<span class="ms-2 text-400 fw-bold fs--2">1h</span></p>
-                                  <p class="text-800 fs--1 mb-0"><span class="me-1 fas fa-clock"></span><span class="fw-bold">9:30 AM </span>August 7,2021</p>
-                                </div>
-                              </div>
-                              <div class="font-sans-serif d-none d-sm-block">
-                                <button class="btn fs--2 btn-sm dropdown-toggle dropdown-caret-none transition-none notification-dropdown-toggle" type="button" data-stop-propagation="data-stop-propagation" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><span class="fas fa-ellipsis-h fs--2 text-900"></span></button>
-                                <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item" href="#!">Mark as unread</a></div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="border-300">
-                          <div class="px-2 px-sm-3 py-3 border-300 notification-card position-relative unread border-bottom">
-                            <div class="d-flex align-items-center justify-content-between position-relative">
-                              <div class="d-flex">
-                                <div class="avatar avatar-m status-online me-3"><img class="rounded-circle" src="assets/img/team/40x40/57.webp" alt="" />
-                                </div>
-                                <div class="flex-1 me-sm-3">
-                                  <h4 class="fs--1 text-black">Kiera Anderson</h4>
-                                  <p class="fs--1 text-1000 mb-2 mb-sm-3 fw-normal"><span class='me-1 fs--2'>💬</span>Mentioned you in a comment.<span class="ms-2 text-400 fw-bold fs--2"></span></p>
-                                  <p class="text-800 fs--1 mb-0"><span class="me-1 fas fa-clock"></span><span class="fw-bold">9:11 AM </span>August 7,2021</p>
-                                </div>
-                              </div>
-                              <div class="font-sans-serif d-none d-sm-block">
-                                <button class="btn fs--2 btn-sm dropdown-toggle dropdown-caret-none transition-none notification-dropdown-toggle" type="button" data-stop-propagation="data-stop-propagation" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><span class="fas fa-ellipsis-h fs--2 text-900"></span></button>
-                                <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item" href="#!">Mark as unread</a></div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="px-2 px-sm-3 py-3 border-300 notification-card position-relative unread border-bottom">
-                            <div class="d-flex align-items-center justify-content-between position-relative">
-                              <div class="d-flex">
-                                <div class="avatar avatar-m status-online me-3"><img class="rounded-circle" src="assets/img/team/40x40/59.webp" alt="" />
-                                </div>
-                                <div class="flex-1 me-sm-3">
-                                  <h4 class="fs--1 text-black">Herman Carter</h4>
-                                  <p class="fs--1 text-1000 mb-2 mb-sm-3 fw-normal"><span class='me-1 fs--2'>👤</span>Tagged you in a comment.<span class="ms-2 text-400 fw-bold fs--2"></span></p>
-                                  <p class="text-800 fs--1 mb-0"><span class="me-1 fas fa-clock"></span><span class="fw-bold">10:58 PM </span>August 7,2021</p>
-                                </div>
-                              </div>
-                              <div class="font-sans-serif d-none d-sm-block">
-                                <button class="btn fs--2 btn-sm dropdown-toggle dropdown-caret-none transition-none notification-dropdown-toggle" type="button" data-stop-propagation="data-stop-propagation" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><span class="fas fa-ellipsis-h fs--2 text-900"></span></button>
-                                <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item" href="#!">Mark as unread</a></div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="px-2 px-sm-3 py-3 border-300 notification-card position-relative read ">
-                            <div class="d-flex align-items-center justify-content-between position-relative">
-                              <div class="d-flex">
-                                <div class="avatar avatar-m status-online me-3"><img class="rounded-circle" src="assets/img/team/40x40/58.webp" alt="" />
-                                </div>
-                                <div class="flex-1 me-sm-3">
-                                  <h4 class="fs--1 text-black">Benjamin Button</h4>
-                                  <p class="fs--1 text-1000 mb-2 mb-sm-3 fw-normal"><span class='me-1 fs--2'>👍</span>Liked your comment.<span class="ms-2 text-400 fw-bold fs--2"></span></p>
-                                  <p class="text-800 fs--1 mb-0"><span class="me-1 fas fa-clock"></span><span class="fw-bold">10:18 AM </span>August 7,2021</p>
-                                </div>
-                              </div>
-                              <div class="font-sans-serif d-none d-sm-block">
-                                <button class="btn fs--2 btn-sm dropdown-toggle dropdown-caret-none transition-none notification-dropdown-toggle" type="button" data-stop-propagation="data-stop-propagation" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><span class="fas fa-ellipsis-h fs--2 text-900"></span></button>
-                                <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item" href="#!">Mark as unread</a></div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div> -->
+
                         </div>
                         <div class="card-footer p-0 border-top border-0">
                             <div class="my-2 text-center fw-bold fs--2 text-600"></div>
@@ -464,7 +363,7 @@ echo $dataHoraAtual;
                     </div>
                 </div>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown d-none">
                 <a class="nav-link" id="navbarDropdownNindeDots" href="#" role="button" data-bs-toggle="dropdown"
                     aria-haspopup="true" data-bs-auto-close="outside" aria-expanded="false">
                     <svg width="16" height="16" viewbox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -481,83 +380,7 @@ echo $dataHoraAtual;
 
                 <div class="dropdown-menu dropdown-menu-end navbar-dropdown-caret py-0 dropdown-nide-dots shadow border border-300"
                     aria-labelledby="navbarDropdownNindeDots">
-                    <!-- <div class="card bg-white position-relative border-0">
-                        <div class="card-body pt-3 px-3 pb-0 overflow-auto scrollbar" style="height: 20rem;">
-                            <div class="row text-center align-items-center gx-0 gy-0">
-                                <div class="col-4"><a
-                                        class="d-block hover-bg-200 p-2 rounded-3 text-center text-decoration-none mb-3"
-                                        href="#!"><img src="assets/img/nav-icons/behance.webp" alt="" width="30" />
-                                        <p class="mb-0 text-black text-truncate fs--2 mt-1 pt-1">Behance</p>
-                                    </a></div>
-                                <div class="col-4"><a
-                                        class="d-block hover-bg-200 p-2 rounded-3 text-center text-decoration-none mb-3"
-                                        href="#!"><img src="assets/img/nav-icons/google-cloud.webp" alt="" width="30" />
-                                        <p class="mb-0 text-black text-truncate fs--2 mt-1 pt-1">Cloud</p>
-                                    </a></div>
-                                <div class="col-4"><a
-                                        class="d-block hover-bg-200 p-2 rounded-3 text-center text-decoration-none mb-3"
-                                        href="#!"><img src="assets/img/nav-icons/slack.webp" alt="" width="30" />
-                                        <p class="mb-0 text-black text-truncate fs--2 mt-1 pt-1">Slack</p>
-                                    </a></div>
-                                <div class="col-4"><a
-                                        class="d-block hover-bg-200 p-2 rounded-3 text-center text-decoration-none mb-3"
-                                        href="#!"><img src="assets/img/nav-icons/gitlab.webp" alt="" width="30" />
-                                        <p class="mb-0 text-black text-truncate fs--2 mt-1 pt-1">Gitlab</p>
-                                    </a></div>
-                                <div class="col-4"><a
-                                        class="d-block hover-bg-200 p-2 rounded-3 text-center text-decoration-none mb-3"
-                                        href="#!"><img src="assets/img/nav-icons/bitbucket.webp" alt="" width="30" />
-                                        <p class="mb-0 text-black text-truncate fs--2 mt-1 pt-1">BitBucket</p>
-                                    </a></div>
-                                <div class="col-4"><a
-                                        class="d-block hover-bg-200 p-2 rounded-3 text-center text-decoration-none mb-3"
-                                        href="#!"><img src="assets/img/nav-icons/google-drive.webp" alt="" width="30" />
-                                        <p class="mb-0 text-black text-truncate fs--2 mt-1 pt-1">Drive</p>
-                                    </a></div>
-                                <div class="col-4"><a
-                                        class="d-block hover-bg-200 p-2 rounded-3 text-center text-decoration-none mb-3"
-                                        href="#!"><img src="assets/img/nav-icons/trello.webp" alt="" width="30" />
-                                        <p class="mb-0 text-black text-truncate fs--2 mt-1 pt-1">Trello</p>
-                                    </a></div>
-                                <div class="col-4"><a
-                                        class="d-block hover-bg-200 p-2 rounded-3 text-center text-decoration-none mb-3"
-                                        href="#!"><img src="assets/img/nav-icons/figma.webp" alt="" width="20" />
-                                        <p class="mb-0 text-black text-truncate fs--2 mt-1 pt-1">Figma</p>
-                                    </a></div>
-                                <div class="col-4"><a
-                                        class="d-block hover-bg-200 p-2 rounded-3 text-center text-decoration-none mb-3"
-                                        href="#!"><img src="assets/img/nav-icons/twitter.webp" alt="" width="30" />
-                                        <p class="mb-0 text-black text-truncate fs--2 mt-1 pt-1">Twitter</p>
-                                    </a></div>
-                                <div class="col-4"><a
-                                        class="d-block hover-bg-200 p-2 rounded-3 text-center text-decoration-none mb-3"
-                                        href="#!"><img src="assets/img/nav-icons/pinterest.webp" alt="" width="30" />
-                                        <p class="mb-0 text-black text-truncate fs--2 mt-1 pt-1">Pinterest</p>
-                                    </a></div>
-                                <div class="col-4"><a
-                                        class="d-block hover-bg-200 p-2 rounded-3 text-center text-decoration-none mb-3"
-                                        href="#!"><img src="assets/img/nav-icons/ln.webp" alt="" width="30" />
-                                        <p class="mb-0 text-black text-truncate fs--2 mt-1 pt-1">Linkedin</p>
-                                    </a></div>
-                                <div class="col-4"><a
-                                        class="d-block hover-bg-200 p-2 rounded-3 text-center text-decoration-none mb-3"
-                                        href="#!"><img src="assets/img/nav-icons/google-maps.webp" alt="" width="30" />
-                                        <p class="mb-0 text-black text-truncate fs--2 mt-1 pt-1">Maps</p>
-                                    </a></div>
-                                <div class="col-4"><a
-                                        class="d-block hover-bg-200 p-2 rounded-3 text-center text-decoration-none mb-3"
-                                        href="#!"><img src="assets/img/nav-icons/google-photos.webp" alt=""
-                                            width="30" />
-                                        <p class="mb-0 text-black text-truncate fs--2 mt-1 pt-1">Photos</p>
-                                    </a></div>
-                                <div class="col-4"><a
-                                        class="d-block hover-bg-200 p-2 rounded-3 text-center text-decoration-none mb-3"
-                                        href="#!"><img src="assets/img/nav-icons/spotify.webp" alt="" width="30" />
-                                        <p class="mb-0 text-black text-truncate fs--2 mt-1 pt-1">Spotify</p>
-                                    </a></div>
-                            </div>
-                        </div>
-                    </div> -->
+
                 </div>
             </li>
             <li class="nav-item dropdown"><a class="nav-link lh-1 pe-0" id="navbarDropdownUser" href="#!" role="button"
@@ -601,9 +424,14 @@ echo $dataHoraAtual;
                         <div class="overflow-auto scrollbar" style="height: 10rem;">
 
                             <?php
-
+// echo $_SESSION['adm'];
                                                                 // Consulta para obter os itens do menu
-                                        $sql_menu_adm = "SELECT * FROM submenu WHERE  mostrar = 's' and tipo ='ADM' ";
+                                                                if ($_SESSION['adm'] == 'x') {
+                                                                  $condition = "";
+                                                              } else {
+                                                                  $condition = "AND (NOT adm = 'x' OR adm IS NULL)";
+                                                              }
+                                        $sql_menu_adm = "SELECT * FROM submenu WHERE  mostrar = 's' and tipo ='ADM' $condition";
                                         $result_menu_adm = $conn->query($sql_menu_adm);
 
                                         // Verifica se a consulta retornou resultados
@@ -634,15 +462,15 @@ echo $dataHoraAtual;
 
 
                         </div>
-                        <div class="card-footer p-0 border-top">
-                            <ul class="nav d-flex flex-column my-3">
+                        <div class="card-footer p-0 border-top ">
+                            <ul class="nav d-flex flex-column my-3 d-none">
                                 <li class="nav-item"><a class="nav-link px-3" href="#!"> <span class="me-2 text-900"
                                             data-feather="user-plus"></span>Add another account</a></li>
                             </ul>
                             <hr />
                             <div class="px-3"> <a class="btn btn-phoenix-secondary d-flex flex-center w-100"
                                     href="database/logout.php">
-                                    <span class="me-2" data-feather="log-out"> </span>Sign out</a></div>
+                                    <span class="me-2" data-feather="log-out"> </span>Sair</a></div>
                             <div class="my-2 text-center fw-bold fs--2 text-600"><a class="text-600 me-1"
                                     href="#!">Privacy policy</a>&bull;<a class="text-600 mx-1"
                                     href="#!">Terms</a>&bull;<a class="text-600 ms-1" href="#!">Cookies</a></div>
@@ -834,3 +662,6 @@ echo $dataHoraAtual;
         </div>
     </div>
 </div>
+
+
+

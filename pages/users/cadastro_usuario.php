@@ -14,10 +14,26 @@
         <label for="telefone">Telefone:</label>
         <input type="text" class="form-control" id="telefone" name="telefone" placeholder="Digite o telefone">
       </div>
+
       <div class="form-group">
-      <label for="group">Grupo de Usuário:</label>
-      <input type="text" class="form-control" id="group" name="group" placeholder="Digite o grupo de usuário">
-    </div>
+            <label for="grupo_acesso">Grupo de Acesso:</label>
+            <select class="form-control" id="grupo_acesso" data-choices="data-choices" data-options='{"removeItemButton":true,"placeholder":true}'>
+                <?php
+                // Busca os grupos de acesso no banco de dados
+                $sql_grupos = "SELECT id, nome_do_grupo FROM user_group";
+                $result_grupos = $conn->query($sql_grupos);
+
+                if ($result_grupos->num_rows > 0) {
+                    while ($row_grupo = $result_grupos->fetch_assoc()) {
+                        $grupo_id = $row_grupo['id'];
+                        $grupo_nome = $row_grupo['nome_do_grupo'];
+                        $selected = ($grupo_acesso == $grupo_id) ? "selected" : "";
+                        echo "<option value='$grupo_id' $selected>$grupo_nome</option>";
+                    }
+                }
+                ?>
+            </select>
+        </div>
       <button type="submit" class="btn btn-primary mt-2">Enviar</button>
     </form>
   </div>

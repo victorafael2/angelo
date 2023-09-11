@@ -59,8 +59,8 @@
     border: 1px solid #ccc;
     border-radius: 10%;
     text-align: center;
-    padding: 10px;
-    margin: 5px;
+    padding: 5px;
+    margin: 1px;
 }
 
 .current-day {
@@ -315,7 +315,7 @@
         </div> -->
     </div>
     <div class="row">
-    <?php
+        <?php
 // Suponha que você já tenha executado a consulta SQL e os resultados estejam em $resultados.
 
 // Inicie a div externa
@@ -459,30 +459,35 @@ echo '</ul>
 
 
 
-        <div class="col-md-8 col-xl-8 col-xxl-8 gy-5 gy-md-3">
-            <h5 class="pb-4 border-bottom">Calendário de Eventos</h5>
-            <div class="row justify-content-center mt-4">
-                <div class="col-md-12 text-center">
-                    <div class="calendar">
-                        <div class="row">
-                            <div class="col-md-2">
-                                <button class="btn btn-phoenix-primary btn-block" id="prev-week-button"><i class="fa-solid fa-chevron-left"></i></button>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="week" id="days"></div>
-                            </div>
-                            <div class="col-md-2">
-                                <button class="btn btn-phoenix-primary btn-block" id="next-week-button"><i class="fa-solid fa-chevron-right"></i></button>
-                            </div>
-                        </div>
+<div class="col-md-8 col-xl-8 col-xxl-8 gy-5 gy-md-3">
+    <h5 class="pb-4 border-bottom">Calendário de Eventos</h5>
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-12 text-center">
+            <div class="calendar">
+                <div class="row align-items-center">
+                    <div class="col-md-2 col-3">
+                        <button class="btn btn-phoenix-primary btn-block" id="prev-week-button"><i class="fa-solid fa-chevron-left"></i></button>
+                    </div>
+                    <div class="col-md-6 col-6">
+                        <div class="week" id="days"></div>
+                    </div>
+                    <div class="col-md-2 col-3">
+                        <button class="btn btn-phoenix-primary btn-block" id="next-week-button"><i class="fa-solid fa-chevron-right"></i></button>
+                    </div>
+                    <!-- Adicione o botão "Hoje" -->
+                    <div class="col-md-2 col-12 mt-3 mt-md-0">
+                        <button class="btn btn-phoenix-primary btn-block" id="today-button">Hoje</button>
                     </div>
                 </div>
             </div>
-            <div class="activities mt-4  bg-white border-top border-bottom border-200 position-relative top-1">
-                <h2 class="text-center">Eventos do dia:</h2>
-                <ul id="activity-list"></ul>
-            </div>
         </div>
+    </div>
+    <div class="activities mt-4 bg-white border-top border-bottom border-200 position-relative top-1">
+        <h4 class="text-center">Eventos do dia:</h4>
+        <ul id="activity-list"></ul>
+    </div>
+</div>
+
 
 
 
@@ -531,6 +536,7 @@ function createWeekDays() {
         const dayCell = document.createElement('div');
         dayCell.classList.add('day-cell');
         dayCell.textContent = dayLabel;
+        dayCell.setAttribute('data-date', currentDay.toISOString().split('T')[0]);
 
         // Marca o dia atual
         if (currentDay.toISOString().split('T')[0] === today.toISOString().split('T')[0]) {
@@ -578,6 +584,29 @@ nextWeekButton.addEventListener('click', () => {
     createWeekDays();
     activitiesDiv.style.display = 'none';
     showActivities(today);
+});
+
+
+
+const todayButton = document.getElementById('today-button');
+
+todayButton.addEventListener('click', () => {
+    currentWeekStart.setDate(today.getDate() - today.getDay());
+    currentWeekEnd.setDate(today.getDate() - today.getDay() + 6);
+    daysContainer.innerHTML = '';
+    createWeekDays();
+    activitiesDiv.style.display = 'none';
+    showActivities(today);
+
+    // Remova a classe 'current-day' dos dias anteriores
+    const allCells = document.querySelectorAll('.day-cell');
+    allCells.forEach(cell => cell.classList.remove('current-day'));
+
+    // Adicione a classe 'current-day' à célula do dia atual
+    const todayCell = document.querySelector(`.day-cell[data-date="${today.toISOString().split('T')[0]}"]`);
+    if (todayCell) {
+        todayCell.classList.add('current-day');
+    }
 });
 </script>
 

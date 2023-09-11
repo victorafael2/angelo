@@ -69,6 +69,7 @@ if ($_SESSION['login_attempts'][$email] >= $maxTentativas) {
                 // Defina a variável de sessão 'destinationPage' com base na página de destino do usuário
                 $_SESSION['destinationPage'] = 'content_pages.php?id=' . $user['submenu_id'];
 
+                $_SESSION['adm'] = $user['adm_p'];
                 // Redirecione para a página de destino
                 $destinationPage = $user['submenu_id'];
                 $response['success'] = true;

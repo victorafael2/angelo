@@ -12,7 +12,7 @@ $id_tarefa = isset($_GET['dado']) ? $_GET['dado'] : 18;
 // Consulta para obter os dados da tabela
 $sql = "SELECT f.cpf, h.id_funcionario, h.nome_social, h.nome_registro, h.sexo, h.genero, h.estado_civil, h.id_cargo, h.id_vt, h.id_superior, h.id_area, h.id_operacao, h.id_filial, h.id_history, aux_cargos.cargo_nome, aux_vt.vt_nome, tb_sup.nome_social as superior_nome, aux_areas.nome_area, aux_operacoes.nome_operacao, aux_filiais.filial_nome, 'cpf' AS tipo
 FROM funcionarios f
-LEFT JOIN tb_history_cadastro h ON f.idFuncionario = h.id_funcionario
+LEFT JOIN tb_history_cadastro h ON f.idFuncionario = h.id_funcionario AND h.tipo_registro = 'cpf'
 LEFT JOIN aux_cargos ON aux_cargos.id_cargo = h.id_cargo
 LEFT JOIN aux_vt ON aux_vt.id_vt = h.id_vt
 LEFT JOIN tb_history_cadastro tb_sup ON tb_sup.id_funcionario = h.id_superior
@@ -30,7 +30,7 @@ UNION ALL
 
 SELECT f_cnpj.cnpj AS 'cpf', h.id_funcionario, h.nome_social, h.nome_registro, h.sexo, h.genero, h.estado_civil, h.id_cargo, h.id_vt, h.id_superior, h.id_area, h.id_operacao, h.id_filial, h.id_history, aux_cargos.cargo_nome, aux_vt.vt_nome, tb_sup.nome_social as superior_nome, aux_areas.nome_area, aux_operacoes.nome_operacao, aux_filiais.filial_nome, 'cnpj' AS tipo
 FROM funcionarios_cnpj AS f_cnpj
-INNER JOIN tb_history_cadastro h ON f_cnpj.id = h.id_funcionario
+INNER JOIN tb_history_cadastro h ON f_cnpj.id = h.id_funcionario AND h.tipo_registro = 'cnpj'
 LEFT JOIN aux_cargos ON aux_cargos.id_cargo = h.id_cargo
 LEFT JOIN aux_vt ON aux_vt.id_vt = h.id_vt
 LEFT JOIN tb_history_cadastro tb_sup ON tb_sup.id_funcionario = h.id_superior
