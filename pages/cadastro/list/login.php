@@ -44,7 +44,7 @@ WHERE id_funcionario = '$idUsuario' and tipo = '$tipo'";
 
           $childTable .= '<td>';
 
-        $childTable .= ($row['habilitado'] == 1) ? '<i class="fa-solid fa-check text-success"></i>' : '<i class="fa-solid fa-check"></i>';
+        $childTable .= ($row['habilitado'] == 1) ? '<i class="fa-solid fa-check text-success"></i>' : '<i class="fa-solid fa-xmark text-danger"></i>';
 
         $childTable .= '</td>';
 

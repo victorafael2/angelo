@@ -1162,8 +1162,10 @@ $status = $row["status"] ?? "";
                                 </tr>
                             </thead>
                             <tbody class="list fs--1">
+                            <!-- <?php echo $tipo ?> -->
                                 <?php
-                                    if (isset($id_funci) && !empty($id_funci)) {
+                                // echo $id_funci;
+                                    // if (isset($id_funci)) {
                                         // Recupere os dados do MySQL
                                         $sql_tab2 = "SELECT *, ac.cargo_nome, vt.vt_nome, aa.nome_area, ao.nome_operacao, af.filial_nome FROM tb_history_cadastro AS thc
                                         LEFT JOIN  funcionarios AS f ON f.idFuncionario = thc.id_funcionario
@@ -1176,7 +1178,10 @@ $status = $row["status"] ?? "";
 
 
 
-                                        WHERE id_funcionario = $id_funci and tipo_registro = '<?php echo $tipo ?>'";
+                                        WHERE id_funcionario = $id_funci and tipo_registro = '$tipo'";
+
+                                        // echo $sql_tab2;
+
                                         $result_tab2 = $conn->query($sql_tab2);
 
                                         // Preencha a tabela com os dados
@@ -1203,7 +1208,7 @@ $status = $row["status"] ?? "";
                                         } else {
                                             echo '<tr><td colspan="4">Nenhum registro encontrado.</td></tr>';
                                         }
-                                    }
+                                    // }
                                     ?>
 
 
