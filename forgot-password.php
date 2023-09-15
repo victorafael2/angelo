@@ -34,9 +34,9 @@ if (isset($_POST["email"])) {
 
         // Verificar se o servidor não é localhost
             if ($_SERVER['SERVER_NAME'] !== 'localhost') {
-                $currentServer = 'https://191.96.31.197:8090/preview/xpeer.com/';
+                $currentServer = 'https://191.96.31.197:8090/preview/xpeer.com';
             } else {
-                $currentServer = 'localhost';
+                $currentServer = 'localhost/angelo';
             }
 
 
@@ -66,7 +66,7 @@ if (isset($_POST["email"])) {
             $mail->Subject = utf8_encode($subject);
 
             // Construir o link de redefinição de senha
-            $resetLink = 'http://' . $currentServer . '/angelo/reset-password.php?token=' . $token . '&email=' . $email;
+            $resetLink = 'http://' . $currentServer . '/reset-password.php?token=' . $token . '&email=' . $email;
             $emailBody = 'Clique no link a seguir para redefinir sua senha: <a href="' . $resetLink . '">Redefinir Senha</a>';
             $emailBody = utf8_encode($emailBody);
 
