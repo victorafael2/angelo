@@ -32,8 +32,16 @@ if (isset($_POST["email"])) {
         // Gerar um token
         $token = bin2hex(random_bytes(16));
 
-        // Inserir o token no banco de dados MySQL
+        // Verificar se o servidor não é localhost
+            if ($_SERVER['SERVER_NAME'] !== 'localhost') {
+                $currentServer = $_SERVER['SERVER_NAME'];
+            } else {
+                $currentServer = 'localhost';
+            }
 
+
+
+        // Inserir o token no banco de dados MySQL
 
         if ($conn->connect_error) {
             die('Erro de conexão com o banco de dados: ' . $conn->connect_error);
@@ -54,7 +62,13 @@ if (isset($_POST["email"])) {
             // Configurar o conteúdo do e-mail
             $mail->isHTML(true);
             $mail->Subject = 'Redefinição de Senha';
-            $mail->Body = 'Clique no link a seguir para redefinir sua senha: <a href="http://localhost/angelo/reset-password.php?token=' . $token . '&email='.$email.'">Redefinir Senha</a>';
+
+            // Construir o link de redefinição de senha
+            $resetLink = 'http://' . $currentServer . '/angelo/reset-password.php?token=' . $token . '&email=' . $email;
+            $emailBody = 'Clique no link a seguir para redefinir sua senha: <a href="' . $resetLink . '">Redefinir Senha</a>';
+            $emailBody = utf8_encode($emailBody);
+
+            $mail->Body = $emailBody;
 
             // Enviar o e-mail
             $mail->send();
@@ -69,7 +83,7 @@ if (isset($_POST["email"])) {
         $conn->close();
 
         header("Content-Type: application/json");
-echo json_encode($response);
+        echo json_encode($response);
     } catch (Exception $e) {
         echo "Erro ao enviar o e-mail: {$mail->ErrorInfo}";
     }
@@ -77,4 +91,3 @@ echo json_encode($response);
     echo "Por favor, preencha o campo de e-mail.";
 }
 ?>
-
