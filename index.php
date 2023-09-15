@@ -73,6 +73,9 @@
                 </div>
                 <!--/.bg-holder-->
 
+
+
+
                 <div class="row flex-center position-relative min-vh-100 g-0 py-5">
                     <div class="col-11 col-sm-10 col-xl-8">
                         <div class="card border border-300 auth-card">
@@ -134,6 +137,10 @@
                                             <div class="row flex-between-center mb-7">
         <div class="col-auto">
             <a class="fs--1 fw-semi-bold" href="#" id="forgot-password-link">Esqueceu a Senha?</a>
+
+
+            <div id="wait-text" style="display: none;">Aguarde...</div>
+
         </div>
     </div>
                                             <button class="btn btn-primary w-100 mb-3">Entrar</button>
@@ -184,7 +191,7 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 
-        <script>
+        <!-- <script>
 document.getElementById('forgot-password-link').addEventListener('click', function(event) {
     event.preventDefault();
     var email = document.getElementById('email').value;
@@ -195,7 +202,71 @@ document.getElementById('forgot-password-link').addEventListener('click', functi
         alert('Por favor, preencha o campo de e-mail.');
     }
 });
+</script> -->
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<script>
+// Função para mostrar o texto "Aguarde..."
+function showWaitText() {
+    var waitText = document.getElementById('wait-text');
+    waitText.style.display = 'block';
+}
+
+// Função para ocultar o texto "Aguarde..."
+function hideWaitText() {
+    var waitText = document.getElementById('wait-text');
+    waitText.style.display = 'none';
+}
+
+document.getElementById('forgot-password-link').addEventListener('click', function(event) {
+    event.preventDefault();
+    var email = document.getElementById('email').value;
+    if (email) {
+        showWaitText(); // Mostrar o texto "Aguarde..." antes de enviar a solicitação AJAX
+        // Enviar uma solicitação AJAX para o arquivo PHP
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'forgot-password.php', true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+        xhr.onload = function() {
+            hideWaitText(); // Ocultar o texto "Aguarde..." após a conclusão da solicitação AJAX
+            if (xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                if (response.success) {
+                    // Se o email foi enviado com sucesso, exibir uma mensagem SweetAlert2
+                    Swal.fire({
+                        title: 'Sucesso!',
+                        text: response.message,
+                        icon: 'success'
+                    });
+                } else {
+                    // Se ocorreu um erro no servidor, exibir uma mensagem de erro
+                    Swal.fire({
+                        title: 'Erro!',
+                        text: response.message,
+                        icon: 'error'
+                    });
+                }
+            }
+        };
+
+        xhr.send('email=' + encodeURIComponent(email));
+    } else {
+        // alert('Por favor, preencha o campo de e-mail.');
+        Swal.fire({
+            title: 'Erro!',
+            text: 'Por favor, preencha o campo de e-mail.',
+            icon: 'error'
+        });
+    }
+});
 </script>
+
+
+
 
         <script>
         document.addEventListener('DOMContentLoaded', function() {

@@ -16,6 +16,10 @@ function getFileIcon($fileName) {
 
 ?>
 
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 <?php
 // Assuming you have already received the `id_usuario` via POST
 if (isset($_POST['id_usuario'])) {
@@ -123,12 +127,22 @@ $(document).ready(function() {
                 // Exiba um toast com base no novo status
                 var toastMessage = (response.status == 1) ? 'Status atualizado para Ativo' : 'Status atualizado para Inativo';
 
-                // Crie o toast
-                var toast = $('#liveToast');
-                toast.find('.toast-body').text(toastMessage);
+                const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
 
-                // Mostre o toast
-                toast.toast('show');
+            Toast.fire({
+                icon: 'success',
+                title: toastMessage
+            })
             }
         });
     });
@@ -151,15 +165,30 @@ $(document).ready(function() {
             success: function(response) {
                 icon.html(response.icon);
 
-                // Exiba um toast com base no novo status
-                var toastMessage = (response.status == 1) ? 'Status atualizado para Ativo' : 'Status atualizado para Inativo';
+                alert
 
-                // Crie o toast
-                var toast = $('#liveToast');
-                toast.find('.toast-body').text(toastMessage);
+             // Exiba um toast com base no novo status
+             var toastMessage = (response.status == 1) ? 'Preferencial Ativado' :
+                'Preferencial Desativado';
 
-                // Mostre o toast
-                toast.toast('show');
+
+
+                const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({
+                icon: 'success',
+                title: toastMessage
+            })
             }
         });
     });

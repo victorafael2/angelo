@@ -9,8 +9,8 @@ use PHPMailer\PHPMailer\Exception;
 
 include 'database/databaseconnect.php';
 
-if (isset($_GET["email"])) {
-    $email = $_GET["email"];
+if (isset($_POST["email"])) {
+    $email = $_POST["email"];
 
     // Criar uma instância do PHPMailer
     $mail = new PHPMailer(true);
@@ -58,15 +58,18 @@ if (isset($_GET["email"])) {
 
             // Enviar o e-mail
             $mail->send();
-
-            echo "Um e-mail de redefinição de senha foi enviado para o seu endereço de e-mail.";
+            $response = array("success" => true, "message" => "Email de recuperação de senha enviado com sucesso!");
         } else {
-            echo "Erro ao inserir o token no banco de dados: " . $stmt->error;
+            $response = array("success" => false, "message" => "Erro ao enviar o email.");
+
         }
 
         // Feche a conexão e o statement
         $stmt->close();
         $conn->close();
+
+        header("Content-Type: application/json");
+echo json_encode($response);
     } catch (Exception $e) {
         echo "Erro ao enviar o e-mail: {$mail->ErrorInfo}";
     }
@@ -74,3 +77,4 @@ if (isset($_GET["email"])) {
     echo "Por favor, preencha o campo de e-mail.";
 }
 ?>
+

@@ -1541,6 +1541,8 @@ $(document).ready(function() {
                 // On success, update the file list
                 updateBancoList();
 
+
+
                 // Clear the form
                 $("#banco_user")[0].reset();
             },
