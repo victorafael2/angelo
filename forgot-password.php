@@ -66,7 +66,7 @@ if (isset($_POST["email"])) {
             $mail->Subject = utf8_encode($subject);
 
             // Construir o link de redefinição de senha
-            $resetLink = 'http://' . $currentServer . '/reset-password.php?token=' . $token . '&email=' . $email;
+            $resetLink =  $currentServer . '/reset-password.php?token=' . $token . '&email=' . $email;
             $emailBody = 'Clique no link a seguir para redefinir sua senha: <a href="' . $resetLink . '">Redefinir Senha</a>';
             $emailBody = utf8_encode($emailBody);
 
