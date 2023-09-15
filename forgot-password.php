@@ -61,7 +61,9 @@ if (isset($_POST["email"])) {
             // O token foi inserido com sucesso na tabela token
             // Configurar o conteúdo do e-mail
             $mail->isHTML(true);
-            $mail->Subject = 'Redefinição de Senha';
+            // Forçar a codificação UTF-8 no assunto
+            $subject = 'Redefinição de Senha';
+            $mail->Subject = utf8_encode($subject);
 
             // Construir o link de redefinição de senha
             $resetLink = 'http://' . $currentServer . '/angelo/reset-password.php?token=' . $token . '&email=' . $email;
