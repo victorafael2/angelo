@@ -136,7 +136,7 @@
                                             </div>
                                             <div class="row flex-between-center mb-7">
         <div class="col-auto">
-            <a class="fs--1 fw-semi-bold" href="#" id="forgot-password-link">Esqueceu a Senha?</a> <?php echo $_SERVER['SERVER_NAME'] ?>
+            <a class="fs--1 fw-semi-bold" href="#" id="forgot-password-link">Esqueceu a Senha?</a>
 
 
             <div id="wait-text" style="display: none;">Aguarde...</div>
