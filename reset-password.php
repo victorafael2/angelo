@@ -192,8 +192,11 @@ function validarToken($token) {
 
 ?>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
 <script>
 $(document).ready(function() {
     var passwordField = $("#password");
@@ -209,22 +212,33 @@ $(document).ready(function() {
             // As senhas coincidem, faz uma solicitação AJAX para chamar a função PHP
             var token = $("#token").val();
             var novaSenha = passwordField.val();
-            var email =$("#email").val();
+            var email = $("#email").val();
 
             $.ajax({
                 type: "POST",
                 url: "funcao_alterar_senha.php",
-                data: { token: token, password: novaSenha, email: email  },
+                data: {
+                    token: token,
+                    password: novaSenha,
+                    email: email
+                },
                 success: function(response) {
-                    if (response === "success") {
-                        // Senha atualizada com sucesso
-                        console.log("Senha atualizada com sucesso!");
-                        console.log("Código gerado: " + response.codigoGerado);
-                    } else {
-                        // Erro ao atualizar a senha
-                        console.log("Erro ao atualizar a senha. Verifique o token ou tente novamente.");
-                    }
+
+
+                        Swal.fire({
+                            title: 'Sucesso',
+                            text: 'Senha atualizada com sucesso!',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then((result) => {
+                            // Redirecione o usuário ou faça outras ações necessárias após o sucesso
+                            if (result.isConfirmed) {
+                                window.location.href = 'index.php';
+                            }
+                        });
+
                 }
+
             });
         }
     });
@@ -238,5 +252,3 @@ $(document).ready(function() {
     });
 });
 </script>
-
-

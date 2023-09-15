@@ -20,33 +20,32 @@ $email = $_POST['email'];
 $sql = "UPDATE user SET senha = '$senhaHash' WHERE email = '$email'";
 
 if ($conn->query($sql) === TRUE) {
-    $logMessage = "Senha atualizada com sucesso para o usuário com email: " . $email;
+
+    $response = array("status" => "success");
+    echo json_encode($response);
 } else {
-    $logMessage = "Erro ao atualizar a senha no banco de dados: " . $conn->error;
+
+    $response = array("status" => "error");
+    echo json_encode($response);
 }
 
-echo $sql;
+
+//       // Remova o token da tabela de tokens
+// $sql = "DELETE FROM token WHERE token = '$token'";
+
+// if ($conn->query($sql) === TRUE) {
+//     $logMessage = "Token removido com sucesso para o token: " . $token;
+// } else {
+//     $logMessage = "Erro ao remover o token do banco de dados: " . $conn->error;
+// }
+
+// // Registre a mensagem no log
+// error_log($logMessage);
 
 
+//         $conn->close();
 
-
-
-      // Remova o token da tabela de tokens
-$sql = "DELETE FROM token WHERE token = '$token'";
-
-if ($conn->query($sql) === TRUE) {
-    $logMessage = "Token removido com sucesso para o token: " . $token;
-} else {
-    $logMessage = "Erro ao remover o token do banco de dados: " . $conn->error;
-}
-
-// Registre a mensagem no log
-error_log($logMessage);
-
-
-        $conn->close();
-
-        return true; // Senha atualizada com sucesso
+//         return true; // Senha atualizada com sucesso
 
 
 
