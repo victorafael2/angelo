@@ -27,7 +27,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // Prepare and execute the database insertion query
     $sql = "INSERT INTO aux_info_bancario (id_funcionario, pix_tipo, pix_identificacao, banco_tipo_conta, banco_numero, banco_nome, banco_agencia, banco_dv_agencia, banco_conta, banco_dv_conta, habilitado, preferencial,tipo)
-            VALUES ('$idFuncionario', '$pixTipo', '$pixIdentificacao', '$bancoTipoConta', '$bancoNumero', '$bancoNome', '$bancoAgencia', '$bancoDvAgencia', '$bancoConta', '$bancoDvConta', $habilitado, $preferencial,$tipo)";
+            VALUES ('$idFuncionario', '$pixTipo', '$pixIdentificacao', '$bancoTipoConta', '$bancoNumero', '$bancoNome', '$bancoAgencia', '$bancoDvAgencia', '$bancoConta', '$bancoDvConta', $habilitado, $preferencial,'$tipo')";
+            echo $sql;
 
     if ($conn->query($sql) === TRUE) {
         echo "Data inserted successfully.";

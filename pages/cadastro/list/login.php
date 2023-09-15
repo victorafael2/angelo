@@ -42,11 +42,20 @@ WHERE id_funcionario = '$idUsuario' and tipo = '$tipo'";
           $childTable .= '<td>' . $row['nome_sistema'] . '</td>';
           $childTable .= '<td>' . $row['username'] . '</td>';
 
-          $childTable .= '<td>';
 
-        $childTable .= ($row['habilitado'] == 1) ? '<i class="fa-solid fa-check text-success"></i>' : '<i class="fa-solid fa-xmark text-danger"></i>';
 
+        $childTable .= '<td>';
+        $childTable .= '<span class="status-icon" data-id="' . $row['id_acesso'] . '">';
+
+        if ($row['habilitado'] == 1) {
+            $childTable .= '<i class="fa-solid fa-check text-success"></i>';
+        } else {
+            $childTable .= '<i class="fa-solid fa-xmark text-danger"></i>';
+        }
+
+        $childTable .= '</span>';
         $childTable .= '</td>';
+
 
           $childTable .= '</tr>';
       }
@@ -63,3 +72,38 @@ WHERE id_funcionario = '$idUsuario' and tipo = '$tipo'";
 
 $conn->close();
 ?>
+
+
+
+
+<script>
+$(document).ready(function() {
+    $('.status-icon').click(function() {
+        var icon = $(this);
+        var id = icon.data('id');
+
+        $.ajax({
+            type: 'POST',
+            url: 'pages/cadastro/update/update_login_habilitar.php',
+            data: {
+                id: id
+            },
+            dataType: 'json',
+            success: function(response) {
+                icon.html(response.icon);
+
+                // Exiba um toast com base no novo status
+                var toastMessage = (response.status == 1) ? 'Status atualizado para Ativo' :
+                    'Status atualizado para Inativo';
+
+                // Crie o toast
+                var toast = $('#liveToast');
+                toast.find('.toast-body').text(toastMessage);
+
+                // Mostre o toast
+                toast.toast('show');
+            }
+        });
+    });
+});
+</script>

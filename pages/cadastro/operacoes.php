@@ -285,6 +285,237 @@
 </div>
 
 
+
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Editar Informações da Operação</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Coloque os campos de edição aqui -->
+                <form id="editForm">
+
+                        <div class="form-group">
+                            <!-- <label for="id_area">ID Área:</label> -->
+                            <!-- <input type="text" class="form-control" name="id_area" id="id_area" required> -->
+                            <!-- <div class=""> -->
+                            <label for="id_area_modal" class="form-label" >Area</label>
+                            <!-- <input type="text" class="form-control" id="idVt" name="idVt" value="<?php echo $idVt; ?>"> -->
+                            <select type="text" class="form-control" id="id_area_modal" name="id_area_modal"
+                                 >
+                                <option value="">Selecione</option>
+
+
+
+                                <?php
+                                // Executar a consulta para obter os dados
+                                $sql_vt = "SELECT id_area, nome_area FROM aux_areas"; // Substitua "tabela" pelo nome correto da sua tabela
+                                $result_vt = $conn->query($sql_vt);
+
+                                // Verificar se há resultados e criar as opções
+                                if ($result_vt->num_rows > 0) {
+                                    while ($row = $result_vt->fetch_assoc()) {
+                                        $id_area = $row["id_area"];
+                                        $nome_area = $row["nome_area"];
+                                        // $visibilidade_vt = ($idVt == $id_vt) ? "selected" : "";
+
+                                        echo "<option value='$id_area' >$nome_area</option>";
+                                    }
+                                } else {
+                                    // echo "<option value=''>Nenhum resultado encontrado</option>";
+                                }
+                                ?>
+                            </select>
+                            <!-- </div> -->
+                        </div>
+
+                        <div class="form-group">
+                            <label for="nome_operacao_modal" class="form-label">Nome Operação:</label>
+                            <input type="text" class="form-control" name="nome_operacao_modal" id="nome_operacao_modal"
+                                >
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="hr_ini_seg_modal" class="form-label">Hora Início Segunda:</label>
+                                    <input type="text" class="form-control datetimepicker" name="hr_ini_seg_modal"
+                                        id="hr_ini_seg_modal" type="text" placeholder="hora : minuto"
+                                        data-options='{"enableTime":true,"noCalendar":true,"dateFormat":"H:i", "time_24hr": true,"disableMobile":true}'
+                                        required>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="hr_fim_seg_modal" class="form-label">Hora Fim Segunda:</label>
+                                    <input type="text" class="form-control datetimepicker" name="hr_fim_seg_modal"
+                                        id="hr_fim_seg_modal" type="text" placeholder="hora : minuto"
+                                        data-options='{"enableTime":true,"noCalendar":true,"dateFormat":"H:i", "time_24hr": true,"disableMobile":true}'
+                                        required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+
+                                <div class="d-grid gap-2">
+                                    <button type="button" class="btn btn-soft-secondary btn-block mt-2 mb-1"
+                                        onclick="copiarHorarios()">Copiar Horários para os demais dias</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label class="form-label" for="hr_ini_ter_modal">Hora Início Terça:</label>
+                                    <input type="text" class="form-control datetimepicker" name="hr_ini_ter_modal"
+                                        id="hr_ini_ter_modal" type="text" placeholder="hora : minuto"
+                                        data-options='{"enableTime":true,"noCalendar":true,"dateFormat":"H:i", "time_24hr": true,"disableMobile":true}'
+                                        required>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label class="form-label" for="hr_fim_ter_modal">Hora Fim Terça:</label>
+                                    <input type="text" class="form-control datetimepicker" name="hr_fim_ter_modal"
+                                        id="hr_fim_ter_modal" type="text" placeholder="hora : minuto"
+                                        data-options='{"enableTime":true,"noCalendar":true,"dateFormat":"H:i", "time_24hr": true,"disableMobile":true}'
+                                        required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label class="form-label" for="hr_ini_qua_modal">Hora Início Quarta:</label>
+                                    <input type="text" class="form-control datetimepicker" name="hr_ini_qua_modal"
+                                        id="hr_ini_qua_modal" type="text" placeholder="hora : minuto"
+                                        data-options='{"enableTime":true,"noCalendar":true,"dateFormat":"H:i", "time_24hr": true,"disableMobile":true}'
+                                        required>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label class="form-label" for="hr_fim_qua_modal">Hora Fim Quarta:</label>
+                                    <input type="text" class="form-control datetimepicker" name="hr_fim_qua_modal"
+                                        id="hr_fim_qua_modal" type="text" placeholder="hora : minuto"
+                                        data-options='{"enableTime":true,"noCalendar":true,"dateFormat":"H:i", "time_24hr": true,"disableMobile":true}'
+                                        required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label class="form-label" for="hr_ini_qui_modal">Hora Início Quinta:</label>
+                                    <input type="text" class="form-control datetimepicker" name="hr_ini_qui_modal"
+                                        id="hr_ini_qui_modal" type="text" placeholder="hora : minuto"
+                                        data-options='{"enableTime":true,"noCalendar":true,"dateFormat":"H:i", "time_24hr": true,"disableMobile":true}'
+                                        required>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label class="form-label" for="hr_fim_qui_modal">Hora Fim Quinta:</label>
+                                    <input type="text" class="form-control datetimepicker" name="hr_fim_qui_modal"
+                                        id="hr_fim_qui_modal" type="text" placeholder="hora : minuto"
+                                        data-options='{"enableTime":true,"noCalendar":true,"dateFormat":"H:i", "time_24hr": true,"disableMobile":true}'
+                                        required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label class="form-label" for="hr_ini_sex_modal">Hora Início Sexta:</label>
+                                    <input type="text" class="form-control datetimepicker" name="hr_ini_sex_modal"
+                                        id="hr_ini_sex_modal" type="text" placeholder="hora : minuto"
+                                        data-options='{"enableTime":true,"noCalendar":true,"dateFormat":"H:i", "time_24hr": true,"disableMobile":true}'
+                                        required>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label class="form-label" for="hr_fim_sex_modal">Hora Fim Sexta:</label>
+                                    <input type="text" class="form-control datetimepicker" name="hr_fim_sex_modal"
+                                        id="hr_fim_sex_modal" type="text" placeholder="hora : minuto"
+                                        data-options='{"enableTime":true,"noCalendar":true,"dateFormat":"H:i", "time_24hr": true,"disableMobile":true}'
+                                        required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label class="form-label" for="hr_ini_sab_modal">Hora Início Sábado:</label>
+                                    <input type="text" class="form-control datetimepicker" name="hr_ini_sab_modal"
+                                        id="hr_ini_sab_modal" type="text" placeholder="hora : minuto"
+                                        data-options='{"enableTime":true,"noCalendar":true,"dateFormat":"H:i", "time_24hr": true,"disableMobile":true}'
+                                        required>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label class="form-label" for="hr_fim_sab_modal">Hora Fim Sábado:</label>
+                                    <input type="text" class="form-control datetimepicker" name="hr_fim_sab_modal"
+                                        id="hr_fim_sab_modal" type="text" placeholder="hora : minuto"
+                                        data-options='{"enableTime":true,"noCalendar":true,"dateFormat":"H:i", "time_24hr": true,"disableMobile":true}'
+                                        required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label class="form-label" for="hr_ini_dom_modal">Hora Início Domingo:</label>
+                                    <input type="text" class="form-control datetimepicker" name="hr_ini_dom_modal"
+                                        id="hr_ini_dom_modal" type="text" placeholder="hora : minuto"
+                                        data-options='{"enableTime":true,"noCalendar":true,"dateFormat":"H:i", "time_24hr": true,"disableMobile":true}'
+                                        required>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label class="form-label" for="hr_fim_dom_modal">Hora Fim Domingo:</label>
+                                    <input type="text" class="form-control datetimepicker" name="hr_fim_dom_modal"
+                                        id="hr_fim_dom_modal" type="text" placeholder="hora : minuto"
+                                        data-options='{"enableTime":true,"noCalendar":true,"dateFormat":"H:i", "time_24hr": true,"disableMobile":true}'
+                                        required>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="form-group d-none">
+                            <label for="id_modal" class="form-label">id:</label>
+                            <input type="text" class="form-control" name="id_modal" id="id_modal"
+                                >
+                        </div>
+
+                    </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary" id="saveChanges">Salvar Alterações</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
@@ -322,10 +553,24 @@ $(document).ready(function() {
                         "</td><td>" + item.hr_fim_qua + "</td><td>" + item.hr_ini_qui +
                         "</td><td>" + item.hr_fim_qui + "</td><td>" + item.hr_ini_sex +
                         "</td><td>" + item.hr_fim_sex + "</td><td>" + item.hr_ini_sab +
-                        "</td><td>" + item.hr_fim_sab + "</td><td>" + item.hr_ini_dom +
-                        "</td><td>" + item.hr_fim_dom + "</td><td>" + item.habilitado_icon +
-                        "</td><td><button class='delete-btn btn btn-danger btn-sm apagar_operacoes' data-id='" +
-                        item.id_operacao + "'>Excluir</button></td></tr>";
+                        "</td><td>" + item.hr_fim_sab + "</td><td>" + item.hr_ini_dom + "</td>" +
+                        "<td>" + item.hr_fim_dom + "</td>";
+
+
+                         // Lógica JavaScript para adicionar a estrela com base em algum valor da variável 'item'
+                         tableData += "<td><span class='status-icon' data-id='" + item.id_operacao + "'>";
+                        if (item.habilitado == 1) {
+                            tableData += "<i class='fa-solid fa-check text-success'></i>";
+                        } else {
+                            tableData += "<i class='fa-solid fa-xmark text-danger'></i>";
+                        }
+                        tableData += "</span></td>";
+
+
+                        tableData +=
+                    "<td><button class='edit-btn-operacoes btn btn-primary btn-sm' data-id='" +
+                    item.id_operacao + "'>Editar</button></td>";
+                tableData += "</tr>";
 
 
                 });
@@ -476,34 +721,48 @@ $(document).ready(function() {
 
 
                         loadItems();
-                                                function loadItems() {
-                                $.ajax({
-                                    url: 'pages/config/insert/get_operacoes.php',
-                                    type: 'GET',
-                                    dataType: 'json',
-                                    success: function(data) {
-                                        var tableData = "";
-                                        data.forEach(function(item) {
-                                            tableData += "<tr><td>" + item.nome_operacao + "</td><td>" + item.hr_ini_seg +
-                                                "</td><td>" + item.hr_fim_seg + "</td><td>" + item.hr_ini_ter +
-                                                "</td><td>" + item.hr_fim_ter + "</td><td>" + item.hr_ini_qua +
-                                                "</td><td>" + item.hr_fim_qua + "</td><td>" + item.hr_ini_qui +
-                                                "</td><td>" + item.hr_fim_qui + "</td><td>" + item.hr_ini_sex +
-                                                "</td><td>" + item.hr_fim_sex + "</td><td>" + item.hr_ini_sab +
-                                                "</td><td>" + item.hr_fim_sab + "</td><td>" + item.hr_ini_dom +
-                                                "</td><td>" + item.hr_fim_dom + "</td><td>" + item.habilitado_icon +
-                                                "</td><td><button class='delete-btn btn btn-danger btn-sm apagar_operacoes' data-id='" +
-                                                item.id_operacao + "'>Excluir</button></td></tr>";
+                        function loadItems() {
+        $.ajax({
+            url: 'pages/config/insert/get_operacoes.php',
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                var tableData = "";
+                data.forEach(function(item) {
+                    tableData += "<tr><td>" + item.nome_operacao + "</td><td>" + item.hr_ini_seg +
+                        "</td><td>" + item.hr_fim_seg + "</td><td>" + item.hr_ini_ter +
+                        "</td><td>" + item.hr_fim_ter + "</td><td>" + item.hr_ini_qua +
+                        "</td><td>" + item.hr_fim_qua + "</td><td>" + item.hr_ini_qui +
+                        "</td><td>" + item.hr_fim_qui + "</td><td>" + item.hr_ini_sex +
+                        "</td><td>" + item.hr_fim_sex + "</td><td>" + item.hr_ini_sab +
+                        "</td><td>" + item.hr_fim_sab + "</td><td>" + item.hr_ini_dom + "</td>" +
+                        "<td>" + item.hr_fim_dom + "</td>";
 
 
-                                        });
-                                        $("#table_body_operacoes").html(tableData);
-                                    },
-                                    error: function(xhr, status, error) {
-                                        console.log("Erro na solicitação AJAX: " + error);
-                                    }
-                                });
-                            }
+                         // Lógica JavaScript para adicionar a estrela com base em algum valor da variável 'item'
+                         tableData += "<td><span class='status-icon' data-id='" + item.id_operacao + "'>";
+                        if (item.habilitado == 1) {
+                            tableData += "<i class='fa-solid fa-check text-success'></i>";
+                        } else {
+                            tableData += "<i class='fa-solid fa-xmark text-danger'></i>";
+                        }
+                        tableData += "</span></td>";
+
+
+                        tableData +=
+                    "<td><button class='edit-btn-operacoes btn btn-primary btn-sm' data-id='" +
+                    item.id_operacao + "'>Editar</button></td>";
+                tableData += "</tr>";
+
+
+                });
+                $("#table_body_operacoes").html(tableData);
+            },
+            error: function(xhr, status, error) {
+                console.log("Erro na solicitação AJAX: " + error);
+            }
+        });
+    }
                         document.getElementById("operacoes").reset();
                     }
                 },
@@ -550,4 +809,200 @@ $(document).ready(function() {
         $("#cadastro").toggle(); // This will toggle the visibility of the "cadastro" div
     });
 });
+</script>
+
+
+<script>
+
+// Adicione esta parte ao seu código JavaScript
+$(document).on("click", ".status-icon", function() {
+    var icon = $(this);
+    var id = icon.data('id');
+
+    // Adicione um alert para verificar se a função está sendo chamada
+    /* The above code appears to be written in PHP. However, the code itself is commented out, as
+    indicated by the "//" at the beginning of each line. Therefore, the code is not being executed
+    and does not perform any specific action. The commented line "// alert("Clique no ícone com o
+    ID: " + id);" suggests that it may have been intended to display an alert message in JavaScript,
+    but it is not valid PHP syntax. */
+    // alert("Clique no ícone com o ID: " + id);
+
+    $.ajax({
+        type: 'POST',
+        url: 'pages/cadastro/update/update_operacoes.php',
+        data: { id: id },
+        dataType: 'json',
+        success: function(response) {
+            icon.html(response.icon);
+
+            // Exiba um toast com base no novo status
+            var toastMessage = (response.status == 1) ? 'Status atualizado para Ativo' : 'Status atualizado para Inativo';
+
+            const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 1500,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
+
+Toast.fire({
+  icon: 'success',
+  title: toastMessage
+})
+        },
+        error: function(xhr, status, error) {
+            console.log("Erro na solicitação AJAX: " + error);
+        }
+    });
+});
+
+
+</script>
+
+
+
+<script>
+$(document).on("click", ".edit-btn-operacoes", function() {
+    var id_filial = $(this).data("id");
+
+    // Aqui você pode realizar uma chamada AJAX para buscar as informações da filial com o ID específico
+    // e preencher os campos do formulário de edição no modal.
+
+    // Exemplo de chamada AJAX (substitua pelo seu código real):
+    $.ajax({
+        url: 'pages/config/insert/get_operacoes.php', // Substitua pelo URL correto
+        type: 'POST',
+        data: { id: id_filial },
+        dataType: 'json',
+        success: function(data) {
+            // Preencha os campos do modal com as informações retornadas
+            console.log(data);
+            console.log("Dados recebidos para filial_nome:", data.filial_nome);
+
+            data.forEach(function(item) {
+    $("#id_area_modal").val(item.id_area);
+    $("#nome_operacao_modal").val(item.nome_operacao);
+    $("#hr_ini_seg_modal").val(item.hr_ini_seg);
+    $("#hr_fim_seg_modal").val(item.hr_fim_seg);
+    $("#hr_ini_ter_modal").val(item.hr_ini_ter);
+    $("#hr_fim_ter_modal").val(item.hr_fim_ter);
+    $("#hr_ini_qua_modal").val(item.hr_ini_qua);
+    $("#hr_fim_qua_modal").val(item.hr_fim_qua);
+    $("#hr_ini_qui_modal").val(item.hr_ini_qui);
+    $("#hr_fim_qui_modal").val(item.hr_fim_qui);
+    $("#hr_ini_sex_modal").val(item.hr_ini_sex);
+    $("#hr_fim_sex_modal").val(item.hr_fim_sex);
+    $("#hr_ini_sab_modal").val(item.hr_ini_sab);
+    $("#hr_fim_sab_modal").val(item.hr_fim_sab);
+    $("#hr_ini_dom_modal").val(item.hr_ini_dom);
+    $("#hr_fim_dom_modal").val(item.hr_fim_dom);
+    $("#id_modal").val(item.id_operacao);
+
+});
+
+
+            // Preencha outros campos aqui
+
+            // Abra o modal
+            $("#editModal").modal("show");
+
+        },
+        error: function(xhr, status, error) {
+            console.log("Erro na solicitação AJAX: " + error);
+        }
+    });
+});
+
+// Evento de clique no botão "Salvar Alterações" dentro do modal
+$("#saveChanges").click(function() {
+    // Colete os dados do formulário de edição
+    var formData = $("#editForm").serialize();
+
+    // Realize uma chamada AJAX para enviar os dados ao servidor e atualizar as informações da filial
+    $.ajax({
+        url: 'pages/config/insert/update_operacoes_info.php', // Substitua pelo URL correto
+        type: 'POST',
+        data: formData,
+        dataType: 'json',
+        success: function(response) {
+            // Verifique a resposta do servidor e lide com ela (por exemplo, exiba uma mensagem de sucesso)
+
+            // Feche o modal após salvar as alterações
+            $("#editModal").modal("hide");
+
+            loadItems();
+            function loadItems() {
+        $.ajax({
+            url: 'pages/config/insert/get_operacoes.php',
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                var tableData = "";
+                data.forEach(function(item) {
+                    tableData += "<tr><td>" + item.nome_operacao + "</td><td>" + item.hr_ini_seg +
+                        "</td><td>" + item.hr_fim_seg + "</td><td>" + item.hr_ini_ter +
+                        "</td><td>" + item.hr_fim_ter + "</td><td>" + item.hr_ini_qua +
+                        "</td><td>" + item.hr_fim_qua + "</td><td>" + item.hr_ini_qui +
+                        "</td><td>" + item.hr_fim_qui + "</td><td>" + item.hr_ini_sex +
+                        "</td><td>" + item.hr_fim_sex + "</td><td>" + item.hr_ini_sab +
+                        "</td><td>" + item.hr_fim_sab + "</td><td>" + item.hr_ini_dom + "</td>" +
+                        "<td>" + item.hr_fim_dom + "</td>";
+
+
+                         // Lógica JavaScript para adicionar a estrela com base em algum valor da variável 'item'
+                         tableData += "<td><span class='status-icon' data-id='" + item.id_operacao + "'>";
+                        if (item.habilitado == 1) {
+                            tableData += "<i class='fa-solid fa-check text-success'></i>";
+                        } else {
+                            tableData += "<i class='fa-solid fa-xmark text-danger'></i>";
+                        }
+                        tableData += "</span></td>";
+
+
+                        tableData +=
+                    "<td><button class='edit-btn-operacoes btn btn-primary btn-sm' data-id='" +
+                    item.id_operacao + "'>Editar</button></td>";
+                tableData += "</tr>";
+
+
+                });
+                $("#table_body_operacoes").html(tableData);
+            },
+            error: function(xhr, status, error) {
+                console.log("Erro na solicitação AJAX: " + error);
+            }
+        });
+    }
+    loadItems();
+
+    const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 1500,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
+
+Toast.fire({
+  icon: 'success',
+  title: 'Atualizado com Sucesso!'
+})
+        },
+        error: function(xhr, status, error) {
+            console.log("Erro na solicitação AJAX: " + error);
+        }
+    });
+});
+
+
+
 </script>

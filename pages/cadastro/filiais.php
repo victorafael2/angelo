@@ -175,7 +175,7 @@
                                         <th class="sort border-top ">CEP</th>
                                         <th class="sort border-top ">Nome Responsável</th>
                                         <th class="sort border-top ">Habilitado</th>
-                                        <th class="sort border-top ">Apagar</th>
+                                        <th class="sort border-top ">Editar</th>
 
 
                                     </tr>
@@ -200,6 +200,147 @@
 
     </div>
 </div>
+
+
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Editar Informações da Filial</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Coloque os campos de edição aqui -->
+                <form id="editForm">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="filial_nome_modal" class="form-label">Nome da Filial:</label>
+                                    <input type="text" class="form-control" id="filial_nome_modal" name="filial_nome_modal">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="filial_cnpj_modal" class="form-label">CNPJ:</label>
+                                    <input type="number" class="form-control" id="filial_cnpj_modal" name="filial_cnpj_modal">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="endereco_rua_modal" class="form-label">Rua:</label>
+                                    <input type="text" class="form-control" id="endereco_rua_modal" name="endereco_rua_modal">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="endereco_numero_modal" class="form-label">Número:</label>
+                                    <input type="number" class="form-control" id="endereco_numero_modal" name="endereco_numero_modal">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="endereco_comp_modal" class="form-label">Complemento:</label>
+                                    <input type="text" class="form-control" id="endereco_comp_modal" name="endereco_comp_modal">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="endereco_bairro_modal" class="form-label">Bairro:</label>
+                                    <input type="text" class="form-control" id="endereco_bairro_modal" name="endereco_bairro_modal">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="endereco_cidade_modal" class="form-label">Cidade</label>
+                                    <input type="text" class="form-control" id="endereco_cidade_modal" name="endereco_cidade_modal">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="endereco_uf_modal" class="form-label">UF</label>
+                                    <select class="form-control" id="endereco_uf_modal" name="endereco_uf_modal">
+                                        <option value=""></option>
+                                        <option value="AC">Acre</option>
+                                        <option value="AL">Alagoas</option>
+                                        <option value="AP">Amapá</option>
+                                        <option value="AM">Amazonas</option>
+                                        <option value="BA">Bahia</option>
+                                        <option value="CE">Ceará</option>
+                                        <option value="DF">Distrito Federal</option>
+                                        <option value="ES">Espírito Santo</option>
+                                        <option value="GO">Goiás</option>
+                                        <option value="MA">Maranhão</option>
+                                        <option value="MT">Mato Grosso</option>
+                                        <option value="MS">Mato Grosso do Sul</option>
+                                        <option value="MG">Minas Gerais</option>
+                                        <option value="PA">Pará</option>
+                                        <option value="PB">Paraíba</option>
+                                        <option value="PR">Paraná</option>
+                                        <option value="PE">Pernambuco</option>
+                                        <option value="PI">Piauí</option>
+                                        <option value="RJ">Rio de Janeiro</option>
+                                        <option value="RN">Rio Grande do Norte</option>
+                                        <option value="RS">Rio Grande do Sul</option>
+                                        <option value="RO">Rondônia</option>
+                                        <option value="RR">Roraima</option>
+                                        <option value="SC">Santa Catarina</option>
+                                        <option value="SP">São Paulo</option>
+                                        <option value="SE">Sergipe</option>
+                                        <option value="TO">Tocantins</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="endereco_cep_modal" class="form-label">CEP</label>
+                                    <input type="number" class="form-control" id="endereco_cep_modal" name="endereco_cep_modal">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Add other form rows in the same way -->
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="nome_responsavel_modal" class="form-label">Nome do Responsável:</label>
+                                    <input type="text" class="form-control" id="nome_responsavel_modal"
+                                        name="nome_responsavel_modal">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="cpf_responsavel_modal" class="form-label">CPF do Responsável:</label>
+                                    <input type="number" class="form-control" id="cpf_responsavel_modal" name="cpf_responsavel_modal">
+                                </div>
+                            </div>
+                            <div class="col-md-4 d-none">
+                                <div class="form-group">
+                                    <label for="id_filial_modal" class="form-label">ID filial</label>
+                                    <input type="text" class="form-control" id="id_filial_modal" name="id_filial_modal">
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary" id="saveChanges">Salvar Alterações</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -239,11 +380,23 @@ $(document).ready(function() {
                     tableData += "<td>" + item.endereco_cep + "</td>";
                     tableData += "<td>" + item.nome_responsavel + "</td>";
 
-                    tableData += "<td>" + item.habilitado_icon + "</td>";
+                    // tableData += "<td>" + item.habilitado_icon + "</td>";
+
+                  // Lógica JavaScript para adicionar a estrela com base em algum valor da variável 'item'
+                        tableData += "<td><span class='status-icon' data-id='" + item.id_filial + "'>";
+                        if (item.habilitado == 1) {
+                            tableData += "<i class='fa-solid fa-check text-success'></i>";
+                        } else {
+                            tableData += "<i class='fa-solid fa-xmark text-danger'></i>";
+                        }
+                        tableData += "</span></td>";
+
+
+                    // Substitua o código que gera o botão "Excluir" pelo botão "Editar"
                     tableData +=
-                        "<td><button class='delete-btn-filiais btn btn-danger btn-sm' data-id='" +
-                        item.id_filial + "'>Excluir</button></td>";
-                    tableData += "</tr>";
+                    "<td><button class='edit-btn-filiais btn btn-primary btn-sm' data-id='" +
+                    item.id_filial + "'>Editar</button></td>";
+                tableData += "</tr>";
                 });
                 $("#table_body_filial").html(tableData);
             },
@@ -252,6 +405,9 @@ $(document).ready(function() {
             }
         });
     }
+
+
+
 
     $(document).on("click", ".delete-btn-filiais", function() {
         var id_filial = $(this).data("id");
@@ -399,4 +555,172 @@ $(document).ready(function() {
         $("#cadastro").toggle(); // This will toggle the visibility of the "cadastro" div
     });
 });
+</script>
+
+
+<script>
+
+// Adicione esta parte ao seu código JavaScript
+$(document).on("click", ".status-icon", function() {
+    var icon = $(this);
+    var id = icon.data('id');
+
+    // Adicione um alert para verificar se a função está sendo chamada
+    /* The above code appears to be written in PHP. However, the code itself is commented out, as
+    indicated by the "//" at the beginning of each line. Therefore, the code is not being executed
+    and does not perform any specific action. The commented line "// alert("Clique no ícone com o
+    ID: " + id);" suggests that it may have been intended to display an alert message in JavaScript,
+    but it is not valid PHP syntax. */
+    // alert("Clique no ícone com o ID: " + id);
+
+    $.ajax({
+        type: 'POST',
+        url: 'pages/cadastro/update/update_filiais.php',
+        data: { id: id },
+        dataType: 'json',
+        success: function(response) {
+            icon.html(response.icon);
+
+            // Exiba um toast com base no novo status
+            var toastMessage = (response.status == 1) ? 'Status atualizado para Ativo' : 'Status atualizado para Inativo';
+
+            // Crie o toast
+            var toast = $('#liveToast');
+            toast.find('.toast-body').text(toastMessage);
+
+            // Mostre o toast
+            toast.toast('show');
+        },
+        error: function(xhr, status, error) {
+            console.log("Erro na solicitação AJAX: " + error);
+        }
+    });
+});
+
+
+</script>
+
+
+
+<script>
+$(document).on("click", ".edit-btn-filiais", function() {
+    var id_filial = $(this).data("id");
+
+    // Aqui você pode realizar uma chamada AJAX para buscar as informações da filial com o ID específico
+    // e preencher os campos do formulário de edição no modal.
+
+    // Exemplo de chamada AJAX (substitua pelo seu código real):
+    $.ajax({
+        url: 'pages/config/insert/get_filiais.php', // Substitua pelo URL correto
+        type: 'POST',
+        data: { id: id_filial },
+        dataType: 'json',
+        success: function(data) {
+            // Preencha os campos do modal com as informações retornadas
+            console.log(data);
+            console.log("Dados recebidos para filial_nome:", data.filial_nome);
+
+            data.forEach(function(item) {
+                console.log("Dados recebidos para filial_nome 2:", item.filial_nome);
+                $("#filial_nome_modal").val(item.filial_nome);
+                $("#filial_cnpj_modal").val(item.filial_cnpj);
+                $("#endereco_rua_modal").val(item.endereco_rua);
+                $("#endereco_numero_modal").val(item.endereco_numero);
+                $("#endereco_comp_modal").val(item.endereco_comp);
+                $("#endereco_bairro_modal").val(item.endereco_bairro);
+                $("#endereco_cidade_modal").val(item.endereco_cidade);
+                $("#endereco_uf_modal").val(item.endereco_uf);
+                $("#endereco_cep_modal").val(item.endereco_cep);
+                $("#nome_responsavel_modal").val(item.nome_responsavel);
+                $("#cpf_responsavel_modal").val(item.cpf_responsavel);
+                $("#id_filial_modal").val(item.id_filial);
+
+            })
+
+            // Preencha outros campos aqui
+
+            // Abra o modal
+            $("#editModal").modal("show");
+
+        },
+        error: function(xhr, status, error) {
+            console.log("Erro na solicitação AJAX: " + error);
+        }
+    });
+});
+
+// Evento de clique no botão "Salvar Alterações" dentro do modal
+$("#saveChanges").click(function() {
+    // Colete os dados do formulário de edição
+    var formData = $("#editForm").serialize();
+
+    // Realize uma chamada AJAX para enviar os dados ao servidor e atualizar as informações da filial
+    $.ajax({
+        url: 'pages/config/insert/update_filial_info.php', // Substitua pelo URL correto
+        type: 'POST',
+        data: formData,
+        dataType: 'json',
+        success: function(response) {
+            // Verifique a resposta do servidor e lide com ela (por exemplo, exiba uma mensagem de sucesso)
+
+            // Feche o modal após salvar as alterações
+            $("#editModal").modal("hide");
+
+            loadItems();
+            function loadItems() {
+        $.ajax({
+            url: 'pages/config/insert/get_filiais.php',
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                var tableData = "";
+                data.forEach(function(item) {
+                    tableData += "<tr>";
+                    tableData += "<td>" + item.id_filial + "</td>";
+                    tableData += "<td>" + item.filial_nome + "</td>";
+                    tableData += "<td>" + item.filial_cnpj + "</td>";
+                    tableData += "<td>" + item.endereco_rua + "</td>";
+                    tableData += "<td>" + item.endereco_numero + "</td>";
+                    tableData += "<td>" + item.endereco_comp + "</td>";
+                    tableData += "<td>" + item.endereco_bairro + "</td>";
+                    tableData += "<td>" + item.endereco_cidade + "</td>";
+                    tableData += "<td>" + item.endereco_uf + "</td>";
+                    tableData += "<td>" + item.endereco_cep + "</td>";
+                    tableData += "<td>" + item.nome_responsavel + "</td>";
+
+                    // tableData += "<td>" + item.habilitado_icon + "</td>";
+
+                  // Lógica JavaScript para adicionar a estrela com base em algum valor da variável 'item'
+                        tableData += "<td><span class='status-icon' data-id='" + item.id_filial + "'>";
+                        if (item.habilitado == 1) {
+                            tableData += "<i class='fa-solid fa-check text-success'></i>";
+                        } else {
+                            tableData += "<i class='fa-solid fa-xmark text-danger'></i>";
+                        }
+                        tableData += "</span></td>";
+
+
+                    // Substitua o código que gera o botão "Excluir" pelo botão "Editar"
+                    tableData +=
+                    "<td><button class='edit-btn-filiais btn btn-primary btn-sm' data-id='" +
+                    item.id_filial + "'>Editar</button></td>";
+                tableData += "</tr>";
+                });
+                $("#table_body_filial").html(tableData);
+            },
+            error: function(xhr, status, error) {
+                console.log("Erro na solicitação AJAX: " + error);
+            }
+        });
+    }
+    loadItems();
+        },
+        error: function(xhr, status, error) {
+            console.log("Erro na solicitação AJAX: " + error);
+        }
+    });
+});
+
+
+
 </script>

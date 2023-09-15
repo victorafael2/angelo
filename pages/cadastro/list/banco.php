@@ -58,16 +58,36 @@ FROM aux_info_bancario WHERE id_funcionario = '$idUsuario' and tipo ='$tipo'";
           $childTable .= '<td>' . $row['banco_dv_agencia'] . '</td>';
           $childTable .= '<td>' . $row['banco_conta'] . '</td>';
           $childTable .= '<td>' . $row['banco_dv_conta'] . '</td>';
+
+
           $childTable .= '<td>';
+          $childTable .= '<span class="status-icon-bank" data-id="' . $row['id'] . '">';
 
-        $childTable .= ($row['habilitado'] == 1) ? '<i class="fa-solid fa-check text-success"></i>' : '<i class="fa-solid fa-check"></i>';
+          if ($row['habilitado'] == 1) {
+              $childTable .= '<i class="fa-solid fa-check text-success"></i>';
+          } else {
+              $childTable .= '<i class="fa-solid fa-xmark text-danger"></i>';
+          }
 
-        $childTable .= '</td>';
-        $childTable .= '<td>';
+          $childTable .= '</span>';
+          $childTable .= '</td>';
 
-        $childTable .= ($row['preferencial'] == 1) ? '<i class="fa-solid fa-star text-warning"></i>' : '<i class="fa-solid fa-star"></i>';
 
-        $childTable .= '</td>';
+          $childTable .= '<td>';
+          $childTable .= '<span class="status-icon_star" data-id="' . $row['id'] . '">';
+
+          if ($row['preferencial'] == 1) {
+              $childTable .= '<i class="fa-solid fa-star text-warning"></i>';
+          } else {
+              $childTable .= '<i class="fa-regular fa-star"></i>';
+          }
+
+          $childTable .= '</span>';
+          $childTable .= '</td>';
+
+
+
+
           $childTable .= '</tr>';
       }
       $childTable .= '</tbody></table>';
@@ -83,3 +103,66 @@ FROM aux_info_bancario WHERE id_funcionario = '$idUsuario' and tipo ='$tipo'";
 
 $conn->close();
 ?>
+
+
+<script>
+
+$(document).ready(function() {
+    $('.status-icon-bank').click(function() {
+        var icon = $(this);
+        var id = icon.data('id');
+
+        $.ajax({
+            type: 'POST',
+            url: 'pages/cadastro/update/update_inf_bancaria_habilitar.php',
+            data: { id: id },
+            dataType: 'json',
+            success: function(response) {
+                icon.html(response.icon);
+
+                // Exiba um toast com base no novo status
+                var toastMessage = (response.status == 1) ? 'Status atualizado para Ativo' : 'Status atualizado para Inativo';
+
+                // Crie o toast
+                var toast = $('#liveToast');
+                toast.find('.toast-body').text(toastMessage);
+
+                // Mostre o toast
+                toast.toast('show');
+            }
+        });
+    });
+});
+
+</script>
+
+<script>
+
+$(document).ready(function() {
+    $('.status-icon_star').click(function() {
+        var icon = $(this);
+        var id = icon.data('id');
+
+        $.ajax({
+            type: 'POST',
+            url: 'pages/cadastro/update/update_inf_bancaria_habilitar_preferencial.php',
+            data: { id: id },
+            dataType: 'json',
+            success: function(response) {
+                icon.html(response.icon);
+
+                // Exiba um toast com base no novo status
+                var toastMessage = (response.status == 1) ? 'Status atualizado para Ativo' : 'Status atualizado para Inativo';
+
+                // Crie o toast
+                var toast = $('#liveToast');
+                toast.find('.toast-body').text(toastMessage);
+
+                // Mostre o toast
+                toast.toast('show');
+            }
+        });
+    });
+});
+
+</script>

@@ -5,12 +5,24 @@ include '../../../database/databaseconnect.php';
 if ($conn->connect_error) {
     die("Erro na conexão com o banco de dados: " . $conn->connect_error);
 }
+// Inicializa a variável para armazenar o ID da solicitação POST
+$id = null;
+// Verifica se foi enviado um ID via POST
+if (isset($_POST['id'])) {
+    $id = $_POST['id'];
+}
 
 // Consulta os dados da tabela AUX_VT
 $sql = "SELECT aux.*, a.nome_area
 FROM aux_cargos as aux
 JOIN aux_areas as a ON aux.id_area = a.id_area";
+
+if (!is_null($id)) {
+    $sql .= " WHERE aux.id_cargo  = $id";
+}
 $result = $conn->query($sql);
+
+
 
 // Array para armazenar os dados
 $items = array();

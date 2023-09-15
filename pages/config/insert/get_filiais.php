@@ -1,14 +1,25 @@
 <?php
 include '../../../database/databaseconnect.php';
 
+
 // Verifica a conexão
 if ($conn->connect_error) {
     die("Erro na conexão com o banco de dados: " . $conn->connect_error);
 }
 
+// Inicializa a variável para armazenar o ID da solicitação POST
+$id = null;
 
-// Consulta os dados da tabela AUX_VT
+// Verifica se foi enviado um ID via POST
+if (isset($_POST['id'])) {
+    $id = $_POST['id'];
+}
+
+// Consulta os dados da tabela AUX_VT com uma cláusula WHERE para filtrar pelo ID, se fornecido
 $sql = "SELECT * FROM aux_filiais";
+if (!is_null($id)) {
+    $sql .= " WHERE id_filial = $id";
+}
 $result = $conn->query($sql);
 
 // Array para armazenar os dados
@@ -23,13 +34,9 @@ if ($result->num_rows > 0) {
         } else {
             $row['habilitado_icon'] = '<i class="fas fa-times"></i>'; // Ícone "não ok" do Font Awesome
         }
-        // echo $row['habilitado_icon'];
         $items[] = $row;
-
     }
 }
-
-
 
 // Fecha a conexão com o banco de dados
 $conn->close();

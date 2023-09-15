@@ -1003,7 +1003,7 @@ $status = $row["status"] ?? "";
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row mt-2">
                                 <div class="col-md-12">
                                     <button type="submit" class="btn btn-primary">Enviar</button>
                                 </div>
@@ -1073,7 +1073,7 @@ $status = $row["status"] ?? "";
                     <!-- Por exemplo, um campo de e-mail -->
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label class="form-label mt-4" for="habilitado">Habilitado:</label>
+                            <label class="form-label mt-1 mb-3" for="habilitado">Habilitado:</label>
                             <input type="checkbox" id="habilitado" name="habilitado">
                         </div>
                     </div>
@@ -1231,6 +1231,10 @@ $status = $row["status"] ?? "";
 
 
 
+<!-- Conteúdo da sua página -->
+<div class="toast-container position-fixed top-0 end-0 p-3">
+</div>
+<!-- Outro conteúdo da sua página -->
 
 
 
@@ -1536,6 +1540,9 @@ $(document).ready(function() {
             success: function(data) {
                 // On success, update the file list
                 updateBancoList();
+
+                // Clear the form
+                $("#banco_user")[0].reset();
             },
             error: function(xhr, status, error) {
                 // Handle error if necessary
@@ -1631,6 +1638,7 @@ $(document).ready(function() {
     updateLoginList();
 });
 </script>
+
 
 
 
