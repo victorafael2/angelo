@@ -472,8 +472,11 @@ echo $dataHoraAtual;
                                     href="database/logout.php">
                                     <span class="me-2" data-feather="log-out"> </span>Sair</a></div>
                             <div class="my-2 text-center fw-bold fs--2 text-600"><a class="text-600 me-1"
-                                    href="#!">Privacy policy</a>&bull;<a class="text-600 mx-1"
-                                    href="#!">Terms</a>&bull;<a class="text-600 ms-1" href="#!">Cookies</a></div>
+                                    href="content_pages.php?id=40">Privacy policy</a>&bull;
+                                    <!-- <a class="text-600 mx-1"
+                                    href="#!">Terms</a>&bull;
+                                    <a class="text-600 ms-1" href="#!">Cookies</a> -->
+                                </div>
                         </div>
                     </div>
                 </div>

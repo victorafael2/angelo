@@ -86,15 +86,15 @@
 
                                         <div
                                             class="position-relative px-4 px-lg-7 pt-7 pb-7 pb-sm-5 text-center text-md-start pb-lg-7 pb-md-7">
-                                            <h3 class="mb-3 text-black fs-1">CRM Autenticação</h3>
+                                            <!-- <h3 class="mb-3 text-black fs-1">CRM Autenticação</h3> -->
 
                                         </div>
                                         <div
                                             class="position-relative z-index--1 mb-6 d-none d-md-block text-center mt-md-15">
                                             <img class="auth-title-box-img d-dark-none"
-                                                src="assets/img/spot-illustrations/auth.png" alt="" /><img
+                                                src="assets/png/base_logo_white_background-removebg-preview.png" alt="" /><img
                                                 class="auth-title-box-img d-light-none"
-                                                src="assets/img/spot-illustrations/auth-dark.png" alt="" />
+                                                src="assets/img/spot-illustrations/better_wall.png" alt="" />
                                         </div>
                                     </div>
                                     <div class="col mx-auto">
