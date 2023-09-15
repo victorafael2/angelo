@@ -8,6 +8,7 @@
                     <select class="form-control" id="funcionario" name="funcionario">
         <?php
 
+
         if ($conn->connect_error) {
             die("Conexão falhou: " . $conn->connect_error);
         }
