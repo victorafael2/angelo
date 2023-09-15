@@ -18,6 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $descricao = $conn->real_escape_string($_POST["descricao"]);
     $inicio = $conn->real_escape_string($_POST["hora_inicio"]);
     $fim = $conn->real_escape_string($_POST["hora_fim"]);
+    $user = $conn->real_escape_string($_POST["user"]);
 
     // Processar outros campos conforme necessário
 
@@ -26,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $anexo_temp = $_FILES["anexo"]["tmp_name"];
 
         // Diretório onde serão armazenados os anexos
-        $diretorio_anexos = "uploads/$id_funcionario/$tipo/";
+        $diretorio_anexos = "../../../uploads_justificativas/$id_funcionario/$tipo/";
 
         if (!is_dir($diretorio_anexos)) {
             // Se o diretório não existir, crie-o
@@ -39,15 +40,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Inserir dados no banco de dados em colunas separadas
-    $sql = "INSERT INTO justificativa (id_funcionario, tipo, data, descricao, anexo,inicio,fim) VALUES ('$id_funcionario', '$tipo', '$data', '$descricao', '$anexo_nome', '$inicio', '$fim')";
+    $sql = "INSERT INTO justificativa (id_funcionario, tipo, data, descricao, anexo,inicio,fim,user) VALUES ('$id_funcionario', '$tipo', '$data', '$descricao', '$anexo_nome', '$inicio', '$fim','$user')";
 
     if ($conn->query($sql) === TRUE) {
-        echo "Dados inseridos com sucesso!";
+        $response = array("status" => "success");
     } else {
-        echo "Erro ao inserir dados: " . $conn->error;
+        $response = array("status" => "error", "message" => "Erro ao inserir dados: " . $conn->error);
     }
 
     $conn->close();
+
+    // Enviar resposta como JSON
+    header('Content-Type: application/json');
+    echo json_encode($response);
 
     // Redirecionar ou fornecer feedback ao usuário
 }
