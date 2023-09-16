@@ -1,6 +1,7 @@
 <?php
 
-$id_funci = isset($_GET['id_func']) ? $_GET['id_func'] : '';
+$id_funci = isset($_GET['id_func']) ? $_GET['id_func'] : null;
+
 
 $tipo = isset($_GET['tipo']) ? $_GET['tipo'] : '';
 
@@ -702,6 +703,12 @@ $status = $row["status"] ?? "";
 
 
                                 ?>
+
+<div id="includeContainer"></div>
+
+
+
+
         </div>
 
         <div class="tab-pane fade" id="docs" role="tabpanel" aria-labelledby="docs-tab">
@@ -1136,7 +1143,7 @@ $status = $row["status"] ?? "";
         <div class="tab-pane fade " id="historico" role="tabpanel" aria-labelledby="historico-tab">
 
             <div class="d-flex pb-4 mt-3 border-bottom border-dashed border-300 align-items-end">
-                <h3 class="flex-1 mb-0">Histórico</h3>
+                <h3 class="flex-1 mb-0">Histórico do colaborador</h3> <?php echo $tipo ?>
             </div>
             <div class="py-3 border-bottom border-dashed">
                 <div id="tableExample2" data-list='{"valueNames":["cpf","email","age"],"page":10,"pagination":true}'>
@@ -1162,10 +1169,12 @@ $status = $row["status"] ?? "";
                                 </tr>
                             </thead>
                             <tbody class="list fs--1">
-                            <!-- <?php echo $tipo ?> -->
+                            <?php echo $tipo ?>
                                 <?php
                                 // echo $id_funci;
-                                    // if (isset($id_funci)) {
+
+
+                                if (isset($id_funci) && isset($tipo)) {
                                         // Recupere os dados do MySQL
                                         $sql_tab2 = "SELECT *, ac.cargo_nome, vt.vt_nome, aa.nome_area, ao.nome_operacao, af.filial_nome FROM tb_history_cadastro AS thc
                                         LEFT JOIN  funcionarios AS f ON f.idFuncionario = thc.id_funcionario
@@ -1204,11 +1213,12 @@ $status = $row["status"] ?? "";
                                                 echo '<td class="align-middle">' . $row['filial_nome'] . '</td>';
 
                                                 echo '</tr>';
-                                            }
-                                        } else {
-                                            echo '<tr><td colspan="4">Nenhum registro encontrado.</td></tr>';
+                                           }
                                         }
-                                    // }
+                                    } else {
+                                        echo '<tr><td colspan="4">As variáveis $id_funci e $tipo não estão configuradas.</td></tr>';
+                                    }
+
                                     ?>
 
 
