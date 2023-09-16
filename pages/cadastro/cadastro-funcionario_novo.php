@@ -1216,7 +1216,7 @@ $status = $row["status"] ?? "";
                                            }
                                         }
                                     } else {
-                                        echo '<tr><td colspan="4">As variáveis $id_funci e $tipo não estão configuradas.</td></tr>';
+                                        // echo '<tr><td colspan="4">As variáveis $id_funci e $tipo não estão configuradas.</td></tr>';
                                     }
 
                                     ?>
