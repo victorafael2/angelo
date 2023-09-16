@@ -77,7 +77,7 @@
                                 echo '<td class="align-middle">' . $row['dataNascimento'] . '</td>';
 
                                 echo '<td class="align-middle white-space-nowrap  pe-0">';
-                                if ($row['tipo_registro'] == 1) {
+                                if ($row['tipo_registro'] > 0) {
                                     echo '<button class="btn btn-sm btn-phoenix-success update-button" data-id="' . $row['idFuncionario'] . '" data-tipo="' . $row['tipo'] . '">Aceitar Cadastro <i class="fa-solid fa-circle-check"></i></button>';
                                 } else {
                                     echo '<button class="btn btn-sm btn-phoenix-danger update-button-negado" data-id="' . $row['idFuncionario'] . '" data-tipo="' . $row['tipo'] . '">Cadastro Incompleto <i class="fa-solid fa-ban"></i></button>';
