@@ -20,29 +20,26 @@ if (isset($_POST["email"])) {
         $mail->isSMTP();
         $mail->Host = 'smtp.hostinger.com'; // Substitua pelo seu servidor SMTP
         $mail->SMTPAuth = true;
-        $mail->Username = 'victor.rafael@betterconsultoria.com'; // Substitua pelo seu endereço de e-mail
-        $mail->Password = 'ftC35kxnt%aHhcr1'; // Substitua pela sua senha
+        $mail->Username = 'resetpassword@betterconsultoria.com'; // Substitua pelo seu endereço de e-mail
+        $mail->Password = 'mailC98k32xnt%ahcrpassreset'; // Substitua pela sua senha
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587; // A porta pode variar dependendo das configurações do seu servidor
 
         // Configurar o remetente e o destinatário
-        $mail->setFrom('victor.rafael@betterconsultoria.com', 'BETTER');
+        $mail->setFrom('resetpassword@betterconsultoria.com', 'BETTER');
         $mail->addAddress($email);
 
         // Gerar um token
         $token = bin2hex(random_bytes(16));
 
         // Verificar se o servidor não é localhost
-            if ($_SERVER['SERVER_NAME'] !== 'localhost') {
-                $currentServer = 'https://191.96.31.197:8090/preview/xpeer.com';
-            } else {
-                $currentServer = 'localhost/angelo';
-            }
-
-
+        if ($_SERVER['SERVER_NAME'] !== 'localhost') {
+            $currentServer = 'https://191.96.31.197:8090/preview/xpeer.com';
+        } else {
+            $currentServer = 'localhost/angelo';
+        }
 
         // Inserir o token no banco de dados MySQL
-
         if ($conn->connect_error) {
             die('Erro de conexão com o banco de dados: ' . $conn->connect_error);
         }
@@ -61,15 +58,30 @@ if (isset($_POST["email"])) {
             // O token foi inserido com sucesso na tabela token
             // Configurar o conteúdo do e-mail
             $mail->isHTML(true);
-            // Forçar a codificação UTF-8 no assunto
-            $subject = 'Redefinição de Senha';
-            $mail->Subject = utf8_encode($subject);
 
             // Construir o link de redefinição de senha
             $resetLink =  $currentServer . '/reset-password.php?token=' . $token . '&email=' . $email;
-            $emailBody = 'Clique no link a seguir para redefinir sua senha: <a href="' . $resetLink . '">Redefinir Senha</a>';
-            $emailBody = utf8_encode($emailBody);
 
+           // Corpo do e-mail formatado em HTML com estilos CSS inline
+$emailBody = '
+<html>
+<head>
+    <title>Redefinir Senha</title>
+</head>
+<body>
+    <div style="background-color: #007bff; color: #fff; padding: 10px;">
+        <h1>Recuperação de Senha</h1>
+    </div>
+    <p>Clique no link abaixo para redefinir sua senha:</p>
+    <p><a href="' . $resetLink . '" style="background-color: #007bff; color: #fff; padding: 10px; text-decoration: none; border-radius: 5px;">Redefinir Senha</a></p>
+    <div style="background-color: #f0f0f0; padding: 10px; text-align: center;">
+        <p>Este é um e-mail automático. Por favor, não responda a este e-mail.</p>
+    </div>
+</body>
+</html>
+';
+
+            $mail->Subject = 'Redefinir Senha';
             $mail->Body = $emailBody;
 
             // Enviar o e-mail
@@ -77,7 +89,6 @@ if (isset($_POST["email"])) {
             $response = array("success" => true, "message" => "Email de recuperação de senha enviado com sucesso!");
         } else {
             $response = array("success" => false, "message" => "Erro ao enviar o email.");
-
         }
 
         // Feche a conexão e o statement
