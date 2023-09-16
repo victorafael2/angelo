@@ -81,6 +81,7 @@ $emailBody = '
 </html>
 ';
 
+
             $mail->Subject = 'Redefinir Senha';
             $mail->Body = $emailBody;
 
