@@ -224,10 +224,8 @@
                 include_once("database/databaseconnect.php");
 
                 // Executar a consulta SQL para obter o contador
-                $sql = "SELECT COUNT(DISTINCT f.id) AS total_funcionarios
-                FROM funcionarios_cnpj f
-                JOIN tb_history_cadastro h ON f.id = h.id_funcionario
-                WHERE h.tipo_registro = 'cnpj';;";
+                $sql = "select count(id) AS total_funcionarios  from funcionarios_cnpj
+                where ativo_cad = 1";
                 $result = mysqli_query($conn, $sql);
 
                 if ($result && mysqli_num_rows($result) > 0) {
@@ -248,25 +246,13 @@
                 include_once("database/databaseconnect.php");
 
                 // Executar a consulta SQL para obter o contador
-                $sql = "SELECT COUNT(*) AS quantidade, subquery.idFuncionario, subquery.cpf, subquery.dataCadastro, subquery.dataAdmissao, subquery.dataNascimento, subquery.tipo
-                FROM (
-                    SELECT fcnpj.id AS idFuncionario, fcnpj.cnpj AS cpf, fcnpj.dataCadastro, fcnpj.dataAdmissao, fcnpj.dataNascimento, 'cnpj' AS tipo, fcnpj.ativo_cad
-                    FROM funcionarios_cnpj AS fcnpj
-                    LEFT JOIN tb_history_cadastro ON tb_history_cadastro.id_funcionario = fcnpj.id
-                    WHERE tb_history_cadastro.id_funcionario IS NULL
-
-                    UNION ALL
-
-                    SELECT f.idFuncionario, f.cpf, f.dataCadastro, f.dataAdmissao, f.dataNascimento, 'cpf' AS tipo, f.ativo_cad
-                    FROM funcionarios AS f
-                    LEFT JOIN tb_history_cadastro ON tb_history_cadastro.id_funcionario = f.idFuncionario
-                    WHERE tb_history_cadastro.id_funcionario IS NULL
-                ) AS subquery WHERE subquery.tipo = 'cnpj' AND subquery.ativo_cad <> '1';";
+                $sql = "select count(id) AS total_funcionarios  from funcionarios_cnpj
+                where ativo_cad = 0";
                 $result = mysqli_query($conn, $sql);
 
                 if ($result && mysqli_num_rows($result) > 0) {
                     $row = mysqli_fetch_assoc($result);
-                    $contador_faltantes = $row['quantidade'];
+                    $contador_faltantes = $row['total_funcionarios'];
 
                     // Exibir o valor do contador
                     // echo $contador;

@@ -22,9 +22,9 @@ LEFT JOIN aux_filiais ON aux_filiais.id_filial = h.id_filial
 WHERE h.id_history IN (
     SELECT MAX(id_history)
     FROM tb_history_cadastro
-    WHERE ativo_cad = 1  -- Filtre por ativo_cad igual a 1
+    WHERE tipo_registro = 'cpf'
     GROUP BY id_funcionario
-)
+)  AND f.ativo_cad = 1
 
 UNION ALL
 
@@ -40,9 +40,9 @@ LEFT JOIN aux_filiais ON aux_filiais.id_filial = h.id_filial
 WHERE h.id_history IN (
     SELECT MAX(id_history)
     FROM tb_history_cadastro
-    WHERE ativo_cad = 1  -- Filtre por ativo_cad igual a 1
+    WHERE tipo_registro = 'cnpj'
     GROUP BY id_funcionario
-);
+) AND f_cnpj.ativo_cad = 1
 ";
 
 $result = $conn->query($sql);
