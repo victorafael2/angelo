@@ -1,10 +1,37 @@
 <style>
-        /* Estilos CSS para a miniatura */
-        .thumbnail {
-            max-width: 200px; /* Defina o tamanho máximo da miniatura */
-            cursor: pointer; /* Transforma o cursor em uma mãozinha quando passar sobre a miniatura */
-        }
-    </style>
+/* Estilos CSS para a miniatura */
+.thumbnail {
+    max-width: 200px;
+    /* Defina o tamanho máximo da miniatura */
+    cursor: pointer;
+    /* Transforma o cursor em uma mãozinha quando passar sobre a miniatura */
+}
+
+/* Centraliza o formulário */
+.center-form {
+    text-align: center;
+    margin: 0 auto;
+    max-width: 600px; /* Define a largura máxima do formulário */
+}
+
+/* Estilo para a miniatura da imagem */
+.thumbnail {
+    display: block;
+    margin: 0 auto;
+}
+
+/* Estilo para a imagem completa */
+#imagemCompleta {
+    text-align: center;
+    display: none;
+    max-width: 100%; /* Garante que a imagem completa não seja maior que o formulário */
+}
+#img_grande {
+    max-width: 100%;
+    height: auto;
+}
+
+</style>
 
 <div class="row align-items-center justify-content-between g-3 mb-4">
     <div class="col-12 col-md-auto">
@@ -12,7 +39,8 @@
     </div>
     <div class="col-12 col-md-auto">
         <a href="content_pages.php?id=38" class="btn btn-phoenix-secondary px-3 px-sm-5 me-2"><span
-                class="fa-solid fa-plus me-sm-2"></span><span class="d-none d-sm-inline">Adicionar Justificativa </span></a>
+                class="fa-solid fa-plus me-sm-2"></span><span class="d-none d-sm-inline">Adicionar Justificativa
+            </span></a>
 
         <!-- <button class="btn px-3 btn-phoenix-secondary" type="button" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><span class="fa-solid fa-ellipsis"></span></button>
                 <ul class="dropdown-menu dropdown-menu-end p-0" style="z-index: 9999;">
@@ -31,7 +59,7 @@
             <thead>
                 <tr>
 
-                    <th class=" border-top " ></th>
+                    <th class=" border-top "></th>
                     <th class="sort border-top " data-sort="cpf">Funcionário</th>
                     <th class="sort border-top " data-sort="cpf">Descrição</th>
                     <th class="sort border-top " data-sort="nome_social">Data</th>
@@ -46,7 +74,7 @@
                 </tr>
             </thead>
             <tbody class="list">
-                            <?php
+                <?php
                             // Recupere os dados do MySQL
                                         $sql = "SELECT * FROM justificativa AS j
 
@@ -119,69 +147,63 @@
 
 
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="editModalLabel">Informações da Justificativa</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close"><span class="fas fa-times fs--1"></span></button>
             </div>
             <div class="modal-body">
                 <!-- Coloque os campos de edição aqui -->
                 <form id="editForm">
 
-                <div class="row">
-                <div class="form-group">
-                                <label for="funcionario" class="form-label">Colaborador:</label>
-                                <input type="text" class="form-control" id="funcionario" name="funcionario" required readonly>
-                            </div>
-
-
-                            <div class="col-md-4">
-                    <label for="data" class="form-label">Data</label>
-                    <input type="date" class="form-control" id="data" name="data" readonly>
-                </div>
-                <div class="col-md-4" class="form-label">
-                    <label for="hora_inicio">Hora inicio</label>
-                    <input type="time" class="form-control" id="hora_inicio" name="hora_inicio" readonly>
-                </div>
-                <div class="col-md-4" class="form-label">
-                    <label for="hora_fim">Hora fim</label>
-                    <input type="time" class="form-control" id="hora_fim" name="hora_fim" readonly>
-                </div>
-                <div class="col-md-4" class="form-label">
-                    <label for="descricao">Descrição</label>
-                    <input type="text" class="form-control" id="descricao" name="descricao" readonly>
-                </div>
-                <div class="col-md-4" class="form-label">
-                    <label for="user">Adicionado por</label>
-                    <input type="text" class="form-control" id="user" name="user" value=<?php echo $email ?> readonly>
-                </div>
-
-
-           <!-- Miniatura da imagem -->
-                    <img class="thumbnail" id="thumbnail" src="uploads_justificativas/2/cnpj/download_page-0001.jpg" alt="Miniatura da Imagem">
-
-                <!-- Div para exibir a imagem completa -->
-                <div id="imagemCompleta" style="display: none;">
-                    <img src="uploads_justificativas/2/cnpj/download_page-0001.jpg" alt="Imagem Completa">
-                </div>
-
-
-                        <div class="form-group d-none">
-                            <label for="id_modal" class="form-label">id:</label>
-                            <input type="text" class="form-control" name="id_modal" id="id_modal"
-                                >
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="funcionario" class="form-label">Colaborador:</label>
+                            <input type="text" class="form-control" id="funcionario" name="funcionario" required
+                                readonly>
                         </div>
-                </div>
 
-                    </form>
+
+                        <div class="col-md-4">
+                            <label for="data" class="form-label">Data</label>
+                            <input type="date" class="form-control" id="data" name="data" readonly>
+                        </div>
+                        <div class="col-md-4" class="form-label">
+                            <label for="hora_inicio">Hora inicio</label>
+                            <input type="time" class="form-control" id="hora_inicio" name="hora_inicio" readonly>
+                        </div>
+                        <div class="col-md-4" class="form-label">
+                            <label for="hora_fim">Hora fim</label>
+                            <input type="time" class="form-control" id="hora_fim" name="hora_fim" readonly>
+                        </div>
+                        <div class="col-md-12" class="form-label">
+                            <label for="descricao">Descrição</label>
+                            <input type="text" class="form-control" id="descricao" name="descricao" readonly>
+                        </div>
+                        <div class="col-md-4 d-none" class="form-label">
+                            <label for="user">Adicionado por</label>
+                            <input type="text" class="form-control" id="user" name="user" value=<?php echo $email ?>
+                                readonly>
+                        </div>
+
+
+
+
+
+                    </div>
+
+                    <!-- Miniatura da imagem -->
+                    <img class="thumbnail mt-2 text-center" id="thumbnail" src="" alt="Miniatura da Imagem">
+
+                    <!-- Div para exibir a imagem completa -->
+                    <div id="imagemCompleta" style="display: none;">
+                        <img src="" alt="Imagem Completa" id="img_grande">
+                    </div>
+                </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary" id="saveChanges">Salvar Alterações</button>
-            </div>
+
         </div>
     </div>
 </div>
@@ -198,18 +220,18 @@
 <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
 
 
- <!-- JavaScript para exibir a imagem completa ao clicar na miniatura -->
- <script>
-        // Obtém a miniatura e a div da imagem completa
-        var thumbnail = document.getElementById("thumbnail");
-        var imagemCompleta = document.getElementById("imagemCompleta");
+<!-- JavaScript para exibir a imagem completa ao clicar na miniatura -->
+<script>
+// Obtém a miniatura e a div da imagem completa
+var thumbnail = document.getElementById("thumbnail");
+var imagemCompleta = document.getElementById("imagemCompleta");
 
-        // Adiciona um evento de clique à miniatura
-        thumbnail.addEventListener("click", function() {
-            // Exibe a imagem completa ao clicar na miniatura
-            imagemCompleta.style.display = "block";
-        });
-    </script>
+// Adiciona um evento de clique à miniatura
+thumbnail.addEventListener("click", function() {
+    // Exibe a imagem completa ao clicar na miniatura
+    imagemCompleta.style.display = "block";
+});
+</script>
 
 
 <script>
@@ -223,31 +245,36 @@ $(document).on("click", ".edit-btn-operacoes", function() {
     $.ajax({
         url: 'pages/cadastro/list/get_justificativa.php', // Substitua pelo URL correto
         type: 'POST',
-        data: { id: id_filial },
+        data: {
+            id: id_filial
+        },
         dataType: 'json',
         success: function(data) {
             // Preencha os campos do modal com as informações retornadas
             console.log(data);
             console.log("Dados recebidos para filial_nome:", data.filial_nome);
 
-            data.forEach(function(item) {
-    $("#funcionario").val(item.nome_registro);
-    $("#data").val(item.data);
-
-    $("#hora_inicio").val(item.inicio);
-    $("#hora_fim").val(item.fim);
-    $("#descricao").val(item.descricao);
-    $("#user").val(item.user);
-
-
-});
-
-
             // Preencha outros campos aqui
+            data.forEach(function(item) {
+                $("#funcionario").val(item.nome_registro);
+                $("#data").val(item.data);
+                $("#hora_inicio").val(item.inicio);
+                $("#hora_fim").val(item.fim);
+                $("#descricao").val(item.descricao);
+                $("#user").val(item.user);
+            });
+
+            // Suponhamos que você queira criar uma URL de arquivo com base em algum valor do item
+            var arquivoUrl = 'uploads_justificativas/' + data[0].id_funcionario + '/' + data[0]
+                .tipo + '/' + data[0].anexo; // Substitua 'nome_do_arquivo' pelo campo correto
+
+            // Defina a URL do arquivo como src em um elemento HTML (por exemplo, uma tag <img> ou <iframe>)
+            $("#thumbnail").attr('src', arquivoUrl);
+
+            $("#img_grande").attr('src', arquivoUrl);
 
             // Abra o modal
             $("#editModal").modal("show");
-
         },
         error: function(xhr, status, error) {
             console.log("Erro na solicitação AJAX: " + error);
@@ -273,66 +300,68 @@ $("#saveChanges").click(function() {
             $("#editModal").modal("hide");
 
             loadItems();
+
             function loadItems() {
-        $.ajax({
-            url: 'pages/config/insert/get_sistemas.php',
-            type: 'GET',
-            dataType: 'json',
-            success: function(data) {
-                var tableData = "";
-                data.forEach(function(item) {
-                    tableData += "<tr>";
-                    tableData += "<td>" + item.id_sistema + "</td>";
-                    tableData += "<td>" + item.nome_sistema + "</td>";
+                $.ajax({
+                    url: 'pages/config/insert/get_sistemas.php',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        var tableData = "";
+                        data.forEach(function(item) {
+                            tableData += "<tr>";
+                            tableData += "<td>" + item.id_sistema + "</td>";
+                            tableData += "<td>" + item.nome_sistema + "</td>";
 
-                     // Lógica JavaScript para adicionar a estrela com base em algum valor da variável 'item'
-                     tableData += "<td><span class='status-icon' data-id='" + item.id_sistema + "'>";
-                        if (item.habilitado == 1) {
-                            tableData += "<i class='fa-solid fa-check text-success'></i>";
-                        } else {
-                            tableData += "<i class='fa-solid fa-xmark text-danger'></i>";
-                        }
-                        tableData += "</span></td>";
+                            // Lógica JavaScript para adicionar a estrela com base em algum valor da variável 'item'
+                            tableData +=
+                                "<td><span class='status-icon' data-id='" + item
+                                .id_sistema + "'>";
+                            if (item.habilitado == 1) {
+                                tableData +=
+                                    "<i class='fa-solid fa-check text-success'></i>";
+                            } else {
+                                tableData +=
+                                    "<i class='fa-solid fa-xmark text-danger'></i>";
+                            }
+                            tableData += "</span></td>";
 
-                    tableData +=
-                    "<td><button class='edit-btn-operacoes btn btn-primary btn-sm' data-id='" +
-                    item.id_sistema + "'>Editar</button></td>";
-                tableData += "</tr>";
+                            tableData +=
+                                "<td><button class='edit-btn-operacoes btn btn-primary btn-sm' data-id='" +
+                                item.id_sistema + "'>Editar</button></td>";
+                            tableData += "</tr>";
+                        });
+                        $("#table_body_sistemas").html(tableData);
+                    },
+                    error: function(xhr, status, error) {
+                        console.log("Erro na solicitação AJAX: " + error);
+                    }
                 });
-                $("#table_body_sistemas").html(tableData);
-            },
-            error: function(xhr, status, error) {
-                console.log("Erro na solicitação AJAX: " + error);
             }
-        });
-    }
-    loadItems();
+            loadItems();
 
-    const Toast = Swal.mixin({
-  toast: true,
-  position: 'top-end',
-  showConfirmButton: false,
-  timer: 1500,
-  timerProgressBar: true,
-  didOpen: (toast) => {
-    toast.addEventListener('mouseenter', Swal.stopTimer)
-    toast.addEventListener('mouseleave', Swal.resumeTimer)
-  }
-})
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
 
-Toast.fire({
-  icon: 'success',
-  title: 'Atualizado com Sucesso!'
-})
+            Toast.fire({
+                icon: 'success',
+                title: 'Atualizado com Sucesso!'
+            })
         },
         error: function(xhr, status, error) {
             console.log("Erro na solicitação AJAX: " + error);
         }
     });
 });
-
-
-
 </script>
 
 <script>
@@ -356,7 +385,7 @@ $(document).ready(function() {
 
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function() {
     // Listen for button clicks
     document.querySelectorAll(".update-button").forEach(button => {
         button.addEventListener("click", function() {
@@ -370,7 +399,8 @@ $(document).ready(function() {
 });
 
 function updateData(id, tipo) {
-    const url = "pages/cadastro/update/update-ativar_justificativa.php"; // Substitua pelo URL do seu script de atualização
+    const url =
+    "pages/cadastro/update/update-ativar_justificativa.php"; // Substitua pelo URL do seu script de atualização
 
     const formData = new FormData();
     formData.append("id", id);
@@ -379,7 +409,7 @@ function updateData(id, tipo) {
     const xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
 
-    xhr.onreadystatechange = function () {
+    xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
                 const data = JSON.parse(xhr.responseText);
@@ -406,31 +436,23 @@ function updateData(id, tipo) {
 
     xhr.send(formData);
 }
-
-
-
-
 </script>
 
 
 <script>
-    // Selecione todos os botões com a classe "update-button-negado"
-    const buttonsNegados = document.querySelectorAll('.update-button-negado');
+// Selecione todos os botões com a classe "update-button-negado"
+const buttonsNegados = document.querySelectorAll('.update-button-negado');
 
-    // Adicione um ouvinte de eventos de clique a cada botão
-    buttonsNegados.forEach(button => {
-        button.addEventListener('click', () => {
-            // Exiba o SweetAlert2 informando que o cadastro está incompleto
-            Swal.fire({
-                icon: 'info',
-                title: 'Justificativa Aceita',
-                text: 'Justificativa já aceita',
-                confirmButtonText: 'OK'
-            });
+// Adicione um ouvinte de eventos de clique a cada botão
+buttonsNegados.forEach(button => {
+    button.addEventListener('click', () => {
+        // Exiba o SweetAlert2 informando que o cadastro está incompleto
+        Swal.fire({
+            icon: 'info',
+            title: 'Justificativa Aceita',
+            text: 'Justificativa já aceita',
+            confirmButtonText: 'OK'
         });
     });
+});
 </script>
-
-
-
-

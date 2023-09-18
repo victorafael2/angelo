@@ -110,9 +110,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="editModalLabel">Editar Informações de Benefícios </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close"><span class="fas fa-times fs--1"></span></button>
             </div>
             <div class="modal-body">
                 <!-- Coloque os campos de edição aqui -->
@@ -141,7 +139,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                 <button type="button" class="btn btn-primary" id="saveChanges">Salvar Alterações</button>
             </div>
         </div>

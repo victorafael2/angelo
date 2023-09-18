@@ -13,15 +13,15 @@ $dataHoraAtual = date("Y-m-d H:i:s");
 
 // Obtém os dados do formulário
 // $id_vt = $_POST['id_vt'];
-$vr_nome = $_POST['ps_nome'];
-$vr_valor = $_POST['ps_valor'];
-$vr_desc = $_POST['ps_desc'];
+$nome = $_POST['nome'];
+$desc = $_POST['desc'];
+$valor = $_POST['valor'];
 $habilitado = $_POST['habilitado'];
-$sys_user = $_POST['sys_user'];
+
 // $sys_data = $_POST['sys_data'];
 
 // Insere os dados na tabela AUX_VT
-$sql = "INSERT INTO aux_outros_beneficios ( op_nome, op_valor, op_desc, habilitado, sys_user, sys_data) VALUES ( '$vr_nome', '$vr_valor','$vr_desc', '$habilitado', '$sys_user', '$dataHoraAtual')";
+$sql = "INSERT INTO aux_outros_beneficios ( op_nome, op_valor, op_desc, habilitado,  sys_data) VALUES ( '$nome', '$valor','$desc', '$habilitado',  '$dataHoraAtual')";
 if ($conn->query($sql) === TRUE) {
     $response = array(
         'status' => true,

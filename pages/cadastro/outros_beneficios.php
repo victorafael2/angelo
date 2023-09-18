@@ -24,16 +24,16 @@
                                     <input type="text" class="form-control" id="id_vt" name="id_vt">
                                 </div> -->
                                 <div class="form-group">
-                                    <label for="vt_nome" class="form-label">Nome:</label>
-                                    <input type="text" class="form-control" id="vr_nome" name="vr_nome">
+                                    <label for="nome" class="form-label">Nome:</label>
+                                    <input type="text" class="form-control" id="nome" name="nome">
                                 </div>
                                 <div class="form-group">
-                                    <label for="vt_desc" class="form-label">Descrição:</label>
-                                    <input type="text" class="form-control" id="vr_desc" name="vr_desc">
+                                    <label for="desc" class="form-label">Descrição:</label>
+                                    <input type="text" class="form-control" id="desc" name="desc">
                                 </div>
                                 <div class="form-group">
-                                    <label for="vt_valor" class="form-label">Valor:</label>
-                                    <input type="number" class="form-control" id="vr_valor" name="vr_valor">
+                                    <label for="valor" class="form-label">Valor:</label>
+                                    <input type="number" class="form-control" id="valor" name="valor">
                                 </div>
                                 <div class="form-group">
                                     <label for="habilitado" class="form-label">HABILITADO:</label>
@@ -157,7 +157,7 @@ $(document).ready(function() {
 
     function deleteItem(id_op) {
         $.ajax({
-            url: 'pages/config/insert/delete_plano_odonto.php',
+            url: 'pages/config/insert/delete_outros_beneficios.php',
             type: 'POST',
             data: {
                 id_op: id_op
@@ -184,21 +184,21 @@ $(document).ready(function() {
     document.getElementById("aux_ali_form").addEventListener("submit", function(event) {
         event.preventDefault();
 
-        var ps_nome = document.getElementById("vt_nome").value;
-        var ps_valor = document.getElementById("vt_valor").value;
-        var ps_desc = document.getElementById("vt_desc").value;
+        var nome = document.getElementById("nome").value;
+        var desc = document.getElementById("desc").value;
+        var valor = document.getElementById("valor").value;
         var habilitado = document.getElementById("habilitado").value;
-        var sys_user = document.getElementById("sys_user").value;
+
 
         $.ajax({
             url: 'pages/config/insert/salve_outros_beneficios.php',
             type: 'POST',
             data: {
-                ps_nome: ps_nome,
-                ps_valor: ps_valor,
-                ps_desc: ps_desc,
-                habilitado: habilitado,
-                sys_user: sys_user
+                nome: nome,
+                desc: desc,
+                valor: valor,
+                habilitado: habilitado
+
             },
             dataType: 'json',
             success: function(response) {
