@@ -58,6 +58,9 @@
         userLinkRTL.setAttribute('disabled', true);
     }
     </script>
+
+
+
 </head>
 
 
@@ -69,7 +72,8 @@
     <main class="main" id="top">
         <div class="container-fluid px-0">
             <div class="container-fluid">
-                <div class="bg-holder bg-auth-card-overlay" style="background-image:url(assets/img/bg/37.png);">
+                <div class="bg-holder bg-auth-card-overlay"
+                    style="background-image:url(assets/img/spot-illustrations/better_wall.png);">
                 </div>
                 <!--/.bg-holder-->
 
@@ -77,29 +81,11 @@
 
 
                 <div class="row flex-center position-relative min-vh-100 g-0 py-5">
-                    <div class="col-11 col-sm-10 col-xl-8">
-                        <div class="card border border-300 auth-card">
-                            <div class="card-body pe-md-0">
+                    <div class="col-11 col-sm-5 col-xl-3">
+                        <div class="card border border-300 auth-card " id="form_login" style="background-color: rgba(0, 0, 0, 0.5);">
+                            <div class="card-body " >
                                 <div class="row align-items-center gx-0 gy-7">
-                                    <div
-                                        class="col-auto bg-100 dark__bg-1100 rounded-3 position-relative overflow-hidden auth-title-box">
-                                        <div class="bg-holder" style="background-image:url(assets/img/bg/38.png);">
-                                        </div>
-                                        <!--/.bg-holder-->
 
-                                        <div
-                                            class="position-relative px-4 px-lg-7 pt-7 pb-7 pb-sm-5 text-center text-md-start pb-lg-7 pb-md-7">
-                                            <!-- <h3 class="mb-3 text-black fs-1">CRM Autenticação</h3> -->
-
-                                        </div>
-                                        <div
-                                            class="position-relative z-index--1 mb-6 d-none d-md-block text-center mt-md-15">
-                                            <img class="auth-title-box-img d-dark-none"
-                                                src="assets/png/base_logo_white_background-removebg-preview.png" alt="" /><img
-                                                class="auth-title-box-img d-light-none"
-                                                src="assets/img/spot-illustrations/better_wall.png" alt="" />
-                                        </div>
-                                    </div>
                                     <div class="col mx-auto">
                                         <div class="auth-form-box">
                                             <div class="text-center mb-4"><a
@@ -135,14 +121,15 @@
                                                 </div>
                                             </div>
                                             <div class="row flex-between-center mb-7">
-        <div class="col-auto">
-            <a class="fs--1 fw-semi-bold" href="#" id="forgot-password-link">Esqueceu a Senha?</a>
+                                                <div class="col-auto">
+                                                    <a class="fs--1 fw-semi-bold" href="#"
+                                                        id="forgot-password-link">Esqueceu a Senha?</a>
 
 
-            <div id="wait-text" style="display: none;">Aguarde...</div>
+                                                    <div id="wait-text" style="display: none;">Aguarde...</div>
 
-        </div>
-    </div>
+                                                </div>
+                                            </div>
                                             <button class="btn btn-primary w-100 mb-3">Entrar</button>
 
                                             </form>
@@ -204,108 +191,187 @@ document.getElementById('forgot-password-link').addEventListener('click', functi
 });
 </script> -->
 
-
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
 <script>
-// Função para mostrar o texto "Aguarde..."
-function showWaitText() {
-    var waitText = document.getElementById('wait-text');
-    waitText.style.display = 'block';
+
+const formLogin = document.getElementById("form_login");
+const phoenixTheme = localStorage.getItem("phoenixTheme"); // Supondo que você armazene o tema no localStorage
+
+if (phoenixTheme === "light") {
+  formLogin.style.backgroundColor = "rgba(255, 255, 255, 0.5)";
+} else {
+  formLogin.style.backgroundColor = "rgba(0, 0, 0, 0.5)"; // Preto com transparência
 }
 
-// Função para ocultar o texto "Aguarde..."
-function hideWaitText() {
-    var waitText = document.getElementById('wait-text');
-    waitText.style.display = 'none';
-}
+console.log(phoenixTheme);
 
-document.getElementById('forgot-password-link').addEventListener('click', function(event) {
-    event.preventDefault();
-    var email = document.getElementById('email').value;
-    if (email) {
-        showWaitText(); // Mostrar o texto "Aguarde..." antes de enviar a solicitação AJAX
-        // Enviar uma solicitação AJAX para o arquivo PHP
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'forgot-password.php', true);
-        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
-        xhr.onload = function() {
-            hideWaitText(); // Ocultar o texto "Aguarde..." após a conclusão da solicitação AJAX
-            if (xhr.status === 200) {
-                var response = JSON.parse(xhr.responseText);
-                if (response.success) {
-                    // Se o email foi enviado com sucesso, exibir uma mensagem SweetAlert2
-                    Swal.fire({
-                        title: 'Sucesso!',
-                        text: response.message,
-                        icon: 'success'
-                    });
-                } else {
-                    // Se ocorreu um erro no servidor, exibir uma mensagem de erro
-                    Swal.fire({
-                        title: 'Erro!',
-                        text: response.message,
-                        icon: 'error'
-                    });
-                }
-            }
-        };
-
-        xhr.send('email=' + encodeURIComponent(email));
-    } else {
-        // alert('Por favor, preencha o campo de e-mail.');
-        Swal.fire({
-            title: 'Erro!',
-            text: 'Por favor, preencha o campo de e-mail.',
-            icon: 'error'
-        });
-    }
-});
 </script>
 
-
-
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
         <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('login-form').addEventListener('submit', function(event) {
-                event.preventDefault(); // Prevent default form submission
+        // Função para mostrar o texto "Aguarde..."
+        function showWaitText() {
+            var waitText = document.getElementById('wait-text');
+            waitText.style.display = 'block';
+        }
 
-                const formData = new FormData(this);
+        // Função para ocultar o texto "Aguarde..."
+        function hideWaitText() {
+            var waitText = document.getElementById('wait-text');
+            waitText.style.display = 'none';
+        }
 
-                fetch('database/processa_login.php', {
-                        method: 'POST',
-                        body: formData
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
+        document.getElementById('forgot-password-link').addEventListener('click', function(event) {
+            event.preventDefault();
+            var email = document.getElementById('email').value;
+            if (email) {
+                showWaitText(); // Mostrar o texto "Aguarde..." antes de enviar a solicitação AJAX
+                // Enviar uma solicitação AJAX para o arquivo PHP
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', 'forgot-password.php', true);
+                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+                xhr.onload = function() {
+                    hideWaitText(); // Ocultar o texto "Aguarde..." após a conclusão da solicitação AJAX
+                    if (xhr.status === 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        if (response.success) {
+                            // Se o email foi enviado com sucesso, exibir uma mensagem SweetAlert2
                             Swal.fire({
-                                icon: 'success',
-                                title: 'Login bem sucedido!',
-                                text: data.message,
-                                showConfirmButton: false,
-                                timer: 1000 // Tempo em milissegundos que a mensagem deve ser exibida
-                            }).then(function() {
-                                // Redirect to the URL provided by the server
-                                window.location.href = data.redirect;
+                                title: 'Sucesso!',
+                                text: response.message,
+                                icon: 'success'
                             });
                         } else {
+                            // Se ocorreu um erro no servidor, exibir uma mensagem de erro
                             Swal.fire({
-                                icon: 'error',
-                                title: 'Erro de Login',
-                                text: data.message
+                                title: 'Erro!',
+                                text: response.message,
+                                icon: 'error'
                             });
                         }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-            });
+                    }
+                };
+
+                xhr.send('email=' + encodeURIComponent(email));
+            } else {
+                // alert('Por favor, preencha o campo de e-mail.');
+                Swal.fire({
+                    title: 'Erro!',
+                    text: 'Por favor, preencha o campo de e-mail.',
+                    icon: 'error'
+                });
+            }
         });
         </script>
+
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const formData = new FormData(this);
+
+            fetch('database/processa_login.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Login bem sucedido!',
+                        text: data.message,
+                        showConfirmButton: false,
+                        timer: 1000 // Tempo em milissegundos que a mensagem deve ser exibida
+                    }).then(function() {
+                        // Redirect to the URL provided by the server
+                        window.location.href = data.redirect;
+                    });
+                } else {
+
+                    if (data.mathQuestion) {
+                        // Se houver uma pergunta matemática, exiba-a em um modal
+                        Swal.fire({
+                                title: data.mathQuestionText,
+                                input: 'text',
+                                inputValue: '',
+                                showCancelButton: true,
+                                confirmButtonText: 'Enviar',
+                                cancelButtonText: 'Cancelar',
+                                inputValidator: (value) => {
+                                    if (!value) {
+                                        return 'Você precisa responder a pergunta matemática.';
+                                    } else {
+                                        // Remova espaços em branco e converta para inteiro
+                                        const userAnswer = parseInt(value.replace(/\s+/g, ''));
+                                        const correctAnswer = parseInt(data.mathAnswer);
+
+                                        if (userAnswer === correctAnswer) {
+                                            // Resposta correta
+                                            return undefined; // Retorna undefined para indicar resposta válida
+                                        } else {
+                                            return 'Resposta incorreta. Tente novamente.';
+                                        }
+                                    }
+                                }
+                            }).then((result) => {
+                            if (result.isConfirmed) {
+                                // Se a resposta estiver correta, faça uma nova solicitação de login
+                                formData.append('math_answer', result.value);
+                                fetch('database/processa_login_recovery.php', {
+                                    method: 'POST',
+                                    body: formData
+                                })
+                                .then(response => response.json())
+                                .then(newData => {
+                                    if (newData.success) {
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Login bem sucedido!',
+                                            text: newData.message,
+                                            showConfirmButton: false,
+                                            timer: 1000
+                                        }).then(function() {
+                                            window.location.href = newData.redirect;
+                                        });
+                                    } else {
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Erro de Login',
+                                            text: newData.message
+                                        });
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Error:', error);
+                                });
+                            }
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Erro de Login',
+                            text: data.message
+                        });
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    });
+
+
+
+</script>
+
 
 </body>
 

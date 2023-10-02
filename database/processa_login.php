@@ -11,16 +11,31 @@ $senha = $_POST['senha'];
 // Defina o número máximo de tentativas permitidas
 $maxTentativas = 5;
 
+
+
+
+
 // Verifique se há um contador de tentativas para este usuário na sessão
 if (!isset($_SESSION['login_attempts'][$email])) {
     $_SESSION['login_attempts'][$email] = 0;
 }
 
+
+
 // Verifique o número de tentativas e bloqueie o usuário se exceder
 if ($_SESSION['login_attempts'][$email] >= $maxTentativas) {
     // Usuário bloqueado
     $response['success'] = false;
-    $response['message'] = 'Sua conta foi bloqueada. Entre em contato com o suporte.';
+    $response['message'] = 'Sua conta está bloqueada. Responda a pergunta matemática para desbloqueá-la.';
+
+        // Gerar pergunta matemática aleatória
+        $question = generateMathQuestion();
+        $_SESSION['math_question'] = $question['question'];
+        $_SESSION['math_answer'] = $question['answer'];
+
+        $response['mathQuestion'] = true;
+    $response['mathQuestionText'] = 'Responda a pergunta matemática para desbloquear sua conta: ' . $_SESSION['math_question'];
+    $response['mathAnswer'] = $_SESSION['math_answer'];
     try {
         // Atualize o campo de bloqueio na tabela "user" para "sim"
         $updateSql = "UPDATE user SET bloqueio = 'sim' WHERE email = ?";
@@ -60,8 +75,19 @@ if ($_SESSION['login_attempts'][$email] >= $maxTentativas) {
             if ($isBlocked === 'sim') {
                 // Usuário bloqueado
                 $response['success'] = false;
-                $response['message'] = 'Sua conta foi bloqueada. Entre em contato com o suporte.';
+                $response['message'] = 'Sua conta está bloqueada. Responda a pergunta matemática para desbloqueá-la.';
+
+                // Gerar pergunta matemática aleatória
+                $question = generateMathQuestion();
+                $_SESSION['math_question'] = $question['question'];
+                $_SESSION['math_answer'] = $question['answer'];
+
+                $response['mathQuestion'] = true;
+                $response['mathQuestionText'] = 'Responda a pergunta matemática para desbloquear sua conta: ' . $_SESSION['math_question'];
+                $response['mathAnswer'] = $_SESSION['math_answer'];
             } else {
+
+
                 // Login bem-sucedido
                 $_SESSION['email'] = $email;
                 $_SESSION['login_attempts'][$email] = 0; // Redefina o contador de tentativas
@@ -90,6 +116,19 @@ if ($_SESSION['login_attempts'][$email] >= $maxTentativas) {
       $response['message'] = 'Usuário ou senha incorretos. Tentativas restantes: ' . $remainingAttempts;
     }
 }
+
+
+
+// Função para gerar uma pergunta matemática simples
+function generateMathQuestion() {
+    $num1 = rand(1, 10);
+    $num2 = rand(1, 10);
+    $question = "$num1 + $num2 = ?";
+    $answer = $num1 + $num2;
+
+    return ['question' => $question, 'answer' => $answer];
+}
+
 
 // Return JSON response
 header('Content-Type: application/json');
