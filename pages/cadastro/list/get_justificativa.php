@@ -16,7 +16,7 @@ if (isset($_POST['id'])) {
 }
 
 // Consulta os dados da tabela AUX_VT
-$sql = "SELECT * FROM justificativa AS j
+$sql = "SELECT *, j.`data` AS data_jus FROM justificativa AS j
 
 LEFT JOIN (SELECT hc.*
 FROM tb_history_cadastro hc

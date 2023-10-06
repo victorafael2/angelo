@@ -29,8 +29,7 @@
                                 <div class="form-group">
                                     <label for="id_area_cargos" class="form-label">AREA:</label>
                                     <select type="text" class="form-control" id="id_area_cargos" name="id_area_cargos"
-                                        data-choices="data-choices"
-                                        data-options='{"removeItemButton":true,"placeholder":true}'>
+                                        >
                                         <option value="">Selecione</option>
                                         <?php
                                                 // Executar a consulta para obter os dados
@@ -56,14 +55,14 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="cargo_nome" class="form-label">Nome do Cargo:</label>
-                                    <input type="text" class="form-control" id="cargo_nome">
+                                    <input type="text" class="form-control" id="cargo_nome" required>
                                 </div>
                             </div>
 
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="cargo_grupo" class="form-label">Grupo do Cargo:</label>
-                                    <input type="text" class="form-control" id="cargo_grupo">
+                                    <input type="text" class="form-control" id="cargo_grupo" required>
                                 </div>
                             </div>
                         </div>
@@ -72,7 +71,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="cargo_nivel" class="form-label">Nivel do Cargo:</label>
-                                    <input type="text" class="form-control" id="cargo_nivel">
+                                    <input type="text" class="form-control" id="cargo_nivel" required>
                                 </div>
                             </div>
 
@@ -278,7 +277,7 @@ $(document).ready(function() {
                     tableData += "<td>" + item.cargo_nivel + "</td>";
                     tableData += "<td>" + item.cargo_description + "</td>";
                     // Lógica JavaScript para adicionar a estrela com base em algum valor da variável 'item'
-                    tableData += "<td><span class='status-icon' data-id='" + item.id_cargo +
+                    tableData += "<td class='amount align-middle white-space-nowrap fw-bold ps-4 text-900 py-0'><span class='status-icon' data-id='" + item.id_cargo +
                         "'>";
                     if (item.habilitado == 1) {
                         tableData += "<i class='fa-solid fa-check text-success'></i>";

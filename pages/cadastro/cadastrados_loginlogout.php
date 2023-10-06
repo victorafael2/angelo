@@ -66,7 +66,7 @@
                     <th class="sort border-top " data-sort="nome_registro">Inicio</th>
                     <th class="sort border-top " data-sort="sexo">Fim</th>
                     <th class="sort border-top " data-sort="sexo">Ver justificativa</th>
-                    <th class="sort border-top " data-sort="sexo">Aprovado?</th>
+                    <th class="sort border-top " data-sort="sexo">Tratativa</th>
 
 
 
@@ -76,7 +76,7 @@
             <tbody class="list">
                 <?php
                             // Recupere os dados do MySQL
-                                        $sql = "SELECT * FROM justificativa AS j
+                                        $sql = "SELECT *, j.`data` as data_jus FROM justificativa AS j
 
                                         LEFT JOIN (SELECT hc.*
                                         FROM tb_history_cadastro hc
@@ -98,7 +98,7 @@
                                                 echo '<td class="align-middle cpf">' . $row['id'] . '</td>';
                                                 echo '<td class="align-middle">' . $row['nome_registro'] . '</td>';
                                                 echo '<td class="align-middle">' . $row['descricao'] . '</td>';
-                                                echo '<td class="align-middle">' . $row['data'] . '</td>';
+                                                echo '<td class="align-middle">' . $row['data_jus'] . '</td>';
                                                 echo '<td class="align-middle">' . $row['inicio'] . '</td>';
                                                 echo '<td class="align-middle">' . $row['fim'] . '</td>';
 
@@ -110,11 +110,24 @@
 
 
                                                 echo '<td class="align-middle white-space-nowrap  pe-0">';
-                                                if ($row['aprovado'] != 1) {
-                                                    echo '<button class="btn btn-sm btn-phoenix-info update-button" data-id="' . $row['id'] . '" data-tipo="' . $row['tipo'] . '">Aceitar Justificativa? <i class="fa-solid fa-hourglass-half"></i></button>';
+
+
+
+
+                                                if ($row['aprovado'] === null) {
+                                                    echo '<button class="btn btn-sm btn-phoenix-success update-button" data-id="' . $row['id'] . '" data-tipo="' . $row['tipo'] . '"><i class="fa-solid fa-check"></i></button>';
+                                                    echo '<button class="btn btn-sm btn-phoenix-danger update-button-negacao" data-id="' . $row['id'] . '" data-tipo="' . $row['tipo'] . '"><i class="fa-solid fa-xmark"></i></button>';
+
+                                                } elseif ($row['aprovado'] == 1) {
+                                                    echo '<button class="btn btn-sm btn-phoenix-success update-button-aprovado" data-id="' . $row['id'] . '" data-tipo="' . $row['tipo'] . '">Solicitação Aceita <i class="fa-solid fa-circle-check"></i></button>';
+                                                } elseif ($row['aprovado'] == 0) {
+                                                    echo '<button class="btn btn-sm btn-phoenix-danger update-button-negado" data-id="' . $row['id'] . '" data-tipo="' . $row['tipo'] . '" data-justificativa="' . $row['justificativa'] . '">Solicitação Negada <i class="fa-solid fa-circle-xmark"></i></button>';
+
                                                 } else {
-                                                    echo '<button class="btn btn-sm btn-phoenix-success update-button-negado" data-id="' . $row['id'] . '" data-tipo="' . $row['tipo'] . '">Solicitação Aceita <i class="fa-solid fa-circle-check"></i></button>';
+                                                    // Trate outros casos aqui, se necessário
                                                 }
+
+
                                                 echo '</td>';
 
 
@@ -168,7 +181,7 @@
 
                         <div class="col-md-4">
                             <label for="data" class="form-label">Data</label>
-                            <input type="date" class="form-control" id="data" name="data" readonly>
+                            <input type="text" class="form-control" id="data" name="data" readonly>
                         </div>
                         <div class="col-md-4" class="form-label">
                             <label for="hora_inicio">Hora inicio</label>
@@ -257,7 +270,7 @@ $(document).on("click", ".edit-btn-operacoes", function() {
             // Preencha outros campos aqui
             data.forEach(function(item) {
                 $("#funcionario").val(item.nome_registro);
-                $("#data").val(item.data);
+                $("#data").val(item.data_jus);
                 $("#hora_inicio").val(item.inicio);
                 $("#hora_fim").val(item.fim);
                 $("#descricao").val(item.descricao);
@@ -441,18 +454,76 @@ function updateData(id, tipo) {
 
 <script>
 // Selecione todos os botões com a classe "update-button-negado"
-const buttonsNegados = document.querySelectorAll('.update-button-negado');
+const buttonsAprovados = document.querySelectorAll('.update-button-aprovado');
 
 // Adicione um ouvinte de eventos de clique a cada botão
-buttonsNegados.forEach(button => {
+buttonsAprovados.forEach(button => {
     button.addEventListener('click', () => {
         // Exiba o SweetAlert2 informando que o cadastro está incompleto
         Swal.fire({
-            icon: 'info',
+            icon: 'success',
             title: 'Justificativa Aceita',
             text: 'Justificativa já aceita',
             confirmButtonText: 'OK'
         });
     });
 });
+</script>
+
+
+<script>
+// Selecione todos os botões com a classe "update-button-negado"
+const buttonsNegados = document.querySelectorAll('.update-button-negado');
+
+// Adicione um ouvinte de eventos de clique a cada botão
+buttonsNegados.forEach(button => {
+    button.addEventListener('click', () => {
+        // Recupere a justificativa do atributo data-justificativa
+        const justificativa = button.getAttribute('data-justificativa');
+
+        // Exiba o SweetAlert2 com a justificativa
+        Swal.fire({
+            icon: 'error',
+            title: 'Justificativa Negada',
+            text: justificativa, // Use a justificativa recuperada aqui
+            confirmButtonText: 'OK'
+        });
+    });
+});
+
+</script>
+
+
+
+<script>
+$('.update-button-negacao').on('click', function() {
+    const id = $(this).data('id');
+    const tipo = $(this).data('tipo');
+
+    Swal.fire({
+        title: 'Justificativa da Negativa',
+        input: 'text',
+        inputPlaceholder: 'Digite sua justificativa aqui...',
+        showCancelButton: true,
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Enviar',
+        preConfirm: (justificativa) => {
+            $.ajax({
+                type: 'POST',
+                url: 'pages/cadastro/update/update_desativar_justificativa.php', // Coloque o caminho correto para seu arquivo PHP
+                data: {
+                    id: id,
+                    justificativa: justificativa
+                },
+                success: function(response) {
+                    Swal.fire('Sucesso', response, 'success');
+                },
+                error: function(xhr, status, error) {
+                    Swal.fire('Erro', 'Ocorreu um erro: ' + error, 'error');
+                }
+            });
+        }
+    });
+});
+
 </script>

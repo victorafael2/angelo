@@ -67,7 +67,7 @@
                                         <th class="sort border-top " data-sort="id">ID</th>
                                         <th class="sort border-top " data-sort="vt_nome">Nome</th>
                                         <th class="sort border-top " data-sort="vt_valor">Valor R$</th>
-                                        <th class="sort border-top text-center">Habilitado</th>
+                                        <th class="sort border-top ">Habilitado</th>
 
                                         <th class="sort border-top ">Editar</th>
                                     </tr>
@@ -157,7 +157,7 @@ $(document).ready(function() {
                     tableData += "<tr><td>" + item.id_ps + "</td><td>" + item.ps_nome +
                         "</td><td>" + item.ps_valor + "</td>";
                         // Lógica JavaScript para adicionar a estrela com base em algum valor da variável 'item'
-                    tableData += "<td><span class='status-icon' data-id='" + item.id_ps +
+                    tableData += "<td class='amount align-middle white-space-nowrap fw-bold ps-4 text-900 py-0'><span class='status-icon' data-id='" + item.id_ps +
                         "'>";
                     if (item.habilitado == 1) {
                         tableData += "<i class='fa-solid fa-check text-success'></i>";

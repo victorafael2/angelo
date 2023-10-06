@@ -68,7 +68,7 @@
                                     <input type="text" class="form-control datetimepicker" name="hr_ini_seg"
                                         id="hr_ini_seg" type="text" placeholder="hora : minuto"
                                         data-options='{"enableTime":true,"noCalendar":true,"dateFormat":"H:i", "time_24hr": true,"disableMobile":true}'
-                                        required>
+                                        required onchange="validarHoras('hr_ini_seg', 'hr_fim_seg')">
                                 </div>
                             </div>
                             <div class="col">
@@ -77,7 +77,8 @@
                                     <input type="text" class="form-control datetimepicker" name="hr_fim_seg"
                                         id="hr_fim_seg" type="text" placeholder="hora : minuto"
                                         data-options='{"enableTime":true,"noCalendar":true,"dateFormat":"H:i", "time_24hr": true,"disableMobile":true}'
-                                        required>
+                                        required onchange="validarHoras('hr_ini_seg', 'hr_fim_seg')">
+                                        <span id="erro_hr_fim_seg" class="erro-horario text-danger"></span>
                                 </div>
                             </div>
                         </div>
@@ -98,7 +99,7 @@
                                     <input type="text" class="form-control datetimepicker" name="hr_ini_ter"
                                         id="hr_ini_ter" type="text" placeholder="hora : minuto"
                                         data-options='{"enableTime":true,"noCalendar":true,"dateFormat":"H:i", "time_24hr": true,"disableMobile":true}'
-                                        required>
+                                        required onchange="validarHoras('hr_ini_ter', 'hr_fim_ter')">
                                 </div>
                             </div>
                             <div class="col">
@@ -107,7 +108,8 @@
                                     <input type="text" class="form-control datetimepicker" name="hr_fim_ter"
                                         id="hr_fim_ter" type="text" placeholder="hora : minuto"
                                         data-options='{"enableTime":true,"noCalendar":true,"dateFormat":"H:i", "time_24hr": true,"disableMobile":true}'
-                                        required>
+                                        required onchange="validarHoras('hr_ini_ter', 'hr_fim_ter')">
+                                        <span id="erro_hr_fim_ter" class="erro-horario text-danger"></span>
                                 </div>
                             </div>
                         </div>
@@ -119,7 +121,7 @@
                                     <input type="text" class="form-control datetimepicker" name="hr_ini_qua"
                                         id="hr_ini_qua" type="text" placeholder="hora : minuto"
                                         data-options='{"enableTime":true,"noCalendar":true,"dateFormat":"H:i", "time_24hr": true,"disableMobile":true}'
-                                        required>
+                                        required onchange="validarHoras('hr_ini_qua', 'hr_fim_qua')">
                                 </div>
                             </div>
                             <div class="col">
@@ -128,7 +130,8 @@
                                     <input type="text" class="form-control datetimepicker" name="hr_fim_qua"
                                         id="hr_fim_qua" type="text" placeholder="hora : minuto"
                                         data-options='{"enableTime":true,"noCalendar":true,"dateFormat":"H:i", "time_24hr": true,"disableMobile":true}'
-                                        required>
+                                        required onchange="validarHoras('hr_ini_qua', 'hr_fim_qua')">
+                                        <span id="erro_hr_fim_qua" class="erro-horario text-danger"></span>
                                 </div>
                             </div>
                         </div>
@@ -140,7 +143,8 @@
                                     <input type="text" class="form-control datetimepicker" name="hr_ini_qui"
                                         id="hr_ini_qui" type="text" placeholder="hora : minuto"
                                         data-options='{"enableTime":true,"noCalendar":true,"dateFormat":"H:i", "time_24hr": true,"disableMobile":true}'
-                                        required>
+                                        required onchange="validarHoras('hr_ini_qui', 'hr_fim_qui')">
+
                                 </div>
                             </div>
                             <div class="col">
@@ -149,7 +153,8 @@
                                     <input type="text" class="form-control datetimepicker" name="hr_fim_qui"
                                         id="hr_fim_qui" type="text" placeholder="hora : minuto"
                                         data-options='{"enableTime":true,"noCalendar":true,"dateFormat":"H:i", "time_24hr": true,"disableMobile":true}'
-                                        required>
+                                        required onchange="validarHoras('hr_ini_qui', 'hr_fim_qui')">
+                                        <span id="erro_hr_fim_qui" class="erro-horario text-danger"></span>
                                 </div>
                             </div>
                         </div>
@@ -161,7 +166,7 @@
                                     <input type="text" class="form-control datetimepicker" name="hr_ini_sex"
                                         id="hr_ini_sex" type="text" placeholder="hora : minuto"
                                         data-options='{"enableTime":true,"noCalendar":true,"dateFormat":"H:i", "time_24hr": true,"disableMobile":true}'
-                                        required>
+                                        required onchange="validarHoras('hr_ini_sex', 'hr_fim_sex')">
                                 </div>
                             </div>
                             <div class="col">
@@ -170,7 +175,8 @@
                                     <input type="text" class="form-control datetimepicker" name="hr_fim_sex"
                                         id="hr_fim_sex" type="text" placeholder="hora : minuto"
                                         data-options='{"enableTime":true,"noCalendar":true,"dateFormat":"H:i", "time_24hr": true,"disableMobile":true}'
-                                        required>
+                                        required onchange="validarHoras('hr_ini_sex', 'hr_fim_sex')">
+                                        <span id="erro_hr_fim_sex" class="erro-horario text-danger"></span>
                                 </div>
                             </div>
                         </div>
@@ -182,7 +188,7 @@
                                     <input type="text" class="form-control datetimepicker" name="hr_ini_sab"
                                         id="hr_ini_sab" type="text" placeholder="hora : minuto"
                                         data-options='{"enableTime":true,"noCalendar":true,"dateFormat":"H:i", "time_24hr": true,"disableMobile":true}'
-                                        required>
+                                        required onchange="validarHoras('hr_ini_sab', 'hr_fim_sab')">
                                 </div>
                             </div>
                             <div class="col">
@@ -191,7 +197,8 @@
                                     <input type="text" class="form-control datetimepicker" name="hr_fim_sab"
                                         id="hr_fim_sab" type="text" placeholder="hora : minuto"
                                         data-options='{"enableTime":true,"noCalendar":true,"dateFormat":"H:i", "time_24hr": true,"disableMobile":true}'
-                                        required>
+                                        required onchange="validarHoras('hr_ini_sab', 'hr_fim_sab')">
+                                        <span id="erro_hr_fim_sab" class="erro-horario text-danger"></span>
                                 </div>
                             </div>
                         </div>
@@ -203,7 +210,7 @@
                                     <input type="text" class="form-control datetimepicker" name="hr_ini_dom"
                                         id="hr_ini_dom" type="text" placeholder="hora : minuto"
                                         data-options='{"enableTime":true,"noCalendar":true,"dateFormat":"H:i", "time_24hr": true,"disableMobile":true}'
-                                        required>
+                                        required onchange="validarHoras('hr_ini_dom', 'hr_fim_dom')">
                                 </div>
                             </div>
                             <div class="col">
@@ -212,7 +219,8 @@
                                     <input type="text" class="form-control datetimepicker" name="hr_fim_dom"
                                         id="hr_fim_dom" type="text" placeholder="hora : minuto"
                                         data-options='{"enableTime":true,"noCalendar":true,"dateFormat":"H:i", "time_24hr": true,"disableMobile":true}'
-                                        required>
+                                        required onchange="validarHoras('hr_ini_dom', 'hr_fim_dom')">
+                                        <span id="erro_hr_fim_dom" class="erro-horario text-danger"></span>
                                 </div>
                             </div>
                         </div>
@@ -344,7 +352,7 @@
                                     <input type="text" class="form-control datetimepicker" name="hr_ini_seg_modal"
                                         id="hr_ini_seg_modal" type="text" placeholder="hora : minuto"
                                         data-options='{"enableTime":true,"noCalendar":true,"dateFormat":"H:i", "time_24hr": true,"disableMobile":true}'
-                                        required>
+                                        required onchange="validarHoras()">
                                 </div>
                             </div>
                             <div class="col">
@@ -353,7 +361,7 @@
                                     <input type="text" class="form-control datetimepicker" name="hr_fim_seg_modal"
                                         id="hr_fim_seg_modal" type="text" placeholder="hora : minuto"
                                         data-options='{"enableTime":true,"noCalendar":true,"dateFormat":"H:i", "time_24hr": true,"disableMobile":true}'
-                                        required>
+                                        required onchange="validarHoras()">
                                 </div>
                             </div>
                         </div>
@@ -556,7 +564,7 @@ $(document).ready(function() {
 
 
                          // Lógica JavaScript para adicionar a estrela com base em algum valor da variável 'item'
-                         tableData += "<td><span class='status-icon' data-id='" + item.id_operacao + "'>";
+                         tableData += "<td class='amount align-middle white-space-nowrap fw-bold ps-4 text-900 py-0'><span class='status-icon' data-id='" + item.id_operacao + "'>";
                         if (item.habilitado == 1) {
                             tableData += "<i class='fa-solid fa-check text-success'></i>";
                         } else {
@@ -1004,3 +1012,26 @@ Toast.fire({
 
 
 </script>
+
+
+<script>
+function validarHoras(idInicio, idFim) {
+    var horaInicio = document.getElementById(idInicio).value;
+    var horaFim = document.getElementById(idFim).value;
+
+    var dataHoraInicio = new Date("1970-01-01T" + horaInicio + "Z");
+    var dataHoraFim = new Date("1970-01-01T" + horaFim + "Z");
+
+    var erroSpan = document.getElementById("erro_" + idFim);
+
+    if (dataHoraFim.getTime() < dataHoraInicio.getTime()) {
+        erroSpan.textContent = "A hora de término não pode ser menor que a hora de início";
+        document.getElementById(idFim).value = ""; // Define a hora de término de volta para a hora de início
+    } else {
+        erroSpan.textContent = ""; // Limpa a mensagem de erro se as horas forem válidas
+    }
+}
+
+</script>
+
+

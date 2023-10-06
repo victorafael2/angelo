@@ -38,7 +38,7 @@ $result = $conn->query($sql);
 
             // Modal for each row
             echo '<div class="modal fade" id="reportModal' . $row["id"] . '" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">';
-            echo '<div class="modal-dialog modal-xl">';
+            echo '<div class="modal-dialog modal-dialog-centered modal-fullscreen">';
             echo '<div class="modal-content">';
             echo '<div class="modal-header">';
             echo '<h5 class="modal-title" id="exampleModalLabel">' . $row["nome"] . '</h5>';
@@ -46,7 +46,8 @@ $result = $conn->query($sql);
             echo '</div>';
             echo '<div class="modal-body">';
             // Replace 'embed_url' with the actual Power BI embed URL for this report
-            echo '<iframe width="100%" height="500px" src="' . $row["link"] . '" frameborder="0" allowFullScreen="true"></iframe>';
+            echo '<iframe width="100%" height="500px" src="' . $row["link"] . '"&toolbarHidden=true></iframe>';
+
             echo '</div>';
             echo '</div>';
             echo '</div>';

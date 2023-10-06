@@ -1,7 +1,8 @@
 <!-- <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.22.0/dist/bootstrap-table.min.css">
 <script src="https://unpkg.com/bootstrap-table@1.22.0/dist/bootstrap-table.min.js"></script> -->
 
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.3/bootstrap-table.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.3/locale/bootstrap-table-pt-BR.min.js"></script>
 <div class="row align-items-center justify-content-between g-3 mb-4">
     <div class="col-12 col-md-auto">
         <h2 class="mb-0">Usuários</h2>
@@ -29,8 +30,9 @@
         <!-- Botão para abrir o modal -->
         <button id="updateSelectedBtn" class="btn btn-primary" data-bs-toggle="modal"
             data-bs-target="#selectedIdsModal">Atualizar Selecionados</button>
+
         <table id="table" data-toggle="table" data-flat="true" data-search="true" data-url="pages/cadastro/list/api.php"
-            class="table table-sm fs--2">
+            class="table table-sm fs--2" data-locale="pt-BR">
             <thead>
                 <tr>
                     <th data-field="state" data-checkbox="true"></th>
@@ -61,30 +63,45 @@
 
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.3/bootstrap-table.min.js"></script>
-<!-- <script>
-    $(document).ready(function() {
-      // Redirecionar para a outra página com os IDs selecionados
-      $('#updateSelectedBtn').on('click', function() {
-        var selectedRows = $('#table').bootstrapTable('getSelections');
-        var selectedIds = selectedRows.map(function(row) {
-          return row.id_funcionario;
+
+
+
+
+
+
+
+
+ <script>
+        $(document).ready(function () {
+            // Inicializa a tabela Bootstrap
+            $('#table').bootstrapTable();
+
+            // Rastreia as linhas selecionadas e exibe os IDs no modal
+            $('#updateSelectedBtn').click(function () {
+                var selectedRows = $('#table').bootstrapTable('getSelections');
+                var selectedIds = [];
+
+                // Obtém os IDs das linhas selecionadas
+                selectedRows.forEach(function (row) {
+                    selectedIds.push(row.id); // Substitua 'id' pelo campo apropriado que contém o ID
+                });
+
+                // Atualiza o input e a lista no modal
+                $('#selectedIdsInput').val(selectedIds.join(', '));
+                $('#selectedIdsList').empty();
+                selectedIds.forEach(function (id) {
+                    $('#selectedIdsList').append('<li>' + id + '</li>');
+                });
+
+                // Abre o modal
+                $('#selectedIdsModal').modal('show');
+            });
         });
-        var url = 'pagina-alteracao.html?ids=' + selectedIds.join(',');
-        window.location.href = url;
-      });
-    });
-  </script> -->
+    </script>
 
 
 

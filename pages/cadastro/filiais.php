@@ -32,7 +32,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="filial_cnpj" class="form-label">CNPJ:</label>
-                                    <input type="number" class="form-control" id="filial_cnpj" name="filial_cnpj">
+                                    <input type="text" class="form-control" id="filial_cnpj" name="filial_cnpj" oninput="formatCnpj(this)">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -109,7 +109,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="endereco_cep" class="form-label">CEP</label>
-                                    <input type="number" class="form-control" id="endereco_cep" name="endereco_cep">
+                                    <input type="text" class="form-control" id="endereco_cep" name="endereco_cep" oninput="formatCep(this)">
                                 </div>
                             </div>
                         </div>
@@ -126,7 +126,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="cpf_responsavel" class="form-label">CPF do Responsável:</label>
-                                    <input type="number" class="form-control" id="cpf_responsavel" name="cpf_responsavel">
+                                    <input type="text" class="form-control" id="cpf_responsavel" name="cpf_responsavel" oninput="formatCpf(this)">
                                 </div>
                             </div>
                             <div class="col-md-4 d-none">
@@ -223,7 +223,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="filial_cnpj_modal" class="form-label">CNPJ:</label>
-                                    <input type="number" class="form-control" id="filial_cnpj_modal" name="filial_cnpj_modal">
+                                    <input type="text" class="form-control" id="filial_cnpj_modal" name="filial_cnpj_modal"  oninput="formatCnpj(this)">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -300,7 +300,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="endereco_cep_modal" class="form-label">CEP</label>
-                                    <input type="number" class="form-control" id="endereco_cep_modal" name="endereco_cep_modal">
+                                    <input type="text" class="form-control" id="endereco_cep_modal" name="endereco_cep_modal" oninput="formatCep(this)">
                                 </div>
                             </div>
                         </div>
@@ -317,7 +317,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="cpf_responsavel_modal" class="form-label">CPF do Responsável:</label>
-                                    <input type="number" class="form-control" id="cpf_responsavel_modal" name="cpf_responsavel_modal">
+                                    <input type="text" class="form-control" id="cpf_responsavel_modal" name="cpf_responsavel_modal" oninput="formatCpf(this)">
                                 </div>
                             </div>
                             <div class="col-md-4 d-none">
@@ -381,7 +381,7 @@ $(document).ready(function() {
                     // tableData += "<td>" + item.habilitado_icon + "</td>";
 
                   // Lógica JavaScript para adicionar a estrela com base em algum valor da variável 'item'
-                        tableData += "<td><span class='status-icon' data-id='" + item.id_filial + "'>";
+                        tableData += "<td class='amount align-middle white-space-nowrap fw-bold ps-4 text-900 py-0'><span class='status-icon' data-id='" + item.id_filial + "'>";
                         if (item.habilitado == 1) {
                             tableData += "<i class='fa-solid fa-check text-success'></i>";
                         } else {
@@ -733,3 +733,77 @@ $("#saveChanges").click(function() {
 
 
 </script>
+
+
+
+<script>
+function formatCnpj(input) {
+    // Remove todos os caracteres não numéricos
+    var cnpj = input.value.replace(/\D/g, '');
+
+    // Verifique se o CNPJ tem mais de 14 dígitos
+    if (cnpj.length > 14) {
+        // Limite o comprimento do CNPJ a 14 dígitos
+        cnpj = cnpj.substring(0, 14);
+    }
+
+    // Verifique se o CNPJ tem 14 dígitos
+    if (cnpj.length === 14) {
+        // Formate o CNPJ com pontos e traços
+        cnpj = cnpj.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5');
+    }
+
+    // Atualize o valor do campo de entrada com o CNPJ formatado
+    input.value = cnpj;
+}
+</script>
+
+
+<script>
+function formatCep(input) {
+    // Remove todos os caracteres não numéricos
+    var cep = input.value.replace(/\D/g, '');
+
+    // Verifique se o CEP tem mais de 8 dígitos
+    if (cep.length > 8) {
+        // Limite o comprimento do CEP a 8 dígitos
+        cep = cep.substring(0, 8);
+    }
+
+    // Verifique se o CEP tem 8 dígitos
+    if (cep.length === 8) {
+        // Formate o CEP com hífen
+        cep = cep.replace(/^(\d{5})(\d{3})$/, '$1-$2');
+    }
+
+    // Atualize o valor do campo de entrada com o CEP formatado
+    input.value = cep;
+}
+</script>
+
+<script>
+function formatCpf(input) {
+    // Remove todos os caracteres não numéricos
+    var cpf = input.value.replace(/\D/g, '');
+
+    // Verifique se o CPF tem mais de 11 dígitos
+    if (cpf.length > 11) {
+        // Limite o comprimento do CPF a 11 dígitos
+        cpf = cpf.substring(0, 11);
+    }
+
+    // Verifique se o CPF tem 11 dígitos
+    if (cpf.length === 11) {
+        // Formate o CPF com pontos e traço
+        cpf = cpf.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, '$1.$2.$3-$4');
+    }
+
+    // Atualize o valor do campo de entrada com o CPF formatado
+    input.value = cpf;
+}
+</script>
+
+
+
+
+

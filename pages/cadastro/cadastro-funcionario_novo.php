@@ -810,7 +810,7 @@ $status = $row["status"] ?? "";
                     </div>
                     <div class="col-md-5">
                         <label for="cpf">CPF do Filho:</label>
-                        <input type="text" class="form-control" id="cpf" name="cpf" required>
+                        <input type="text" class="form-control" id="cpf" name="cpf" required oninput="formatarCPF(this)">
                     </div>
                     <div class="col-md-5">
                         <label for="nome_mae">Nome da Mãe:</label>
@@ -827,6 +827,22 @@ $status = $row["status"] ?? "";
                     </div>
                 </div>
             </form>
+
+            <script>
+                function formatarCPF(input) {
+                    // Remove caracteres não numéricos
+                    var cpf = input.value.replace(/\D/g, '');
+
+                    // Verifica se o CPF possui 11 dígitos
+                    if (cpf.length === 11) {
+                        // Formata CPF (XXX.XXX.XXX-XX)
+                        cpf = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+                    }
+
+                    // Atualiza o valor do input com a formatação
+                    input.value = cpf;
+                }
+                </script>
 
             <div id="childList" class="mt-5"></div>
 
@@ -851,7 +867,7 @@ $status = $row["status"] ?? "";
                     </div>
                     <div class="col-md-5">
                         <label for="cpf">CPF:</label>
-                        <input type="text" class="form-control" id="cpf" name="cpf" required>
+                        <input type="text" class="form-control" id="cpf" name="cpf" required oninput="formatarCPF(this)">
                     </div>
                     <div class="col-md-5">
                         <label for="telefone_contato">Telefone de Contato:</label>
@@ -872,6 +888,23 @@ $status = $row["status"] ?? "";
                     </div>
                 </div>
             </form>
+
+
+            <script>
+                function formatarCPF(input) {
+                    // Remove caracteres não numéricos
+                    var cpf = input.value.replace(/\D/g, '');
+
+                    // Verifica se o CPF possui 11 dígitos
+                    if (cpf.length === 11) {
+                        // Formata CPF (XXX.XXX.XXX-XX)
+                        cpf = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+                    }
+
+                    // Atualiza o valor do input com a formatação
+                    input.value = cpf;
+                }
+                </script>
 
             <div id="conjugeList" class="mt-5"></div>
 
@@ -914,7 +947,7 @@ $status = $row["status"] ?? "";
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="form-label" for="pix_tipo">PIX Tipo:</label>
-                                        <select class="form-control" id="pix_tipo" name="pix_tipo" required>
+                                        <select class="form-control" id="pix_tipo" name="pix_tipo" required >
                                             <option value="">Selecionar tipo de Chave</option>
                                             <option value="CPF">CPF</option>
                                             <option value="CNPJ">CNPJ</option>
@@ -932,6 +965,11 @@ $status = $row["status"] ?? "";
                                             name="pix_identificacao" required>
                                     </div>
                                 </div>
+
+
+
+
+
 
                             </div>
                             <div class="row">
@@ -1711,3 +1749,91 @@ $(document).ready(function() {
     updateStatusList();
 });
 </script>
+
+
+
+<script>
+    // Função para formatar e validar o campo pix_identificacao com base no evento oninput
+    $("#pix_identificacao").on("input", function () {
+        var selectedOption = $("#pix_tipo").val();
+        var pixIdentificacaoInput = $(this);
+
+        // Limpar formatação e validação anterior
+        pixIdentificacaoInput.removeClass("is-valid is-invalid");
+
+        // Remover eventuais mensagens de erro
+        pixIdentificacaoInput.next(".invalid-feedback").remove();
+
+        // Valor atual do campo
+        var value = pixIdentificacaoInput.val();
+
+        // Lógica para formatar e validar o campo com base na opção selecionada
+        if (selectedOption === "CPF") {
+            // Formatar como CPF (xxx.xxx.xxx-xx)
+            value = value.replace(/\D/g, '');
+            if (value.length === 11) {
+                var formattedValue = value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+                pixIdentificacaoInput.val(formattedValue);
+
+                // Validar CPF
+                if (!isValidCPF(value)) {
+                    pixIdentificacaoInput.addClass("is-invalid");
+                } else {
+                    pixIdentificacaoInput.addClass("is-valid");
+                }
+            }
+        } else if (selectedOption === "CNPJ") {
+            // Formatar como CNPJ (xx.xxx.xxx/xxxx-xx)
+            value = value.replace(/\D/g, '');
+            if (value.length === 14) {
+                var formattedValue = value.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5");
+                pixIdentificacaoInput.val(formattedValue);
+
+                // Validar CNPJ
+                if (!isValidCNPJ(value)) {
+                    pixIdentificacaoInput.addClass("is-invalid");
+                } else {
+                    pixIdentificacaoInput.addClass("is-valid");
+                }
+            }
+        } else if (selectedOption === "Email") {
+            // Validar E-mail (usando uma expressão regular simples)
+            if (!isValidEmail(value)) {
+                pixIdentificacaoInput.addClass("is-invalid");
+            }   else {
+                    pixIdentificacaoInput.addClass("is-valid");
+                }
+        } else if (selectedOption === "Telefone") {
+            // Formatar como Telefone (xx) xxxxx-xxxx
+            value = value.replace(/\D/g, '');
+            if (value.length === 11) {
+                var formattedValue = value.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
+                pixIdentificacaoInput.val(formattedValue);
+                pixIdentificacaoInput.addClass("is-valid");
+            }
+        }
+        // Nenhum tratamento especial para ChaveAleatoria
+    });
+
+    // Função para validar CPF
+    function isValidCPF(cpf) {
+        // Implemente sua lógica de validação de CPF aqui
+        return true; // Retorno de exemplo
+    }
+
+    // Função para validar CNPJ
+    function isValidCNPJ(cnpj) {
+        // Implemente sua lógica de validação de CNPJ aqui
+        return true; // Retorno de exemplo
+    }
+
+    // Função para validar E-mail (usando uma expressão regular simples)
+    function isValidEmail(email) {
+        var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+        return emailPattern.test(email);
+    }
+</script>
+
+
+
+

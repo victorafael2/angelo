@@ -13,16 +13,27 @@
     </style>
 
 <footer class="footer position-absolute">
-  <div class="row g-0 justify-content-between align-items-center h-100">
-    <div class="col-12 col-sm-auto text-center">
+<div class="row g-0  align-items-center h-100">
+<div class="d-flex justify-content-between align-items-center">
+  <div class=" flex-fill justify-content-between align-items-center ">
       <img class="d-dark-none" src="assets/png/black_logo_transparent_background-1.png " alt="Better" width="50"  class="img-fluid">
       <img class="d-light-none" src="assets/png/watermark_logo_transparent_background.png " alt="Better" width="50"  class="img-fluid">
+    </div>
+  <div class="flex-fill justify-content-between align-items-center"><p class="mb-0 mt-2 mt-sm-0 text-900 better fs--1 d-inline-block">Inteligência e resultados para seu negócio<span class="d-none d-sm-inline-block"></span><span class="d-none d-sm-inline-block mx-1">|</span><br class="d-sm-none" />2023 &copy;</p></div>
+  <div class=" flex-fill text-end"><p class="mb-0 text-600">v1.08.26</p></div>
+</div>
+</div>
+  <!-- <div class="row g-0 justify-content-between align-items-center h-100">
+    <div class="col-12 col-sm-auto">
+    <img class="d-dark-none" src="assets/png/black_logo_transparent_background-1.png " alt="Better" width="50"  class="img-fluid">
+      <img class="d-light-none" src="assets/png/watermark_logo_transparent_background.png " alt="Better" width="50"  class="img-fluid">
+
       <p class="mb-0 mt-2 mt-sm-0 text-900 better fs--1 d-inline-block">Inteligência e resultados para seu negócio<span class="d-none d-sm-inline-block"></span><span class="d-none d-sm-inline-block mx-1">|</span><br class="d-sm-none" />2023 &copy;</p>
     </div>
     <div class="col-12 col-sm-auto text-center">
       <p class="mb-0 text-600">v1.08.26</p>
     </div>
-  </div>
+  </div> -->
 </footer>
 
 
@@ -115,6 +126,63 @@ document.addEventListener('click', reiniciarTempoInatividade);
 
 
 </script>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    var startTime = new Date();
+
+    // Função para obter o ID da URL
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
+    // Quando a página é carregada (aberta)
+    $(document).ready(function() {
+        startTime = new Date();
+
+        var userEmail = '<?php echo $_SESSION['email']; ?>';
+        var pageID = getParameterByName('id'); // Obtém o valor do ID da URL
+
+        // Enviar solicitação para registrar a abertura da página
+        $.ajax({
+            url: 'pages/users/log.php',
+            type: 'POST',
+            data: { action: 'open', page_id: pageID, user_id: userEmail },
+            success: function(response) {
+                console.log('Abertura da página registrada.');
+            }
+        });
+    });
+
+    // Quando a página é fechada
+    $(window).on('beforeunload', function() {
+        var endTime = new Date();
+        var duration = (endTime - startTime) / 1000; // Duração em segundos
+
+        var userEmail = '<?php echo $_SESSION['email']; ?>';
+        var pageID = getParameterByName('id'); // Obtém o valor do ID da URL
+
+        // Enviar solicitação para registrar o fechamento da página
+        $.ajax({
+            url: 'pages/users/log.php',
+            type: 'POST',
+            data: { action: 'close', page_id: pageID, duration: duration, user_id: userEmail },
+            async: false, // Sincronizar a solicitação antes de fechar a página
+            success: function(response) {
+                console.log('Fechamento da página registrada.');
+            }
+        });
+    });
+</script>
+
+
 
 
 

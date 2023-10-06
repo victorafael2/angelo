@@ -150,7 +150,7 @@ $(document).ready(function() {
                     tableData += "<td>" + item.nome_sistema + "</td>";
 
                      // Lógica JavaScript para adicionar a estrela com base em algum valor da variável 'item'
-                     tableData += "<td><span class='status-icon' data-id='" + item.id_sistema + "'>";
+                     tableData += "<td class='amount align-middle white-space-nowrap fw-bold ps-4 text-900 py-0'><span class='status-icon' data-id='" + item.id_sistema + "'>";
                         if (item.habilitado == 1) {
                             tableData += "<i class='fa-solid fa-check text-success'></i>";
                         } else {
