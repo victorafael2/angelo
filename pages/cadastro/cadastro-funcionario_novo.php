@@ -240,45 +240,45 @@ $status = $row["status"] ?? "";
                 aria-selected="false">1. Cadastro</a>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item <?php echo isset($_GET['id_func']) ? '' : 'd-none'; ?>">
             <a class="nav-link " id="tab1-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2"
                 aria-selected="true">2. Cadastrar Atualização</a>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item  <?php echo isset($_GET['id_func']) ? '' : 'd-none'; ?>">
             <a class="nav-link " id="docs-tab" data-toggle="tab" href="#docs" role="tab" aria-controls="docs"
                 aria-selected="true">3. Documentos</a>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item  <?php echo isset($_GET['id_func']) ? '' : 'd-none'; ?>">
             <a class="nav-link " id="filhos-tab" data-toggle="tab" href="#filhos" role="tab" aria-controls="filhos"
                 aria-selected="true">4. Filhos</a>
         </li>
 
 
-        <li class="nav-item">
+        <li class="nav-item  <?php echo isset($_GET['id_func']) ? '' : 'd-none'; ?>">
             <a class="nav-link " id="conjuge-tab" data-toggle="tab" href="#conjuge" role="tab" aria-controls="conjuge"
                 aria-selected="true">5. Cônjuge</a>
         </li>
 
 
-        <li class="nav-item">
+        <li class="nav-item  <?php echo isset($_GET['id_func']) ? '' : 'd-none'; ?>">
             <a class="nav-link " id="banco-tab" data-toggle="tab" href="#banco" role="tab" aria-controls="banco"
                 aria-selected="true">6. Inf. Bancaria</a>
         </li>
 
 
-        <li class="nav-item">
+        <li class="nav-item  <?php echo isset($_GET['id_func']) ? '' : 'd-none'; ?>">
             <a class="nav-link " id="login-tab" data-toggle="tab" href="#login" role="tab" aria-controls="login"
                 aria-selected="true">7. Logins</a>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item  <?php echo isset($_GET['id_func']) ? '' : 'd-none'; ?>">
             <a class="nav-link " id="linha-tab" data-toggle="tab" href="#linha" role="tab" aria-controls="linha"
                 aria-selected="true">8. Status</a>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item  <?php echo isset($_GET['id_func']) ? '' : 'd-none'; ?>">
             <a class="nav-link " id="historico-tab" data-toggle="tab" href="#historico" role="tab"
                 aria-controls="historico" aria-selected="true">9. Histórico</a>
         </li>
@@ -641,7 +641,7 @@ $status = $row["status"] ?? "";
                 <div class="row mb-3">
                     <div class="col-md-4">
                         <label for="vlrSalario" class="form-label">Valor do Salário</label>
-                        <input type="text" class="form-control" id="vlrSalario" name="vlrSalario"
+                        <input type="number" class="form-control" id="vlrSalario" name="vlrSalario"
                             value="<?php echo $vlrSalario; ?>">
                     </div>
                     <div class="col-md-4">
@@ -686,7 +686,8 @@ $status = $row["status"] ?? "";
             <form id="tipoForm" action="" method="GET" class="mt-0 mb-3">
                 <div class="form-group d-inline-block align-middle">
                     <label for="tipoSelect">Selecione o tipo de cadastro</label>
-                    <select id="tipoSelect" name="tipo" class="form-control">
+                    <select id="tipoSelect" name="tipo" class="form-control"  <?php if (isset($_GET['id_func']) && isset($_GET['tipo'])) echo 'disabled'; ?>>
+                    <option value="" >-</option>
                         <option value="cpf" <?php if ($tipo === 'cpf') echo 'selected'; ?>>CPF</option>
                         <option value="cnpj" <?php if ($tipo === 'cnpj') echo 'selected'; ?>>CNPJ</option>
                     </select>
@@ -694,15 +695,15 @@ $status = $row["status"] ?? "";
                 <!-- <button type="submit" class="btn btn-primary align-middle">Enviar</button> -->
             </form>
 
-            <?php if ($tipo == 'cpf')  {
-                                    include 'include_cpf_novo.php';
-                                } else {
-                                    include 'include_cnpj_novo.php';
-                                }
-
-
-
-                                ?>
+            <?php
+if ($tipo == 'cpf') {
+    include 'include_cpf_novo.php';
+} elseif ($tipo == 'cnpj') {
+    include 'include_cnpj_novo.php';
+} else {
+    // Se não for igual a nenhum dos dois (cpf ou cnpj), faça algo aqui (ou deixe vazio).
+}
+?>
 
 <div id="includeContainer"></div>
 
@@ -757,7 +758,7 @@ $status = $row["status"] ?? "";
 
             <h3>Outros Anexos</h3>
 
-            <form id="form_docs" action="pages/cadastro/enviar_documentos.php" method="post"
+            <form id="form_docs2" action="pages/cadastro/enviar_documentos_unicos.php" method="post"
                 enctype="multipart/form-data" class="mb-2 border-bottom">
                 <div class="row">
                     <div class="col-md-5 mb-3">
@@ -1007,7 +1008,7 @@ $status = $row["status"] ?? "";
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="form-label" for="banco_agencia">Banco Agência:</label>
-                                        <input type="text" class="form-control" id="banco_agencia" name="banco_agencia"
+                                        <input type="number" class="form-control" id="banco_agencia" name="banco_agencia"
                                             required>
                                     </div>
                                 </div>
@@ -1015,14 +1016,14 @@ $status = $row["status"] ?? "";
                                     <div class="form-group">
                                         <label class="form-label" for="banco_dv_agencia">Banco DV
                                             Agência:</label>
-                                        <input type="text" class="form-control" id="banco_dv_agencia"
+                                        <input type="number" class="form-control" id="banco_dv_agencia"
                                             name="banco_dv_agencia" required>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="form-label" for="banco_conta">Banco Conta:</label>
-                                        <input type="text" class="form-control" id="banco_conta" name="banco_conta"
+                                        <input type="number" class="form-control" id="banco_conta" name="banco_conta"
                                             required>
                                     </div>
                                 </div>
@@ -1032,7 +1033,7 @@ $status = $row["status"] ?? "";
                                     <div class="form-group">
                                         <label class="form-label" for="banco_dv_conta">Banco DV Conta:</label>
                                         <input type="text" class="form-control" id="banco_dv_conta"
-                                            name="banco_dv_conta" required>
+                                            name="number" required>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -1428,34 +1429,178 @@ $(document).ready(function() {
         });
     });
 
-    // Function to update the file list after form submission
     function updateFileList() {
-        var idUsuario = $("#idFuncionario")
-            .val(); // Get the ID of the user (assuming it's stored in #idFuncioanrio)
-        var fileListContainer = $("#fileList");
+    var idUsuario = $("#idFuncionario").val(); // Get the ID of the user (assuming it's stored in #idFuncioanrio)
+    var fileListContainer = $("#fileList");
 
-        // Make an AJAX request to get the related files based on the user ID
+    // Make an AJAX request to get the related files based on the user ID
+    $.ajax({
+        url: "pages/cadastro/list/get_user_files.php", // Replace with the PHP script to fetch user files based on ID
+        type: "POST",
+        data: {
+            id_usuario: idUsuario
+        },
+        success: function (data) {
+            // On success, update the file list container
+            fileListContainer.html(data);
+
+            // Add a click event handler for the delete buttons
+            $(".delete-button").click(function () {
+                var fileId = $(this).data("file-id");
+                deleteFile(fileId);
+            });
+        },
+        error: function (xhr, status, error) {
+            // Handle error if necessary
+            console.error(error);
+        }
+    });
+}
+
+
+    // Initial file list update (if needed)
+    updateFileList();
+
+
+
+});
+
+
+function deleteFile(fileId) {
+    // Faça uma solicitação AJAX para excluir o arquivo no servidor
+    $.ajax({
+        url: "pages/cadastro/delete/apagar_documento.php", // Substitua pelo caminho correto para o script PHP que exclui o arquivo
+        type: "POST",
+        data: {
+            file_id: fileId
+        },
+        success: function (response) {
+        if (response === "success") {
+            // A exclusão foi bem-sucedida, você pode fazer algo aqui, como remover o elemento da lista.
+            $("#fileEntry_" + fileId).remove();
+            function updateFileList() {
+    var idUsuario = $("#idFuncionario").val(); // Get the ID of the user (assuming it's stored in #idFuncioanrio)
+    var fileListContainer = $("#fileList");
+
+    // Make an AJAX request to get the related files based on the user ID
+    $.ajax({
+        url: "pages/cadastro/list/get_user_files.php", // Replace with the PHP script to fetch user files based on ID
+        type: "POST",
+        data: {
+            id_usuario: idUsuario
+        },
+        success: function (data) {
+            // On success, update the file list container
+            fileListContainer.html(data);
+
+            // Add a click event handler for the delete buttons
+            $(".delete-button").click(function () {
+                var fileId = $(this).data("file-id");
+                deleteFile(fileId);
+            });
+        },
+        error: function (xhr, status, error) {
+            // Handle error if necessary
+            console.error(error);
+        }
+    });
+}
+            updateFileList();
+        } else {
+            // A exclusão falhou, você pode exibir uma mensagem de erro.
+            console.error("Erro ao excluir o arquivo: " + response);
+        }
+    },
+
+    error: function (xhr, status, error) {
+        // Trate erros de comunicação com o servidor, se necessário
+        console.error(error);
+    }
+    });
+
+    console.log("ID do arquivo a ser excluído: " + fileId);
+}
+
+
+
+</script>
+
+
+
+
+
+<script>
+$(document).ready(function() {
+    // Function to handle form submission
+    $("#form_docs2").submit(function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        var formData = new FormData(this); // Get form data
+
         $.ajax({
-            url: "pages/cadastro/list/get_user_files.php", // Replace with the PHP script to fetch user files based on ID
+            url: $(this).attr("action"), // URL to handle form submission
             type: "POST",
-            data: {
-                id_usuario: idUsuario
-            },
+            data: formData,
+            contentType: false,
+            processData: false,
             success: function(data) {
-                // On success, update the file list container
-                fileListContainer.html(data);
+                // On success, update the file list
+                updateFileList();
             },
             error: function(xhr, status, error) {
                 // Handle error if necessary
                 console.error(error);
             }
         });
-    }
+    });
+
+
+
+    function updateFileList() {
+    var idUsuario = $("#idFuncionario").val(); // Get the ID of the user (assuming it's stored in #idFuncioanrio)
+    var fileListContainer = $("#fileList");
+
+    // Make an AJAX request to get the related files based on the user ID
+    $.ajax({
+        url: "pages/cadastro/list/get_user_files.php", // Replace with the PHP script to fetch user files based on ID
+        type: "POST",
+        data: {
+            id_usuario: idUsuario
+        },
+        success: function (data) {
+            // On success, update the file list container
+            fileListContainer.html(data);
+
+            // Add a click event handler for the delete buttons
+            $(".delete-button").click(function () {
+                var fileId = $(this).data("file-id");
+                deleteFile(fileId);
+            });
+        },
+        error: function (xhr, status, error) {
+            // Handle error if necessary
+            console.error(error);
+        }
+    });
+}
+
 
     // Initial file list update (if needed)
     updateFileList();
+
+
+
 });
+
+
+
+
+
 </script>
+
+
+
+
 
 <script>
 $(document).ready(function() {

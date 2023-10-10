@@ -6,8 +6,6 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-
-
 require '../../../mail/PHPMailer/src/Exception.php';
 require '../../../mail/PHPMailer/src/PHPMailer.php';
 require '../../../mail/PHPMailer/src/SMTP.php';
@@ -32,12 +30,20 @@ function enviarEmail($name, $email, $telefone, $group, $password) {
         $mail->Subject = 'Cadastro de Usuário';
 
         // Corpo do e-mail
-        $message = "Seu cadastro foi realizado com sucesso!\n\n";
-        $message .= "Nome: " . $name . "\n";
-        $message .= "E-mail: " . $email . "\n";
-        $message .= "Telefone: " . $telefone . "\n";
-        $message .= "Grupo de Usuário: " . $group . "\n";
-        $message .= "Senha: " . $password . "\n"; // Inclui a senha gerada no e-mail
+        $message = "
+        <html>
+        <body>
+            <h2>Seu cadastro foi realizado com sucesso!</h2>
+            <p><strong>Nome:</strong> {$name}</p>
+            <p><strong>E-mail:</strong> {$email}</p>
+            <p><strong>Telefone:</strong> {$telefone}</p>
+            <p><strong>Grupo de Usuário:</strong> {$group}</p>
+            <p><strong>Senha:</strong> {$password}</p>
+        </body>
+        </html>
+        ";
+
+        $mail->isHTML(true); // Define o formato como HTML
         $mail->Body = $message;
 
         $mail->send();
@@ -58,6 +64,24 @@ $email = $_POST['email'];
 $telefone = $_POST['telefone'];
 $group = $_POST['group'];
 
+// Verifica se o email já existe na tabela de usuários
+$sql_check_email = "SELECT COUNT(*) FROM user WHERE email = ?";
+$stmt_check_email = $conn->prepare($sql_check_email);
+$stmt_check_email->bind_param("s", $email);
+$stmt_check_email->execute();
+$stmt_check_email->bind_result($email_count);
+$stmt_check_email->fetch();
+
+if ($email_count > 0) {
+    // O email já existe na tabela, retorne uma resposta de erro
+    $response['success'] = false;
+    $response['message'] = "Este email já está cadastrado.";
+    echo json_encode($response);
+    exit; // Saia do script
+}
+
+$stmt_check_email->close();
+
 // Gere uma senha aleatória forte
 $length = 12; // Define o comprimento da senha (pode ajustar conforme necessário)
 $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+-=[]{}|;:,.<>?'; // Caracteres válidos
@@ -71,8 +95,8 @@ $sql = "INSERT INTO user (name, email, telefone, grupo_acesso, senha) VALUES (?,
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("sssss", $name, $email, $telefone, $group, $hashedPassword);
 
- // Envie o e-mail com as informações
- if (enviarEmail($name, $email, $telefone, $group, $password)) {
+// Envie o e-mail com as informações
+if (enviarEmail($name, $email, $telefone, $group, $password)) {
     $response['success'] = true;
     $response['message'] = "Informações salvas com sucesso! Um e-mail foi enviado com os detalhes e senha.";
 } else {
@@ -80,15 +104,13 @@ $stmt->bind_param("sssss", $name, $email, $telefone, $group, $hashedPassword);
     $response['message'] = "Ocorreu um erro ao enviar o e-mail.";
 }
 
-$response = array();
-
-if ($stmt->execute()) {
-    $response['success'] = true;
-    $response['message'] = "Informações salvas com sucesso! A senha é: " . $password;
-} else {
-    $response['success'] = false;
-    $response['message'] = "Ocorreu um erro ao salvar as informações: " . $conn->error;
-}
+// if ($stmt->execute()) {
+//     $response['success'] = true;
+//     $response['message'] = "Informações salvas com sucesso! A senha é: " . $password;
+// } else {
+//     $response['success'] = false;
+//     $response['message'] = "Ocorreu um erro ao salvar as informações: " . $conn->error;
+// }
 
 $stmt->close();
 $conn->close();
@@ -97,4 +119,3 @@ $conn->close();
 header('Content-Type: application/json');
 echo json_encode($response);
 ?>
-

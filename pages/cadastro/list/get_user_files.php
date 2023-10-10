@@ -24,7 +24,11 @@ function getFileIcon($fileName) {
         case "xlsx":
             $fileIcon = "far fa-file-excel";
             break;
-        // Add more cases for other file types if needed
+        case "jpg":
+        case "jpeg":
+        case "png":
+            $fileIcon = "far fa-file-image"; // Você pode escolher um ícone apropriado aqui
+            break;
         default:
             $fileIcon = "far fa-file";
             break;
@@ -32,6 +36,7 @@ function getFileIcon($fileName) {
 
     return $fileIcon;
 }
+
 ?>
 
 <?php
@@ -50,8 +55,17 @@ if (isset($_POST['id_usuario'])) {
         $counter = 0;
         while ($row = $result->fetch_assoc()) {
             $fileIcon = getFileIcon($row['nome']);
-            $fileList .= '<div class="col-md-4 mb-3"><div class="file-box">';
-            $fileList .= '<a href="uploads/' . $row['nome'] . '"><i class="' . $fileIcon . '"></i> ' . $row['nome'] . '</a>';
+
+            $fileList .= '<div class="col-md-4 mb-3  "><div class="file-box position-relative border p-1">';
+
+            // Add JavaScript to open the file in a new window
+            $fileList .= '<a class="fs--1" href="#" onclick="openFile(\'pages/cadastro/' . $row['caminho'] . '\'); return false;"><i class="' . $fileIcon . '"></i> ' . $row['texto'] . '</a>';
+
+            // Add the delete icon with a unique ID for each file
+            $fileList .= '<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">';
+            $fileList .= '<a class="delete-button" data-file-id="' . $row['id'] . '" data-file-path="' . $row['caminho'] . '"><i class="fas fa-times"></i></a>';
+            $fileList .= '<span class="visually-hidden"></span></span>';
+
             $fileList .= '</div></div>';
 
             $counter++;
@@ -74,3 +88,14 @@ if (isset($_POST['id_usuario'])) {
 
 $conn->close();
 ?>
+<script>
+    function openFile(filePath) {
+        // Open the file in a new window with specific dimensions
+        window.open(filePath, "_blank", "width=600, height=400");
+    }
+</script>
+
+
+
+
+

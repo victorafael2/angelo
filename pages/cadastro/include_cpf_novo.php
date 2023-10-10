@@ -53,7 +53,7 @@
         <div class="col-sm-6">
             <div class="form-group">
                 <label for="eSocial">eSocial:</label>
-                <input type="text" class="form-control" id="eSocial" name="eSocial" value="<?php echo $eSocial; ?>">
+                <input type="number" class="form-control" id="eSocial" name="eSocial" value="<?php echo $eSocial; ?>">
             </div>
         </div>
     </div>
@@ -84,7 +84,7 @@
         <div class="col-sm-4">
             <div class="form-group">
                 <label for="rgNumero">RG Número:</label>
-                <input type="text" class="form-control" id="rgNumero" name="rgNumero" value="<?php echo $rgNumero; ?>">
+                <input type="number" class="form-control" id="rgNumero" name="rgNumero" value="<?php echo $rgNumero; ?>">
             </div>
         </div>
         <div class="col-sm-4">
@@ -112,7 +112,7 @@
         <div class="col-sm-4">
             <div class="form-group">
                 <label for="cnhNumero">CNH Número:</label>
-                <input type="text" class="form-control" id="cnhNumero" name="cnhNumero"
+                <input type="number" class="form-control" id="cnhNumero" name="cnhNumero"
                     value="<?php echo $cnhNumero; ?>">
             </div>
         </div>
@@ -263,7 +263,7 @@ $(document).ready(function() {
                     }).then((result) => {
                         if (result.isConfirmed) {
                             // Redirect to the destination URL with the inserted ID
-                            location.href = 'content_pages.php?id=10&id_func=' +
+                            location.href = 'content_pages.php?tipo=cpf&id=10&id_func=' +
                                 insertedId;
                             // Or if you want to redirect to a page without any query parameters
                             // location.href = 'palitagens.php';

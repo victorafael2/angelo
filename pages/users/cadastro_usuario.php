@@ -53,7 +53,7 @@ $(document).ready(function () {
       name: $("#name").val(),
       email: $("#email").val(),
       telefone: $("#telefone").val(),
-      group: $("#group").val(),
+      group: $("#grupo_acesso option:selected").val(),
     };
 
     // Envia os dados para o servidor via Ajax
@@ -69,17 +69,17 @@ $(document).ready(function () {
           Swal.fire({
             icon: "success",
             title: "Sucesso",
-            text: "Informações salvas com sucesso!",
+            text: response.message, // Use a mensagem do servidor
           });
 
           // Limpa o formulário após o sucesso
           $("#user-form")[0].reset();
         } else {
-          // Exibe um SweetAlert2 de erro
+          // Exibe um SweetAlert2 de erro com a mensagem do servidor
           Swal.fire({
             icon: "error",
             title: "Erro",
-            text: "Ocorreu um erro ao salvar as informações.",
+            text: response.message, // Use a mensagem do servidor
           });
         }
       },
@@ -94,6 +94,7 @@ $(document).ready(function () {
     });
   });
 });
+
 
 </script>
 

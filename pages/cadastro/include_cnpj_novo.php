@@ -342,7 +342,7 @@ $(document).ready(function() {
                 }).then(function() {
                     // Limpar os campos do formulário
                     // $('#form')[0].reset();
-                    location.href = 'content_pages.php?id=10&tipo=cnpj&id_func=' +
+                    location.href = 'content_pages.php?tipo=cnpj&id=10&tipo=cnpj&id_func=' +
                         insertedId;
                 });
             },

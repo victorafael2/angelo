@@ -32,7 +32,7 @@ if (
     $extensaoArquivo = pathinfo($nomeArquivo, PATHINFO_EXTENSION);
 
     // Gera um nome único para o arquivo usando o ID do usuário e o timestamp atual
-    $novoNomeArquivo = $id_usuario . "_" . time() . "." . $extensaoArquivo;
+    $novoNomeArquivo = $id_usuario . "_" . time() . $campoTexto . "."  . $extensaoArquivo;
     $caminhoArquivo = $pasta . $novoNomeArquivo;
 
     // Move o arquivo para a pasta de upload
@@ -53,9 +53,9 @@ if (
   }
 
   // Chama a função para mover cada arquivo and pass the corresponding name for the 'texto' column
-  moverArquivo($_FILES['arquivoCPF'], $pastaUsuario, $id_usuario, $conn, 'Anexar CPF');
-  moverArquivo($_FILES['arquivoRG'], $pastaUsuario, $id_usuario, $conn, 'Anexar RG');
-  moverArquivo($_FILES['arquivoEndereco'], $pastaUsuario, $id_usuario, $conn, 'Anexar comprovante de Endereço');
+  moverArquivo($_FILES['arquivoCPF'], $pastaUsuario, $id_usuario, $conn, 'CPF');
+  moverArquivo($_FILES['arquivoRG'], $pastaUsuario, $id_usuario, $conn, 'RG');
+  moverArquivo($_FILES['arquivoEndereco'], $pastaUsuario, $id_usuario, $conn, 'Comprovante de Endereço');
 
   $conn->close();
 }
