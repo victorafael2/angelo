@@ -5,9 +5,9 @@ if (
 ) {
   // Obter o ID do usuário enviado pelo formulário
   $id_usuario = $_POST['idFuncionario'];
-
+  $tipo = $_POST['tipo'];
   // Pasta para salvar os arquivos do usuário
-  $pastaUsuario = "uploads/" . $id_usuario . "/";
+  $pastaUsuario = "uploads/" . $tipo . "/" . $id_usuario . "/";
   if (!is_dir($pastaUsuario)) {
     // Verifica e cria o diretório com permissões adequadas
     if (!mkdir($pastaUsuario, 0755, true)) {
@@ -26,6 +26,7 @@ if (
   {
     $nomeArquivo = $arquivo['name'];
     $tamanhoArquivo = $arquivo['size'];
+    $tipo = $_POST['tipo'];
     $extensaoArquivo = pathinfo($nomeArquivo, PATHINFO_EXTENSION);
 
     // Gera um nome único para o arquivo usando o ID do usuário e o timestamp atual
@@ -34,12 +35,14 @@ if (
 
     // Move o arquivo para a pasta de upload
     if (move_uploaded_file($arquivo['tmp_name'], $caminhoArquivo)) {
+      $tipo = $_POST['tipo'];
       // Insere as informações na tabela do banco de dados
-      $sql = "INSERT INTO arquivos_usuario (id_usuario, caminho, nome, tamanho, extensao, texto)
-              VALUES ('$id_usuario', '$caminhoArquivo', '$nomeArquivo', '$tamanhoArquivo', '$extensaoArquivo', '$campoTexto')";
+      $sql = "INSERT INTO arquivos_usuario (id_usuario, caminho, nome, tamanho, extensao, texto, tipo)
+              VALUES ('$id_usuario', '$caminhoArquivo', '$nomeArquivo', '$tamanhoArquivo', '$extensaoArquivo', '$campoTexto', '$tipo')";
 
       if ($conn->query($sql) === TRUE) {
         echo "Arquivo enviado com sucesso!";
+        echo $tipo;
       } else {
         echo "Erro ao enviar o arquivo: " . $conn->error;
       }

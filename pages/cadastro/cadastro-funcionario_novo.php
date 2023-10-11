@@ -740,6 +740,11 @@ if ($tipo == 'cpf') {
                         <input type="file" class="form-control" id="arquivoEndereco" name="arquivoEndereco" required>
                     </div>
 
+                    <div class="col-md-3 mb-3 d-none">
+                        <label for="tipo">Tipo:</label>
+                        <input type="text" class="form-control" id="tipo" name="tipo" value="<?php echo $tipo ?>" readonly>
+                    </div>
+
                     <div class="col-md-4 d-none">
                         <label for="idFuncionario" class="form-label">Id Funcioanrio</label>
                         <input type="text" class="form-control" id="idFuncionario" name="idFuncionario"
@@ -775,6 +780,11 @@ if ($tipo == 'cpf') {
                         <label for="idFuncionario" class="form-label">Id Funcioanrio</label>
                         <input type="text" class="form-control" id="idFuncionario" name="idFuncionario"
                             value="<?php echo $id_funci; ?>" readonly>
+                    </div>
+
+                    <div class="col-md-3 mb-3 d-none">
+                        <label for="tipo">Tipo:</label>
+                        <input type="text" class="form-control" id="tipo" name="tipo" value="<?php echo $tipo ?>" readonly>
                     </div>
 
                     <!-- Additional fields, if needed -->
@@ -1430,7 +1440,9 @@ $(document).ready(function() {
     });
 
     function updateFileList() {
-    var idUsuario = $("#idFuncionario").val(); // Get the ID of the user (assuming it's stored in #idFuncioanrio)
+    var idUsuario = $("#idFuncionario").val();
+    var tipo = $("#tipo").val();
+     // Get the ID of the user (assuming it's stored in #idFuncioanrio)
     var fileListContainer = $("#fileList");
 
     // Make an AJAX request to get the related files based on the user ID
@@ -1438,7 +1450,9 @@ $(document).ready(function() {
         url: "pages/cadastro/list/get_user_files.php", // Replace with the PHP script to fetch user files based on ID
         type: "POST",
         data: {
-            id_usuario: idUsuario
+            id_usuario: idUsuario,
+            tipo: tipo
+
         },
         success: function (data) {
             // On success, update the file list container
@@ -1479,6 +1493,7 @@ function deleteFile(fileId) {
             // A exclusão foi bem-sucedida, você pode fazer algo aqui, como remover o elemento da lista.
             $("#fileEntry_" + fileId).remove();
             function updateFileList() {
+                var tipo = $("#tipo").val();
     var idUsuario = $("#idFuncionario").val(); // Get the ID of the user (assuming it's stored in #idFuncioanrio)
     var fileListContainer = $("#fileList");
 
@@ -1487,7 +1502,8 @@ function deleteFile(fileId) {
         url: "pages/cadastro/list/get_user_files.php", // Replace with the PHP script to fetch user files based on ID
         type: "POST",
         data: {
-            id_usuario: idUsuario
+            id_usuario: idUsuario,
+            tipo: tipo
         },
         success: function (data) {
             // On success, update the file list container
@@ -1557,6 +1573,7 @@ $(document).ready(function() {
 
 
     function updateFileList() {
+    var tipo = $("#tipo").val();
     var idUsuario = $("#idFuncionario").val(); // Get the ID of the user (assuming it's stored in #idFuncioanrio)
     var fileListContainer = $("#fileList");
 
@@ -1565,7 +1582,8 @@ $(document).ready(function() {
         url: "pages/cadastro/list/get_user_files.php", // Replace with the PHP script to fetch user files based on ID
         type: "POST",
         data: {
-            id_usuario: idUsuario
+            id_usuario: idUsuario,
+            tipo: tipo
         },
         success: function (data) {
             // On success, update the file list container

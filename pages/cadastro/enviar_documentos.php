@@ -7,10 +7,11 @@ if (
 ) {
 
   // Obter o ID do usuário enviado pelo formulário
-  $id_usuario = $_POST['idFuncionario']; // Fix the typo here - 'idFuncionario'
+  $id_usuario = $_POST['idFuncionario'];
+  $tipo = $_POST['tipo']; // Fix the typo here - 'idFuncionario'
 
   // Pasta para salvar os arquivos do usuário
-  $pastaUsuario = "uploads/" . $id_usuario . "/";
+  $pastaUsuario = "uploads/" . $tipo . "/" . $id_usuario . "/";
   if (!is_dir($pastaUsuario)) {
     // Check and create the directory with proper permissions
     if (!mkdir($pastaUsuario, 0755, true)) {
@@ -39,8 +40,9 @@ if (
     if (move_uploaded_file($arquivo['tmp_name'], $caminhoArquivo)) {
       // Insere as informações na tabela do banco de dados
       $id_usuario = $_POST['idFuncionario'];
-      $sql = "INSERT INTO arquivos_usuario (id_usuario, caminho, nome, tamanho, extensao, texto)
-              VALUES ('$id_usuario', '$caminhoArquivo', '$nomeArquivo', '$tamanhoArquivo', '$extensaoArquivo', '$campoTexto')";
+      $tipo = $_POST['tipo'];
+      $sql = "INSERT INTO arquivos_usuario (id_usuario, caminho, nome, tamanho, extensao, texto, tipo)
+              VALUES ('$id_usuario', '$caminhoArquivo', '$nomeArquivo', '$tamanhoArquivo', '$extensaoArquivo', '$campoTexto', '$tipo')";
 
       if ($conn->query($sql) === TRUE) {
         echo "Arquivo enviado com sucesso!";

@@ -43,9 +43,10 @@ function getFileIcon($fileName) {
 // Assuming you have already received the `id_usuario` via POST
 if (isset($_POST['id_usuario'])) {
     $idUsuario = $_POST['id_usuario'];
+    $tipo = $_POST['tipo'];
 
     // SQL query to fetch related files based on the user ID
-    $sql = "SELECT * FROM arquivos_usuario WHERE id_usuario = '$idUsuario'";
+    $sql = "SELECT * FROM arquivos_usuario WHERE id_usuario = '$idUsuario' and tipo = '$tipo'";
 
     $result = $conn->query($sql);
 
@@ -56,7 +57,7 @@ if (isset($_POST['id_usuario'])) {
         while ($row = $result->fetch_assoc()) {
             $fileIcon = getFileIcon($row['nome']);
 
-            $fileList .= '<div class="col-md-4 mb-3  "><div class="file-box position-relative border p-1">';
+            $fileList .= '<div class="col-md-4 mb-3  " ><div class="file-box position-relative border p-1">';
 
             // Add JavaScript to open the file in a new window
             $fileList .= '<a class="fs--1" href="#" onclick="openFile(\'pages/cadastro/' . $row['caminho'] . '\'); return false;"><i class="' . $fileIcon . '"></i> ' . $row['texto'] . '</a>';
@@ -80,7 +81,8 @@ if (isset($_POST['id_usuario'])) {
         // Return the file list HTML as the response
         echo $fileList;
     } else {
-        echo "Sem Informação.";
+        echo "Sem Arquivos.";
+
     }
 } else {
     echo "Invalid request.";
