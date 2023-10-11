@@ -795,6 +795,8 @@ if ($tipo == 'cpf') {
                 </div>
             </form>
 
+            <div id="progress-bar"> </div>
+
 
 
 
@@ -1547,74 +1549,79 @@ function deleteFile(fileId) {
 
 <script>
 $(document).ready(function() {
-    // Function to handle form submission
+    // Função para lidar com a submissão do formulário
     $("#form_docs2").submit(function(event) {
-        event.preventDefault(); // Prevent default form submission
+        event.preventDefault(); // Impede a submissão padrão do formulário
 
-        var formData = new FormData(this); // Get form data
+        var formData = new FormData(this); // Obtenha os dados do formulário
 
         $.ajax({
-            url: $(this).attr("action"), // URL to handle form submission
+            url: $(this).attr("action"), // URL para lidar com a submissão do formulário
             type: "POST",
             data: formData,
             contentType: false,
             processData: false,
+            xhr: function() {
+                var xhr = new window.XMLHttpRequest();
+
+                // Monitorar o progresso do upload
+                xhr.upload.addEventListener("progress", function(evt) {
+                    if (evt.lengthComputable) {
+                        var percentComplete = (evt.loaded / evt.total) * 100;
+                        // Atualizar a barra de progresso
+                        $("#progress-bar").css("width", percentComplete + "%");
+                    }
+                }, false);
+
+                return xhr;
+            },
             success: function(data) {
-                // On success, update the file list
+                // Em caso de sucesso, atualize a lista de arquivos
                 updateFileList();
+                // Limpar a barra de progresso
+                $("#progress-bar").css("width", "0%");
             },
             error: function(xhr, status, error) {
-                // Handle error if necessary
+                // Lidar com erro, se necessário
                 console.error(error);
             }
         });
     });
 
-
-
     function updateFileList() {
-    var tipo = $("#tipo").val();
-    var idUsuario = $("#idFuncionario").val(); // Get the ID of the user (assuming it's stored in #idFuncioanrio)
-    var fileListContainer = $("#fileList");
+        var tipo = $("#tipo").val();
+        var idUsuario = $("#idFuncionario").val();
+        var fileListContainer = $("#fileList");
 
-    // Make an AJAX request to get the related files based on the user ID
-    $.ajax({
-        url: "pages/cadastro/list/get_user_files.php", // Replace with the PHP script to fetch user files based on ID
-        type: "POST",
-        data: {
-            id_usuario: idUsuario,
-            tipo: tipo
-        },
-        success: function (data) {
-            // On success, update the file list container
-            fileListContainer.html(data);
+        $.ajax({
+            url: "pages/cadastro/list/get_user_files.php",
+            type: "POST",
+            data: {
+                id_usuario: idUsuario,
+                tipo: tipo
+            },
+            success: function (data) {
+                fileListContainer.html(data);
 
-            // Add a click event handler for the delete buttons
-            $(".delete-button").click(function () {
-                var fileId = $(this).data("file-id");
-                deleteFile(fileId);
-            });
-        },
-        error: function (xhr, status, error) {
-            // Handle error if necessary
-            console.error(error);
-        }
-    });
-}
+                // Adicionar um manipulador de evento de clique para os botões de exclusão
+                $(".delete-button").click(function () {
+                    var fileId = $(this).data("file-id");
+                    deleteFile(fileId);
+                });
+            },
+            error: function (xhr, status, error) {
+                // Lidar com erro, se necessário
+                console.error(error);
+            }
+        });
+    }
 
-
-    // Initial file list update (if needed)
+    // Atualização inicial da lista de arquivos (se necessário)
     updateFileList();
 
-
-
 });
-
-
-
-
-
 </script>
+
 
 
 
