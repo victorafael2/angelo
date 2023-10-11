@@ -46,11 +46,14 @@ if (
 
       if ($conn->query($sql) === TRUE) {
         echo "Arquivo enviado com sucesso!";
+        echo "<script>console.log('Arquivo enviado com sucesso!');</script>"; // Log no console do navegador
       } else {
         echo "Erro ao enviar o arquivo: " . $conn->error;
+        echo "<script>console.log('Erro ao enviar o arquivo: " . $conn->error . "');</script>"; // Log no console do navegador
       }
     } else {
       echo "Erro ao mover o arquivo.";
+      echo "<script>console.log('Erro ao mover o arquivo.');</script>"; // Log no console do navegador
     }
   }
 
