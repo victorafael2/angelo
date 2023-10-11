@@ -1,4 +1,5 @@
 <?php
+  require('../ssh/phpseclib-master/phpseclib/Net/SSH2.php');
     // Seleciona as configurações do banco de dados com base no ambiente
 
     if ($_SERVER['SERVER_NAME'] === 'localhost') {
@@ -7,6 +8,13 @@
         $senha = "Angelo01";
         $dbname = "u358437276_angelo";
 } else {
+
+
+
+    $ssh = new Net_SSH2('191.96.31.197'); // Substitua 'localhost' pelo endereço do servidor SSH remoto
+if (!$ssh->login('victorrafael', 'victor001@2023')) {
+    exit('Falha na autenticação SSH');
+}
 
     // $servidor = "45.152.44.103";
     // $usuario = "u358437276_angelo";
