@@ -26,11 +26,11 @@
                                 </div> -->
                         <div class="form-group">
                             <label for="vt_nome" class="form-label">Nome:</label>
-                            <input type="text" class="form-control" id="vt_nome" name="vt_nome">
+                            <input type="text" class="form-control" id="vt_nome" name="vt_nome" require>
                         </div>
                         <div class="form-group">
                             <label for="vt_valor" class="form-label">Valor:</label>
-                            <input type="number" class="form-control" id="vt_valor" name="vt_valor">
+                            <input type="number" class="form-control" id="vt_valor" name="vt_valor" required>
                         </div>
                         <div class="form-group">
                             <label for="vt_habilitado" class="form-label">HABILITADO:</label>
@@ -230,6 +230,44 @@ $(document).ready(function() {
         var habilitado = document.getElementById("habilitado").value;
         var sys_user = document.getElementById("sys_user").value;
 
+
+          // Realize uma verificação no servidor para ver se o nome da área já existe
+          $.ajax({
+            url: 'pages/cadastro/list/verificar_vt.php',
+            type: 'POST',
+            data: {
+                vt_nome: vt_nome
+
+                  },
+
+            dataType: 'json',
+            success: function(response) {
+                if (response.status === 'error') {
+                    // Exibe uma mensagem de erro usando SweetAlert2
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Erro!',
+                        text: 'O nome do VT já está em uso. Escolha outro nome.',
+                        confirmButtonText: 'OK'
+                    });
+                } else {
+                    // O nome da área não está em uso, pode prosseguir com o salvamento
+                    salvarArea();
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log("Erro na solicitação AJAX: " + error);
+            }
+        });
+
+
+        function salvarArea() {
+
+            var vt_nome = document.getElementById("vt_nome").value;
+        var vt_valor = document.getElementById("vt_valor").value;
+        var habilitado = document.getElementById("habilitado").value;
+        var sys_user = document.getElementById("sys_user").value;
+
         $.ajax({
             url: 'pages/config/insert/salve_vt.php',
             type: 'POST',
@@ -257,6 +295,7 @@ $(document).ready(function() {
                 console.log("Erro na solicitação AJAX: " + error);
             }
         });
+    }
     });
 });
 </script>
@@ -372,6 +411,24 @@ $("#saveChanges").click(function() {
     // Colete os dados do formulário de edição
     var formData = $("#editForm").serialize();
 
+
+
+    $.ajax({
+        url: 'pages/cadastro/list/verificar_vt.php', // Use o URL correto
+        type: 'POST',
+        data: formData,
+        dataType: 'json',
+        success: function(response) {
+            if (response.status === 'error') {
+                // O nome da filial já existe, exiba uma mensagem de erro
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erro!',
+                    text: response.message,
+                    confirmButtonText: 'OK'
+                });
+            } else {
+
     // Realize uma chamada AJAX para enviar os dados ao servidor e atualizar as informações da filial
     $.ajax({
         url: 'pages/config/insert/update_vt_info.php', // Substitua pelo URL correto
@@ -447,5 +504,7 @@ $("#saveChanges").click(function() {
             console.log("Erro na solicitação AJAX: " + error);
         }
     });
+}   }
+    })
 });
 </script>

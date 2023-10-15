@@ -130,7 +130,21 @@ document.addEventListener('click', reiniciarTempoInatividade);
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+
+function generateUniqueID() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = (Math.random() * 16) | 0,
+            v = c == 'x' ? r : (r & 0x3) | 0x8;
+        return v.toString(16);
+    });
+}
+
+// Use o ID exclusivo gerado onde for necessário
+var uniqueID = generateUniqueID();
+
+
     var startTime = new Date();
+
 
     // Função para obter o ID da URL
     function getParameterByName(name, url) {
@@ -154,32 +168,36 @@ document.addEventListener('click', reiniciarTempoInatividade);
         $.ajax({
             url: 'pages/users/log.php',
             type: 'POST',
-            data: { action: 'open', page_id: pageID, user_id: userEmail },
+            data: { action: 'open', page_id: pageID, user_id: userEmail, uniqueID },
             success: function(response) {
                 console.log('Abertura da página registrada.');
             }
         });
     });
 
-    // Quando a página é fechada
-    $(window).on('beforeunload', function() {
-        var endTime = new Date();
-        var duration = (endTime - startTime) / 1000; // Duração em segundos
 
-        var userEmail = '<?php echo $_SESSION['email']; ?>';
-        var pageID = getParameterByName('id'); // Obtém o valor do ID da URL
+// Definir uma função para enviar dados a cada 10 segundos
+function sendDataToServer() {
+    var endTime = new Date();
+    var duration = (endTime - startTime) / 1000; // Duração em segundos
 
-        // Enviar solicitação para registrar o fechamento da página
-        $.ajax({
-            url: 'pages/users/log.php',
-            type: 'POST',
-            data: { action: 'close', page_id: pageID, duration: duration, user_id: userEmail },
-            async: false, // Sincronizar a solicitação antes de fechar a página
-            success: function(response) {
-                console.log('Fechamento da página registrada.');
-            }
-        });
+    var userEmail = '<?php echo $_SESSION['email']; ?>';
+    var pageID = getParameterByName('id'); // Obtém o valor do ID da URL
+
+    // Enviar solicitação para registrar o fechamento da página
+    $.ajax({
+        url: 'pages/users/log.php',
+        type: 'POST',
+        data: { action: 'close', page_id: pageID, duration: duration, user_id: userEmail, uniqueID },
+        success: function(response) {
+            console.log('Fechamento da página registrado.');
+        }
     });
+}
+
+// Executar a função a cada 10 segundos
+setInterval(sendDataToServer, 10000); // 10000 milissegundos = 10 segundos
+
 </script>
 
 

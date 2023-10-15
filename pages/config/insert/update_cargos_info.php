@@ -14,8 +14,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $cargo_grupo = $_POST['cargo_grupo_modal'];
     $cargo_nivel = $_POST['cargo_nivel_modal'];
     $cargo_nome = $_POST['cargo_nome_modal'];
-    $id_area = $_POST['id_area_cargos_modal'];
-    $id_cargo = $_POST['id_modal'];
+
+    $id_cargo = $_POST['id_area_cargos_modal'];
+    $id_area = $_POST['id_modal'];
 
 
 
@@ -29,10 +30,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             cargo_grupo = '$cargo_grupo',
             cargo_nivel = '$cargo_nivel',
             cargo_description = '$cargo_description',
-            id_area = '$id_area'
+            id_area = '$id_cargo'
 
 
-            WHERE id_cargo = $id_cargo"; // Substitua 'sua_tabela' e 'seu_id' pelos valores corretos
+            WHERE id_cargo = $id_area"; // Substitua 'sua_tabela' e 'seu_id' pelos valores corretos
 
     if ($conn->query($sql) === TRUE) {
         // Resposta de sucesso

@@ -516,29 +516,56 @@ $(document).ready(function() {
     });
 
     function salvarFormulario(formData) {
-        $.ajax({
-            url: 'pages/config/insert/salve_filiais.php',
-            type: 'POST',
-            data: formData,
-            dataType: 'json',
-            success: function(response) {
+    // Obtenha o valor do campo filial_nome
+    var filialNome = $("#filial_nome").val();
+
+    // Faça uma solicitação AJAX para verificar se o nome da filial já existe
+    $.ajax({
+        url: 'pages/cadastro/list/verificar_filial.php',
+        type: 'POST',
+        data: { filial_nome: filialNome },
+        dataType: 'json',
+        success: function(response) {
+            if (response.status === 'error') {
+                // O nome da filial já existe, exiba uma mensagem de erro
                 Swal.fire({
-                    icon: response.status ? 'success' : 'error',
-                    title: response.status ? 'Sucesso!' : 'Erro!',
+                    icon: 'error',
+                    title: 'Erro!',
                     text: response.message,
                     confirmButtonText: 'OK'
                 });
+            } else {
+                // O nome da filial não existe, continue com o envio do formulário
+                $.ajax({
+                    url: 'pages/config/insert/salve_filiais.php',
+                    type: 'POST',
+                    data: formData,
+                    dataType: 'json',
+                    success: function(response) {
+                        Swal.fire({
+                            icon: response.status ? 'success' : 'error',
+                            title: response.status ? 'Sucesso!' : 'Erro!',
+                            text: response.message,
+                            confirmButtonText: 'OK'
+                        });
 
-                if (response.status) {
-                    loadItems();
-                    $("#filiais")[0].reset();
-                }
-            },
-            error: function(xhr, status, error) {
-                console.log("Erro na solicitação AJAX: " + error);
+                        if (response.status) {
+                            loadItems();
+                            $("#filiais")[0].reset();
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log("Erro na solicitação AJAX: " + error);
+                    }
+                });
             }
-        });
-    }
+        },
+        error: function(xhr, status, error) {
+            console.log("Erro na solicitação AJAX: " + error);
+        }
+    });
+}
+
 
 });
 </script>
@@ -662,21 +689,67 @@ $(document).on("click", ".edit-btn-filiais", function() {
 $("#saveChanges").click(function() {
     // Colete os dados do formulário de edição
     var formData = $("#editForm").serialize();
+     // Inclua o id_filial
 
-    // Realize uma chamada AJAX para enviar os dados ao servidor e atualizar as informações da filial
+    // Realize uma chamada AJAX para verificar se o nome da filial já existe
     $.ajax({
-        url: 'pages/config/insert/update_filial_info.php', // Substitua pelo URL correto
+        url: 'pages/cadastro/list/verificar_filial.php', // Use o URL correto
         type: 'POST',
         data: formData,
         dataType: 'json',
         success: function(response) {
-            // Verifique a resposta do servidor e lide com ela (por exemplo, exiba uma mensagem de sucesso)
+            if (response.status === 'error') {
+                // O nome da filial já existe, exiba uma mensagem de erro
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erro!',
+                    text: response.message,
+                    confirmButtonText: 'OK'
+                });
+            } else {
+                // O nome da filial não existe, continue com a atualização
+                $.ajax({
+                    url: 'pages/config/insert/update_filial_info.php', // Substitua pelo URL correto
+                    type: 'POST',
+                    data: formData,
+                    dataType: 'json',
+                    success: function(response) {
+                        // Verifique a resposta do servidor e lide com ela (por exemplo, exiba uma mensagem de sucesso)
 
-            // Feche o modal após salvar as alterações
-            $("#editModal").modal("hide");
+                        // Feche o modal após salvar as alterações
+                        $("#editModal").modal("hide");
 
-            loadItems();
-            function loadItems() {
+                        const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'center',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                        })
+
+                        Toast.fire({
+                        icon: 'success',
+                        title: 'Filial Atualizada!'
+                        })
+                        loadItems();
+                    },
+                    error: function(xhr, status, error) {
+                        console.log("Erro na solicitação AJAX: " + error);
+                    }
+                });
+            }
+        },
+        error: function(xhr, status, error) {
+            console.log("Erro na solicitação AJAX: " + error);
+        }
+    });
+});
+
+function loadItems() {
         $.ajax({
             url: 'pages/config/insert/get_filiais.php',
             type: 'GET',
@@ -700,7 +773,7 @@ $("#saveChanges").click(function() {
                     // tableData += "<td>" + item.habilitado_icon + "</td>";
 
                   // Lógica JavaScript para adicionar a estrela com base em algum valor da variável 'item'
-                        tableData += "<td><span class='status-icon' data-id='" + item.id_filial + "'>";
+                        tableData += "<td class='amount align-middle white-space-nowrap fw-bold ps-4 text-900 py-0'><span class='status-icon' data-id='" + item.id_filial + "'>";
                         if (item.habilitado == 1) {
                             tableData += "<i class='fa-solid fa-check text-success'></i>";
                         } else {
@@ -722,13 +795,7 @@ $("#saveChanges").click(function() {
             }
         });
     }
-    loadItems();
-        },
-        error: function(xhr, status, error) {
-            console.log("Erro na solicitação AJAX: " + error);
-        }
-    });
-});
+
 
 
 

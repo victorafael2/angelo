@@ -2,8 +2,8 @@
 // Verificar se a requisição é do tipo POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Verificar se o parâmetro 'id_vt' foi enviado
-    if (isset($_POST["id_po"])) {
-        $id_po = $_POST["id_po"];
+    if (isset($_POST["id_op"])) {
+        $id_po = $_POST["id_op"];
 
         include '../../../database/databaseconnect.php';
 

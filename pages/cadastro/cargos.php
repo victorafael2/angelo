@@ -120,7 +120,7 @@
                                         <th class="sort border-top">CARGO_NIVEL</th>
                                         <th class="sort border-top">CARGO_DESCRIPTION</th>
                                         <th class="sort border-top">HABILITADO</th>
-                                        <th class="sort border-top">APAGAR</th>
+                                        <th class="sort border-top">EDITAR</th>
 
 
 
@@ -362,6 +362,47 @@ $(document).ready(function() {
         var habilitado = document.getElementById("habilitado").checked;
         var sysUser = document.getElementById("sys_user").value;
 
+                  // Realize uma verificação no servidor para ver se o nome da área já existe
+                  $.ajax({
+            url: 'pages/cadastro/list/verificar_cargo.php',
+            type: 'POST',
+            data: {
+                idArea_cargos: idArea_cargos,
+                cargoNome: cargoNome
+
+                  },
+
+            dataType: 'json',
+            success: function(response) {
+                if (response.status === 'error') {
+                    // Exibe uma mensagem de erro usando SweetAlert2
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Erro!',
+                        text: 'O nome do cargo já está em uso. Escolha outro nome.',
+                        confirmButtonText: 'OK'
+                    });
+                } else {
+                    // O nome da área não está em uso, pode prosseguir com o salvamento
+                    salvarArea();
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log("Erro na solicitação AJAX: " + error);
+            }
+        });
+
+
+        function salvarArea() {
+
+            var idArea_cargos = document.getElementById("id_area_cargos").value;
+        var cargoNome = document.getElementById("cargo_nome").value;
+        var cargoGrupo = document.getElementById("cargo_grupo").value;
+        var cargoNivel = document.getElementById("cargo_nivel").value;
+        var cargoDescription = document.getElementById("cargo_description").value;
+        var habilitado = document.getElementById("habilitado").checked;
+        var sysUser = document.getElementById("sys_user").value;
+
         $.ajax({
             url: 'pages/config/insert/salve_cargos.php',
             type: 'POST',
@@ -392,6 +433,7 @@ $(document).ready(function() {
                 console.log("Erro na solicitação AJAX: " + error);
             }
         });
+    }
     });
 });
 </script>
@@ -511,6 +553,24 @@ $("#saveChanges").click(function() {
     // Colete os dados do formulário de edição
     var formData = $("#editForm").serialize();
 
+
+    $.ajax({
+        url: 'pages/cadastro/list/verificar_cargo.php', // Use o URL correto
+        type: 'POST',
+        data: formData,
+        dataType: 'json',
+        success: function(response) {
+            if (response.status === 'error') {
+                // O nome da filial já existe, exiba uma mensagem de erro
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erro!',
+                    text: response.message,
+                    confirmButtonText: 'OK'
+                });
+            } else {
+
+
     // Realize uma chamada AJAX para enviar os dados ao servidor e atualizar as informações da filial
     $.ajax({
         url: 'pages/config/insert/update_cargos_info.php', // Substitua pelo URL correto
@@ -586,5 +646,7 @@ $("#saveChanges").click(function() {
             console.log("Erro na solicitação AJAX: " + error);
         }
     });
+}   }
+    })
 });
 </script>

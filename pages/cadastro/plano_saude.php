@@ -25,11 +25,11 @@
                                 </div> -->
                         <div class="form-group">
                             <label for="vt_nome" class="form-label">Nome:</label>
-                            <input type="text" class="form-control" id="vr_nome" name="vr_nome">
+                            <input type="text" class="form-control" id="vr_nome" name="vr_nome" required>
                         </div>
                         <div class="form-group">
                             <label for="vt_valor" class="form-label">Valor:</label>
-                            <input type="number" class="form-control" id="vr_valor" name="vr_valor">
+                            <input type="number" class="form-control" id="vr_valor" name="vr_valor" required>
                         </div>
                         <div class="form-group">
                             <label for="habilitado" class="form-label">HABILITADO:</label>
@@ -231,6 +231,38 @@ $(document).ready(function() {
         var habilitado = document.getElementById("habilitado").value;
         var sys_user = document.getElementById("sys_user").value;
 
+
+                    // Realize uma verificação no servidor para ver se o nome da área já existe
+                    $.ajax({
+            url: 'pages/cadastro/list/verificar_ps.php',
+            type: 'POST',
+            data: {
+                ps_nome: ps_nome
+
+                  },
+
+            dataType: 'json',
+            success: function(response) {
+                if (response.status === 'error') {
+                    // Exibe uma mensagem de erro usando SweetAlert2
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Erro!',
+                        text: 'O nome do Plano de Saúde já está em uso. Escolha outro nome.',
+                        confirmButtonText: 'OK'
+                    });
+                } else {
+                    // O nome da área não está em uso, pode prosseguir com o salvamento
+                    salvarArea();
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log("Erro na solicitação AJAX: " + error);
+            }
+        });
+
+        function salvarArea() {
+
         $.ajax({
             url: 'pages/config/insert/salve_plano_saude.php',
             type: 'POST',
@@ -258,6 +290,7 @@ $(document).ready(function() {
                 console.log("Erro na solicitação AJAX: " + error);
             }
         });
+    }
     });
 });
 </script>
@@ -371,6 +404,24 @@ $("#saveChanges").click(function() {
     // Colete os dados do formulário de edição
     var formData = $("#editForm").serialize();
 
+
+    $.ajax({
+        url: 'pages/cadastro/list/verificar_ps.php', // Use o URL correto
+        type: 'POST',
+        data: formData,
+        dataType: 'json',
+        success: function(response) {
+            if (response.status === 'error') {
+                // O nome da filial já existe, exiba uma mensagem de erro
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erro!',
+                    text: response.message,
+                    confirmButtonText: 'OK'
+                });
+            } else {
+
+
     // Realize uma chamada AJAX para enviar os dados ao servidor e atualizar as informações da filial
     $.ajax({
         url: 'pages/config/insert/update_ps_info.php', // Substitua pelo URL correto
@@ -440,6 +491,8 @@ $("#saveChanges").click(function() {
         error: function(xhr, status, error) {
             console.log("Erro na solicitação AJAX: " + error);
         }
+    });
+}   }
     });
 });
 </script>

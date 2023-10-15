@@ -226,6 +226,37 @@ $(document).ready(function() {
         var nome_sistema = document.getElementById("nome_sistema").value;
         var habilitado = document.getElementById("habilitado_sistemas").value;
 
+          // Realize uma verificação no servidor para ver se o nome da área já existe
+          $.ajax({
+            url: 'pages/cadastro/list/verificar_sistema.php',
+            type: 'POST',
+            data: {
+                nome_sistema: nome_sistema
+            },
+            dataType: 'json',
+            success: function(response) {
+                if (response.status === 'error') {
+                    // Exibe uma mensagem de erro usando SweetAlert2
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Erro!',
+                        text: 'O nome do sistema já está em uso. Escolha outro nome.',
+                        confirmButtonText: 'OK'
+                    });
+                } else {
+                    // O nome da área não está em uso, pode prosseguir com o salvamento
+                    salvarArea();
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log("Erro na solicitação AJAX: " + error);
+            }
+        });
+
+        function salvarArea() {
+            var nome_sistema = document.getElementById("nome_sistema").value;
+        var habilitado = document.getElementById("habilitado_sistemas").value;
+
         $.ajax({
             url: 'pages/config/insert/salve_sistemas.php',
             type: 'POST',
@@ -253,7 +284,11 @@ $(document).ready(function() {
                 console.log("Erro na solicitação AJAX: " + error);
             }
         });
+
+    }
     });
+
+
 });
 </script>
 
@@ -366,6 +401,23 @@ $("#saveChanges").click(function() {
     // Colete os dados do formulário de edição
     var formData = $("#editForm").serialize();
 
+
+    $.ajax({
+        url: 'pages/cadastro/list/verificar_sistema.php', // Use o URL correto
+        type: 'POST',
+        data: formData,
+        dataType: 'json',
+        success: function(response) {
+            if (response.status === 'error') {
+                // O nome da filial já existe, exiba uma mensagem de erro
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erro!',
+                    text: response.message,
+                    confirmButtonText: 'OK'
+                });
+            } else {
+
     // Realize uma chamada AJAX para enviar os dados ao servidor e atualizar as informações da filial
     $.ajax({
         url: 'pages/config/insert/update_sistema_info.php', // Substitua pelo URL correto
@@ -435,6 +487,8 @@ Toast.fire({
             console.log("Erro na solicitação AJAX: " + error);
         }
     });
+}   }
+    })
 });
 
 
