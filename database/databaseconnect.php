@@ -16,14 +16,14 @@
 //     exit('Falha na autenticação SSH');
 // }
 
-    $servidor = "45.152.44.103";
-    $usuario = "u358437276_angelo";
-    $senha = "Angelo01";
-    $dbname = "u358437276_angelo";
-            // $servidor = "localhost";
-            // $usuario = "xpeer_adm";
-            // $senha = "xpeer_adm_victor";
-            // $dbname = "xpeer_adm";
+    // $servidor = "45.152.44.103";
+    // $usuario = "u358437276_angelo";
+    // $senha = "Angelo01";
+    // $dbname = "u358437276_angelo";
+            $servidor = "localhost";
+            $usuario = "xpeer_adm";
+            $senha = "xpeer_adm_victor";
+            $dbname = "xpeer_adm";
 
 }
 
