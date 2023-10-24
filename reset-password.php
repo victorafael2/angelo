@@ -68,6 +68,26 @@ if (isset($_GET["token"])) {
         userLinkRTL.setAttribute("disabled", true);
       }
     </script>
+
+    <style>
+#validacao-senha {
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+.item-requisito {
+    color: #ccc;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.item-requisito.ok {
+    color: #28a745;
+    font-weight: bold;
+}
+</style>
   </head>
 
 
@@ -93,8 +113,17 @@ if (isset($_GET["token"])) {
                   <input class="form-control mb-2" id="password" type="password" placeholder="Nova senha" />
                   <input class="form-control mb-4" id="confirmPassword" type="password" placeholder="Confirmar nova senha" />
                   <p id="passwordError" class="text-danger"></p>
+                  <p id="forca-senha"></p>
 
-                  <button class="btn btn-primary w-100" type="submit">Salvar nova senha</button>
+                  <div id="validacao-senha" class="mb-2">
+                      <div class="item-requisito">Pelo menos 8 caracteres</div>
+                      <div class="item-requisito">Pelo menos uma letra maiúscula</div>
+                      <div class="item-requisito">Pelo menos um número</div>
+                      <div class="item-requisito">Pelo menos um caractere especial</div>
+                      <div class="item-requisito">Senhas Iguais</div>
+                  </div>
+
+                  <button id="cadastrarBtn" class="btn btn-primary w-100" type="submit" disabled>Salvar nova senha</button>
                 </form>
               </div>
             </div>
@@ -197,58 +226,154 @@ function validarToken($token) {
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
+
+
 <script>
-$(document).ready(function() {
-    var passwordField = $("#password");
-    var confirmPasswordField = $("#confirmPassword");
-    var passwordError = $("#passwordError");
+    $(document).ready(function() {
+        var passwordField = $("#password");
+        var confirmPasswordField = $("#confirmPassword");
+        var passwordError = $("#passwordError");
 
-    $("form").submit(function(e) {
-        e.preventDefault(); // Impede o envio do formulário padrão
+        $("form").submit(function(e) {
+            e.preventDefault(); // Impede o envio do formulário padrão
 
-        if (passwordField.val() !== confirmPasswordField.val()) {
-            passwordError.text("As senhas não coincidem. Por favor, insira senhas iguais.");
+            if (passwordField.val() !== confirmPasswordField.val()) {
+                passwordError.text("As senhas não coincidem. Por favor, insira senhas iguais.");
+            } else {
+                // Verificar se a nova senha é diferente da antiga senha
+                var novaSenha = passwordField.val();
+                var email = $("#email").val();
+
+                // Fazer uma solicitação AJAX para verificar se a nova senha é diferente da antiga senha
+                $.ajax({
+                    type: "POST",
+                    url: "forms/verificar_senha_antiga.php",
+                    data: {
+                        email: email,
+                        novaSenha: novaSenha
+                    },
+                    success: function(response) {
+                        if (response === "mesma_senha") {
+                            passwordError.text("A nova senha não pode ser igual à senha antiga.");
+                        } else {
+                            // As senhas coincidem, faz uma solicitação AJAX para chamar a função PHP
+                            var token = $("#token").val();
+
+                            $.ajax({
+                                type: "POST",
+                                url: "funcao_alterar_senha.php",
+                                data: {
+                                    token: token,
+                                    password: novaSenha,
+                                    email: email
+                                },
+                                success: function(response) {
+
+
+                                    Swal.fire({
+                                        title: 'Sucesso',
+                                        text: 'Senha atualizada com sucesso!',
+                                        icon: 'success',
+                                        confirmButtonText: 'OK'
+                                    }).then((result) => {
+                                        // Redirecione o usuário ou faça outras ações necessárias após o sucesso
+                                        if (result.isConfirmed) {
+                                            window.location.href = 'index.php';
+                                        }
+                                    });
+
+                                    }
+
+                            });
+                        }
+                    }
+                });
+            }
+        });
+
+        // ...
+    });
+</script>
+
+// ...
+
+
+
+<script>
+    // Seleciona os elementos HTML relevantes
+    const senhaInput = document.getElementById('password');
+    const confirmSenhaInput = document.getElementById('confirmPassword');
+    const validacaoSenha = document.getElementById('validacao-senha');
+    const requisitosSenha = validacaoSenha.querySelectorAll('.item-requisito');
+
+    // Define as regras de validação da senha
+    const requisitos = [
+        {
+            descricao: 'Pelo menos 8 caracteres',
+            valida: function (senha) {
+                return senha.length >= 8;
+            },
+        },
+        {
+            descricao: 'Pelo menos uma letra maiúscula',
+            valida: function (senha) {
+                return /[A-Z]/.test(senha);
+            },
+        },
+        {
+            descricao: 'Pelo menos um número',
+            valida: function (senha) {
+                return /\d/.test(senha);
+            },
+        },
+        {
+            descricao: 'Pelo menos um caractere especial',
+            valida: function (senha) {
+                return /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(senha);
+            },
+        },
+        {
+            descricao: 'Senhas Iguais',
+            valida: function (senha) {
+                return senha === confirmSenhaInput.value;
+            },
+        },
+    ];
+
+    // Função para atualizar a exibição dos requisitos de validação da senha
+    function atualizaValidacaoSenha() {
+        let validaTudo = true;
+        requisitos.forEach(function (requisito, index) {
+            const requisitoHTML = requisitosSenha[index];
+            const valido = requisito.valida(senhaInput.value);
+            if (valido) {
+                requisitoHTML.classList.add('ok');
+            } else {
+                validaTudo = false;
+                requisitoHTML.classList.remove('ok');
+            }
+        });
+
+        if (
+            validaTudo &&
+            senhaInput.value !== '' &&
+            senhaInput.value === confirmSenhaInput.value
+        ) {
+            validacaoSenha.style.borderColor = '#28a745';
+            document.getElementById('cadastrarBtn').disabled = false;
         } else {
-            // As senhas coincidem, faz uma solicitação AJAX para chamar a função PHP
-            var token = $("#token").val();
-            var novaSenha = passwordField.val();
-            var email = $("#email").val();
-
-            $.ajax({
-                type: "POST",
-                url: "funcao_alterar_senha.php",
-                data: {
-                    token: token,
-                    password: novaSenha,
-                    email: email
-                },
-                success: function(response) {
-
-
-                        Swal.fire({
-                            title: 'Sucesso',
-                            text: 'Senha atualizada com sucesso!',
-                            icon: 'success',
-                            confirmButtonText: 'OK'
-                        }).then((result) => {
-                            // Redirecione o usuário ou faça outras ações necessárias após o sucesso
-                            if (result.isConfirmed) {
-                                window.location.href = 'index.php';
-                            }
-                        });
-
-                }
-
-            });
+            validacaoSenha.style.borderColor = '#ddd';
+            document.getElementById('cadastrarBtn').disabled = true;
         }
+    }
+
+    // Adiciona um ouvinte de eventos para a entrada do campo de senha
+    senhaInput.addEventListener('input', function () {
+        atualizaValidacaoSenha();
     });
 
-    passwordField.on("input", function() {
-        passwordError.text("");
+    // Adiciona um ouvinte de eventos para a entrada do campo de confirmação de senha
+    confirmSenhaInput.addEventListener('input', function () {
+        atualizaValidacaoSenha();
     });
-
-    confirmPasswordField.on("input", function() {
-        passwordError.text("");
-    });
-});
 </script>
