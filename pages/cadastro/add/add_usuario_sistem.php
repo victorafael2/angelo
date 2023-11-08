@@ -1,6 +1,7 @@
 <?php
 // Conexão com o banco de dados (substitua as informações)
 include '../../../database/databaseconnect.php';
+$conn->set_charset('utf8'); // Garante que a conexão está em UTF-8
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -13,6 +14,7 @@ require '../../../mail/PHPMailer/src/SMTP.php';
 // Função para enviar e-mail
 function enviarEmail($name, $email, $telefone, $group, $password) {
     $mail = new PHPMailer(true);
+    $mail->CharSet = 'UTF-8'; // Define a codificação dos caracteres para UTF-8
 
     try {
         // Configurações do servidor de e-mail (substitua com as suas configurações)
