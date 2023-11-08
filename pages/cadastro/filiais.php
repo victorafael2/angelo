@@ -32,7 +32,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="filial_cnpj" class="form-label">CNPJ:</label>
-                                    <input type="text" class="form-control" id="filial_cnpj" name="filial_cnpj" oninput="formatCnpj(this)">
+                                    <input type="text" class="form-control" id="filial_cnpj" name="filial_cnpj" oninput="formatCnpj(this)" onblur="validateCnpj(this)">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -109,7 +109,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="endereco_cep" class="form-label">CEP</label>
-                                    <input type="text" class="form-control" id="endereco_cep" name="endereco_cep" oninput="formatCep(this)">
+                                    <input type="text" class="form-control" id="endereco_cep" name="endereco_cep" oninput="formatCep(this)" onblur="validateCep(this)">
                                 </div>
                             </div>
                         </div>
@@ -126,7 +126,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="cpf_responsavel" class="form-label">CPF do Responsável:</label>
-                                    <input type="text" class="form-control" id="cpf_responsavel" name="cpf_responsavel" oninput="formatCpf(this)">
+                                    <input type="text" class="form-control" id="cpf_responsavel" name="cpf_responsavel" oninput="formatCpf(this)" onblur="validateCpf(this)">
                                 </div>
                             </div>
                             <div class="col-md-4 d-none">
@@ -317,7 +317,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="cpf_responsavel_modal" class="form-label">CPF do Responsável:</label>
-                                    <input type="text" class="form-control" id="cpf_responsavel_modal" name="cpf_responsavel_modal" oninput="formatCpf(this)">
+                                    <input type="text" class="form-control" id="cpf_responsavel_modal" name="cpf_responsavel_modal" oninput="formatCpf(this)" onblur="validateCpf(this)">
                                 </div>
                             </div>
                             <div class="col-md-4 d-none">
@@ -823,6 +823,56 @@ function formatCnpj(input) {
     // Atualize o valor do campo de entrada com o CNPJ formatado
     input.value = cnpj;
 }
+
+function validateCnpj(input) {
+        const cnpj = input.value.replace(/[^\d]+/g, ''); // Remove all non-numeric characters
+
+        if (cnpj.length !== 14) {
+            alert('CNPJ deve ter 14 digitos.');
+            input.value = '';
+            return;
+        }
+
+        if (isCnpjInvalid(cnpj)) {
+            alert('Invalid CNPJ.');
+            input.value = '';
+        }
+    }
+
+    function isCnpjInvalid(cnpj) {
+        // Validate the CNPJ using its algorithm
+        if (/^(\d)\1+$/.test(cnpj)) return true;
+
+        const length = cnpj.length - 2;
+        const numbers = cnpj.substring(0, length);
+        const digits = cnpj.substring(length);
+        let sum = 0;
+        let pos = length - 7;
+
+        for (let i = length; i >= 1; i--) {
+            sum += numbers.charAt(length - i) * pos--;
+            if (pos < 2) pos = 9;
+        }
+
+        let result = sum % 11 < 2 ? 0 : 11 - (sum % 11);
+        if (result !== parseInt(digits.charAt(0))) return true;
+
+        length += 1;
+        numbers = cnpj.substring(0, length);
+        sum = 0;
+        pos = length - 7;
+
+        for (let i = length; i >= 1; i--) {
+            sum += numbers.charAt(length - i) * pos--;
+            if (pos < 2) pos = 9;
+        }
+
+        result = sum % 11 < 2 ? 0 : 11 - (sum % 11);
+        if (result !== parseInt(digits.charAt(1))) return true;
+
+        return false;
+    }
+
 </script>
 
 
@@ -846,6 +896,27 @@ function formatCep(input) {
     // Atualize o valor do campo de entrada com o CEP formatado
     input.value = cep;
 }
+
+function validateCep(input) {
+        const cep = input.value.replace(/\D/g, ''); // Remove all non-numeric characters
+
+        if (cep.length !== 8) {
+            alert('CEP deve ter 8 digitos.');
+            input.value = '';
+            return;
+        }
+
+        if (isCepInvalid(cep)) {
+            alert('CEP invalido.');
+            input.value = '';
+        }
+    }
+
+    function isCepInvalid(cep) {
+        // Validate the CEP using regular expression
+        const cepPattern = /^[0-9]{8}$/;
+        return !cepPattern.test(cep);
+    }
 </script>
 
 <script>
@@ -868,6 +939,57 @@ function formatCpf(input) {
     // Atualize o valor do campo de entrada com o CPF formatado
     input.value = cpf;
 }
+
+function validateCpf(input) {
+        const cpf = input.value.replace(/[^\d]+/g, ''); // Remove all non-numeric characters
+
+        if (cpf.length !== 11) {
+            alert('CPF deve ter 11 dígitos.');
+            input.value = '';
+            return;
+        }
+
+        if (isCpfInvalid(cpf)) {
+            alert('CPF Invalido.');
+            input.value = '';
+        }
+    }
+
+    function isCpfInvalid(cpf) {
+        // Validate the CPF using its algorithm
+        if (/^(\d)\1+$/.test(cpf)) return true;
+
+        let sum = 0;
+        let remainder;
+
+        for (let i = 1; i <= 9; i++) {
+            sum = sum + parseInt(cpf.substring(i - 1, i)) * (11 - i);
+        }
+
+        remainder = (sum * 10) % 11;
+
+        if (remainder === 10 || remainder === 11) {
+            remainder = 0;
+        }
+
+        if (remainder !== parseInt(cpf.substring(9, 10))) return true;
+
+        sum = 0;
+
+        for (let i = 1; i <= 10; i++) {
+            sum = sum + parseInt(cpf.substring(i - 1, i)) * (12 - i);
+        }
+
+        remainder = (sum * 10) % 11;
+
+        if (remainder === 10 || remainder === 11) {
+            remainder = 0;
+        }
+
+        if (remainder !== parseInt(cpf.substring(10, 11))) return true;
+
+        return false;
+    }
 </script>
 
 
