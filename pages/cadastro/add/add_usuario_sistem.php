@@ -84,7 +84,7 @@ $stmt_check_email->close();
 
 // Gere uma senha aleatória forte
 $length = 12; // Define o comprimento da senha (pode ajustar conforme necessário)
-$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+-=[]{}|;:,.<>?'; // Caracteres válidos
+$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@'; // Caracteres válidos
 $password = substr(str_shuffle($characters), 0, $length); // Gere a senha aleatória
 
 // Hash seguro da senha
@@ -102,6 +102,14 @@ if (enviarEmail($name, $email, $telefone, $group, $password)) {
 } else {
     $response['success'] = false;
     $response['message'] = "Ocorreu um erro ao enviar o e-mail.";
+}
+
+if ($stmt->execute()) {
+    $response['success'] = true;
+    $response['message'] = "Informações salvas com sucesso! Um e-mail foi enviado com os detalhes e senha.";
+} else {
+    $response['success'] = false;
+    $response['message'] = "Ocorreu um erro ao salvar as informações: " . $conn->error;
 }
 
 // if ($stmt->execute()) {
