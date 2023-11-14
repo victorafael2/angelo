@@ -9,8 +9,27 @@ use PHPMailer\PHPMailer\Exception;
 
 include 'database/databaseconnect.php';
 
+
+
+
+
+
+
 if (isset($_POST["email"])) {
     $email = $_POST["email"];
+
+    // Verificar se o e-mail existe no banco de dados
+$checkEmailQuery = $conn->prepare("SELECT * FROM user WHERE email = ?");
+$checkEmailQuery->bind_param('s', $email);
+$checkEmailQuery->execute();
+$result = $checkEmailQuery->get_result();
+
+if ($result->num_rows == 0) {
+    // E-mail não encontrado
+    $response = array("success" => false, "message" => "E-mail não cadastrado.");
+    echo json_encode($response);
+    exit;
+}
 
     // Criar uma instância do PHPMailer
     $mail = new PHPMailer(true);
