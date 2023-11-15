@@ -1415,7 +1415,6 @@ $(document).ready(function() {
 
 
 
-
 <script>
 $(document).ready(function() {
     // Function to handle form submission
@@ -2003,6 +2002,8 @@ $(document).ready(function() {
         return emailPattern.test(email);
     }
 </script>
+
+
 
 
 

@@ -26,7 +26,8 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="filial_nome" class="form-label">Nome da Filial:</label>
-                                    <input type="text" class="form-control" id="filial_nome" name="filial_nome">
+                                    <input type="text" class="form-control" id="filial_nome" name="filial_nome" onblur="validarCampoTexto(this)">
+                                    <span id="filial_nome_error" class="text-danger fs--1"></span>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -38,7 +39,8 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="endereco_rua" class="form-label">Rua:</label>
-                                    <input type="text" class="form-control" id="endereco_rua" name="endereco_rua">
+                                    <input type="text" class="form-control" id="endereco_rua" name="endereco_rua" onblur="validarCampoTexto(this)">
+                                    <span id="endereco_rua_error" class="text-danger fs--1"></span>
                                 </div>
                             </div>
                         </div>
@@ -52,13 +54,15 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="endereco_comp" class="form-label">Complemento:</label>
-                                    <input type="text" class="form-control" id="endereco_comp" name="endereco_comp">
+                                    <input type="text" class="form-control" id="endereco_comp" name="endereco_comp" onblur="validarCampoTexto(this)">
+                                    <span id="endereco_comp_error" class="text-danger fs--1"></span>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="endereco_bairro" class="form-label">Bairro:</label>
-                                    <input type="text" class="form-control" id="endereco_bairro" name="endereco_bairro">
+                                    <input type="text" class="form-control" id="endereco_bairro" name="endereco_bairro" onblur="validarCampoTexto(this)">
+                                    <span id="endereco_bairro_error" class="text-danger fs--1"></span>
                                 </div>
                             </div>
                         </div>
@@ -67,7 +71,8 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="endereco_cidade" class="form-label">Cidade</label>
-                                    <input type="text" class="form-control" id="endereco_cidade" name="endereco_cidade">
+                                    <input type="text" class="form-control" id="endereco_cidade" name="endereco_cidade" onblur="validarCampoTexto(this)">
+                                    <span id="endereco_cidade_error" class="text-danger fs--1"></span>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -120,7 +125,8 @@
                                 <div class="form-group">
                                     <label for="nome_responsavel" class="form-label">Nome do Responsável:</label>
                                     <input type="text" class="form-control" id="nome_responsavel"
-                                        name="nome_responsavel">
+                                        name="nome_responsavel" onblur="validarCampoTexto(this)">
+                                        <span id="nome_responsavel_error" class="text-danger fs--1"></span>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -991,6 +997,28 @@ function validateCpf(input) {
         return false;
     }
 </script>
+
+
+<script>
+function validarCampoTexto(input) {
+    const valor = input.value.trim();
+    const regex = /^[A-Za-z]{3,}/; // Expressão regular para pelo menos 3 letras
+    const errorSpan = document.getElementById(input.id + "_error");
+    const submitButton = document.querySelector("button[type=submit]");
+
+    if (!regex.test(valor)) {
+        errorSpan.textContent = "O campo deve começar com letras e ter pelo menos 3 letras.";
+        input.value = "";
+        input.focus();
+        submitButton.disabled = true; // Desabilita o botão de envio
+    } else {
+        errorSpan.textContent = "";
+        submitButton.disabled = false; // Limpa a mensagem de erro se o campo for válido
+    }
+}
+
+</script>
+
 
 
 

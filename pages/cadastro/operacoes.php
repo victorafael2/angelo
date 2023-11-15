@@ -57,7 +57,8 @@
 
                         <div class="form-group">
                             <label for="nome_operacao" class="form-label">Nome Operação:</label>
-                            <input type="text" class="form-control" name="nome_operacao" id="nome_operacao">
+                            <input type="text" class="form-control" name="nome_operacao" id="nome_operacao" onblur="validarCampoTexto(this)">
+                            <span id="nome_operacao_error" class="text-danger fs--1"></span>
                         </div>
                         <div class="row">
                             <div class="col">
@@ -273,13 +274,13 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="d-flex justify-content-center mt-3">
+                        <!-- <div class="d-flex justify-content-center mt-3">
                             <button class="page-link" data-list-pagination="prev"><span
                                     class="fas fa-chevron-left"></span></button>
                             <ul class="mb-0 pagination"></ul>
                             <button class="page-link pe-0" data-list-pagination="next"><span
                                     class="fas fa-chevron-right"></span></button>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
 
@@ -1127,4 +1128,24 @@ function validarHoras(idInicio, idFim) {
         erroSpan.textContent = ""; // Limpa a mensagem de erro se as horas forem válidas
     }
 }
+</script>
+
+<script>
+function validarCampoTexto(input) {
+    const valor = input.value.trim();
+    const regex = /^[A-Za-z]{3,}/; // Expressão regular para pelo menos 3 letras
+    const errorSpan = document.getElementById(input.id + "_error");
+    const submitButton = document.querySelector("button[type=submit]");
+
+    if (!regex.test(valor)) {
+        errorSpan.textContent = "O campo deve começar com letras e ter pelo menos 3 letras.";
+        input.value = "";
+        input.focus();
+        submitButton.disabled = true; // Desabilita o botão de envio
+    } else {
+        errorSpan.textContent = "";
+        submitButton.disabled = false; // Limpa a mensagem de erro se o campo for válido
+    }
+}
+
 </script>

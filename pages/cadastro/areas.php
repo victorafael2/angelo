@@ -26,11 +26,12 @@
                                 <input type="text" class="form-control" id="id_area" name="id_area">
                             </div> -->
                         <div class="form-group">
-                            <label for="nome_area" class="form-label">NOME_AREA:</label>
-                            <input type="text" class="form-control" id="nome_area" name="nome_area">
+                            <label for="nome_area" class="form-label">Nome Área::</label>
+                            <input type="text" class="form-control" id="nome_area" name="nome_area" onblur="validarCampoTexto(this)">
+                            <span id="nome_area_error" class="text-danger fs--1"></span>
                         </div>
                         <div class="form-group">
-                            <label for="habilitado_areas" class="form-label">HABILITADO:</label>
+                            <label for="habilitado_areas" class="form-label">Habilitado:</label>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="habilitado_areas"
                                     name="habilitado_areas">
@@ -645,4 +646,24 @@ $("#saveChanges").click(function() {
 }   }
     })
 });
+</script>
+
+<script>
+function validarCampoTexto(input) {
+    const valor = input.value.trim();
+    const regex = /^[A-Za-z]{3,}/; // Expressão regular para pelo menos 3 letras
+    const errorSpan = document.getElementById(input.id + "_error");
+    const submitButton = document.querySelector("button[type=submit]");
+
+    if (!regex.test(valor)) {
+        errorSpan.textContent = "O campo deve começar com letras e ter pelo menos 3 letras.";
+        input.value = "";
+        input.focus();
+        submitButton.disabled = true; // Desabilita o botão de envio
+    } else {
+        errorSpan.textContent = "";
+        submitButton.disabled = false; // Limpa a mensagem de erro se o campo for válido
+    }
+}
+
 </script>

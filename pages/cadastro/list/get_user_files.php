@@ -51,18 +51,22 @@ if (isset($_POST['id_usuario'])) {
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-        // Build the file list
+        // Construir a lista de arquivos
         $fileList = '<div class="row">';
         $counter = 0;
         while ($row = $result->fetch_assoc()) {
             $fileIcon = getFileIcon($row['nome']);
+            $base64Data = $row['caminho']; // Assumindo que 'caminho' contém os dados base64
 
-            $fileList .= '<div class="col-md-4 mb-3  " ><div class="file-box position-relative border p-1">';
+            $fileList .= '<div class="col-md-4 mb-3"><div class="file-box position-relative border p-1">';
 
-            // Add JavaScript to open the file in a new window
-            $fileList .= '<a class="fs--1" href="#" onclick="openFile(\'pages/cadastro/' . $row['caminho'] . '\'); return false;"><i class="' . $fileIcon . '"></i> ' . $row['texto'] . '</a>';
+            // ... Dentro do loop while:
+$ext = strtolower(pathinfo($row['nome'], PATHINFO_EXTENSION));
+$fileList .= '<a class="fs--1" href="#" onclick="openFile(this); return false;" data-base64="' . $base64Data . '" data-ext="' . $ext . '"><i class="' . $fileIcon . '"></i> ' . $row['texto'] . '</a>';
+// ...
 
-            // Add the delete icon with a unique ID for each file
+
+            // Adicionar ícone de exclusão
             $fileList .= '<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">';
             $fileList .= '<a class="delete-button" data-file-id="' . $row['id'] . '" data-file-path="' . $row['caminho'] . '"><i class="fas fa-times"></i></a>';
             $fileList .= '<span class="visually-hidden"></span></span>';
@@ -75,27 +79,56 @@ if (isset($_POST['id_usuario'])) {
             }
         }
 
-        // Close the last row
+        // Fechar a última linha
         $fileList .= '</div>';
 
-        // Return the file list HTML as the response
+        // Retornar o HTML da lista de arquivos como resposta
         echo $fileList;
     } else {
         echo "Sem Arquivos.";
-
     }
+
 } else {
     echo "Invalid request.";
 }
 
 $conn->close();
 ?>
-<script>
+<!-- <script>
     function openFile(filePath) {
         // Open the file in a new window with specific dimensions
         window.open(filePath, "_blank", "width=600, height=400");
     }
-</script>
+</script> -->
+
+<script>
+        function openFile(linkElement) {
+            var base64Data = linkElement.getAttribute('data-base64');
+            var ext = linkElement.getAttribute('data-ext').toLowerCase();
+            var mimeType;
+
+            if (ext === 'jpg' || ext === 'jpeg') {
+                mimeType = 'data:image/jpeg;base64,';
+            } else if (ext === 'png') {
+                mimeType = 'data:image/png;base64,';
+            } else if (ext === 'pdf') {
+                mimeType = 'data:application/pdf;base64,';
+            }
+
+            var fullBase64Data = mimeType + base64Data;
+
+            var newWindow = window.open("", "_blank", "width=600,height=400,scrollbars=yes");
+
+            if (ext === 'jpg' || ext === 'jpeg' || ext === 'png') {
+                newWindow.document.write('<img src="' + fullBase64Data + '" style="width: 100%; height: auto;">');
+            } else if (ext === 'pdf') {
+                newWindow.document.write('<iframe src="' + fullBase64Data + '" style="width:100%; height:100%;" frameborder="0"></iframe>');
+            }
+
+            newWindow.document.write('<br><button class="btn btn-sm btn-phoenix-success" id="downloadBtn">Download</button>');
+            newWindow.document.write('<script>document.getElementById("downloadBtn").addEventListener("click", function() { var link = document.createElement("a"); link.href = "' + fullBase64Data + '"; link.download = "DownloadedFile.' + ext + '"; link.click(); });<\/script>');
+        }
+    </script>
 
 
 
