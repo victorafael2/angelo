@@ -44,7 +44,8 @@ while ($row1 = mysqli_fetch_array($result)) {
     <!-- ===============================================-->
     <title>Katrina Colab</title>
 
-
+    <!-- Meta tag para o ícone personalizado -->
+    <meta property="og:image" content="assets/png/Circulo.png">
     <!-- ===============================================-->
     <!--    Favicons-->
     <!-- ===============================================-->

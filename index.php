@@ -13,6 +13,8 @@
     <!--    Document Title-->
     <!-- ===============================================-->
     <title>Katrina Colab</title>
+    <!-- Meta tag para o ícone personalizado -->
+    <meta property="og:image" content="assets/png/Circulo.png">
 
     <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
     <!-- ===============================================-->
