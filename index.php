@@ -18,12 +18,12 @@
     <!-- ===============================================-->
     <!--    Favicons-->
     <!-- ===============================================-->
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/png/logo.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/png/logo.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/png/logo.png">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/png/logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/png/inove_logo_novo.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/png/inove_logo_novo.svg">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/png/inove_logo_novo.svg">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/png/inove_logo_novo.svg">
     <link rel="manifest" href="assets/img/favicons/manifest.json">
-    <meta name="msapplication-TileImage" content="assets/png/logo.png">
+    <meta name="msapplication-TileImage" content="assets/png/inove_logo_novo.svg">
     <meta name="theme-color" content="#ffffff">
     <script src="vendors/imagesloaded/imagesloaded.pkgd.min.js"></script>
     <script src="vendors/simplebar/simplebar.min.js"></script>
