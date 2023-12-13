@@ -46,7 +46,7 @@ $result = $conn->query($sql);
             echo '</div>';
             echo '<div class="modal-body">';
             // Replace 'embed_url' with the actual Power BI embed URL for this report
-            echo '<iframe width="100%" height="500px" src="' . $row["link"] . '"&toolbarHidden=true></iframe>';
+            echo '<iframe width="100%" height="700px" src="' . $row["link"] . '"&toolbarHidden=true></iframe>';
 
             echo '</div>';
             echo '</div>';
