@@ -188,7 +188,7 @@ echo $dataHoraAtual;
                 href="<?php echo $_SESSION['destinationPage']; ?>">
 
                 <div class="d-flex align-items-center">
-                    <div class="d-flex align-items-center"><img src="assets/png/logo.png" alt="crm"
+                    <div class="d-flex align-items-center"><img src="assets/png/inove_logo_novo.svg" alt="crm"
                             width="80" />
                         <!-- <p class="logo-text ms-2 d-none d-sm-block">CRM</p> -->
                     </div>
