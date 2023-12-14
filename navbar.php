@@ -54,12 +54,13 @@ function generateMenuHTML($data)
         $html .= '<div class="d-flex align-items-center">';
         $html .= '<div class="dropdown-indicator-icon"><span class="fas fa-caret-right"></span></div>';
         $html .= '<span class="nav-link-icon">' . $menu['icone'] . '</span>';
-        $html .= '<span class="nav-link-text line-clamp-1 " >' . htmlspecialchars($menu['menu_name']) . '</span>';
+        $html .= '<span class="nav-link-text text-wrap" >' . htmlspecialchars($menu['menu_name']) . '</span>';
 
         // Check the 'breve' property to decide whether to display additional text
         if ($menu['breve'] === 's') {
           $html .= '<span class="fa-solid fa-circle text-info ms-1 new-page-indicator" style="font-size: 6px"></span>';
           $html .= '<span class="badge ms-2 badge badge-phoenix badge-phoenix-info nav-link-badge">Breve</span>';
+          // $html .= ' <i class="fa-solid fa-pen me-1"></i>';
       }
         $html .= '</div>';
         $html .= '</a>';
@@ -69,7 +70,7 @@ function generateMenuHTML($data)
 
         foreach ($menu['submenu'] as $submenu) {
             $html .= '<li class="nav-item fs--1"><a class="nav-link" href="content_pages.php?id=' . $submenu['submenu_id'] . '" data-bs-toggle="" aria-expanded="false">';
-            $html .= '<div class="d-flex align-items-center"><span class="nav-link-text line-clamp-1">' . $submenu['submenu_name'] . '</span></div>';
+            $html .= '<div class="d-flex align-items-center"><span class="nav-link-text text-wrap">' . $submenu['submenu_name'] . '</span></div>';
             $html .= '</a></li>';
         }
 
@@ -117,7 +118,18 @@ function generateMenuHTML($data)
   color: #007bff;
 } */
 
+/* Estilos CSS para controlar o layout */
+.parent-wrapper {
+        /* Use flexbox para controlar o layout dos elementos filhos */
+        display: flex;
+        flex-wrap: wrap; /* Permite a quebra de linha */
+    }
 
+    .nav-item {
+        /* Defina a largura para evitar que os itens ocupem toda a largura disponível */
+        width: 100%; /* Por exemplo, para dividir em duas colunas */
+        /* Altere o valor de acordo com o número de colunas desejado */
+    }
 
 
 
