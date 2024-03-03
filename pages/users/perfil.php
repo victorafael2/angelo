@@ -17,15 +17,18 @@
     }
     ?>
 
-    <form id="userForm ">
+    <form id="userForm" method="POST" enctype="multipart/form-data">
+
+
         <div class="form-group">
             <label for="name">Nome:</label>
-            <input type="text" class="form-control" id="name" placeholder="Digite o nome" value="<?php echo $name ?>">
+            <input type="text" class="form-control" id="name" name="name" placeholder="Digite o nome"
+                value="<?php echo $name ?>">
         </div>
         <div class="row">
             <div class="form-group col">
                 <label for="email">Email:</label>
-                <input type="email" class="form-control" id="email" placeholder="Digite o email"
+                <input type="email" class="form-control" id="email" name="email" placeholder="Digite o email"
                     value="<?php echo $email ?>" disabled>
             </div>
 
@@ -35,7 +38,7 @@
 
         <div class="form-group">
             <label for="telefone">Telefone:</label>
-            <input type="text" class="form-control" id="telefone" placeholder="Digite o telefone"
+            <input type="text" class="form-control" id="telefone" name="telefone" placeholder="Digite o telefone"
                 value="<?php echo $telefone ?>">
         </div>
 
@@ -43,7 +46,8 @@
         <div class="form-group">
             <label for="cpf">CPF:</label>
             <!-- <input type="text" class="form-control" id="cpf" placeholder="Digite o CPF" value="<?php echo $cpf ?>"> -->
-            <select class="form-control" id="cpf" data-choices="data-choices" data-options='{"removeItemButton":true,"placeholder":true}' readonly>
+            <select class="form-control" id="cpf" name="cpf" data-choices="data-choices"
+                data-options='{"removeItemButton":true,"placeholder":true}' readonly>
                 <?php
                 // Busca os grupos de acesso no banco de dados
                 $sql_grupos = "SELECT f.cpf, h.id_funcionario, h.nome_social, h.nome_registro, h.sexo, h.genero, h.estado_civil, h.id_cargo, h.id_vt, h.id_superior, h.id_area, h.id_operacao, h.id_filial, h.id_history
@@ -69,115 +73,208 @@
                 ?>
             </select>
         </div>
+        <div class="form-group mt-3">
+            <label class="form-label" for="imagem">Imagem de Perfil:</label>
+            <input type="file" class="form-control" id="imagem" name="imagem" accept="image/*"
+                onchange="previewImage(event)">
+            <img class="mt-2" id="preview" src="#" alt="Pré-visualização da Imagem" style="max-width: 200px; display: none;">
+
+
+
+        </div>
+
         <br>
+
         <button type="submit" class="btn btn-primary">Salvar</button>
     </form>
 
 
 
     <form id="trocarSenhaForm" action="pages/users/processar_troca_senha.php" method="POST" class="mt-5">
-    <div class="form-group">
-        <label for="senhaAntiga">Senha Antiga:</label>
-        <div class="input-group">
-            <input type="password" class="form-control" id="senhaAntiga" name="senhaAntiga" placeholder="Digite a senha antiga">
-            <div class="input-group-append">
-                <span class="input-group-text toggle-password" data-target="senhaAntiga">
-                    <i class="fa fa-eye"></i>
-                </span>
+        <div class="form-group">
+            <label for="senhaAntiga">Senha Antiga:</label>
+            <div class="input-group">
+                <input type="password" class="form-control" id="senhaAntiga" name="senhaAntiga"
+                    placeholder="Digite a senha antiga">
+                <div class="input-group-append">
+                    <span class="input-group-text toggle-password" data-target="senhaAntiga">
+                        <i class="fa fa-eye"></i>
+                    </span>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label for="novaSenha">Nova Senha:</label>
-        <div class="input-group">
-            <input type="password" class="form-control" id="novaSenha" name="novaSenha" placeholder="Digite a nova senha">
-            <div class="input-group-append">
-                <span class="input-group-text toggle-password" data-target="novaSenha">
-                    <i class="fa fa-eye"></i>
-                </span>
+        <div class="form-group">
+            <label for="novaSenha">Nova Senha:</label>
+            <div class="input-group">
+                <input type="password" class="form-control" id="novaSenha" name="novaSenha"
+                    placeholder="Digite a nova senha">
+                <div class="input-group-append">
+                    <span class="input-group-text toggle-password" data-target="novaSenha">
+                        <i class="fa fa-eye"></i>
+                    </span>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label for="confirmNovaSenha">Confirmar Nova Senha:</label>
-        <div class="input-group">
-            <input type="password" class="form-control" id="confirmNovaSenha" name="confirmNovaSenha" placeholder="Confirme a nova senha">
-            <div class="input-group-append">
-                <span class="input-group-text toggle-password" data-target="confirmNovaSenha">
-                    <i class="fa fa-eye"></i>
-                </span>
+        <div class="form-group">
+            <label for="confirmNovaSenha">Confirmar Nova Senha:</label>
+            <div class="input-group">
+                <input type="password" class="form-control" id="confirmNovaSenha" name="confirmNovaSenha"
+                    placeholder="Confirme a nova senha">
+                <div class="input-group-append">
+                    <span class="input-group-text toggle-password" data-target="confirmNovaSenha">
+                        <i class="fa fa-eye"></i>
+                    </span>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="form-group d-none">
+        <div class="form-group d-none">
             <label for="login">Nome:</label>
-            <input type="text" class="form-control" id="login" placeholder="Digite o nome" value="<?php echo $_SESSION['email'] ?>">
+            <input type="text" class="form-control" id="login" placeholder="Digite o nome"
+                value="<?php echo $_SESSION['email'] ?>">
         </div>
-    <button type="submit" class="btn btn-primary mt-2 mb-2">Trocar Senha</button>
-</form>
+        <button type="submit" class="btn btn-primary mt-2 mb-2">Trocar Senha</button>
+    </form>
 
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+
+
 <script>
-    var senhaInput = document.getElementById('senha');
-    var mostrarSenhaCheckbox = document.getElementById('mostrarSenha');
+    // Função para converter a imagem em Base64 e enviar para o servidor
+    // function uploadImage(formData) {
+    //     $.ajax({
+    //         type: 'POST',
+    //         url: 'pages/cadastro/update/update_usuario_perfil.php',
+    //         data: formData,
+    //         processData: false, // Evita que o jQuery processe os dados
+    //         contentType: false, // Evita que o jQuery defina o cabeçalho Content-Type
+    //         success: function(response) {
+    //             if (response.status === 'success') {
+    //                 Swal.fire({
+    //                     title: 'Sucesso',
+    //                     text: response.message,
+    //                     icon: 'success'
+    //                 });
+    //             } else {
+    //                 Swal.fire({
+    //                     title: 'Erro',
+    //                     text: response.message,
+    //                     icon: 'error'
+    //                 });
+    //             }
+    //         },
+    //         error: function() {
+    //             Swal.fire({
+    //                 title: 'Erro',
+    //                 text: 'Ocorreu um erro ao comunicar com o servidor.',
+    //                 icon: 'error'
+    //             });
+    //         }
+    //     });
+    // }
 
-    mostrarSenhaCheckbox.addEventListener('change', function() {
-        if (mostrarSenhaCheckbox.checked) {
-            senhaInput.type = 'text';
-        } else {
-            senhaInput.type = 'password';
-        }
-    });
+    // // Função para pré-visualizar a imagem selecionada
+    // function previewImage(event) {
+    //     var reader = new FileReader();
+    //     reader.onload = function() {
+    //         var preview = document.getElementById('preview');
+    //         preview.src = reader.result;
+    //         preview.style.display = 'block'; // Exibe a imagem
 
-    var form = document.getElementById('userForm');
-    form.addEventListener('submit', function(event) {
-        event.preventDefault();
+    //         // Cria um objeto FormData e adiciona a imagem como um campo de arquivo
+    //         var formData = new FormData();
+    //         formData.append('name', document.getElementById('name').value);
+    //         formData.append('email', document.getElementById('email').value);
+    //         formData.append('telefone', document.getElementById('telefone').value);
+    //         formData.append('cpf', document.getElementById('cpf').value);
+    //         formData.append('imagem', event.target.files[0]); // Adiciona a imagem como arquivo
 
-        // Obtém os valores dos campos do formulário
-        var name = document.getElementById('name').value;
-        var email = document.getElementById('email').value;
-        var telefone = document.getElementById('telefone').value;
-        // var senha = document.getElementById('senha').value;
-        var grupo_acesso = document.getElementById('grupo_acesso').value;
-        var cpf = document.getElementById('cpf').value;
+    //         // Envia a imagem para o servidor
+    //         uploadImage(formData);
+    //     }
+    //     reader.readAsDataURL(event.target.files[0]);
+    // }
 
-        // Cria um objeto FormData para enviar os dados via Ajax
-        var formData = new FormData();
-        formData.append('name', name);
-        formData.append('email', email);
-        formData.append('telefone', telefone);
-        // formData.append('senha', senha);
-        formData.append('grupo_acesso', grupo_acesso);
-        formData.append('cpf', cpf);
+    $(document).ready(function() {
+    $('#userForm').submit(function(event) {
+        event.preventDefault(); // Impede o envio tradicional do formulário
+
+        // Cria um objeto FormData para enviar os dados do formulário
+        var formData = new FormData($(this)[0]);
+
+         // Adiciona manualmente o valor do campo de e-mail ao FormData
+         formData.append('email', $('#email').val());
 
         // Envia a solicitação Ajax
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'pages/cadastro/update/update_usuario_perfil.php', true);
-        xhr.onload = function() {
-            if (xhr.status === 200) {
+        $.ajax({
+            type: 'POST',
+            url: 'pages/cadastro/update/update_usuario_perfil.php',
+            data: formData,
+            processData: false, // Não processar os dados
+            contentType: false, // Não definir o tipo de conteúdo
+            success: function(response) {
+                if (response.status === 'success') {
+                    Swal.fire({
+                        title: 'Sucesso',
+                        text: response.message,
+                        icon: 'success'
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Erro',
+                        text: response.message,
+                        icon: 'error'
+                    });
+                }
+            },
+            error: function() {
                 Swal.fire({
-                    title: 'Dados salvos com sucesso!',
-                    icon: 'success'
-                }).then(function() {
-                    location.reload(); // Recarrega a página após o salvamento
-                });
-            } else {
-                Swal.fire({
-                    title: 'Erro ao salvar os dados.',
+                    title: 'Erro',
+                    text: 'Ocorreu um erro ao comunicar com o servidor.',
                     icon: 'error'
                 });
             }
-        };
-        xhr.send(formData);
+        });
     });
+});
+
+</script>
+
+
+
+<script>
+    // Função para pré-visualizar a imagem selecionada
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function() {
+            var preview = document.getElementById('preview');
+            preview.src = reader.result;
+            preview.style.display = 'block'; // Exibe a imagem
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
+
+
+<script>
+var senhaInput = document.getElementById('senha');
+var mostrarSenhaCheckbox = document.getElementById('mostrarSenha');
+
+mostrarSenhaCheckbox.addEventListener('change', function() {
+    if (mostrarSenhaCheckbox.checked) {
+        senhaInput.type = 'text';
+    } else {
+        senhaInput.type = 'password';
+    }
+});
 </script>
 
 <script>
-$(document).ready(function () {
+$(document).ready(function() {
     // Quando o formulário for enviado
-    $("#trocarSenhaForm").submit(function (event) {
+    $("#trocarSenhaForm").submit(function(event) {
         event.preventDefault(); // Impede o envio padrão do formulário
 
         // Recupere os valores dos campos
@@ -212,7 +309,8 @@ $(document).ready(function () {
         var regexUpperCase = /[A-Z]/;
         var regexSpecialChars = /[^a-zA-Z0-9]/;
 
-        if (novaSenha.length < 6 || !regexUpperCase.test(novaSenha) || !regexSpecialChars.test(novaSenha)) {
+        if (novaSenha.length < 6 || !regexUpperCase.test(novaSenha) || !regexSpecialChars.test(
+                novaSenha)) {
             // A senha não atende aos critérios, exiba uma mensagem de erro
             Swal.fire({
                 icon: 'error',
@@ -226,8 +324,12 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             url: "pages/users/processar_troca_senha.php", // O arquivo PHP que faz a consulta ao banco de dados
-            data: { senhaAntiga: senhaAntiga, idUsuario: idUsuario, novaSenha: novaSenha },
-            success: function (response) {
+            data: {
+                senhaAntiga: senhaAntiga,
+                idUsuario: idUsuario,
+                novaSenha: novaSenha
+            },
+            success: function(response) {
                 console.log(response);
 
                 // Manipule a resposta aqui
@@ -248,7 +350,7 @@ $(document).ready(function () {
                     });
                 }
             },
-            error: function () {
+            error: function() {
                 // Manipule os erros aqui
                 Swal.fire({
                     icon: 'error',
@@ -267,25 +369,18 @@ $(document).ready(function () {
 
 
 <script>
-    const togglePasswordIcons = document.querySelectorAll('.toggle-password');
+const togglePasswordIcons = document.querySelectorAll('.toggle-password');
 
-    togglePasswordIcons.forEach(icon => {
-        icon.addEventListener('click', function () {
-            const targetId = icon.getAttribute('data-target');
-            const passwordInput = document.getElementById(targetId);
+togglePasswordIcons.forEach(icon => {
+    icon.addEventListener('click', function() {
+        const targetId = icon.getAttribute('data-target');
+        const passwordInput = document.getElementById(targetId);
 
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-            } else {
-                passwordInput.type = 'password';
-            }
-        });
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+        } else {
+            passwordInput.type = 'password';
+        }
     });
+});
 </script>
-
-
-
-
-
-
-

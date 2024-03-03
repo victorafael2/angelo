@@ -120,19 +120,18 @@ function generateMenuHTML($data)
 
 /* Estilos CSS para controlar o layout */
 .parent-wrapper {
-        /* Use flexbox para controlar o layout dos elementos filhos */
-        display: flex;
-        flex-wrap: wrap; /* Permite a quebra de linha */
-    }
+    /* Use flexbox para controlar o layout dos elementos filhos */
+    display: flex;
+    flex-wrap: wrap;
+    /* Permite a quebra de linha */
+}
 
-    .nav-item {
-        /* Defina a largura para evitar que os itens ocupem toda a largura disponível */
-        width: 100%; /* Por exemplo, para dividir em duas colunas */
-        /* Altere o valor de acordo com o número de colunas desejado */
-    }
-
-
-
+.nav-item {
+    /* Defina a largura para evitar que os itens ocupem toda a largura disponível */
+    width: 100%;
+    /* Por exemplo, para dividir em duas colunas */
+    /* Altere o valor de acordo com o número de colunas desejado */
+}
 </style>
 
 
@@ -160,7 +159,7 @@ function generateMenuHTML($data)
 
 
 
-                            <?php // Exibir o menu cascata no HTML
+                    <?php // Exibir o menu cascata no HTML
                             echo generateMenuHTML($menuData);
                             ?>
 
@@ -196,8 +195,7 @@ echo $dataHoraAtual;
                 data-bs-toggle="collapse" data-bs-target="#navbarVerticalCollapse"
                 aria-controls="navbarVerticalCollapse" aria-expanded="false" aria-label="Toggle Navigation"><span
                     class="navbar-toggle-icon"><span class="toggle-line"></span></span></button>
-            <a class="navbar-brand me-1 me-sm-3"
-                href="<?php echo $_SESSION['destinationPage']; ?>">
+            <a class="navbar-brand me-1 me-sm-3" href="<?php echo $_SESSION['destinationPage']; ?>">
 
                 <div class="d-flex align-items-center">
                     <div class="d-flex align-items-center"><img src="assets/png/inove_logo_novo.svg" alt="crm"
@@ -399,7 +397,7 @@ echo $dataHoraAtual;
                     data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
                     <div class="avatar avatar-l ">
                         <!-- <img class="rounded-circle " src="assets/img/team/40x40/57.webp" alt="" /> -->
-                        <?php
+                        <!-- <?php
                             function getInitialLetter($name) {
                               return strtoupper(substr($name, 0, 1));
                             }
@@ -409,7 +407,47 @@ echo $dataHoraAtual;
                             echo '<div class="avatar-letter">' . getInitialLetter($name) . '</div>';
 
 
-                            ?>
+                            ?> -->
+                        <?php
+
+
+                          // Obtém o valor da coluna picture_profile da tabela user
+                          $sql = "SELECT picture_profile FROM user WHERE email=?";
+                          $stmt = $conn->prepare($sql);
+
+                          // Verifica se a preparação da consulta foi bem-sucedida
+                          if ($stmt) {
+                              // Associa os parâmetros e executa a consulta
+                              $stmt->bind_param("s", $email);
+                              $stmt->execute();
+                              $stmt->store_result();
+
+                              // Verifica se a consulta retornou alguma linha
+                              if ($stmt->num_rows > 0) {
+                                  // Faz o bind do resultado
+                                  $stmt->bind_result($picture_profile);
+
+                                  // Obtém o resultado
+                                  $stmt->fetch();
+
+                                  // Verifica se o campo picture_profile está vazio
+                                  if (empty($picture_profile)) {
+                                      // Se o campo picture_profile estiver vazio, exibe a letra inicial
+                                      echo '<div class="avatar-letter">' . getInitialLetter($name) . '</div>';
+                                  } else {
+                                      // Se o campo picture_profile não estiver vazio, exibe a imagem de perfil
+                                      echo '<div class="avatar avatar-xl avatar-bordered me-4">';
+                                      echo '<img src="data:image/jpeg;base64,' . $picture_profile . '" class="rounded-circle" alt="Imagem de Perfil">';
+                                      echo '</div>';
+                                  }
+                              }
+                              $stmt->close();
+                          } else {
+                              // Se a preparação da consulta falhou, exibe uma mensagem de erro
+                              echo '<div class="avatar-letter">' . getInitialLetter($name) . '</div>';
+                          }
+                          ?>
+
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end navbar-dropdown-caret py-0 dropdown-profile shadow border border-300"
@@ -417,16 +455,63 @@ echo $dataHoraAtual;
                     <div class="card position-relative border-0">
                         <div class="card-body p-0">
                             <div class="text-center pt-4 pb-3">
-                                <div class="avatar avatar-xl ">
+                                <div class="avatar avatar-5xl ">
                                     <!-- <img class="rounded-circle " src="assets/img/team/72x72/57.webp" alt="" />
                          -->
-                                    <?php
+                                    <!-- <?php
 
 
                             echo '<div class="avatar-letter">' . getInitialLetter($name) . '</div>';
 
-                            ?>
+                            ?> -->
+
+                                    <!-- <div class="avatar avatar-5xl avatar-bordered me-4">
+  <img class="rounded-circle " src="../../assets/img/team/30.webp" alt="" />
+
+</div> -->
+                                    <?php
+
+
+                                            // Obtém o valor da coluna picture_profile da tabela user
+                                            $sql = "SELECT picture_profile FROM user WHERE email=?";
+                                            $stmt = $conn->prepare($sql);
+
+                                            // Verifica se a preparação da consulta foi bem-sucedida
+                                            if ($stmt) {
+                                                // Associa os parâmetros e executa a consulta
+                                                $stmt->bind_param("s", $email);
+                                                $stmt->execute();
+                                                $stmt->store_result();
+
+                                                // Verifica se a consulta retornou alguma linha
+                                                if ($stmt->num_rows > 0) {
+                                                    // Faz o bind do resultado
+                                                    $stmt->bind_result($picture_profile);
+
+                                                    // Obtém o resultado
+                                                    $stmt->fetch();
+
+                                                    // Verifica se o campo picture_profile está vazio
+                                                    if (empty($picture_profile)) {
+                                                        // Se o campo picture_profile estiver vazio, exibe a letra inicial
+                                                        echo '<div class="avatar-letter">' . getInitialLetter($name) . '</div>';
+                                                    } else {
+                                                        // Se o campo picture_profile não estiver vazio, exibe a imagem de perfil
+                                                        echo '<div class="avatar avatar-5xl avatar-bordered me-4">';
+                                                        echo '<img src="data:image/jpeg;base64,' . $picture_profile . '" class="rounded-circle" alt="Imagem de Perfil">';
+                                                        echo '</div>';
+                                                    }
+                                                }
+                                                $stmt->close();
+                                            } else {
+                                                // Se a preparação da consulta falhou, exibe uma mensagem de erro
+                                                echo '<div class="avatar-letter">' . getInitialLetter($name) . '</div>';
+                                            }
+                                            ?>
+
                                 </div>
+
+
                                 <h6 class="mt-2 text-black"><?php echo $name ?></h6>
                             </div>
                             <!-- <div class="mb-3 mx-3">
@@ -485,10 +570,10 @@ echo $dataHoraAtual;
                                     <span class="me-2" data-feather="log-out"> </span>Sair</a></div>
                             <div class="my-2 text-center fw-bold fs--2 text-600"><a class="text-600 me-1"
                                     href="content_pages.php?id=40">Política de Privacidade</a>
-                                    <!-- <a class="text-600 mx-1"
+                                <!-- <a class="text-600 mx-1"
                                     href="#!">Terms</a>&bull;
                                     <a class="text-600 ms-1" href="#!">Cookies</a> -->
-                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -496,7 +581,3 @@ echo $dataHoraAtual;
         </ul>
     </div>
 </nav>
-
-
-
-
