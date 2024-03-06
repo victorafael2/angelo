@@ -53,7 +53,7 @@ if ($result->num_rows == 0) {
 
         // Verificar se o servidor não é localhost
         if ($_SERVER['SERVER_NAME'] !== 'localhost') {
-            $currentServer = 'https://katrina.dev.betterconsultoria.com/';
+            $currentServer = 'https://katrina.dev.betterconsultoria.com';
         } else {
             $currentServer = 'localhost/angelo';
         }
