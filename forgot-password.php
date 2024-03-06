@@ -53,7 +53,7 @@ if ($result->num_rows == 0) {
 
         // Verificar se o servidor não é localhost
         if ($_SERVER['SERVER_NAME'] !== 'localhost') {
-            $currentServer = 'https://191.96.31.197:8090/preview/xpeer.com';
+            $currentServer = 'https://katrina.dev.betterconsultoria.com/';
         } else {
             $currentServer = 'localhost/angelo';
         }
