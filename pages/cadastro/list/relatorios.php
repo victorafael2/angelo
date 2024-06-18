@@ -26,7 +26,7 @@ if ($result->num_rows > 0) {
         echo '<td>' . ($row["ativo"] ? 'Sim' : 'Não') . '</td>';
         echo '<td>';
         echo '<div class="btn-group" role="group" >';
-        echo '<a href="href="content_pages.php?id=43&id_relatorio=' . $row["id"] . '"" class="btn btn-sm btn-soft-success data-bs-toggle="tooltip" data-bs-placement="top" title="Ver Relatório"><i class="fa-regular fa-eye"></i></a> ';
+        echo '<a href="content_pages.php?id=43&id_relatorio=' . $row["id"] . '" class="btn btn-sm btn-soft-success" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver Relatório"><i class="fa-regular fa-eye"></i></a>';
         echo '<button class="btn btn-sm btn-soft-primary edit-button" data-id="' . $row["id"] . '" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar Relatório"><i class="fa-regular fa-pen-to-square"></i></button> ';
         echo '<button class="btn btn-sm btn-soft-danger delete-button" data-id="' . $row["id"] . '" data-bs-toggle="tooltip" data-bs-placement="top" title="Apagar Relatório"><i class="fa-regular fa-trash-can"></i></button></td>';
         echo '</div>';
