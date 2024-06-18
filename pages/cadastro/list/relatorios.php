@@ -15,17 +15,22 @@ if ($result->num_rows > 0) {
     // Monta a tabela HTML com os relatórios
     echo ' <div class="table-responsive">';
     echo '<table class="table">';
-    echo '<thead><tr><th>ID</th><th>Nome</th><th>Link</th><th>Descricao</th><th>Ativo</th><th>Ações</th></tr></thead>';
+    echo '<thead><tr><th>ID</th><th>Nome</th><th>Descricao</th><th>Ativo</th><th>Ações</th></tr></thead>';
     echo '<tbody>';
     while ($row = $result->fetch_assoc()) {
         echo '<tr>';
         echo '<td>' . $row["id"] . '</td>';
         echo '<td>' . $row["nome"] . '</td>';
-        echo '<td>' . $row["short_link"] . '</td>';
+        // echo '<td>' . $row["short_link"] . '</td>';
         echo '<td>' . $row["descricao"] . '</td>';
         echo '<td>' . ($row["ativo"] ? 'Sim' : 'Não') . '</td>';
-        echo '<td><button class="btn btn-sm btn-primary edit-button" data-id="' . $row["id"] . '">Editar</button> ';
-        echo '<button class="btn btn-sm btn-danger delete-button" data-id="' . $row["id"] . '">Apagar</button></td>';
+        echo '<td>';
+        echo '<div class="btn-group" role="group" >';
+        echo '<a href="href="content_pages.php?id=43&id_relatorio=' . $row["id"] . '"" class="btn btn-sm btn-soft-success data-bs-toggle="tooltip" data-bs-placement="top" title="Ver Relatório"><i class="fa-regular fa-eye"></i></a> ';
+        echo '<button class="btn btn-sm btn-soft-primary edit-button" data-id="' . $row["id"] . '" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar Relatório"><i class="fa-regular fa-pen-to-square"></i></button> ';
+        echo '<button class="btn btn-sm btn-soft-danger delete-button" data-id="' . $row["id"] . '" data-bs-toggle="tooltip" data-bs-placement="top" title="Apagar Relatório"><i class="fa-regular fa-trash-can"></i></button></td>';
+        echo '</div>';
+        echo '</td>';
         echo '</tr>';
     }
     echo '</tbody>';

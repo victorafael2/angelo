@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
     }
 
     // Consulta o relatório no banco de dados
-    $sql = "SELECT id, nome, link, ativo,descricao FROM relatorios WHERE id = '$id'";
+    $sql = "SELECT * FROM relatorios WHERE id = '$id'";
     $result = $conn->query($sql);
 
     if ($result->num_rows == 1) {
@@ -25,6 +25,16 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
         echo '<label for="nome" class="form-label">Nome</label>';
         echo '<input type="text" class="form-control" name="nome" value="' . $row["nome"] . '">';
         echo '</div>';
+        echo '<div class="col-md-3">';
+        echo ' <label for="">Tipo de Link</label>';
+        echo '<select class="form-select" id="tipolink" name="tipolink" >';
+        echo '<option value="" disabled selected>URL ou Embed</option>';
+        echo '<option value="url"' . ($row["tipolink"] == 'url' ? ' selected' : '') . '>Url</option>';
+        echo '<option value="embed"' . ($row["tipolink"] == 'embed' ? ' selected' : '') . '>Embed</option>';
+
+        echo '</select>';
+
+        echo ' </div>';
         echo '<div class="mb-3">';
         echo '<label for="link" class="form-label">Link</label>';
         echo '<input type="text" class="form-control" name="link" value="' . $row["link"] . '">';
@@ -48,4 +58,3 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
 } else {
     echo "Erro ao obter o relatório.";
 }
-?>

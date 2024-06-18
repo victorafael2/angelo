@@ -10,11 +10,11 @@ if (isset($_SESSION['atividade']) && (time() - $_SESSION['atividade'] > 1800)) {
 }
 $_SESSION['atividade'] = time();
 
-if (isset($_SESSION['email'])) {
-  // echo 'A sessão foi iniciada!';
-} else {
-  header('Location: index.php');
-}
+// if (isset($_SESSION['email'])) {
+//   // echo 'A sessão foi iniciada!';
+// } else {
+//   header('Location: index.php');
+// }
 
 // Armazene uma variável de sessão chamada "nome" com o valor "João"
 $email = $_SESSION['email'];

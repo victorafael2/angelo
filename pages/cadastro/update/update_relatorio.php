@@ -5,6 +5,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = $_POST["id"];
     $nome = $_POST["nome"];
     $link = $_POST["link"];
+    $tipolink = $_POST["tipolink"];
+    $escaped_iframe_code = htmlspecialchars($link, ENT_QUOTES, 'UTF-8');
     $desc = $_POST["desc"];
     $ativo = isset($_POST["ativo"]) ? 1 : 0;
 
@@ -17,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Prepara a instrução SQL
-    $sql = "UPDATE relatorios SET nome='$nome', link='$link', ativo='$ativo', descricao = '$desc' WHERE id='$id'";
+    $sql = "UPDATE relatorios SET nome='$nome', link='$escaped_iframe_code', ativo='$ativo', descricao = '$desc', tipolink= '$tipolink' WHERE id='$id'";
 
     // Executa a instrução SQL
     if ($conn->query($sql) === TRUE) {

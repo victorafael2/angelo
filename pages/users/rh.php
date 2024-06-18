@@ -110,19 +110,22 @@
 
                 // Executar a consulta SQL para obter o contador
                 $sql = "SELECT COUNT(*) AS quantidade, subquery.idFuncionario, subquery.cpf, subquery.dataCadastro, subquery.dataAdmissao, subquery.dataNascimento, subquery.tipo
-                FROM (
-                    SELECT fcnpj.id AS idFuncionario, fcnpj.cnpj AS cpf, fcnpj.dataCadastro, fcnpj.dataAdmissao, fcnpj.dataNascimento, 'cnpj' AS tipo, fcnpj.ativo_cad
-                    FROM funcionarios_cnpj AS fcnpj
-                    LEFT JOIN tb_history_cadastro ON tb_history_cadastro.id_funcionario = fcnpj.id
-                    WHERE tb_history_cadastro.id_funcionario IS NULL
+FROM (
+    SELECT fcnpj.id AS idFuncionario, fcnpj.cnpj AS cpf, fcnpj.dataCadastro, fcnpj.dataAdmissao, fcnpj.dataNascimento, 'cnpj' AS tipo, fcnpj.ativo_cad
+    FROM funcionarios_cnpj AS fcnpj
+    LEFT JOIN tb_history_cadastro ON tb_history_cadastro.id_funcionario = fcnpj.id
+    WHERE tb_history_cadastro.id_funcionario IS NULL
 
-                    UNION ALL
+    UNION ALL
 
-                    SELECT f.idFuncionario, f.cpf, f.dataCadastro, f.dataAdmissao, f.dataNascimento, 'cpf' AS tipo, f.ativo_cad
-                    FROM funcionarios AS f
-                    LEFT JOIN tb_history_cadastro ON tb_history_cadastro.id_funcionario = f.idFuncionario
-                    WHERE tb_history_cadastro.id_funcionario IS NULL
-                ) AS subquery WHERE subquery.tipo = 'cpf' AND subquery.ativo_cad = '1';
+    SELECT f.idFuncionario, f.cpf, f.dataCadastro, f.dataAdmissao, f.dataNascimento, 'cpf' AS tipo, f.ativo_cad
+    FROM funcionarios AS f
+    LEFT JOIN tb_history_cadastro ON tb_history_cadastro.id_funcionario = f.idFuncionario
+    WHERE tb_history_cadastro.id_funcionario IS NULL
+) AS subquery
+WHERE subquery.tipo = 'cpf' AND subquery.ativo_cad = '1'
+GROUP BY subquery.idFuncionario, subquery.cpf, subquery.dataCadastro, subquery.dataAdmissao, subquery.dataNascimento, subquery.tipo;
+
                 ";
                 $result = mysqli_query($conn, $sql);
 
@@ -183,7 +186,7 @@
                     FROM funcionarios AS f
                     LEFT JOIN tb_history_cadastro ON tb_history_cadastro.id_funcionario = f.idFuncionario
                     WHERE tb_history_cadastro.id_funcionario IS NULL
-                ) AS subquery WHERE subquery.tipo = 'cpf' AND subquery.ativo_cad <> '1';
+                ) AS subquery WHERE subquery.tipo = 'cpf' AND subquery.ativo_cad <> '1' GROUP BY subquery.idFuncionario, subquery.cpf, subquery.dataCadastro, subquery.dataAdmissao, subquery.dataNascimento, subquery.tipo;;
                 ";
                 $result = mysqli_query($conn, $sql);
 
