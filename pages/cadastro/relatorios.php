@@ -32,7 +32,7 @@
                             <div class="col-md-3">
                                 <label for="">Tipo de Link</label>
                                 <select class="form-select" id="tipolink" name="tipolink" required>
-                                    <option selected="">URL ou Embed</option>
+                                    <option value="">URL ou Embed</option>
                                     <option value="url">Url</option>
                                     <option value="embed">Embed</option>
 
