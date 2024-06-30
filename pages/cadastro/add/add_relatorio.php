@@ -9,6 +9,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $reporDesc = $_POST["reporDesc"];
     $activateReport = isset($_POST["activateReport"]) ? 1 : 0;
     $reporAltura = $_POST["reporAltura"];
+    $id_relatorio_menu = $_POST["id_relatorio_menu"];
+
 
     // Configuração da conexão com o banco de dados (substitua com suas próprias informações)
     include '../../../database/databaseconnect.php';
@@ -19,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Prepara a instrução SQL
-    $sql = "INSERT INTO relatorios (nome, link, ativo,descricao,tipolink,altura) VALUES ('$reportName', '$escaped_iframe_code', '$activateReport', '$reporDesc','$reportTipoLInk','$reporAltura')";
+    $sql = "INSERT INTO relatorios (nome, link, ativo,descricao,tipolink,altura,menu_relatorio) VALUES ('$reportName', '$escaped_iframe_code', '$activateReport', '$reporDesc','$reportTipoLInk','$reporAltura','$id_relatorio_menu')";
 
     // Executa a instrução SQL
     if ($conn->query($sql) === TRUE) {

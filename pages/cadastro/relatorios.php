@@ -1,3 +1,12 @@
+<?php
+$id_relatorio_menu = $_GET['id'];
+
+
+
+
+?>
+
+
 <style>
     #cadastro {
         display: none;
@@ -22,10 +31,11 @@
                 </div>
                 <div class="card-body">
                     <form id="reportForm">
+                        <input type="text" name="id_relatorio_menu" id="id_relatorio_menu" value="<?php echo $id_relatorio_menu ?>" readonly>
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="reportName">Nome do Relatório</label>
+                                    <label for="reportName">Nome do Relatório </label>
                                     <input type="text" class="form-control" id="reportName" name="reportName" required>
                                 </div>
                             </div>
@@ -110,6 +120,7 @@
             var reporDesc = $("#reporDesc").val();
             var activateReport = $("#activateReport").is(":checked");
             var reporAltura = $("#altura").val();
+            var id_relatorio_menu = $("#id_relatorio_menu").val();
 
             // Simular o envio dos dados via AJAX
             $.ajax({
@@ -121,7 +132,8 @@
                     reportLink: reportLink,
                     activateReport: activateReport,
                     reporDesc: reporDesc,
-                    reporAltura: reporAltura
+                    reporAltura: reporAltura,
+                    id_relatorio_menu: id_relatorio_menu
                 },
                 success: function() {
                     // Exibir mensagem de sucesso usando o SweetAlert2
@@ -167,16 +179,25 @@
         // Carrega a lista de relatórios
         loadRelatorios();
 
-        // Função para carregar a lista de relatórios via AJAX
-        function loadRelatorios() {
-            $.ajax({
-                type: "GET",
-                url: "pages/cadastro/list/relatorios.php",
-                success: function(data) {
-                    $("#relatorios-lista").html(data);
-                }
-            });
+        var id_relatorio_menu = <?php echo $id_relatorio_menu; ?>;
+
+function loadRelatorios() {
+    $.ajax({
+        type: "GET",
+        url: "pages/cadastro/list/relatorios.php",
+        data: { menu_id: id_relatorio_menu },
+        success: function(data) {
+            $("#relatorios-lista").html(data);
+        },
+        error: function(xhr, status, error) {
+            console.error("Erro na requisição AJAX:", status, error);
         }
+    });
+}
+
+// Chame a função para carregar os relatórios
+loadRelatorios();
+
 
         // Delega o evento de exclusão do relatório
         $(document).on("click", ".delete-button", function() {

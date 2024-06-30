@@ -1,7 +1,17 @@
 <?php
+$id_menu_relatório = $_GET['id'];
+
 
 // Consulta SQL
-$sql = "SELECT * FROM relatorios where ativo = 1";
+$sql = "WITH submenu_cte AS (
+    SELECT menu_id
+    FROM submenu
+    WHERE submenu.submenu_id = $id_menu_relatório
+)
+SELECT r.*
+FROM relatorios r
+LEFT JOIN submenu s ON s.submenu_id = r.menu_relatorio
+WHERE s.menu_id = (SELECT menu_id FROM submenu_cte);";
 
 $result = $conn->query($sql);
 ?>

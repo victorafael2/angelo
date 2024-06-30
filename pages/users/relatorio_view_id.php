@@ -17,7 +17,7 @@ $result = $conn->query($sql);
           while($row = $result->fetch_assoc()) {
            echo '<div style="display: flex; justify-content: space-between;" class="mb-2">';
           echo  '<h3 style="margin: 0;">' . $row["nome"] . '</h3>';
-          echo '<a href="content_pages.php?id=35" class="btn btn-sm btn-phoenix-info">Voltar para Relatórios</a></div>';
+          echo '<a href="content_pages.php?id=' . $row["menu_relatorio"] . '" class="btn btn-sm btn-phoenix-info">Voltar para Relatórios</a></div>';
             // echo '<div class="col-12">';
             // echo '<div class="card">';
             // echo '<div class="card-body">';
